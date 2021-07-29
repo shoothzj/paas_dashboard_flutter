@@ -4,6 +4,7 @@ import 'package:paas_dashboard_flutter/module/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
+import 'package:paas_dashboard_flutter/ui/bk/bk_page.dart';
 import 'package:paas_dashboard_flutter/ui/home/home_page.dart';
 import 'package:paas_dashboard_flutter/ui/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_instance.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
+        '/bookkeeper': (context) => BkPage(),
         '/pulsar': (context) => PulsarPage(),
       },
       onGenerateRoute: (settings) {

@@ -1,5 +1,3 @@
-
-
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 
 class PulsarNamespaceModule {

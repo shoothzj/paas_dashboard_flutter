@@ -25,43 +25,40 @@ class HomePage extends StatelessWidget {
               crossAxisCount: 3,
               padding: const EdgeInsets.all(20),
               children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PulsarPage()));
-                      },
-                      child: ListView(
-                        children: [
-                          Image.asset('assets/images/icons/pulsar.png'),
-                          Center(
-                            child: Text('Pulsar'),
-                          )
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.brown,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 20),
-                          textStyle: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold)),
-                    ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Text('BookKeeper'),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Text('ZooKeeper'),
-                )
+                buildPaasCard(context, "pulsar"),
+                buildPaasCard(context, "bookkeeper"),
+                buildPaasCard(context, "zookeeper"),
+                buildPaasCard(context, "elasticsearch"),
+                buildPaasCard(context, "kubernetes"),
+                buildPaasCard(context, "kafka"),
+                buildPaasCard(context, "flink"),
               ],
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget buildPaasCard(BuildContext context, String name) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed('/$name');
+        },
+        child: ListView(
+          children: [
+            Image.asset('assets/images/icons/$name.png'),
+            Center(
+              child: Text(name, style: TextStyle(color: Colors.black),),
+            )
+          ],
+        ),
+        style: ElevatedButton.styleFrom(
+            primary: Colors.white,
+            padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
       ),
     );
   }
