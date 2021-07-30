@@ -1,43 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
+import 'package:provider/provider.dart';
 
 class PulsarTenantsWidget extends StatefulWidget {
-  final PulsarInstanceContext instanceContext;
-
-  PulsarTenantsWidget(this.instanceContext);
+  PulsarTenantsWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTenantsState(this.instanceContext);
+    return new PulsarTenantsState();
   }
 }
 
 class PulsarTenantsState extends State<PulsarTenantsWidget> {
-  final PulsarInstanceContext instanceContext;
-
   late Future<List<TenantResp>> _func;
-
-  PulsarTenantsState(this.instanceContext);
 
   @override
   void initState() {
-    loadData();
     super.initState();
+    final vm = Provider.of<PulsarInstanceViewModel>(context, listen: false);
+    loadData(vm.host, vm.port);
   }
 
   @override
   Widget build(BuildContext context) {
-    var formButton = createTenant(context);
+    final vm = Provider.of<PulsarInstanceViewModel>(context);
+    var formButton = createTenant(context, vm.host, vm.port);
     var refreshButton = TextButton(
         onPressed: () {
           setState(() {
-            loadData();
+            loadData(vm.host, vm.port);
           });
         },
         child: Text('Refresh'));
@@ -73,7 +70,8 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
                                     Navigator.pushNamed(
                                         context, PageRouteConst.PulsarTenant,
                                         arguments: new TenantPageContext(
-                                            instanceContext,
+                                            vm.host,
+                                            vm.port,
                                             new PulsarTenantModule(
                                                 data.tenantName)));
                                   },
@@ -85,10 +83,8 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
                                       child: Text('Delete'),
                                       onPressed: () {
                                         PulsarTenantAPi.deleteTenant(
-                                            instanceContext.host,
-                                            instanceContext.port,
-                                            data.tenantName);
-                                        loadData();
+                                            vm.host, vm.port, data.tenantName);
+                                        loadData(vm.host, vm.port);
                                       },
                                     )),
                                   ]))
@@ -105,19 +101,17 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
     return body;
   }
 
-  loadData() {
-    _func =
-        PulsarTenantAPi.getTenants(instanceContext.host, instanceContext.port);
+  loadData(String host, int port) {
+    _func = PulsarTenantAPi.getTenants(host, port);
   }
 
-  ButtonStyleButton createTenant(BuildContext context) {
+  ButtonStyleButton createTenant(BuildContext context, String host, int port) {
     var list = [FormFieldDef('Tenant Name')];
     return FormUtil.createButton1("Pulsar Tenant", list, context,
         (tenantName) async {
       try {
-        await PulsarTenantAPi.createTenant(
-            instanceContext.host, instanceContext.port, tenantName);
-        loadData();
+        await PulsarTenantAPi.createTenant(host, port, tenantName);
+        loadData(host, port);
       } on Exception catch (e) {
         AlertUtil.exceptionDialog(e, context);
       }

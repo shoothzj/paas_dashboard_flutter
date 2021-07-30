@@ -13,11 +13,11 @@ class NamespacePageContext {
   NamespacePageContext(this.tenantPageContext, this.namespaceModule);
 
   String get host {
-    return tenantPageContext.instanceContext.host;
+    return tenantPageContext.host;
   }
 
   int get port {
-    return tenantPageContext.instanceContext.port;
+    return tenantPageContext.port;
   }
 
   String get tenantName {

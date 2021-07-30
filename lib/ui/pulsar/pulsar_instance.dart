@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_instance.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/tab/pulsar_message_query.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/tab/pulsar_basic.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/tab/pulsar_details.dart';
+import 'package:paas_dashboard_flutter/ui/pulsar/tab/pulsar_message_query.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
+import 'package:provider/provider.dart';
 
 class PulsarInstanceScreen extends StatefulWidget {
-  final PulsarInstanceContext instanceContext;
-
-  PulsarInstanceScreen(this.instanceContext);
+  PulsarInstanceScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new _PulsarInstanceState(instanceContext);
+    return new _PulsarInstanceState();
   }
 }
 
 class _PulsarInstanceState extends State<PulsarInstanceScreen> {
-  final PulsarInstanceContext instanceContext;
-
-  _PulsarInstanceState(this.instanceContext);
+  _PulsarInstanceState();
 
   @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<PulsarInstanceViewModel>(context);
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Pulsar ' + instanceContext.name + ' Dashboard'),
+          title: Text('Pulsar ${vm.name} Dashboard'),
           bottom: TabBar(
             tabs: [
               Tab(
@@ -39,9 +37,9 @@ class _PulsarInstanceState extends State<PulsarInstanceScreen> {
         ),
         body: TabBarView(
           children: [
-            new PulsarBasicWidget(instanceContext),
-            new PulsarTenantsWidget(instanceContext),
-            new PulsarMessageQueryWidget(instanceContext),
+            new PulsarBasicWidget(),
+            new PulsarTenantsWidget(),
+            new PulsarMessageQueryWidget(),
           ],
         ),
       ),

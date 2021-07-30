@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
@@ -7,14 +6,16 @@ import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_partitioned_topic.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_tenant.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
+import 'package:provider/provider.dart';
 
 class RouteGen {
-  static Route pulsarInstance(PulsarInstanceContext args) {
+  static Route pulsarInstance(PulsarInstanceViewModel viewModel) {
     return MaterialPageRoute(
-      builder: (context) {
-        return PulsarInstanceScreen(args);
-      },
-    );
+        builder: (context) => ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: PulsarInstanceScreen(),
+            ));
   }
 
   static Route pulsarTenant(TenantPageContext args) {

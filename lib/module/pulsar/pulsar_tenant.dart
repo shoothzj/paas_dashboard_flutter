@@ -1,5 +1,3 @@
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_instance.dart';
-
 class PulsarTenantModule {
   final String tenantName;
 
@@ -7,18 +5,11 @@ class PulsarTenantModule {
 }
 
 class TenantPageContext {
-  final PulsarInstanceContext instanceContext;
+  final String host;
+  final int port;
   final PulsarTenantModule tenantModule;
 
-  TenantPageContext(this.instanceContext, this.tenantModule);
-
-  String get host {
-    return instanceContext.host;
-  }
-
-  int get port {
-    return instanceContext.port;
-  }
+  TenantPageContext(this.host, this.port, this.tenantModule);
 
   String get tenantName {
     return tenantModule.tenantName;
