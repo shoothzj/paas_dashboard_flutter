@@ -1,10 +1,10 @@
-class PulsarInstancePo {
-  final int id;
-  final String name;
-  final String host;
-  final int port;
+import 'package:paas_dashboard_flutter/persistent/po/http_endpoint.dart';
 
-  PulsarInstancePo(this.id, this.name, this.host, this.port);
+class PulsarInstancePo extends HttpEndpoint {
+  final int id;
+
+  PulsarInstancePo(this.id, String name, String host, int port)
+      : super(name, host, port);
 
   Map<String, dynamic> toMap() {
     return {

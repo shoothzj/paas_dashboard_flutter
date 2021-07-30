@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
-import 'package:paas_dashboard_flutter/ui/page_route_const.dart';
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
@@ -50,7 +50,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
                       .map((data) => DataRow(
                               onSelectChanged: (bool? selected) {
                                 Navigator.pushNamed(
-                                    context, PageRouteConst.RouteTopic,
+                                    context, PageRouteConst.PulsarTopic,
                                     arguments: new TopicPageContext(
                                         namespacePageContext,
                                         new PulsarTopicModule(data.topicName)));
@@ -109,7 +109,10 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
             children: [formButton, refreshButton],
           ),
         ),
-        Text('Partitioned Topics', style: TextStyle(fontSize: 22),),
+        Text(
+          'Partitioned Topics',
+          style: TextStyle(fontSize: 22),
+        ),
         topicsFuture
       ],
     );

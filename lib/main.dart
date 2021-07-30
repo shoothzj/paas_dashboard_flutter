@@ -3,14 +3,11 @@ import 'package:paas_dashboard_flutter/module/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
+import 'package:paas_dashboard_flutter/route/route_gen.dart';
 import 'package:paas_dashboard_flutter/ui/bk/bk_page.dart';
 import 'package:paas_dashboard_flutter/ui/home/home_page.dart';
-import 'package:paas_dashboard_flutter/ui/page_route_const.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_namespace.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_partitioned_topic.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
@@ -37,66 +34,34 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: PageRouteConst.Root,
       routes: {
-        '/': (context) => HomePage(),
-        '/bookkeeper': (context) => ChangeNotifierProvider(
+        PageRouteConst.Root: (context) => HomePage(),
+        PageRouteConst.Bookkeeper: (context) => ChangeNotifierProvider(
               create: (context) => BkInstanceListViewModel(),
               child: BkPage(),
             ),
-        '/pulsar': (context) => ChangeNotifierProvider(
+        PageRouteConst.Pulsar: (context) => ChangeNotifierProvider(
               create: (context) => PulsarInstanceListViewModel(),
               child: PulsarPage(),
             ),
       },
       onGenerateRoute: (settings) {
-        if (settings.name == PageRouteConst.RouteInstance) {
+        if (settings.name == PageRouteConst.PulsarInstance) {
           final args = settings.arguments as PulsarInstanceContext;
-
-          // Then, extract the required data from
-          // the arguments and pass the data to the
-          // correct screen.
-          return MaterialPageRoute(
-            builder: (context) {
-              return PulsarInstanceScreen(args);
-            },
-          );
+          return RouteGen.pulsarInstance(args);
         }
-        if (settings.name == PageRouteConst.RouteTenant) {
+        if (settings.name == PageRouteConst.PulsarTenant) {
           final args = settings.arguments as TenantPageContext;
-
-          // Then, extract the required data from
-          // the arguments and pass the data to the
-          // correct screen.
-          return MaterialPageRoute(
-            builder: (context) {
-              return PulsarTenantScreen(args);
-            },
-          );
+          return RouteGen.pulsarTenant(args);
         }
-        if (settings.name == PageRouteConst.RouteNamespace) {
+        if (settings.name == PageRouteConst.PulsarNamespace) {
           final args = settings.arguments as NamespacePageContext;
-
-          // Then, extract the required data from
-          // the arguments and pass the data to the
-          // correct screen.
-          return MaterialPageRoute(
-            builder: (context) {
-              return PulsarNamespaceScreen(args);
-            },
-          );
+          return RouteGen.pulsarNamespace(args);
         }
-        if (settings.name == PageRouteConst.RouteTopic) {
+        if (settings.name == PageRouteConst.PulsarTopic) {
           final args = settings.arguments as TopicPageContext;
-
-          // Then, extract the required data from
-          // the arguments and pass the data to the
-          // correct screen.
-          return MaterialPageRoute(
-            builder: (context) {
-              return PulsarPartitionedTopicScreen(args);
-            },
-          );
+          return RouteGen.pulsarPartitionedTopic(args);
         }
       },
     );

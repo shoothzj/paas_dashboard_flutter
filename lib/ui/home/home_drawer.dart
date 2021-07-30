@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
 
 class NavDrawer extends StatelessWidget {
   @override
@@ -19,6 +18,10 @@ class NavDrawer extends StatelessWidget {
                     fit: BoxFit.fill,
                     image: AssetImage(
                         'assets/images/background/joy_valley_slide.png'))),
+          ),
+          ListTile(
+            title: Text('About author'),
+            onTap: () => {Navigator.of(context).pop()},
           ),
         ],
       ),

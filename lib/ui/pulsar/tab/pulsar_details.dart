@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
-import 'package:paas_dashboard_flutter/ui/page_route_const.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
@@ -51,7 +51,10 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
             children: [formButton, refreshButton],
           ),
         ),
-        Text('Tenants', style: TextStyle(fontSize: 22),),
+        Text(
+          'Tenants',
+          style: TextStyle(fontSize: 22),
+        ),
         FutureBuilder(
             future: _func,
             builder: (ctx, snapshot) {
@@ -68,7 +71,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
                           .map((data) => DataRow(
                                   onSelectChanged: (bool? selected) {
                                     Navigator.pushNamed(
-                                        context, PageRouteConst.RouteTenant,
+                                        context, PageRouteConst.PulsarTenant,
                                         arguments: new TenantPageContext(
                                             instanceContext,
                                             new PulsarTenantModule(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_namespace_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
-import 'package:paas_dashboard_flutter/ui/page_route_const.dart';
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_namespace_api.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
@@ -52,7 +52,10 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
             children: [formButton, refreshButton],
           ),
         ),
-        Text('Namespaces', style: TextStyle(fontSize: 22),),
+        Text(
+          'Namespaces',
+          style: TextStyle(fontSize: 22),
+        ),
         FutureBuilder(
             future: _func,
             builder: (ctx, snapshot) {
@@ -69,7 +72,7 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
                           .map((data) => DataRow(
                                   onSelectChanged: (bool? selected) {
                                     Navigator.pushNamed(
-                                        context, PageRouteConst.RouteNamespace,
+                                        context, PageRouteConst.PulsarNamespace,
                                         arguments: new NamespacePageContext(
                                             tenantPageContext,
                                             new PulsarNamespaceModule(

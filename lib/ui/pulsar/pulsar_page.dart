@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_converter.dart';
-import 'package:paas_dashboard_flutter/persistent/persistent.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +46,7 @@ class _PulsarPageState extends State<PulsarPage> {
                       DataCell(TextButton(
                         child: Text('Delete'),
                         onPressed: () {
-                          Persistent.deletePulsar(itemRow.id);
+                          vm.deletePulsar(itemRow.id);
                         },
                       )),
                     ]))

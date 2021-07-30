@@ -11,7 +11,8 @@ class PulsarStatAPi {
     final response = await http.get(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     return response.body;
   }
