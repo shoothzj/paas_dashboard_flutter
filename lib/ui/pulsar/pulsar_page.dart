@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_converter.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +36,8 @@ class _PulsarPageState extends State<PulsarPage> {
         rows: vm.instances
             .map((itemRow) => DataRow(
                     onSelectChanged: (bool? selected) {
-                      Navigator.pushNamed(context, '/pulsar/instance',
+                      Navigator.pushNamed(
+                          context, PageRouteConst.PulsarInstance,
                           arguments: PulsarConverter.instance2Module(itemRow));
                     },
                     cells: [
