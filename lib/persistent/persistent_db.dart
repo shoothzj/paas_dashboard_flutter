@@ -2,7 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:paas_dashboard_flutter/persistent/persistent_api.dart';
-import 'package:paas_dashboard_flutter/persistent/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/bk_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -52,6 +53,12 @@ class PersistentDb implements PersistentApi {
     await db.execute(
       'INSERT INTO pulsar_instances(name, host, port) VALUES ("example", "localhost", 8080)',
     );
+    await db.execute(
+      'CREATE TABLE bookkeeper_instances(id INTEGER PRIMARY KEY, name TEXT, host TEXT, port INTEGER)',
+    );
+    await db.execute(
+      'INSERT INTO bookkeeper_instances(name, host, port) VALUES ("example", "localhost", 8080)',
+    );
   }
 
   @override
@@ -79,4 +86,31 @@ class PersistentDb implements PersistentApi {
       return PulsarInstancePo(aux['id'], aux['name'], aux['host'], aux['port']);
     });
   }
+
+  @override
+  Future<void> saveBookkeeper(String name, String host, int port) async {
+    var aux = await getInstance();
+    var list = [name, host, port];
+    aux.database.execute(
+        'INSERT INTO bookkeeper_instances(name, host, port) VALUES (?, ?, ?)',
+        list);
+  }
+
+  @override
+  Future<void> deleteBookkeeper(int id) async {
+    var aux = await getInstance();
+    aux.database.delete('bookkeeper_instances', where: 'id = ?', whereArgs: [id]);
+  }
+
+  @override
+  Future<List<BkInstancePo>> bookkeeperInstances() async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps =
+        await aux.database.query('bookkeeper_instances');
+    return List.generate(maps.length, (i) {
+      var aux = maps[i];
+      return BkInstancePo(aux['id'], aux['name'], aux['host'], aux['port']);
+    });
+  }
+
 }

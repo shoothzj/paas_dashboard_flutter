@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_converter.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent.dart';
-import 'package:paas_dashboard_flutter/persistent/pulsar_instance_po.dart';
-import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
-import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
+import 'package:provider/provider.dart';
 
 class PulsarPage extends StatefulWidget {
   @override
@@ -14,64 +13,55 @@ class PulsarPage extends StatefulWidget {
 }
 
 class _PulsarPageState extends State<PulsarPage> {
-  late Future<List<PulsarInstancePo>> _func;
-
   @override
   void initState() {
-    _func = Persistent.pulsarInstances();
     super.initState();
+    Provider.of<PulsarInstanceListViewModel>(context, listen: false)
+        .fetchPulsarInstances();
   }
 
   @override
   Widget build(BuildContext context) {
-    var instancesFuture = FutureBuilder(
-        future: _func,
-        builder: (ctx, snapshot) {
-          if (snapshot.hasData) {
-            List<PulsarInstancePo> data =
-                snapshot.data as List<PulsarInstancePo>;
-            return SingleChildScrollView(
-              child: DataTable(
-                showCheckboxColumn: false,
-                columns: [
-                  DataColumn(label: Text('Id')),
-                  DataColumn(label: Text('Name')),
-                  DataColumn(label: Text('Address')),
-                  DataColumn(label: Text('Port')),
-                  DataColumn(label: Text('Delete instance')),
-                ],
-                rows: data
-                    .map((itemRow) => DataRow(
-                            onSelectChanged: (bool? selected) {
-                              Navigator.pushNamed(context, '/pulsar/instance',
-                                  arguments:
-                                      PulsarConverter.instance2Module(itemRow));
-                            },
-                            cells: [
-                              DataCell(Text(itemRow.id.toString())),
-                              DataCell(Text(itemRow.name)),
-                              DataCell(Text(itemRow.host)),
-                              DataCell(Text(itemRow.port.toString())),
-                              DataCell(TextButton(
-                                child: Text('Delete'),
-                                onPressed: () {
-                                  Persistent.deletePulsar(itemRow.id);
-                                },
-                              )),
-                            ]))
-                    .toList(),
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return AlertUtil.create(snapshot.error, context);
-          }
-          // By default, show a loading spinner.
-          return SpinnerUtil.create();
-        });
+    final vm = Provider.of<PulsarInstanceListViewModel>(context);
+    var instancesFuture = SingleChildScrollView(
+      child: DataTable(
+        showCheckboxColumn: false,
+        columns: [
+          DataColumn(label: Text('Id')),
+          DataColumn(label: Text('Name')),
+          DataColumn(label: Text('Address')),
+          DataColumn(label: Text('Port')),
+          DataColumn(label: Text('Delete instance')),
+        ],
+        rows: vm.instances
+            .map((itemRow) => DataRow(
+                    onSelectChanged: (bool? selected) {
+                      Navigator.pushNamed(context, '/pulsar/instance',
+                          arguments: PulsarConverter.instance2Module(itemRow));
+                    },
+                    cells: [
+                      DataCell(Text(itemRow.id.toString())),
+                      DataCell(Text(itemRow.name)),
+                      DataCell(Text(itemRow.host)),
+                      DataCell(Text(itemRow.port.toString())),
+                      DataCell(TextButton(
+                        child: Text('Delete'),
+                        onPressed: () {
+                          Persistent.deletePulsar(itemRow.id);
+                        },
+                      )),
+                    ]))
+            .toList(),
+      ),
+    );
     var formButton = createInstanceButton(context);
-    var refreshButton = TextButton(onPressed: (){setState(() {
-      _func = Persistent.pulsarInstances();
-    });}, child: Text('Refresh'));
+    var refreshButton = TextButton(
+        onPressed: () {
+          setState(() {
+            vm.fetchPulsarInstances();
+          });
+        },
+        child: Text('Refresh'));
     var body = ListView(
       children: [
         Container(
@@ -96,6 +86,7 @@ class _PulsarPageState extends State<PulsarPage> {
   }
 
   ButtonStyleButton createInstanceButton(BuildContext context) {
+    final vm = Provider.of<PulsarInstanceListViewModel>(context, listen: false);
     var list = [
       FormFieldDef('Instance Name'),
       FormFieldDef('Instance Host'),
@@ -103,7 +94,7 @@ class _PulsarPageState extends State<PulsarPage> {
     ];
     return FormUtil.createButton3("Pulsar Instance", list, context,
         (name, host, port) {
-      Persistent.savePulsar(name, host, int.parse(port));
+      vm.createPulsar(name, host, int.parse(port));
     });
   }
 }

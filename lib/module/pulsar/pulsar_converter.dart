@@ -1,8 +1,8 @@
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_instance.dart';
-import 'package:paas_dashboard_flutter/persistent/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 
 class PulsarConverter {
-  static PulsarInstanceContext instance2Module(PulsarInstancePo po) {
-    return new PulsarInstanceContext(po.name, po.host, po.port);
+  static PulsarInstanceContext instance2Module(PulsarInstanceViewModel model) {
+    return new PulsarInstanceContext(model.name, model.host, model.port);
   }
 }

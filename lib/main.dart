@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
@@ -10,8 +9,11 @@ import 'package:paas_dashboard_flutter/ui/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_namespace.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_partitioned_topic.dart';
+import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_tenant.dart';
+import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,8 +40,14 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
-        '/bookkeeper': (context) => BkPage(),
-        '/pulsar': (context) => PulsarPage(),
+        '/bookkeeper': (context) => ChangeNotifierProvider(
+              create: (context) => BkInstanceListViewModel(),
+              child: BkPage(),
+            ),
+        '/pulsar': (context) => ChangeNotifierProvider(
+              create: (context) => PulsarInstanceListViewModel(),
+              child: PulsarPage(),
+            ),
       },
       onGenerateRoute: (settings) {
         if (settings.name == PageRouteConst.RouteInstance) {
