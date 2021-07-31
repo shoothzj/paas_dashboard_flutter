@@ -35,11 +35,8 @@ class SubscriptionPageContext {
 
 class SubscriptionResp {
   final String subscriptionName;
+  final int backlog;
+  final double rateOut;
 
-  SubscriptionResp(this.subscriptionName);
-
-  factory SubscriptionResp.fromJson(String name) {
-    var split = name.split("/");
-    return SubscriptionResp(split[split.length - 1]);
-  }
+  SubscriptionResp(this.subscriptionName, this.backlog, this.rateOut);
 }

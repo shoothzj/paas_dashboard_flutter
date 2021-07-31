@@ -43,29 +43,35 @@ class PulsarPartitionedTopicScreenState
                   showCheckboxColumn: false,
                   columns: [
                     DataColumn(label: Text('Subscription Name')),
-                    DataColumn(label: Text('Delete Subscription')),
-                    DataColumn(label: Text('Stats')),
+                    DataColumn(label: Text('MsgBacklog')),
+                    DataColumn(label: Text('MsgRateOut')),
+                    DataColumn(label: Text('Clear Backlog')),
                   ],
                   rows: data
                       .map((data) => DataRow(cells: [
                             DataCell(
                               Text(data.subscriptionName),
                             ),
+                            DataCell(
+                              Text(data.backlog.toString()),
+                            ),
+                            DataCell(
+                              Text(data.rateOut.toString()),
+                            ),
                             DataCell(TextButton(
                               child: Text('clear-backlog'),
                               onPressed: () {
-                                PulsarTopicAPi.deleteSubscription(
+                                PulsarTopicAPi.clearBacklog(
                                     topicPageContext.host,
                                     topicPageContext.port,
                                     topicPageContext.tenantName,
                                     topicPageContext.namespaceName,
                                     topicPageContext.topicName,
                                     data.subscriptionName);
+                                setState(() {
+                                  loadData();
+                                });
                               },
-                            )),
-                            DataCell(TextButton(
-                              child: Text('backlog'),
-                              onPressed: () {},
                             )),
                           ]))
                       .toList()),

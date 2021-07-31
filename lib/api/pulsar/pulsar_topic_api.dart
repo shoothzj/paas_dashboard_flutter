@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_stat_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_subscription.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 
@@ -55,21 +56,25 @@ class PulsarTopicAPi {
 
   static Future<List<SubscriptionResp>> getSubscription(String host, int port,
       String tenant, String namespace, String topic) async {
-    var url =
-        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/subscriptions';
-    final response = await http.get(Uri.parse(url));
-    if (HttpUtil.abnormal(response.statusCode)) {
-      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception(
-          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+    String data = "";
+    await PulsarStatAPi.partitionedTopicStats(
+            host, port, tenant, namespace, topic)
+        .then((value) => {data = value});
+    List<SubscriptionResp> respList = new List.empty(growable: true);
+    Map statsMap = json.decode(data) as Map;
+    if (statsMap.containsKey("subscriptions")) {
+      Map subscriptionsMap = statsMap["subscriptions"] as Map<String,dynamic>;
+      subscriptionsMap.forEach((key, value) {
+        double rateOut = value["msgRateOut"];
+        int backlog = value["msgBacklog"];
+        SubscriptionResp subscriptionDetail = new SubscriptionResp(key, backlog, rateOut);
+        respList.add(subscriptionDetail);
+      });
     }
-    List jsonResponse = json.decode(response.body) as List;
-    return jsonResponse
-        .map((name) => new SubscriptionResp.fromJson(name))
-        .toList();
+    return respList;
   }
 
-  static Future<String> deleteSubscription(String host, int port, String tenant,
+  static Future<String> clearBacklog(String host, int port, String tenant,
       String namespace, String topic, String subscription) async {
     var url =
         'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/subscription/$subscription/skip_all';
@@ -80,5 +85,27 @@ class PulsarTopicAPi {
           'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     return response.body;
+  }
+
+  static Future<String> getSubscriptionBacklog(
+      String host,
+      int port,
+      String tenant,
+      String namespace,
+      String topic,
+      String subscription) async {
+    String data = PulsarStatAPi.partitionedTopicStats(
+        host, port, tenant, namespace, topic) as String;
+
+    Map statsMap = json.decode(data) as Map;
+    if (statsMap.containsKey("subscriptions")) {
+      Map subscriptionsMap = statsMap["subscriptions"] as Map;
+
+      if (subscriptionsMap.containsKey(subscription)) {
+        Map subscriptionMap = statsMap[subscription] as Map;
+        return subscriptionMap["msgBacklog"];
+      }
+    }
+    return "";
   }
 }
