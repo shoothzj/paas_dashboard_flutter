@@ -13,15 +13,15 @@ class TopicPageContext {
   TopicPageContext(this.namespacePageContext, this.topicModule);
 
   String get host {
-    return namespacePageContext.tenantPageContext.host;
+    return namespacePageContext.host;
   }
 
   int get port {
-    return namespacePageContext.tenantPageContext.port;
+    return namespacePageContext.port;
   }
 
   String get tenantName {
-    return namespacePageContext.tenantPageContext.tenantModule.tenantName;
+    return namespacePageContext.tenantName;
   }
 
   String get namespaceName {

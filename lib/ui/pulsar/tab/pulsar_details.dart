@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
@@ -76,12 +75,9 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
               rows: vm.tenants
                   .map((data) => DataRow(
                           onSelectChanged: (bool? selected) {
-                            String host = vm.host;
-                            int port = vm.port;
                             Navigator.pushNamed(
                                 context, PageRouteConst.PulsarTenant,
-                                arguments: new TenantPageContext(host, port,
-                                    new PulsarTenantModule(data.tenantName)));
+                                arguments: data.deepCopy());
                           },
                           cells: [
                             DataCell(

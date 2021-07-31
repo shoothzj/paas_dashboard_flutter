@@ -1,4 +1,4 @@
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
 
 class PulsarNamespaceModule {
   final String namespaceName;
@@ -7,21 +7,21 @@ class PulsarNamespaceModule {
 }
 
 class NamespacePageContext {
-  final TenantPageContext tenantPageContext;
+  final PulsarNamespaceViewModel pulsarNamespaceViewModel;
   final PulsarNamespaceModule namespaceModule;
 
-  NamespacePageContext(this.tenantPageContext, this.namespaceModule);
+  NamespacePageContext(this.pulsarNamespaceViewModel, this.namespaceModule);
 
   String get host {
-    return tenantPageContext.host;
+    return pulsarNamespaceViewModel.host;
   }
 
   int get port {
-    return tenantPageContext.port;
+    return pulsarNamespaceViewModel.port;
   }
 
   String get tenantName {
-    return tenantPageContext.tenantModule.tenantName;
+    return pulsarNamespaceViewModel.tenantName;
   }
 
   String get namespaceName {
@@ -33,6 +33,10 @@ class NamespaceResp {
   final String namespaceName;
 
   NamespaceResp(this.namespaceName);
+
+  NamespaceResp deepCopy() {
+    return new NamespaceResp(namespaceName);
+  }
 
   factory NamespaceResp.fromJson(String name) {
     var split = name.split("/");

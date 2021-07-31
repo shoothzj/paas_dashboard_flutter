@@ -1,25 +1,19 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/vm/base_load_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 
-class PulsarInstanceViewModel extends ChangeNotifier {
+class PulsarInstanceViewModel extends BaseLoadViewModel {
   final PulsarInstancePo pulsarInstancePo;
 
-  List<TenantResp> tenants = <TenantResp>[];
-
-  bool loading = true;
-
-  Exception? loadException;
-
-  Exception? opException;
+  List<PulsarTenantViewModel> tenants = <PulsarTenantViewModel>[];
 
   PulsarInstanceViewModel(this.pulsarInstancePo);
 
   PulsarInstanceViewModel deepCopy() {
-    return new PulsarInstanceViewModel(pulsarInstancePo);
+    return new PulsarInstanceViewModel(pulsarInstancePo.deepCopy());
   }
 
   int get id {
@@ -40,7 +34,10 @@ class PulsarInstanceViewModel extends ChangeNotifier {
 
   Future<void> fetchTenants() async {
     try {
-      this.tenants = await PulsarTenantAPi.getTenants(host, port);
+      final results = await PulsarTenantAPi.getTenants(host, port);
+      this.tenants = results
+          .map((e) => PulsarTenantViewModel(pulsarInstancePo, e))
+          .toList();
       loadException = null;
       loading = false;
     } on Exception catch (e) {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_partitioned_topic.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 import 'package:provider/provider.dart';
 
 class RouteGen {
@@ -14,17 +14,17 @@ class RouteGen {
     // deep copy view model
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
-              create: (context) => viewModel.deepCopy(),
+              create: (context) => viewModel,
               child: PulsarInstanceScreen(),
             ));
   }
 
-  static Route pulsarTenant(TenantPageContext args) {
+  static Route pulsarTenant(PulsarTenantViewModel viewModel) {
     return MaterialPageRoute(
-      builder: (context) {
-        return PulsarTenantScreen(args);
-      },
-    );
+        builder: (context) => ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: PulsarTenantScreen(),
+            ));
   }
 
   static Route pulsarNamespace(NamespacePageContext args) {

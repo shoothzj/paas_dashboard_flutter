@@ -37,7 +37,7 @@ class _PulsarPageState extends State<PulsarPage> {
                     onSelectChanged: (bool? selected) {
                       Navigator.pushNamed(
                           context, PageRouteConst.PulsarInstance,
-                          arguments: itemRow);
+                          arguments: itemRow.deepCopy());
                     },
                     cells: [
                       DataCell(Text(itemRow.id.toString())),
@@ -57,9 +57,7 @@ class _PulsarPageState extends State<PulsarPage> {
     var formButton = createInstanceButton(context);
     var refreshButton = TextButton(
         onPressed: () {
-          setState(() {
-            vm.fetchPulsarInstances();
-          });
+          vm.fetchPulsarInstances();
         },
         child: Text('Refresh'));
     var body = ListView(

@@ -1,45 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_namespace_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
+import 'package:provider/provider.dart';
 
 class PulsarTenantScreen extends StatefulWidget {
-  final TenantPageContext tenantPageContext;
-
-  PulsarTenantScreen(this.tenantPageContext);
+  PulsarTenantScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTenantScreenState(this.tenantPageContext);
+    return new PulsarTenantScreenState();
   }
 }
 
 class PulsarTenantScreenState extends State<PulsarTenantScreen> {
-  final TenantPageContext tenantPageContext;
-
-  late Future<List<NamespaceResp>> _func;
-
-  PulsarTenantScreenState(this.tenantPageContext);
-
   @override
   void initState() {
-    loadData();
     super.initState();
+    final vm = Provider.of<PulsarTenantViewModel>(context, listen: false);
+    vm.fetchNamespaces();
   }
 
   @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<PulsarTenantViewModel>(context);
+    if (vm.loading) {
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        SpinnerUtil.create();
+      });
+    }
+    if (vm.loadException != null) {
+      Exception ex = vm.loadException!;
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        AlertUtil.exceptionDialog(ex, context);
+      });
+    }
+    if (vm.opException != null) {
+      Exception ex = vm.opException!;
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        AlertUtil.exceptionDialog(ex, context);
+      });
+    }
     var formButton = createNamespace(context);
     var refreshButton = TextButton(
         onPressed: () {
-          setState(() {
-            loadData();
-          });
+          vm.fetchNamespaces();
         },
         child: Text('Refresh'));
     var listView = ListView(
@@ -56,52 +65,34 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
           'Namespaces',
           style: TextStyle(fontSize: 22),
         ),
-        FutureBuilder(
-            future: _func,
-            builder: (ctx, snapshot) {
-              if (snapshot.hasData) {
-                List<NamespaceResp> data = snapshot.data as List<NamespaceResp>;
-                return SingleChildScrollView(
-                  child: DataTable(
-                      showCheckboxColumn: false,
-                      columns: [
-                        DataColumn(label: Text('Namespace Name')),
-                        DataColumn(label: Text('Delete namespace')),
-                      ],
-                      rows: data
-                          .map((data) => DataRow(
-                                  onSelectChanged: (bool? selected) {
-                                    Navigator.pushNamed(
-                                        context, PageRouteConst.PulsarNamespace,
-                                        arguments: new NamespacePageContext(
-                                            tenantPageContext,
-                                            new PulsarNamespaceModule(
-                                                data.namespaceName)));
-                                  },
-                                  cells: [
-                                    DataCell(
-                                      Text(data.namespaceName),
-                                    ),
-                                    DataCell(TextButton(
-                                      child: Text('Delete'),
-                                      onPressed: () {
-                                        PulsarNamespaceAPi.deleteNamespace(
-                                            tenantPageContext.host,
-                                            tenantPageContext.port,
-                                            tenantPageContext.tenantName,
-                                            data.namespaceName);
-                                        loadData();
-                                      },
-                                    )),
-                                  ]))
-                          .toList()),
-                );
-              } else if (snapshot.hasError) {
-                return AlertUtil.create(snapshot.error, context);
-              }
-              // By default, show a loading spinner.
-              return SpinnerUtil.create();
-            })
+        SingleChildScrollView(
+          child: DataTable(
+              showCheckboxColumn: false,
+              columns: [
+                DataColumn(label: Text('Namespace Name')),
+                DataColumn(label: Text('Delete namespace')),
+              ],
+              rows: vm.namespaces
+                  .map((data) => DataRow(
+                          onSelectChanged: (bool? selected) {
+                            Navigator.pushNamed(
+                                context, PageRouteConst.PulsarNamespace,
+                                arguments: new NamespacePageContext(data,
+                                    new PulsarNamespaceModule(data.namespace)));
+                          },
+                          cells: [
+                            DataCell(
+                              Text(data.namespace),
+                            ),
+                            DataCell(TextButton(
+                              child: Text('Delete'),
+                              onPressed: () {
+                                vm.deleteNamespace(data.namespace);
+                              },
+                            )),
+                          ]))
+                  .toList()),
+        ),
       ],
     );
     return Scaffold(
@@ -112,22 +103,12 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
     );
   }
 
-  loadData() {
-    _func = PulsarNamespaceAPi.getNamespaces(tenantPageContext.host,
-        tenantPageContext.port, tenantPageContext.tenantName);
-  }
-
   ButtonStyleButton createNamespace(BuildContext context) {
     var list = [FormFieldDef('Namespace Name')];
     return FormUtil.createButton1("Pulsar Namespace", list, context,
         (namespace) async {
-      try {
-        await PulsarNamespaceAPi.createNamespace(tenantPageContext.host,
-            tenantPageContext.port, tenantPageContext.tenantName, namespace);
-        loadData();
-      } on Exception catch (e) {
-        AlertUtil.exceptionDialog(e, context);
-      }
+      final vm = Provider.of<PulsarTenantViewModel>(context, listen: false);
+      vm.createNamespace(namespace);
     });
   }
 }
