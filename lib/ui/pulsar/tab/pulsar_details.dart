@@ -16,11 +16,22 @@ class PulsarTenantsWidget extends StatefulWidget {
 }
 
 class PulsarTenantsState extends State<PulsarTenantsWidget> {
+  final searchTextController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     final vm = Provider.of<PulsarInstanceViewModel>(context, listen: false);
     vm.fetchTenants();
+    searchTextController.addListener(() {
+      vm.filter(searchTextController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    searchTextController.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,11 +57,15 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
     var formButton = createTenant(context, vm.host, vm.port);
     var refreshButton = TextButton(
         onPressed: () {
-          setState(() {
-            vm.fetchTenants();
-          });
+          vm.fetchTenants();
         },
         child: Text('Refresh'));
+    var searchBox = Container(
+      width: 300,
+      child: TextField(
+        controller: searchTextController,
+      ),
+    );
     var body = ListView(
       children: <Widget>[
         Container(
@@ -58,7 +73,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [formButton, refreshButton],
+            children: [formButton, refreshButton, searchBox],
           ),
         ),
         Text(
@@ -72,7 +87,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
                 DataColumn(label: Text('TenantName')),
                 DataColumn(label: Text('Delete tenant')),
               ],
-              rows: vm.tenants
+              rows: vm.displayList
                   .map((data) => DataRow(
                           onSelectChanged: (bool? selected) {
                             Navigator.pushNamed(

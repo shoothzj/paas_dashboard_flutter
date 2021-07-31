@@ -2,13 +2,12 @@ import 'dart:developer';
 
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
-import 'package:paas_dashboard_flutter/vm/base_load_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 
-class PulsarInstanceViewModel extends BaseLoadViewModel {
+class PulsarInstanceViewModel
+    extends BaseLoadListViewModel<PulsarTenantViewModel> {
   final PulsarInstancePo pulsarInstancePo;
-
-  List<PulsarTenantViewModel> tenants = <PulsarTenantViewModel>[];
 
   PulsarInstanceViewModel(this.pulsarInstancePo);
 
@@ -35,15 +34,31 @@ class PulsarInstanceViewModel extends BaseLoadViewModel {
   Future<void> fetchTenants() async {
     try {
       final results = await PulsarTenantAPi.getTenants(host, port);
-      this.tenants = results
+      this.fullList = results
           .map((e) => PulsarTenantViewModel(pulsarInstancePo, e))
           .toList();
+      this.displayList = this.fullList;
       loadException = null;
       loading = false;
     } on Exception catch (e) {
       log('request failed, $e');
       loadException = e;
       loading = false;
+    }
+    notifyListeners();
+  }
+
+  Future<void> filter(String str) async {
+    if (str == "") {
+      this.displayList = this.fullList;
+      notifyListeners();
+      return;
+    }
+    if (!loading && loadException == null) {
+      this.displayList = this
+          .fullList
+          .where((element) => element.tenantName.contains(str))
+          .toList();
     }
     notifyListeners();
   }

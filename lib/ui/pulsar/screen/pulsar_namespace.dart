@@ -17,11 +17,22 @@ class PulsarNamespaceScreen extends StatefulWidget {
 }
 
 class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
+  final searchTextController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     final vm = Provider.of<PulsarNamespaceViewModel>(context, listen: false);
     vm.fetchTopics();
+    searchTextController.addListener(() {
+      vm.filter(searchTextController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    searchTextController.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,7 +63,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
             DataColumn(label: Text('Delete Topic')),
             DataColumn(label: Text('Stats')),
           ],
-          rows: vm.topics
+          rows: vm.displayList
               .map((data) => DataRow(
                       onSelectChanged: (bool? selected) {
                         Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
@@ -84,6 +95,12 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
           vm.fetchTopics();
         },
         child: Text('Refresh'));
+    var searchBox = Container(
+      width: 300,
+      child: TextField(
+        controller: searchTextController,
+      ),
+    );
     var body = ListView(
       children: <Widget>[
         Container(
@@ -91,7 +108,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [formButton, refreshButton],
+            children: [formButton, refreshButton, searchBox],
           ),
         ),
         Text(
