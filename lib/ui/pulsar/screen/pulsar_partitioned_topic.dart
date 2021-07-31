@@ -1,94 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_subscription.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
+import 'package:provider/provider.dart';
 
 class PulsarPartitionedTopicScreen extends StatefulWidget {
-  final TopicPageContext topicPageContext;
-
-  PulsarPartitionedTopicScreen(this.topicPageContext);
+  PulsarPartitionedTopicScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarPartitionedTopicScreenState(this.topicPageContext);
+    return new PulsarPartitionedTopicScreenState();
   }
 }
 
 class PulsarPartitionedTopicScreenState
     extends State<PulsarPartitionedTopicScreen> {
-  final TopicPageContext topicPageContext;
-
-  PulsarPartitionedTopicScreenState(this.topicPageContext);
-
-  late Future<List<SubscriptionResp>> _func;
-
   @override
   void initState() {
-    loadData();
     super.initState();
+    final vm = Provider.of<PulsarTopicViewModel>(context, listen: false);
+    vm.fetchSubscriptions();
   }
 
   @override
   Widget build(BuildContext context) {
-    var topicsFuture = FutureBuilder(
-        future: _func,
-        builder: (ctx, snapshot) {
-          if (snapshot.hasData) {
-            List<SubscriptionResp> data =
-                snapshot.data as List<SubscriptionResp>;
-            return SingleChildScrollView(
-              child: DataTable(
-                  showCheckboxColumn: false,
-                  columns: [
-                    DataColumn(label: Text('Subscription Name')),
-                    DataColumn(label: Text('MsgBacklog')),
-                    DataColumn(label: Text('MsgRateOut')),
-                    DataColumn(label: Text('Clear Backlog')),
-                  ],
-                  rows: data
-                      .map((data) => DataRow(cells: [
-                            DataCell(
-                              Text(data.subscriptionName),
-                            ),
-                            DataCell(
-                              Text(data.backlog.toString()),
-                            ),
-                            DataCell(
-                              Text(data.rateOut.toString()),
-                            ),
-                            DataCell(TextButton(
-                              child: Text('clear-backlog'),
-                              onPressed: () {
-                                PulsarTopicAPi.clearBacklog(
-                                    topicPageContext.host,
-                                    topicPageContext.port,
-                                    topicPageContext.tenantName,
-                                    topicPageContext.namespaceName,
-                                    topicPageContext.topicName,
-                                    data.subscriptionName);
-                                setState(() {
-                                  loadData();
-                                });
-                              },
-                            )),
-                          ]))
-                      .toList()),
-            );
-          } else if (snapshot.hasError) {
-            return AlertUtil.create(snapshot.error, context);
-          }
-          // By default, show a loading spinner.
-          return SpinnerUtil.create();
-        });
+    final vm = Provider.of<PulsarTopicViewModel>(context);
+    if (vm.loading) {
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        SpinnerUtil.create();
+      });
+    }
+    if (vm.loadException != null) {
+      Exception ex = vm.loadException!;
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        AlertUtil.exceptionDialog(ex, context);
+      });
+    }
+    if (vm.opException != null) {
+      Exception ex = vm.opException!;
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        AlertUtil.exceptionDialog(ex, context);
+      });
+    }
+    var topicsFuture = SingleChildScrollView(
+      child: DataTable(
+          showCheckboxColumn: false,
+          columns: [
+            DataColumn(label: Text('Subscription Name')),
+            DataColumn(label: Text('MsgBacklog')),
+            DataColumn(label: Text('MsgRateOut')),
+            DataColumn(label: Text('Clear Backlog')),
+          ],
+          rows: vm.displayList
+              .map((data) => DataRow(cells: [
+                    DataCell(
+                      Text(data.subscriptionName),
+                    ),
+                    DataCell(
+                      Text(data.backlog.toString()),
+                    ),
+                    DataCell(
+                      Text(data.rateOut.toString()),
+                    ),
+                    DataCell(TextButton(
+                      child: Text('clear-backlog'),
+                      onPressed: () {
+                        vm.clearBacklog(data.subscriptionName);
+                      },
+                    )),
+                  ]))
+              .toList()),
+    );
     var refreshButton = TextButton(
         onPressed: () {
-          setState(() {
-            loadData();
-          });
+          vm.fetchSubscriptions();
         },
-        child: Text('Refresh'));
+        child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
         Container(
@@ -100,7 +88,7 @@ class PulsarPartitionedTopicScreenState
           ),
         ),
         Text(
-          'Partitioned Topics',
+          'Subscriptions',
           style: TextStyle(fontSize: 22),
         ),
         topicsFuture
@@ -113,14 +101,5 @@ class PulsarPartitionedTopicScreenState
       ),
       body: body,
     );
-  }
-
-  void loadData() {
-    _func = PulsarTopicAPi.getSubscription(
-        topicPageContext.host,
-        topicPageContext.port,
-        topicPageContext.tenantName,
-        topicPageContext.namespaceName,
-        topicPageContext.topicName);
   }
 }

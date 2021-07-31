@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appName": MessageLookupByLibrary.simpleMessage("Paas 仪表盘"),
+        "clearBacklog": MessageLookupByLibrary.simpleMessage("清理积压"),
         "refresh": MessageLookupByLibrary.simpleMessage("刷新")
       };
 }

@@ -69,6 +69,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Clear Backlog`
+  String get clearBacklog {
+    return Intl.message(
+      'Clear Backlog',
+      name: 'clearBacklog',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/route/route_gen.dart';
 import 'package:paas_dashboard_flutter/ui/bk/bk_page.dart';
@@ -13,6 +12,7 @@ import 'package:paas_dashboard_flutter/vm/general/settings_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
           return RouteGen.pulsarNamespace(args);
         }
         if (settings.name == PageRouteConst.PulsarTopic) {
-          final args = settings.arguments as TopicPageContext;
+          final args = settings.arguments as PulsarTopicViewModel;
           return RouteGen.pulsarPartitionedTopic(args);
         }
       },

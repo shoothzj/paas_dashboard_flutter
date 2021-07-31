@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
@@ -68,8 +67,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
               .map((data) => DataRow(
                       onSelectChanged: (bool? selected) {
                         Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
-                            arguments: new TopicPageContext(
-                                data, new PulsarTopicModule(data.topic)));
+                            arguments: data.deepCopy());
                       },
                       cells: [
                         DataCell(

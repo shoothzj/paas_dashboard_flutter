@@ -1,16 +1,16 @@
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_subscription.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
-import 'package:paas_dashboard_flutter/vm/base_load_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
 
-class PulsarTopicViewModel extends BaseLoadViewModel {
+class PulsarTopicViewModel extends BaseLoadListViewModel<SubscriptionResp> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
-
-  List<TopicResp> topics = <TopicResp>[];
 
   PulsarTopicViewModel(this.pulsarInstancePo, this.tenantResp,
       this.namespaceResp, this.topicResp);
@@ -46,5 +46,31 @@ class PulsarTopicViewModel extends BaseLoadViewModel {
 
   String get topic {
     return this.topicResp.topicName;
+  }
+
+  Future<void> fetchSubscriptions() async {
+    try {
+      final results = await PulsarTopicAPi.getSubscription(
+          host, port, tenantName, namespace, topic);
+      this.fullList = results;
+      this.displayList = this.fullList;
+      loadException = null;
+      loading = false;
+    } on Exception catch (e) {
+      loadException = e;
+      loading = false;
+    }
+    notifyListeners();
+  }
+
+  Future<void> clearBacklog(String subscriptionName) async {
+    try {
+      await PulsarTopicAPi.clearBacklog(
+          host, port, tenantName, namespace, topic, subscriptionName);
+      await fetchSubscriptions();
+    } on Exception catch (e) {
+      opException = e;
+      notifyListeners();
+    }
   }
 }
