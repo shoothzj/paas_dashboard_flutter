@@ -55,31 +55,18 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
         AlertUtil.exceptionDialog(ex, context);
       });
     }
-    var topicsFuture = SingleChildScrollView(
-      child: DataTable(
+    vm.wrapCallback((data) {
+      Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
+          arguments: data.deepCopy());
+    });
+    var topicsTable = SingleChildScrollView(
+      child: PaginatedDataTable(
           showCheckboxColumn: false,
           columns: [
             DataColumn(label: Text('Topic Name')),
             DataColumn(label: Text('Delete Topic')),
           ],
-          rows: vm.displayList
-              .map((data) => DataRow(
-                      onSelectChanged: (bool? selected) {
-                        Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
-                            arguments: data.deepCopy());
-                      },
-                      cells: [
-                        DataCell(
-                          Text(data.topic),
-                        ),
-                        DataCell(TextButton(
-                          child: Text('Delete'),
-                          onPressed: () {
-                            vm.deleteTopic(data.topic);
-                          },
-                        )),
-                      ]))
-              .toList()),
+          source: vm),
     );
     var formButton = createPartitionTopicButton(context);
     var refreshButton = TextButton(
@@ -107,12 +94,12 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
           'Partitioned Topics',
           style: TextStyle(fontSize: 22),
         ),
-        topicsFuture
+        topicsTable
       ],
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pulsar Namespace'),
+        title: Text('Pulsar Tenant ${vm.tenant} Namespace ${vm.namespace}'),
       ),
       body: body,
     );

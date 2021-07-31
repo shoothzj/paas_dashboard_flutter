@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
@@ -56,6 +55,10 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
         AlertUtil.exceptionDialog(ex, context);
       });
     }
+    vm.wrapCallback((data) {
+      Navigator.pushNamed(context, PageRouteConst.PulsarNamespace,
+          arguments: data.deepCopy());
+    });
     var formButton = createNamespace(context);
     var refreshButton = TextButton(
         onPressed: () {
@@ -83,37 +86,19 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
           style: TextStyle(fontSize: 22),
         ),
         SingleChildScrollView(
-          child: DataTable(
+          child: PaginatedDataTable(
               showCheckboxColumn: false,
               columns: [
                 DataColumn(label: Text('Namespace Name')),
                 DataColumn(label: Text('Delete namespace')),
               ],
-              rows: vm.displayList
-                  .map((data) => DataRow(
-                          onSelectChanged: (bool? selected) {
-                            Navigator.pushNamed(
-                                context, PageRouteConst.PulsarNamespace,
-                                arguments: data.deepCopy());
-                          },
-                          cells: [
-                            DataCell(
-                              Text(data.namespace),
-                            ),
-                            DataCell(TextButton(
-                              child: Text('Delete'),
-                              onPressed: () {
-                                vm.deleteNamespace(data.namespace);
-                              },
-                            )),
-                          ]))
-                  .toList()),
+              source: vm),
         ),
       ],
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(PulsarConst.ScreenTitleTenant),
+        title: Text('Pulsar Tenant ${vm.tenant}'),
       ),
       body: listView,
     );

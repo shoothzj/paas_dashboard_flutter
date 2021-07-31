@@ -1,11 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/material/data_table.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_namespace_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
-import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
 
 class PulsarTenantViewModel
-    extends BaseLoadListViewModel<PulsarNamespaceViewModel> {
+    extends BaseLoadListPageViewModel<PulsarNamespaceViewModel> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
 
@@ -37,6 +39,28 @@ class PulsarTenantViewModel
 
   String get tenant {
     return this.tenantResp.tenant;
+  }
+
+  @override
+  DataRow? getRow(int index) {
+    var item = this.displayList[index];
+    return DataRow(
+        onSelectChanged: (bool? selected) {
+          if (callback != null) {
+            callback!.call(item);
+          }
+        },
+        cells: [
+          DataCell(
+            Text(item.namespace),
+          ),
+          DataCell(TextButton(
+            child: Text('Delete'),
+            onPressed: () {
+              deleteNamespace(item.namespace);
+            },
+          )),
+        ]);
   }
 
   Future<void> fetchNamespaces() async {

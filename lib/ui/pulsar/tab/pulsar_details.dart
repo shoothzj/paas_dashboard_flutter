@@ -55,6 +55,10 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
         AlertUtil.exceptionDialog(ex, context);
       });
     }
+    vm.wrapCallback((data) {
+      Navigator.pushNamed(context, PageRouteConst.PulsarTenant,
+          arguments: data.deepCopy());
+    });
     var formButton = createTenant(context, vm.host, vm.port);
     var refreshButton = TextButton(
         onPressed: () {
@@ -82,31 +86,13 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
           style: TextStyle(fontSize: 22),
         ),
         SingleChildScrollView(
-          child: DataTable(
+          child: PaginatedDataTable(
               showCheckboxColumn: false,
               columns: [
                 DataColumn(label: Text('TenantName')),
                 DataColumn(label: Text('Delete tenant')),
               ],
-              rows: vm.displayList
-                  .map((data) => DataRow(
-                          onSelectChanged: (bool? selected) {
-                            Navigator.pushNamed(
-                                context, PageRouteConst.PulsarTenant,
-                                arguments: data.deepCopy());
-                          },
-                          cells: [
-                            DataCell(
-                              Text(data.tenant),
-                            ),
-                            DataCell(TextButton(
-                              child: Text('Delete'),
-                              onPressed: () {
-                                vm.deleteTenants(data.tenant);
-                              },
-                            )),
-                          ]))
-                  .toList()),
+              source: vm),
         )
       ],
     );

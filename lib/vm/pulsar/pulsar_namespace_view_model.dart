@@ -1,12 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/material/data_table.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
-import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
 
 class PulsarNamespaceViewModel
-    extends BaseLoadListViewModel<PulsarTopicViewModel> {
+    extends BaseLoadListPageViewModel<PulsarTopicViewModel> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
@@ -41,6 +43,28 @@ class PulsarNamespaceViewModel
 
   String get namespace {
     return this.namespaceResp.namespace;
+  }
+
+  @override
+  DataRow? getRow(int index) {
+    var item = this.displayList[index];
+    return DataRow(
+        onSelectChanged: (bool? selected) {
+          if (callback != null) {
+            callback!.call(item);
+          }
+        },
+        cells: [
+          DataCell(
+            Text(item.topic),
+          ),
+          DataCell(TextButton(
+            child: Text('Delete'),
+            onPressed: () {
+              deleteTopic(item.topic);
+            },
+          )),
+        ]);
   }
 
   Future<void> fetchTopics() async {

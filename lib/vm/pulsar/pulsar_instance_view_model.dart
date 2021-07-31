@@ -1,12 +1,14 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/src/material/data_table.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
-import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 
 class PulsarInstanceViewModel
-    extends BaseLoadListViewModel<PulsarTenantViewModel> {
+    extends BaseLoadListPageViewModel<PulsarTenantViewModel> {
   final PulsarInstancePo pulsarInstancePo;
 
   PulsarInstanceViewModel(this.pulsarInstancePo);
@@ -29,6 +31,28 @@ class PulsarInstanceViewModel
 
   int get port {
     return this.pulsarInstancePo.port;
+  }
+
+  @override
+  DataRow? getRow(int index) {
+    var item = this.displayList[index];
+    return DataRow(
+        onSelectChanged: (bool? selected) {
+          if (callback != null) {
+            callback!.call(item);
+          }
+        },
+        cells: [
+          DataCell(
+            Text(item.tenant),
+          ),
+          DataCell(TextButton(
+            child: Text('Delete'),
+            onPressed: () {
+              deleteTenants(item.tenant);
+            },
+          )),
+        ]);
   }
 
   Future<void> fetchTenants() async {
