@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
@@ -18,23 +17,38 @@ class PulsarTenantsWidget extends StatefulWidget {
 }
 
 class PulsarTenantsState extends State<PulsarTenantsWidget> {
-  late Future<List<TenantResp>> _func;
-
   @override
   void initState() {
     super.initState();
     final vm = Provider.of<PulsarInstanceViewModel>(context, listen: false);
-    loadData(vm.host, vm.port);
+    vm.fetchTenants();
   }
 
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarInstanceViewModel>(context);
+    if (vm.loading) {
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        SpinnerUtil.create();
+      });
+    }
+    if (vm.loadException != null) {
+      Exception ex = vm.loadException!;
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        AlertUtil.exceptionDialog(ex, context);
+      });
+    }
+    if (vm.opException != null) {
+      Exception ex = vm.opException!;
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        AlertUtil.exceptionDialog(ex, context);
+      });
+    }
     var formButton = createTenant(context, vm.host, vm.port);
     var refreshButton = TextButton(
         onPressed: () {
           setState(() {
-            loadData(vm.host, vm.port);
+            vm.fetchTenants();
           });
         },
         child: Text('Refresh'));
@@ -52,69 +66,47 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
           'Tenants',
           style: TextStyle(fontSize: 22),
         ),
-        FutureBuilder(
-            future: _func,
-            builder: (ctx, snapshot) {
-              if (snapshot.hasData) {
-                List<TenantResp> data = snapshot.data as List<TenantResp>;
-                return SingleChildScrollView(
-                  child: DataTable(
-                      showCheckboxColumn: false,
-                      columns: [
-                        DataColumn(label: Text('TenantName')),
-                        DataColumn(label: Text('Delete tenant')),
-                      ],
-                      rows: data
-                          .map((data) => DataRow(
-                                  onSelectChanged: (bool? selected) {
-                                    Navigator.pushNamed(
-                                        context, PageRouteConst.PulsarTenant,
-                                        arguments: new TenantPageContext(
-                                            vm.host,
-                                            vm.port,
-                                            new PulsarTenantModule(
-                                                data.tenantName)));
-                                  },
-                                  cells: [
-                                    DataCell(
-                                      Text(data.tenantName),
-                                    ),
-                                    DataCell(TextButton(
-                                      child: Text('Delete'),
-                                      onPressed: () {
-                                        PulsarTenantAPi.deleteTenant(
-                                            vm.host, vm.port, data.tenantName);
-                                        loadData(vm.host, vm.port);
-                                      },
-                                    )),
-                                  ]))
-                          .toList()),
-                );
-              } else if (snapshot.hasError) {
-                return AlertUtil.create(snapshot.error, context);
-              }
-              // By default, show a loading spinner.
-              return SpinnerUtil.create();
-            })
+        SingleChildScrollView(
+          child: DataTable(
+              showCheckboxColumn: false,
+              columns: [
+                DataColumn(label: Text('TenantName')),
+                DataColumn(label: Text('Delete tenant')),
+              ],
+              rows: vm.tenants
+                  .map((data) => DataRow(
+                          onSelectChanged: (bool? selected) {
+                            String host = vm.host;
+                            int port = vm.port;
+                            Navigator.pushNamed(
+                                context, PageRouteConst.PulsarTenant,
+                                arguments: new TenantPageContext(host, port,
+                                    new PulsarTenantModule(data.tenantName)));
+                          },
+                          cells: [
+                            DataCell(
+                              Text(data.tenantName),
+                            ),
+                            DataCell(TextButton(
+                              child: Text('Delete'),
+                              onPressed: () {
+                                vm.deleteTenants(data.tenantName);
+                              },
+                            )),
+                          ]))
+                  .toList()),
+        )
       ],
     );
     return body;
   }
 
-  loadData(String host, int port) {
-    _func = PulsarTenantAPi.getTenants(host, port);
-  }
-
   ButtonStyleButton createTenant(BuildContext context, String host, int port) {
+    final vm = Provider.of<PulsarInstanceViewModel>(context, listen: false);
     var list = [FormFieldDef('Tenant Name')];
     return FormUtil.createButton1("Pulsar Tenant", list, context,
         (tenantName) async {
-      try {
-        await PulsarTenantAPi.createTenant(host, port, tenantName);
-        loadData(host, port);
-      } on Exception catch (e) {
-        AlertUtil.exceptionDialog(e, context);
-      }
+      vm.createTenant(tenantName);
     });
   }
 }

@@ -11,9 +11,10 @@ import 'package:provider/provider.dart';
 
 class RouteGen {
   static Route pulsarInstance(PulsarInstanceViewModel viewModel) {
+    // deep copy view model
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
-              create: (context) => viewModel,
+              create: (context) => viewModel.deepCopy(),
               child: PulsarInstanceScreen(),
             ));
   }

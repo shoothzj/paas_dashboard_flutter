@@ -37,9 +37,18 @@ class _PulsarInstanceState extends State<PulsarInstanceScreen> {
         ),
         body: TabBarView(
           children: [
-            new PulsarBasicWidget(),
-            new PulsarTenantsWidget(),
-            new PulsarMessageQueryWidget(),
+            ChangeNotifierProvider(
+              create: (context) => vm.deepCopy(),
+              child: PulsarBasicWidget(),
+            ).build(context),
+            ChangeNotifierProvider(
+              create: (context) => vm.deepCopy(),
+              child: PulsarTenantsWidget(),
+            ).build(context),
+            ChangeNotifierProvider(
+              create: (context) => vm.deepCopy(),
+              child: PulsarMessageQueryWidget(),
+            ).build(context),
           ],
         ),
       ),

@@ -6,6 +6,10 @@ class PulsarInstancePo extends HttpEndpoint {
   PulsarInstancePo(this.id, String name, String host, int port)
       : super(name, host, port);
 
+  PulsarInstancePo deepCopy() {
+    return new PulsarInstancePo(id, name, host, port);
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

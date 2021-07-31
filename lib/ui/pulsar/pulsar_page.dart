@@ -22,7 +22,7 @@ class _PulsarPageState extends State<PulsarPage> {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarInstanceListViewModel>(context);
-    var instancesFuture = SingleChildScrollView(
+    var tableView = SingleChildScrollView(
       child: DataTable(
         showCheckboxColumn: false,
         columns: [
@@ -75,7 +75,7 @@ class _PulsarPageState extends State<PulsarPage> {
         Center(
           child: Text('Pulsar Instance List'),
         ),
-        instancesFuture
+        tableView
       ],
     );
     return Scaffold(
