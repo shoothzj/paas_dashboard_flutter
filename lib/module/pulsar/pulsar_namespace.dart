@@ -1,10 +1,10 @@
 class NamespaceResp {
-  final String namespaceName;
+  final String namespace;
 
-  NamespaceResp(this.namespaceName);
+  NamespaceResp(this.namespace);
 
   NamespaceResp deepCopy() {
-    return new NamespaceResp(namespaceName);
+    return new NamespaceResp(namespace);
   }
 
   factory NamespaceResp.fromJson(String name) {

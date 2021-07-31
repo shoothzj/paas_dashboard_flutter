@@ -20,11 +20,11 @@ class TopicPageContext {
     return pulsarTopicViewModel.port;
   }
 
-  String get tenantName {
-    return pulsarTopicViewModel.tenantName;
+  String get tenant {
+    return pulsarTopicViewModel.tenant;
   }
 
-  String get namespaceName {
+  String get namespace {
     return pulsarTopicViewModel.namespace;
   }
 

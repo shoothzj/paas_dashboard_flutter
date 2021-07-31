@@ -97,12 +97,12 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
                           },
                           cells: [
                             DataCell(
-                              Text(data.tenantName),
+                              Text(data.tenant),
                             ),
                             DataCell(TextButton(
                               child: Text('Delete'),
                               onPressed: () {
-                                vm.deleteTenants(data.tenantName);
+                                vm.deleteTenants(data.tenant);
                               },
                             )),
                           ]))
@@ -117,8 +117,8 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
     final vm = Provider.of<PulsarInstanceViewModel>(context, listen: false);
     var list = [FormFieldDef('Tenant Name')];
     return FormUtil.createButton1("Pulsar Tenant", list, context,
-        (tenantName) async {
-      vm.createTenant(tenantName);
+        (tenant) async {
+      vm.createTenant(tenant);
     });
   }
 }

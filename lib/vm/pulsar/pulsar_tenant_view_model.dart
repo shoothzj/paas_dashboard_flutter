@@ -35,14 +35,14 @@ class PulsarTenantViewModel
     return this.pulsarInstancePo.port;
   }
 
-  String get tenantName {
-    return this.tenantResp.tenantName;
+  String get tenant {
+    return this.tenantResp.tenant;
   }
 
   Future<void> fetchNamespaces() async {
     try {
       final results =
-          await PulsarNamespaceAPi.getNamespaces(host, port, tenantName);
+          await PulsarNamespaceAPi.getNamespaces(host, port, tenant);
       this.fullList = results
           .map((e) => PulsarNamespaceViewModel(pulsarInstancePo, tenantResp, e))
           .toList();
@@ -73,8 +73,7 @@ class PulsarTenantViewModel
 
   Future<void> createNamespace(String namespace) async {
     try {
-      await PulsarNamespaceAPi.createNamespace(
-          host, port, tenantName, namespace);
+      await PulsarNamespaceAPi.createNamespace(host, port, tenant, namespace);
       await fetchNamespaces();
     } on Exception catch (e) {
       opException = e;
@@ -84,8 +83,7 @@ class PulsarTenantViewModel
 
   Future<void> deleteNamespace(String namespace) async {
     try {
-      await PulsarNamespaceAPi.deleteNamespace(
-          host, port, tenantName, namespace);
+      await PulsarNamespaceAPi.deleteNamespace(host, port, tenant, namespace);
       await fetchNamespaces();
     } on Exception catch (e) {
       opException = e;

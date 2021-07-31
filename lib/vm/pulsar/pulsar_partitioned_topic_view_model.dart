@@ -36,12 +36,12 @@ class PulsarTopicViewModel extends BaseLoadListViewModel<SubscriptionResp> {
     return this.pulsarInstancePo.port;
   }
 
-  String get tenantName {
-    return this.tenantResp.tenantName;
+  String get tenant {
+    return this.tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespaceName;
+    return this.namespaceResp.namespace;
   }
 
   String get topic {
@@ -51,7 +51,7 @@ class PulsarTopicViewModel extends BaseLoadListViewModel<SubscriptionResp> {
   Future<void> fetchSubscriptions() async {
     try {
       final results = await PulsarTopicAPi.getSubscription(
-          host, port, tenantName, namespace, topic);
+          host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadException = null;
@@ -66,7 +66,7 @@ class PulsarTopicViewModel extends BaseLoadListViewModel<SubscriptionResp> {
   Future<void> clearBacklog(String subscriptionName) async {
     try {
       await PulsarTopicAPi.clearBacklog(
-          host, port, tenantName, namespace, topic, subscriptionName);
+          host, port, tenant, namespace, topic, subscriptionName);
       await fetchSubscriptions();
     } on Exception catch (e) {
       opException = e;

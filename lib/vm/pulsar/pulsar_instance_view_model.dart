@@ -57,15 +57,15 @@ class PulsarInstanceViewModel
     if (!loading && loadException == null) {
       this.displayList = this
           .fullList
-          .where((element) => element.tenantName.contains(str))
+          .where((element) => element.tenant.contains(str))
           .toList();
     }
     notifyListeners();
   }
 
-  Future<void> createTenant(String tenantName) async {
+  Future<void> createTenant(String tenant) async {
     try {
-      await PulsarTenantAPi.createTenant(host, port, tenantName);
+      await PulsarTenantAPi.createTenant(host, port, tenant);
       await fetchTenants();
     } on Exception catch (e) {
       opException = e;
@@ -73,9 +73,9 @@ class PulsarInstanceViewModel
     }
   }
 
-  Future<void> deleteTenants(String tenantName) async {
+  Future<void> deleteTenants(String tenant) async {
     try {
-      await PulsarTenantAPi.deleteTenant(host, port, tenantName);
+      await PulsarTenantAPi.deleteTenant(host, port, tenant);
       await fetchTenants();
     } on Exception catch (e) {
       opException = e;

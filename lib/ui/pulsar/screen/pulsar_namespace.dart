@@ -61,7 +61,6 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
           columns: [
             DataColumn(label: Text('Topic Name')),
             DataColumn(label: Text('Delete Topic')),
-            DataColumn(label: Text('Stats')),
           ],
           rows: vm.displayList
               .map((data) => DataRow(
@@ -75,12 +74,6 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
                         ),
                         DataCell(TextButton(
                           child: Text('Delete'),
-                          onPressed: () {
-                            vm.deleteTopic(data.topic);
-                          },
-                        )),
-                        DataCell(TextButton(
-                          child: Text('Stats'),
                           onPressed: () {
                             vm.deleteTopic(data.topic);
                           },

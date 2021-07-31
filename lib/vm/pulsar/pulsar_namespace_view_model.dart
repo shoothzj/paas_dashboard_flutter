@@ -35,18 +35,18 @@ class PulsarNamespaceViewModel
     return this.pulsarInstancePo.port;
   }
 
-  String get tenantName {
-    return this.tenantResp.tenantName;
+  String get tenant {
+    return this.tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespaceName;
+    return this.namespaceResp.namespace;
   }
 
   Future<void> fetchTopics() async {
     try {
       final results =
-          await PulsarTopicAPi.getTopics(host, port, tenantName, namespace);
+          await PulsarTopicAPi.getTopics(host, port, tenant, namespace);
       this.fullList = results
           .map((e) => PulsarTopicViewModel(
               pulsarInstancePo, tenantResp, namespaceResp, e))
@@ -79,7 +79,7 @@ class PulsarNamespaceViewModel
   Future<void> createTopic(String topic, int partition) async {
     try {
       await PulsarTopicAPi.createPartitionTopic(
-          host, port, tenantName, namespace, topic, partition);
+          host, port, tenant, namespace, topic, partition);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;
@@ -90,7 +90,7 @@ class PulsarNamespaceViewModel
   Future<void> deleteTopic(String topic) async {
     try {
       await PulsarTopicAPi.deletePartitionTopic(
-          host, port, tenantName, namespace, topic);
+          host, port, tenant, namespace, topic);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;

@@ -1,10 +1,10 @@
 class TenantResp {
-  final String tenantName;
+  final String tenant;
 
-  TenantResp(this.tenantName);
+  TenantResp(this.tenant);
 
   TenantResp deepCopy() {
-    return new TenantResp(this.tenantName);
+    return new TenantResp(this.tenant);
   }
 
   factory TenantResp.fromJson(String name) {
