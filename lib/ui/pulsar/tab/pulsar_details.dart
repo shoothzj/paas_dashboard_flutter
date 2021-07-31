@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
@@ -59,7 +60,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
         onPressed: () {
           vm.fetchTenants();
         },
-        child: Text('Refresh'));
+        child: Text(S.of(context).refresh));
     var searchBox = Container(
       width: 300,
       child: TextField(

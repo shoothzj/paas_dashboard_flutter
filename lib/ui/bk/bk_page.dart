@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class _BkPageState extends State<BkPage> {
             vm.fetchBkInstances();
           });
         },
-        child: Text('Refresh'));
+        child: Text(S.of(context).refresh));
     var body = ListView(
       children: [
         Container(
