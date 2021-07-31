@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
@@ -77,8 +76,7 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
                           onSelectChanged: (bool? selected) {
                             Navigator.pushNamed(
                                 context, PageRouteConst.PulsarNamespace,
-                                arguments: new NamespacePageContext(data,
-                                    new PulsarNamespaceModule(data.namespace)));
+                                arguments: data.deepCopy());
                           },
                           cells: [
                             DataCell(

@@ -1,4 +1,4 @@
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
 
 class PulsarTopicModule {
   final String topicName;
@@ -7,25 +7,25 @@ class PulsarTopicModule {
 }
 
 class TopicPageContext {
-  final NamespacePageContext namespacePageContext;
+  final PulsarTopicViewModel pulsarTopicViewModel;
   final PulsarTopicModule topicModule;
 
-  TopicPageContext(this.namespacePageContext, this.topicModule);
+  TopicPageContext(this.pulsarTopicViewModel, this.topicModule);
 
   String get host {
-    return namespacePageContext.host;
+    return pulsarTopicViewModel.host;
   }
 
   int get port {
-    return namespacePageContext.port;
+    return pulsarTopicViewModel.port;
   }
 
   String get tenantName {
-    return namespacePageContext.tenantName;
+    return pulsarTopicViewModel.tenantName;
   }
 
   String get namespaceName {
-    return namespacePageContext.namespaceModule.namespaceName;
+    return pulsarTopicViewModel.namespace;
   }
 
   String get topicName {
@@ -37,6 +37,10 @@ class TopicResp {
   final String topicName;
 
   TopicResp(this.topicName);
+
+  TopicResp deepCopy() {
+    return new TopicResp(this.topicName);
+  }
 
   factory TopicResp.fromJson(String name) {
     var split = name.split("/");

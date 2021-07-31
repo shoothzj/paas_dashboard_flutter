@@ -1,102 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
+import 'package:provider/provider.dart';
 
 class PulsarNamespaceScreen extends StatefulWidget {
-  final NamespacePageContext namespacePageContext;
-
-  PulsarNamespaceScreen(this.namespacePageContext);
+  PulsarNamespaceScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarNamespaceScreenState(this.namespacePageContext);
+    return new PulsarNamespaceScreenState();
   }
 }
 
 class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
-  final NamespacePageContext namespacePageContext;
-
-  late Future<List<TopicResp>> _func;
-
-  PulsarNamespaceScreenState(this.namespacePageContext);
-
   @override
   void initState() {
-    loadData();
     super.initState();
+    final vm = Provider.of<PulsarNamespaceViewModel>(context, listen: false);
+    vm.fetchTopics();
   }
 
   @override
   Widget build(BuildContext context) {
-    var topicsFuture = FutureBuilder(
-        future: _func,
-        builder: (ctx, snapshot) {
-          if (snapshot.hasData) {
-            List<TopicResp> data = snapshot.data as List<TopicResp>;
-            return SingleChildScrollView(
-              child: DataTable(
-                  showCheckboxColumn: false,
-                  columns: [
-                    DataColumn(label: Text('Topic Name')),
-                    DataColumn(label: Text('Delete Topic')),
-                    DataColumn(label: Text('Stats')),
-                  ],
-                  rows: data
-                      .map((data) => DataRow(
-                              onSelectChanged: (bool? selected) {
-                                Navigator.pushNamed(
-                                    context, PageRouteConst.PulsarTopic,
-                                    arguments: new TopicPageContext(
-                                        namespacePageContext,
-                                        new PulsarTopicModule(data.topicName)));
-                              },
-                              cells: [
-                                DataCell(
-                                  Text(data.topicName),
-                                ),
-                                DataCell(TextButton(
-                                  child: Text('Delete'),
-                                  onPressed: () {
-                                    PulsarTopicAPi.deletePartitionTopic(
-                                        namespacePageContext.host,
-                                        namespacePageContext.port,
-                                        namespacePageContext.tenantName,
-                                        namespacePageContext.namespaceName,
-                                        data.topicName);
-                                    loadData();
-                                  },
-                                )),
-                                DataCell(TextButton(
-                                  child: Text('Stats'),
-                                  onPressed: () {
-                                    PulsarTopicAPi.deletePartitionTopic(
-                                        namespacePageContext.host,
-                                        namespacePageContext.port,
-                                        namespacePageContext.tenantName,
-                                        namespacePageContext.namespaceName,
-                                        data.topicName);
-                                  },
-                                )),
-                              ]))
-                      .toList()),
-            );
-          } else if (snapshot.hasError) {
-            return AlertUtil.create(snapshot.error, context);
-          }
-          // By default, show a loading spinner.
-          return SpinnerUtil.create();
-        });
+    final vm = Provider.of<PulsarNamespaceViewModel>(context);
+    if (vm.loading) {
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        SpinnerUtil.create();
+      });
+    }
+    if (vm.loadException != null) {
+      Exception ex = vm.loadException!;
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        AlertUtil.exceptionDialog(ex, context);
+      });
+    }
+    if (vm.opException != null) {
+      Exception ex = vm.opException!;
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+        AlertUtil.exceptionDialog(ex, context);
+      });
+    }
+    var topicsFuture = SingleChildScrollView(
+      child: DataTable(
+          showCheckboxColumn: false,
+          columns: [
+            DataColumn(label: Text('Topic Name')),
+            DataColumn(label: Text('Delete Topic')),
+            DataColumn(label: Text('Stats')),
+          ],
+          rows: vm.topics
+              .map((data) => DataRow(
+                      onSelectChanged: (bool? selected) {
+                        Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
+                            arguments: new TopicPageContext(
+                                data, new PulsarTopicModule(data.topic)));
+                      },
+                      cells: [
+                        DataCell(
+                          Text(data.topic),
+                        ),
+                        DataCell(TextButton(
+                          child: Text('Delete'),
+                          onPressed: () {
+                            vm.deleteTopic(data.topic);
+                          },
+                        )),
+                        DataCell(TextButton(
+                          child: Text('Stats'),
+                          onPressed: () {
+                            vm.deleteTopic(data.topic);
+                          },
+                        )),
+                      ]))
+              .toList()),
+    );
     var formButton = createPartitionTopicButton(context);
     var refreshButton = TextButton(
         onPressed: () {
-          setState(() {
-            loadData();
-          });
+          vm.fetchTopics();
         },
         child: Text('Refresh'));
     var body = ListView(
@@ -124,30 +109,12 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
     );
   }
 
-  loadData() {
-    _func = PulsarTopicAPi.getTopics(
-        namespacePageContext.host,
-        namespacePageContext.port,
-        namespacePageContext.tenantName,
-        namespacePageContext.namespaceName);
-  }
-
   ButtonStyleButton createPartitionTopicButton(BuildContext context) {
     var list = [FormFieldDef('Topic Name'), FormFieldDef('Partition Number')];
     return FormUtil.createButton2("Partitioned Topic", list, context,
         (topic, partition) async {
-      try {
-        await PulsarTopicAPi.createPartitionTopic(
-            namespacePageContext.host,
-            namespacePageContext.port,
-            namespacePageContext.tenantName,
-            namespacePageContext.namespaceName,
-            topic,
-            int.parse(partition));
-        loadData();
-      } on Exception catch (e) {
-        AlertUtil.exceptionDialog(e, context);
-      }
+      final vm = Provider.of<PulsarNamespaceViewModel>(context, listen: false);
+      vm.createTopic(topic, int.parse(partition));
     });
   }
 }

@@ -1,12 +1,16 @@
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
 
 class PulsarNamespaceViewModel extends BaseLoadViewModel {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
+
+  List<PulsarTopicViewModel> topics = <PulsarTopicViewModel>[];
 
   PulsarNamespaceViewModel(
       this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
@@ -38,5 +42,44 @@ class PulsarNamespaceViewModel extends BaseLoadViewModel {
 
   String get namespace {
     return this.namespaceResp.namespaceName;
+  }
+
+  Future<void> fetchTopics() async {
+    try {
+      final results =
+          await PulsarTopicAPi.getTopics(host, port, tenantName, namespace);
+      this.topics = results
+          .map((e) => PulsarTopicViewModel(
+              pulsarInstancePo, tenantResp, namespaceResp, e))
+          .toList();
+      loadException = null;
+      loading = false;
+    } on Exception catch (e) {
+      loadException = e;
+      loading = false;
+    }
+    notifyListeners();
+  }
+
+  Future<void> createTopic(String topic, int partition) async {
+    try {
+      await PulsarTopicAPi.createPartitionTopic(
+          host, port, tenantName, namespace, topic, partition);
+      await fetchTopics();
+    } on Exception catch (e) {
+      opException = e;
+      notifyListeners();
+    }
+  }
+
+  Future<void> deleteTopic(String topic) async {
+    try {
+      await PulsarTopicAPi.deletePartitionTopic(
+          host, port, tenantName, namespace, topic);
+      await fetchTopics();
+    } on Exception catch (e) {
+      opException = e;
+      notifyListeners();
+    }
   }
 }

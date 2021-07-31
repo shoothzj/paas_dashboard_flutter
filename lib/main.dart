@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/route/route_gen.dart';
@@ -9,6 +8,7 @@ import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           return RouteGen.pulsarTenant(args);
         }
         if (settings.name == PageRouteConst.PulsarNamespace) {
-          final args = settings.arguments as NamespacePageContext;
+          final args = settings.arguments as PulsarNamespaceViewModel;
           return RouteGen.pulsarNamespace(args);
         }
         if (settings.name == PageRouteConst.PulsarTopic) {
