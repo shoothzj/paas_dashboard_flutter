@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 
 class NavDrawer extends StatelessWidget {
   @override
@@ -22,6 +23,11 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             title: Text('About author'),
             onTap: () => {Navigator.of(context).pop()},
+          ),
+          ListTile(
+            title: Text('Settings'),
+            onTap: () =>
+                {Navigator.of(context).pushNamed(PageRouteConst.Settings)},
           ),
         ],
       ),

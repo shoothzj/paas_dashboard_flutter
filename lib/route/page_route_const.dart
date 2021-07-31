@@ -1,5 +1,6 @@
 class PageRouteConst {
   static const String Root = '/';
+  static const String Settings = '/settings';
   static const String Bookkeeper = '/bookkeeper';
   static const String Pulsar = '/pulsar';
   static const String PulsarInstance = '/pulsar/instance';

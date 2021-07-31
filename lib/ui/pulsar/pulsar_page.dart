@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
@@ -59,7 +60,7 @@ class _PulsarPageState extends State<PulsarPage> {
         onPressed: () {
           vm.fetchPulsarInstances();
         },
-        child: Text('Refresh'));
+        child: Text(S.of(context).refresh));
     var body = ListView(
       children: [
         Container(

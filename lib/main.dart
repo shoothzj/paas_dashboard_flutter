@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/route/route_gen.dart';
 import 'package:paas_dashboard_flutter/ui/bk/bk_page.dart';
+import 'package:paas_dashboard_flutter/ui/general/settings_screen.dart';
 import 'package:paas_dashboard_flutter/ui/home/home_page.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/general/settings_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
@@ -22,6 +26,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Paas Dashboard',
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -37,6 +48,10 @@ class MyApp extends StatelessWidget {
       initialRoute: PageRouteConst.Root,
       routes: {
         PageRouteConst.Root: (context) => HomePage(),
+        PageRouteConst.Settings: (context) => ChangeNotifierProvider(
+              create: (context) => SettingsViewModel(),
+              child: SettingsScreen(),
+            ),
         PageRouteConst.Bookkeeper: (context) => ChangeNotifierProvider(
               create: (context) => BkInstanceListViewModel(),
               child: BkPage(),
