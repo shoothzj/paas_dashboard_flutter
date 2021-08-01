@@ -6,22 +6,17 @@ import 'package:paas_dashboard_flutter/persistent/po/bk_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 
 class Persistent {
-  final PersistentApi persistentApi;
-
-  Persistent(this.persistentApi);
-
-  static Future<Persistent> getInstance() async {
-    if (!kIsWeb) {
-      PersistentDb aux = await PersistentDb.getInstance();
-      return new Persistent(aux);
-    } else {
-      return new Persistent(new PersistentMemory());
-    }
-  }
+  static PersistentApi? api;
 
   static Future<PersistentApi> getApi() async {
-    var instance = await getInstance();
-    return instance.persistentApi;
+    if (api == null) {
+      if (!kIsWeb) {
+        api = await PersistentDb.getInstance();
+      } else {
+        api = new PersistentMemory();
+      }
+    }
+    return api!;
   }
 
   static Future<void> savePulsar(String name, String host, int port) async {
