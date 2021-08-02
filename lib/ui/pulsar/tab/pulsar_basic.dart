@@ -15,21 +15,15 @@ class PulsarBasicWidget extends StatefulWidget {
 }
 
 class PulsarBasicScreenState extends State<PulsarBasicWidget> {
-  final searchTextController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
     final vm = Provider.of<PulsarClusterViewModel>(context, listen: false);
     vm.fetchPulsarCluster();
-    searchTextController.addListener(() {
-      vm.filter(searchTextController.text);
-    });
   }
 
   @override
   void dispose() {
-    searchTextController.dispose();
     super.dispose();
   }
 
@@ -48,16 +42,12 @@ class PulsarBasicScreenState extends State<PulsarBasicWidget> {
           showCheckboxColumn: false,
           columns: [
             DataColumn(label: Text(S.of(context).brokersName)),
-            DataColumn(label: Text(S.of(context).isLeader)),
             DataColumn(label: Text(S.of(context).versionName)),
           ],
           rows: vm.displayList
               .map((data) => DataRow(cells: [
                     DataCell(
                       Text(data.instance),
-                    ),
-                    DataCell(
-                      Text(data.isLeader),
                     ),
                     DataCell(
                       Text(data.version),
