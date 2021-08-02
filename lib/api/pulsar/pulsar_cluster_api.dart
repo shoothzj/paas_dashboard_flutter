@@ -17,9 +17,8 @@ class PulsarClusterAPi {
     }
     String version = versionResponse.body;
 
-    String tenantInfo = "";
-    await PulsarTenantAPi.getTenantInfo(host, port, "public")
-        .then((value) => tenantInfo = value);
+    String tenantInfo =
+        await PulsarTenantAPi.getTenantInfo(host, port, "public");
     String cluster =
         ((json.decode(tenantInfo) as Map)["allowedClusters"] as List)[0];
     url = 'http://$host:${port.toString()}/admin/v2/brokers/$cluster';
@@ -40,11 +39,8 @@ class PulsarClusterAPi {
     }
     String leader = json.decode(leaderBrokerResponse.body)["serviceUrl"];
 
-    List<ClusterResp> respList = new List.empty(growable: true);
-    brokers.forEach((element) {
-      respList.add(new ClusterResp(
-          element, leader.contains(element).toString(), version));
-    });
-    return respList;
+    return brokers
+        .map((e) => ClusterResp(e, leader.contains(e).toString(), version))
+        .toList();
   }
 }
