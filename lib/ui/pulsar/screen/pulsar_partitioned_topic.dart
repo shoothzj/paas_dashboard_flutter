@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
+import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
 import 'package:provider/provider.dart';
@@ -31,18 +32,8 @@ class PulsarPartitionedTopicScreenState
         SpinnerUtil.create();
       });
     }
-    if (vm.loadException != null) {
-      Exception ex = vm.loadException!;
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        AlertUtil.exceptionDialog(ex, context);
-      });
-    }
-    if (vm.opException != null) {
-      Exception ex = vm.opException!;
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        AlertUtil.exceptionDialog(ex, context);
-      });
-    }
+    ExceptionUtil.processLoadException(vm, context);
+    ExceptionUtil.processOpException(vm, context);
     var topicsFuture = SingleChildScrollView(
       child: DataTable(
           showCheckboxColumn: false,

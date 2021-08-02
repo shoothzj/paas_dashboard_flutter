@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
-import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
+import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
@@ -44,18 +44,8 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
         SpinnerUtil.create();
       });
     }
-    if (vm.loadException != null) {
-      Exception ex = vm.loadException!;
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        AlertUtil.exceptionDialog(ex, context);
-      });
-    }
-    if (vm.opException != null) {
-      Exception ex = vm.opException!;
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        AlertUtil.exceptionDialog(ex, context);
-      });
-    }
+    ExceptionUtil.processLoadExceptionPageable(vm, context);
+    ExceptionUtil.processOpExceptionPageable(vm, context);
     vm.setDataConverter((item) => DataRow(
             onSelectChanged: (bool? selected) {
               Navigator.pushNamed(context, PageRouteConst.PulsarNamespace,

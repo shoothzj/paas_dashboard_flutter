@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
@@ -60,12 +61,9 @@ class _BkPageState extends State<BkPage> {
                       DataCell(Text(itemRow.name)),
                       DataCell(Text(itemRow.host)),
                       DataCell(Text(itemRow.port.toString())),
-                      DataCell(TextButton(
-                        child: Text(S.of(context).delete),
-                        onPressed: () {
-                          vm.deleteBk(itemRow.id);
-                        },
-                      )),
+                      DataCellUtil.newDellDataCell(() {
+                        vm.deleteBk(itemRow.id);
+                      }),
                     ]))
                 .toList(),
           ),
