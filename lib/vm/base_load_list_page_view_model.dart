@@ -19,6 +19,12 @@ abstract class BaseLoadListPageViewModel<T> extends DataTableSource {
     this.converter = converter;
   }
 
+  /// call loadSuccess to set loading to false and clear the exceptions
+  void loadSuccess() {
+    loading = false;
+    loadException = null;
+  }
+
   @override
   DataRow? getRow(int index) {
     if (converter == null) {

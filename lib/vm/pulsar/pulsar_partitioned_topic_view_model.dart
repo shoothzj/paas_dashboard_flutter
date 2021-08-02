@@ -54,8 +54,7 @@ class PulsarTopicViewModel extends BaseLoadListViewModel<SubscriptionResp> {
           host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
-      loadException = null;
-      loading = false;
+      loadSuccess();
     } on Exception catch (e) {
       loadException = e;
       loading = false;

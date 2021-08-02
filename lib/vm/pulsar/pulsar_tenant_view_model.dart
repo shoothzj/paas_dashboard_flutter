@@ -47,8 +47,7 @@ class PulsarTenantViewModel
           .map((e) => PulsarNamespaceViewModel(pulsarInstancePo, tenantResp, e))
           .toList();
       this.displayList = this.fullList;
-      loadException = null;
-      loading = false;
+      loadSuccess();
     } on Exception catch (e) {
       loadException = e;
       loading = false;

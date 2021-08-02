@@ -38,8 +38,7 @@ class PulsarInstanceViewModel
           .map((e) => PulsarTenantViewModel(pulsarInstancePo, e))
           .toList();
       this.displayList = this.fullList;
-      loadException = null;
-      loading = false;
+      loadSuccess();
     } on Exception catch (e) {
       log('request failed, $e');
       loadException = e;
