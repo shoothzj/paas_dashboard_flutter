@@ -55,10 +55,22 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
         AlertUtil.exceptionDialog(ex, context);
       });
     }
-    vm.wrapCallback((data) {
-      Navigator.pushNamed(context, PageRouteConst.PulsarTenant,
-          arguments: data.deepCopy());
-    });
+    vm.setDataConverter((item) => DataRow(
+            onSelectChanged: (bool? selected) {
+              Navigator.pushNamed(context, PageRouteConst.PulsarTenant,
+                  arguments: item.deepCopy());
+            },
+            cells: [
+              DataCell(
+                Text(item.tenant),
+              ),
+              DataCell(TextButton(
+                child: Text(S.of(context).delete),
+                onPressed: () {
+                  vm.deleteTenants(item.tenant);
+                },
+              )),
+            ]));
     var formButton = createTenant(context, vm.host, vm.port);
     var refreshButton = TextButton(
         onPressed: () {

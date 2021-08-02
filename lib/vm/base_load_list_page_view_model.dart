@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+typedef Converter = DataRow Function(dynamic item);
+
 abstract class BaseLoadListPageViewModel<T> extends DataTableSource {
   bool loading = true;
 
@@ -11,10 +13,19 @@ abstract class BaseLoadListPageViewModel<T> extends DataTableSource {
 
   List<T> fullList = <T>[];
 
-  Function(dynamic)? callback;
+  Converter? converter;
 
-  void wrapCallback(Function(dynamic) callback) {
-    this.callback = callback;
+  void setDataConverter(Converter converter) {
+    this.converter = converter;
+  }
+
+  @override
+  DataRow? getRow(int index) {
+    if (converter == null) {
+      return null;
+    }
+    var item = this.displayList[index];
+    return converter!(item);
   }
 
   @override

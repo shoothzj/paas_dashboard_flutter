@@ -55,10 +55,22 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
         AlertUtil.exceptionDialog(ex, context);
       });
     }
-    vm.wrapCallback((data) {
-      Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
-          arguments: data.deepCopy());
-    });
+    vm.setDataConverter((item) => DataRow(
+            onSelectChanged: (bool? selected) {
+              Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
+                  arguments: item.deepCopy());
+            },
+            cells: [
+              DataCell(
+                Text(item.topic),
+              ),
+              DataCell(TextButton(
+                child: Text('Delete'),
+                onPressed: () {
+                  vm.deleteTopic(item.topic);
+                },
+              )),
+            ]));
     var topicsTable = SingleChildScrollView(
       child: PaginatedDataTable(
           showCheckboxColumn: false,

@@ -55,10 +55,22 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
         AlertUtil.exceptionDialog(ex, context);
       });
     }
-    vm.wrapCallback((data) {
-      Navigator.pushNamed(context, PageRouteConst.PulsarNamespace,
-          arguments: data.deepCopy());
-    });
+    vm.setDataConverter((item) => DataRow(
+            onSelectChanged: (bool? selected) {
+              Navigator.pushNamed(context, PageRouteConst.PulsarNamespace,
+                  arguments: item.deepCopy());
+            },
+            cells: [
+              DataCell(
+                Text(item.namespace),
+              ),
+              DataCell(TextButton(
+                child: Text(S.of(context).delete),
+                onPressed: () {
+                  vm.deleteNamespace(item.namespace);
+                },
+              )),
+            ]));
     var formButton = createNamespace(context);
     var refreshButton = TextButton(
         onPressed: () {

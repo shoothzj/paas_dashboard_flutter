@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/src/material/data_table.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
@@ -43,28 +41,6 @@ class PulsarNamespaceViewModel
 
   String get namespace {
     return this.namespaceResp.namespace;
-  }
-
-  @override
-  DataRow? getRow(int index) {
-    var item = this.displayList[index];
-    return DataRow(
-        onSelectChanged: (bool? selected) {
-          if (callback != null) {
-            callback!.call(item);
-          }
-        },
-        cells: [
-          DataCell(
-            Text(item.topic),
-          ),
-          DataCell(TextButton(
-            child: Text('Delete'),
-            onPressed: () {
-              deleteTopic(item.topic);
-            },
-          )),
-        ]);
   }
 
   Future<void> fetchTopics() async {
