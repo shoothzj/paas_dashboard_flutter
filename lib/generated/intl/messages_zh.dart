@@ -31,8 +31,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteTenant": MessageLookupByLibrary.simpleMessage("删除租户"),
         "deleteTopic": MessageLookupByLibrary.simpleMessage("删除 Topic"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("命名空间名称"),
+        "namespaces": MessageLookupByLibrary.simpleMessage("命名空间列表"),
         "refresh": MessageLookupByLibrary.simpleMessage("刷新"),
+        "searchByNamespace": MessageLookupByLibrary.simpleMessage("按命名空间名称搜索"),
+        "searchByTenant": MessageLookupByLibrary.simpleMessage("按租户名称搜索"),
+        "searchByTopic": MessageLookupByLibrary.simpleMessage("按 Topic 名称搜索"),
+        "subscriptionName": MessageLookupByLibrary.simpleMessage("订阅名称"),
+        "subscriptions": MessageLookupByLibrary.simpleMessage("订阅列表"),
         "tenantName": MessageLookupByLibrary.simpleMessage("租户名称"),
-        "topicName": MessageLookupByLibrary.simpleMessage("Topic 名称")
+        "tenants": MessageLookupByLibrary.simpleMessage("租户列表"),
+        "topicName": MessageLookupByLibrary.simpleMessage("Topic 名称"),
+        "topics": MessageLookupByLibrary.simpleMessage("Topic 列表")
       };
 }

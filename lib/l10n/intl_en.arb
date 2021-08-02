@@ -5,11 +5,19 @@
   "cancel": "Cancel",
   "confirm": "Confirm",
   "confirmDeleteQuestion": "ConfirmDelete?",
+  "tenants": "Tenants",
+  "searchByTenant": "Search by Tenant Name",
   "tenantName": "Tenant Name",
   "deleteTenant": "Delete Tenant",
+  "namespaces": "Namespaces",
+  "searchByNamespace": "Search by Namespace Name",
   "namespaceName": "Namespace Name",
   "deleteNamespace": "Delete Namespace",
+  "topics": "Topics",
+  "searchByTopic": "Search by Topic Name",
   "topicName": "Topic Name",
   "deleteTopic": "Delete Topic",
-  "clearBacklog": "Clear Backlog"
+  "clearBacklog": "Clear Backlog",
+  "subscriptions": "Subscriptions",
+  "subscriptionName": "Subscription Name"
 }

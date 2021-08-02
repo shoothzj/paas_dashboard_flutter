@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
-import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
@@ -38,10 +37,10 @@ class PulsarPartitionedTopicScreenState
       child: DataTable(
           showCheckboxColumn: false,
           columns: [
-            DataColumn(label: Text('Subscription Name')),
+            DataColumn(label: Text(S.of(context).subscriptionName)),
             DataColumn(label: Text('MsgBacklog')),
             DataColumn(label: Text('MsgRateOut')),
-            DataColumn(label: Text('Clear Backlog')),
+            DataColumn(label: Text(S.of(context).clearBacklog)),
           ],
           rows: vm.displayList
               .map((data) => DataRow(cells: [
@@ -55,7 +54,7 @@ class PulsarPartitionedTopicScreenState
                       Text(data.rateOut.toString()),
                     ),
                     DataCell(TextButton(
-                      child: Text('clear-backlog'),
+                      child: Text(S.of(context).clearBacklog),
                       onPressed: () {
                         vm.clearBacklog(data.subscriptionName);
                       },
@@ -79,7 +78,7 @@ class PulsarPartitionedTopicScreenState
           ),
         ),
         Text(
-          'Subscriptions',
+          S.of(context).subscriptions,
           style: TextStyle(fontSize: 22),
         ),
         topicsFuture

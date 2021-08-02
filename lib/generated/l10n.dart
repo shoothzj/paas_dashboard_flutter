@@ -110,6 +110,26 @@ class S {
     );
   }
 
+  /// `Tenants`
+  String get tenants {
+    return Intl.message(
+      'Tenants',
+      name: 'tenants',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by Tenant Name`
+  String get searchByTenant {
+    return Intl.message(
+      'Search by Tenant Name',
+      name: 'searchByTenant',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Tenant Name`
   String get tenantName {
     return Intl.message(
@@ -130,6 +150,26 @@ class S {
     );
   }
 
+  /// `Namespaces`
+  String get namespaces {
+    return Intl.message(
+      'Namespaces',
+      name: 'namespaces',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by Namespace Name`
+  String get searchByNamespace {
+    return Intl.message(
+      'Search by Namespace Name',
+      name: 'searchByNamespace',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Namespace Name`
   String get namespaceName {
     return Intl.message(
@@ -145,6 +185,26 @@ class S {
     return Intl.message(
       'Delete Namespace',
       name: 'deleteNamespace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Topics`
+  String get topics {
+    return Intl.message(
+      'Topics',
+      name: 'topics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by Topic Name`
+  String get searchByTopic {
+    return Intl.message(
+      'Search by Topic Name',
+      name: 'searchByTopic',
       desc: '',
       args: [],
     );
@@ -175,6 +235,26 @@ class S {
     return Intl.message(
       'Clear Backlog',
       name: 'clearBacklog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscriptions`
+  String get subscriptions {
+    return Intl.message(
+      'Subscriptions',
+      name: 'subscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription Name`
+  String get subscriptionName {
+    return Intl.message(
+      'Subscription Name',
+      name: 'subscriptionName',
       desc: '',
       args: [],
     );

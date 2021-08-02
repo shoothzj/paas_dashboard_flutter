@@ -33,8 +33,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteTenant": MessageLookupByLibrary.simpleMessage("Delete Tenant"),
         "deleteTopic": MessageLookupByLibrary.simpleMessage("Delete Topic"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("Namespace Name"),
+        "namespaces": MessageLookupByLibrary.simpleMessage("Namespaces"),
         "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
+        "searchByNamespace":
+            MessageLookupByLibrary.simpleMessage("Search by Namespace Name"),
+        "searchByTenant":
+            MessageLookupByLibrary.simpleMessage("Search by Tenant Name"),
+        "searchByTopic":
+            MessageLookupByLibrary.simpleMessage("Search by Topic Name"),
+        "subscriptionName":
+            MessageLookupByLibrary.simpleMessage("Subscription Name"),
+        "subscriptions": MessageLookupByLibrary.simpleMessage("Subscriptions"),
         "tenantName": MessageLookupByLibrary.simpleMessage("Tenant Name"),
-        "topicName": MessageLookupByLibrary.simpleMessage("Topic Name")
+        "tenants": MessageLookupByLibrary.simpleMessage("Tenants"),
+        "topicName": MessageLookupByLibrary.simpleMessage("Topic Name"),
+        "topics": MessageLookupByLibrary.simpleMessage("Topics")
       };
 }

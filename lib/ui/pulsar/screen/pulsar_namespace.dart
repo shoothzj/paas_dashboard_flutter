@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
+import 'package:paas_dashboard_flutter/ui/component/searchable_title.dart';
 import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
@@ -74,12 +75,6 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
           vm.fetchTopics();
         },
         child: Text(S.of(context).refresh));
-    var searchBox = Container(
-      width: 300,
-      child: TextField(
-        controller: searchTextController,
-      ),
-    );
     var body = ListView(
       children: <Widget>[
         Container(
@@ -87,13 +82,11 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [formButton, refreshButton, searchBox],
+            children: [formButton, refreshButton],
           ),
         ),
-        Text(
-          'Partitioned Topics',
-          style: TextStyle(fontSize: 22),
-        ),
+        SearchableTitle(S.of(context).topics, S.of(context).searchByTopic,
+            searchTextController),
         topicsTable
       ],
     );

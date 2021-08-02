@@ -5,11 +5,19 @@
   "cancel": "取消",
   "confirm": "确认",
   "confirmDeleteQuestion": "确认删除吗？",
+  "tenants": "租户列表",
+  "searchByTenant": "按租户名称搜索",
   "tenantName": "租户名称",
   "deleteTenant": "删除租户",
+  "namespaces": "命名空间列表",
+  "searchByNamespace": "按命名空间名称搜索",
   "namespaceName": "命名空间名称",
   "deleteNamespace": "删除命名空间",
+  "topics": "Topic 列表",
+  "searchByTopic": "按 Topic 名称搜索",
   "topicName": "Topic 名称",
   "deleteTopic": "删除 Topic",
-  "clearBacklog": "清理积压"
+  "clearBacklog": "清理积压",
+  "subscriptions": "订阅列表",
+  "subscriptionName": "订阅名称"
 }
