@@ -2,5 +2,14 @@
   "appName": "Paas Dashboard",
   "refresh": "Refresh",
   "delete": "Delete",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "confirmDeleteQuestion": "ConfirmDelete?",
+  "tenantName": "Tenant Name",
+  "deleteTenant": "Delete Tenant",
+  "namespaceName": "Namespace Name",
+  "deleteNamespace": "Delete Namespace",
+  "topicName": "Topic Name",
+  "deleteTopic": "Delete Topic",
   "clearBacklog": "Clear Backlog"
 }

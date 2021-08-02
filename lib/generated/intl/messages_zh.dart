@@ -22,8 +22,17 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appName": MessageLookupByLibrary.simpleMessage("Paas 仪表盘"),
+        "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "clearBacklog": MessageLookupByLibrary.simpleMessage("清理积压"),
+        "confirm": MessageLookupByLibrary.simpleMessage("确认"),
+        "confirmDeleteQuestion": MessageLookupByLibrary.simpleMessage("确认删除吗？"),
         "delete": MessageLookupByLibrary.simpleMessage("删除"),
-        "refresh": MessageLookupByLibrary.simpleMessage("刷新")
+        "deleteNamespace": MessageLookupByLibrary.simpleMessage("删除命名空间"),
+        "deleteTenant": MessageLookupByLibrary.simpleMessage("删除租户"),
+        "deleteTopic": MessageLookupByLibrary.simpleMessage("删除 Topic"),
+        "namespaceName": MessageLookupByLibrary.simpleMessage("命名空间名称"),
+        "refresh": MessageLookupByLibrary.simpleMessage("刷新"),
+        "tenantName": MessageLookupByLibrary.simpleMessage("租户名称"),
+        "topicName": MessageLookupByLibrary.simpleMessage("Topic 名称")
       };
 }

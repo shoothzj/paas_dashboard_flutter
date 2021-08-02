@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
+import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
@@ -64,19 +65,16 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
               DataCell(
                 Text(item.topic),
               ),
-              DataCell(TextButton(
-                child: Text('Delete'),
-                onPressed: () {
-                  vm.deleteTopic(item.topic);
-                },
-              )),
+              DataCellUtil.newDellDataCell(() {
+                vm.deleteTopic(item.topic);
+              }),
             ]));
     var topicsTable = SingleChildScrollView(
       child: PaginatedDataTable(
           showCheckboxColumn: false,
           columns: [
-            DataColumn(label: Text('Topic Name')),
-            DataColumn(label: Text('Delete Topic')),
+            DataColumn(label: Text(S.of(context).topicName)),
+            DataColumn(label: Text(S.of(context).deleteTopic)),
           ],
           source: vm),
     );

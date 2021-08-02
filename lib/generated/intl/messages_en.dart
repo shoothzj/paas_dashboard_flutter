@@ -22,8 +22,19 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appName": MessageLookupByLibrary.simpleMessage("Paas Dashboard"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clearBacklog": MessageLookupByLibrary.simpleMessage("Clear Backlog"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmDeleteQuestion":
+            MessageLookupByLibrary.simpleMessage("ConfirmDelete?"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
-        "refresh": MessageLookupByLibrary.simpleMessage("Refresh")
+        "deleteNamespace":
+            MessageLookupByLibrary.simpleMessage("Delete Namespace"),
+        "deleteTenant": MessageLookupByLibrary.simpleMessage("Delete Tenant"),
+        "deleteTopic": MessageLookupByLibrary.simpleMessage("Delete Topic"),
+        "namespaceName": MessageLookupByLibrary.simpleMessage("Namespace Name"),
+        "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
+        "tenantName": MessageLookupByLibrary.simpleMessage("Tenant Name"),
+        "topicName": MessageLookupByLibrary.simpleMessage("Topic Name")
       };
 }

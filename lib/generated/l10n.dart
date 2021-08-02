@@ -80,6 +80,96 @@ class S {
     );
   }
 
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ConfirmDelete?`
+  String get confirmDeleteQuestion {
+    return Intl.message(
+      'ConfirmDelete?',
+      name: 'confirmDeleteQuestion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tenant Name`
+  String get tenantName {
+    return Intl.message(
+      'Tenant Name',
+      name: 'tenantName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Tenant`
+  String get deleteTenant {
+    return Intl.message(
+      'Delete Tenant',
+      name: 'deleteTenant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Namespace Name`
+  String get namespaceName {
+    return Intl.message(
+      'Namespace Name',
+      name: 'namespaceName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Namespace`
+  String get deleteNamespace {
+    return Intl.message(
+      'Delete Namespace',
+      name: 'deleteNamespace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Topic Name`
+  String get topicName {
+    return Intl.message(
+      'Topic Name',
+      name: 'topicName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Topic`
+  String get deleteTopic {
+    return Intl.message(
+      'Delete Topic',
+      name: 'deleteTopic',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Clear Backlog`
   String get clearBacklog {
     return Intl.message(

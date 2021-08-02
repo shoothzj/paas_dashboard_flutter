@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
+import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
@@ -64,12 +65,9 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
               DataCell(
                 Text(item.namespace),
               ),
-              DataCell(TextButton(
-                child: Text(S.of(context).delete),
-                onPressed: () {
-                  vm.deleteNamespace(item.namespace);
-                },
-              )),
+              DataCellUtil.newDellDataCell(() {
+                vm.deleteNamespace(item.namespace);
+              }),
             ]));
     var formButton = createNamespace(context);
     var refreshButton = TextButton(
@@ -101,8 +99,8 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
           child: PaginatedDataTable(
               showCheckboxColumn: false,
               columns: [
-                DataColumn(label: Text('Namespace Name')),
-                DataColumn(label: Text('Delete namespace')),
+                DataColumn(label: Text(S.of(context).namespaceName)),
+                DataColumn(label: Text(S.of(context).deleteNamespace)),
               ],
               source: vm),
         ),

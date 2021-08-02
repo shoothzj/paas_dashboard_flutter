@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
+import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
@@ -64,12 +65,9 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
               DataCell(
                 Text(item.tenant),
               ),
-              DataCell(TextButton(
-                child: Text(S.of(context).delete),
-                onPressed: () {
-                  vm.deleteTenants(item.tenant);
-                },
-              )),
+              DataCellUtil.newDellDataCell(() {
+                vm.deleteTenants(item.tenant);
+              })
             ]));
     var formButton = createTenant(context, vm.host, vm.port);
     var refreshButton = TextButton(
@@ -101,8 +99,8 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
           child: PaginatedDataTable(
               showCheckboxColumn: false,
               columns: [
-                DataColumn(label: Text('TenantName')),
-                DataColumn(label: Text('Delete tenant')),
+                DataColumn(label: Text(S.of(context).tenantName)),
+                DataColumn(label: Text(S.of(context).deleteTenant)),
               ],
               source: vm),
         )
@@ -113,7 +111,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
 
   ButtonStyleButton createTenant(BuildContext context, String host, int port) {
     final vm = Provider.of<PulsarInstanceViewModel>(context, listen: false);
-    var list = [FormFieldDef('Tenant Name')];
+    var list = [FormFieldDef(S.of(context).tenantName)];
     return FormUtil.createButton1("Pulsar Tenant", list, context,
         (tenant) async {
       vm.createTenant(tenant);

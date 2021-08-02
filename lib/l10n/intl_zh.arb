@@ -2,5 +2,14 @@
   "appName": "Paas 仪表盘",
   "refresh": "刷新",
   "delete": "删除",
+  "cancel": "取消",
+  "confirm": "确认",
+  "confirmDeleteQuestion": "确认删除吗？",
+  "tenantName": "租户名称",
+  "deleteTenant": "删除租户",
+  "namespaceName": "命名空间名称",
+  "deleteNamespace": "删除命名空间",
+  "topicName": "Topic 名称",
+  "deleteTopic": "删除 Topic",
   "clearBacklog": "清理积压"
 }
