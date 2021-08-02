@@ -1,5 +1,6 @@
 {
   "appName": "Paas 仪表盘",
   "refresh": "刷新",
+  "delete": "删除",
   "clearBacklog": "清理积压"
 }

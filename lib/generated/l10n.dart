@@ -70,6 +70,16 @@ class S {
     );
   }
 
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Clear Backlog`
   String get clearBacklog {
     return Intl.message(

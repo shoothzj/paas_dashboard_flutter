@@ -99,7 +99,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pulsar Tenant ${vm.tenant} Namespace ${vm.namespace}'),
+        title: Text('Pulsar Tenant ${vm.tenant} -> Namespace ${vm.namespace}'),
       ),
       body: body,
     );

@@ -61,7 +61,7 @@ class _BkPageState extends State<BkPage> {
                       DataCell(Text(itemRow.host)),
                       DataCell(Text(itemRow.port.toString())),
                       DataCell(TextButton(
-                        child: Text('Delete'),
+                        child: Text(S.of(context).delete),
                         onPressed: () {
                           vm.deleteBk(itemRow.id);
                         },

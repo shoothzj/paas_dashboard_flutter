@@ -97,7 +97,8 @@ class PulsarPartitionedTopicScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pulsar Partitioned Topic'),
+        title: Text(
+            'Pulsar Tenant ${vm.tenant} -> Namespace ${vm.namespace} -> Topic ${vm.topic}'),
       ),
       body: body,
     );

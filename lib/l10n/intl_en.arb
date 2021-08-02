@@ -1,5 +1,6 @@
 {
   "appName": "Paas Dashboard",
   "refresh": "Refresh",
+  "delete": "Delete",
   "clearBacklog": "Clear Backlog"
 }
