@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "aboutAuthor": MessageLookupByLibrary.simpleMessage("关于作者"),
         "appName": MessageLookupByLibrary.simpleMessage("Paas 仪表盘"),
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "clearBacklog": MessageLookupByLibrary.simpleMessage("清理积压"),
@@ -30,12 +31,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteNamespace": MessageLookupByLibrary.simpleMessage("删除命名空间"),
         "deleteTenant": MessageLookupByLibrary.simpleMessage("删除租户"),
         "deleteTopic": MessageLookupByLibrary.simpleMessage("删除 Topic"),
+        "email": MessageLookupByLibrary.simpleMessage("邮箱"),
+        "languageSettings": MessageLookupByLibrary.simpleMessage("语言设置"),
+        "name": MessageLookupByLibrary.simpleMessage("名称"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("命名空间名称"),
         "namespaces": MessageLookupByLibrary.simpleMessage("命名空间列表"),
         "refresh": MessageLookupByLibrary.simpleMessage("刷新"),
         "searchByNamespace": MessageLookupByLibrary.simpleMessage("按命名空间名称搜索"),
         "searchByTenant": MessageLookupByLibrary.simpleMessage("按租户名称搜索"),
         "searchByTopic": MessageLookupByLibrary.simpleMessage("按 Topic 名称搜索"),
+        "settings": MessageLookupByLibrary.simpleMessage("设置"),
         "subscriptionName": MessageLookupByLibrary.simpleMessage("订阅名称"),
         "subscriptions": MessageLookupByLibrary.simpleMessage("订阅列表"),
         "tenantName": MessageLookupByLibrary.simpleMessage("租户名称"),

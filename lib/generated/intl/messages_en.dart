@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "aboutAuthor": MessageLookupByLibrary.simpleMessage("About author"),
         "appName": MessageLookupByLibrary.simpleMessage("Paas Dashboard"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clearBacklog": MessageLookupByLibrary.simpleMessage("Clear Backlog"),
@@ -32,6 +33,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Delete Namespace"),
         "deleteTenant": MessageLookupByLibrary.simpleMessage("Delete Tenant"),
         "deleteTopic": MessageLookupByLibrary.simpleMessage("Delete Topic"),
+        "email": MessageLookupByLibrary.simpleMessage("email"),
+        "languageSettings":
+            MessageLookupByLibrary.simpleMessage("Language Settings"),
+        "name": MessageLookupByLibrary.simpleMessage("name"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("Namespace Name"),
         "namespaces": MessageLookupByLibrary.simpleMessage("Namespaces"),
         "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
@@ -41,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search by Tenant Name"),
         "searchByTopic":
             MessageLookupByLibrary.simpleMessage("Search by Topic Name"),
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "subscriptionName":
             MessageLookupByLibrary.simpleMessage("Subscription Name"),
         "subscriptions": MessageLookupByLibrary.simpleMessage("Subscriptions"),

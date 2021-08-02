@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/vm/general/settings_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -29,10 +30,10 @@ class SettingsScreenState extends State<SettingsScreen> {
     final vm = Provider.of<SettingsViewModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(S.of(context).settings),
       ),
       body: ExpansionTile(
-        title: Text('Change language'),
+        title: Text(S.of(context).languageSettings),
         leading: Icon(Icons.language),
         initiallyExpanded: false,
         children: [

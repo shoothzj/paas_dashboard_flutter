@@ -19,5 +19,10 @@
   "deleteTopic": "删除 Topic",
   "clearBacklog": "清理积压",
   "subscriptions": "订阅列表",
-  "subscriptionName": "订阅名称"
+  "subscriptionName": "订阅名称",
+  "aboutAuthor": "关于作者",
+  "settings": "设置",
+  "languageSettings": "语言设置",
+  "name": "名称",
+  "email": "邮箱"
 }

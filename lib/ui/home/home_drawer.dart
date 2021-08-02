@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 
 class NavDrawer extends StatelessWidget {
@@ -21,11 +22,12 @@ class NavDrawer extends StatelessWidget {
                         'assets/images/background/joy_valley_slide.png'))),
           ),
           ListTile(
-            title: Text('About author'),
-            onTap: () => {Navigator.of(context).pop()},
+            title: Text(S.of(context).aboutAuthor),
+            onTap: () =>
+                {Navigator.of(context).pushNamed(PageRouteConst.Author)},
           ),
           ListTile(
-            title: Text('Settings'),
+            title: Text(S.of(context).settings),
             onTap: () =>
                 {Navigator.of(context).pushNamed(PageRouteConst.Settings)},
           ),

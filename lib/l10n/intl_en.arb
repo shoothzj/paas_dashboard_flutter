@@ -19,5 +19,10 @@
   "deleteTopic": "Delete Topic",
   "clearBacklog": "Clear Backlog",
   "subscriptions": "Subscriptions",
-  "subscriptionName": "Subscription Name"
+  "subscriptionName": "Subscription Name",
+  "aboutAuthor": "About author",
+  "settings": "Settings",
+  "languageSettings": "Language Settings",
+  "name": "name",
+  "email": "email"
 }

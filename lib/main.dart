@@ -4,6 +4,7 @@ import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/route/route_gen.dart';
 import 'package:paas_dashboard_flutter/ui/bk/bk_page.dart';
+import 'package:paas_dashboard_flutter/ui/general/author_screen.dart';
 import 'package:paas_dashboard_flutter/ui/general/settings_screen.dart';
 import 'package:paas_dashboard_flutter/ui/home/home_page.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
       initialRoute: PageRouteConst.Root,
       routes: {
         PageRouteConst.Root: (context) => HomePage(),
+        PageRouteConst.Author: (context) => AuthorScreen(),
         PageRouteConst.Settings: (context) => ChangeNotifierProvider(
               create: (context) => SettingsViewModel(),
               child: SettingsScreen(),

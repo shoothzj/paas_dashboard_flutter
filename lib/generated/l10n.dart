@@ -259,6 +259,56 @@ class S {
       args: [],
     );
   }
+
+  /// `About author`
+  String get aboutAuthor {
+    return Intl.message(
+      'About author',
+      name: 'aboutAuthor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language Settings`
+  String get languageSettings {
+    return Intl.message(
+      'Language Settings',
+      name: 'languageSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `name`
+  String get name {
+    return Intl.message(
+      'name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `email`
+  String get email {
+    return Intl.message(
+      'email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
