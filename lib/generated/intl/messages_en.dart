@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "aboutAuthor": MessageLookupByLibrary.simpleMessage("About author"),
         "appName": MessageLookupByLibrary.simpleMessage("Paas Dashboard"),
+        "brokersName": MessageLookupByLibrary.simpleMessage("Broker Instance"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clearBacklog": MessageLookupByLibrary.simpleMessage("Clear Backlog"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -34,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteTenant": MessageLookupByLibrary.simpleMessage("Delete Tenant"),
         "deleteTopic": MessageLookupByLibrary.simpleMessage("Delete Topic"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
+        "isLeader": MessageLookupByLibrary.simpleMessage("Is Leader"),
         "languageSettings":
             MessageLookupByLibrary.simpleMessage("Language Settings"),
         "name": MessageLookupByLibrary.simpleMessage("name"),
@@ -53,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tenantName": MessageLookupByLibrary.simpleMessage("Tenant Name"),
         "tenants": MessageLookupByLibrary.simpleMessage("Tenants"),
         "topicName": MessageLookupByLibrary.simpleMessage("Topic Name"),
-        "topics": MessageLookupByLibrary.simpleMessage("Topics")
+        "topics": MessageLookupByLibrary.simpleMessage("Topics"),
+        "versionName": MessageLookupByLibrary.simpleMessage("Version")
       };
 }

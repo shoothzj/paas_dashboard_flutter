@@ -110,6 +110,36 @@ class S {
     );
   }
 
+  /// `Broker Instance`
+  String get brokersName {
+    return Intl.message(
+      'Broker Instance',
+      name: 'brokersName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Is Leader`
+  String get isLeader {
+    return Intl.message(
+      'Is Leader',
+      name: 'isLeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Version`
+  String get versionName {
+    return Intl.message(
+      'Version',
+      name: 'versionName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Tenants`
   String get tenants {
     return Intl.message(

@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "aboutAuthor": MessageLookupByLibrary.simpleMessage("关于作者"),
         "appName": MessageLookupByLibrary.simpleMessage("Paas 仪表盘"),
+        "brokersName": MessageLookupByLibrary.simpleMessage("Pulsar 实例"),
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "clearBacklog": MessageLookupByLibrary.simpleMessage("清理积压"),
         "confirm": MessageLookupByLibrary.simpleMessage("确认"),
@@ -32,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteTenant": MessageLookupByLibrary.simpleMessage("删除租户"),
         "deleteTopic": MessageLookupByLibrary.simpleMessage("删除 Topic"),
         "email": MessageLookupByLibrary.simpleMessage("邮箱"),
+        "isLeader": MessageLookupByLibrary.simpleMessage("是否是主节点"),
         "languageSettings": MessageLookupByLibrary.simpleMessage("语言设置"),
         "name": MessageLookupByLibrary.simpleMessage("名称"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("命名空间名称"),
@@ -46,6 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tenantName": MessageLookupByLibrary.simpleMessage("租户名称"),
         "tenants": MessageLookupByLibrary.simpleMessage("租户列表"),
         "topicName": MessageLookupByLibrary.simpleMessage("Topic 名称"),
-        "topics": MessageLookupByLibrary.simpleMessage("Topic 列表")
+        "topics": MessageLookupByLibrary.simpleMessage("Topic 列表"),
+        "versionName": MessageLookupByLibrary.simpleMessage("版本")
       };
 }

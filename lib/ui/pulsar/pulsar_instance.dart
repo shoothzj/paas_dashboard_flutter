@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/tab/pulsar_basic.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/tab/pulsar_details.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/tab/pulsar_message_query.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_cluster_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +39,7 @@ class _PulsarInstanceState extends State<PulsarInstanceScreen> {
         body: TabBarView(
           children: [
             ChangeNotifierProvider(
-              create: (context) => vm.deepCopy(),
+              create: (context) => PulsarClusterViewModel(vm.pulsarInstancePo),
               child: PulsarBasicWidget(),
             ).build(context),
             ChangeNotifierProvider(
