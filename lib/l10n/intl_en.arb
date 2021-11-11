@@ -21,6 +21,7 @@
   "topicName": "Topic Name",
   "deleteTopic": "Delete Topic",
   "clearBacklog": "Clear Backlog",
+  "confirmClearBacklog": "ConfirmClear?",
   "subscriptions": "Subscriptions",
   "subscriptionName": "Subscription Name",
   "aboutAuthor": "About author",
