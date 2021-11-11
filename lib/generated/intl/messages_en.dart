@@ -27,6 +27,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clearBacklog": MessageLookupByLibrary.simpleMessage("Clear Backlog"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmClearBacklog":
+            MessageLookupByLibrary.simpleMessage("ConfirmClear?"),
         "confirmDeleteQuestion":
             MessageLookupByLibrary.simpleMessage("ConfirmDelete?"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),

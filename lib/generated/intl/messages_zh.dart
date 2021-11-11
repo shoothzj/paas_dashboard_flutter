@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "clearBacklog": MessageLookupByLibrary.simpleMessage("清理积压"),
         "confirm": MessageLookupByLibrary.simpleMessage("确认"),
+        "confirmClearBacklog": MessageLookupByLibrary.simpleMessage("确认清理积压吗？"),
         "confirmDeleteQuestion": MessageLookupByLibrary.simpleMessage("确认删除吗？"),
         "delete": MessageLookupByLibrary.simpleMessage("删除"),
         "deleteNamespace": MessageLookupByLibrary.simpleMessage("删除命名空间"),
