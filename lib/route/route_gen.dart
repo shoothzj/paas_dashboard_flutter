@@ -35,11 +35,12 @@ class RouteGen {
             ));
   }
 
-  static Route pulsarPartitionedTopic(PulsarTopicViewModel viewModel) {
+  static Route pulsarPartitionedTopic(
+      PulsarPartitionedTopicViewModel viewModel) {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: PulsarPartitionedTopicScreen(),
+              child: PulsarPartitionedTopic(),
             ));
   }
 }

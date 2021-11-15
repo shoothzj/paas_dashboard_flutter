@@ -1,94 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:paas_dashboard_flutter/generated/l10n.dart';
-import 'package:paas_dashboard_flutter/ui/component/clear_backlog_button.dart';
-import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
-import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
+import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic_basic.dart';
+import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic_produce.dart';
+import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic_subscription.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_basic_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_produce_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_subscription_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
 import 'package:provider/provider.dart';
 
-class PulsarPartitionedTopicScreen extends StatefulWidget {
-  PulsarPartitionedTopicScreen();
+class PulsarPartitionedTopic extends StatefulWidget {
+  PulsarPartitionedTopic();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarPartitionedTopicScreenState();
+    return new _PulsarPartitionedTopicState();
   }
 }
 
-class PulsarPartitionedTopicScreenState
-    extends State<PulsarPartitionedTopicScreen> {
-  @override
-  void initState() {
-    super.initState();
-    final vm = Provider.of<PulsarTopicViewModel>(context, listen: false);
-    vm.fetchSubscriptions();
-  }
+class _PulsarPartitionedTopicState extends State<PulsarPartitionedTopic> {
+  _PulsarPartitionedTopicState();
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<PulsarTopicViewModel>(context);
-    if (vm.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        SpinnerUtil.create();
-      });
-    }
-    ExceptionUtil.processLoadException(vm, context);
-    ExceptionUtil.processOpException(vm, context);
-    var topicsFuture = SingleChildScrollView(
-      child: DataTable(
-          showCheckboxColumn: false,
-          columns: [
-            DataColumn(label: Text(S.of(context).subscriptionName)),
-            DataColumn(label: Text('MsgBacklog')),
-            DataColumn(label: Text('MsgRateOut')),
-            DataColumn(label: Text(S.of(context).clearBacklog)),
-          ],
-          rows: vm.displayList
-              .map((data) => DataRow(cells: [
-                    DataCell(
-                      Text(data.subscriptionName),
-                    ),
-                    DataCell(
-                      Text(data.backlog.toString()),
-                    ),
-                    DataCell(
-                      Text(data.rateOut.toString()),
-                    ),
-                    DataCell(ClearBacklogButton(() {
-                      vm.clearBacklog(data.subscriptionName);
-                    })),
-                  ]))
-              .toList()),
-    );
-    var refreshButton = TextButton(
-        onPressed: () {
-          vm.fetchSubscriptions();
-        },
-        child: Text(S.of(context).refresh));
-    var body = ListView(
-      children: <Widget>[
-        Container(
-          height: 50,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            children: [refreshButton],
+    final vm = Provider.of<PulsarPartitionedTopicViewModel>(context);
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Pulsar ${vm.topic} Dashboard'),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: "Basic"),
+              Tab(text: "Subscription"),
+              Tab(text: "Produce"),
+            ],
           ),
         ),
-        Text(
-          S.of(context).subscriptions,
-          style: TextStyle(fontSize: 22),
+        body: TabBarView(
+          children: [
+            ChangeNotifierProvider(
+              create: (context) => PulsarPartitionedTopicBasicViewModel(
+                  vm.pulsarInstancePo,
+                  vm.tenantResp,
+                  vm.namespaceResp,
+                  vm.topicResp),
+              child: PulsarPartitionedTopicBasicWidget(),
+            ).build(context),
+            ChangeNotifierProvider(
+              create: (context) =>
+                  new PulsarPartitionedTopicSubscriptionViewModel(
+                      vm.pulsarInstancePo,
+                      vm.tenantResp,
+                      vm.namespaceResp,
+                      vm.topicResp),
+              child: PulsarPartitionedTopicSubscriptionWidget(),
+            ).build(context),
+            ChangeNotifierProvider(
+              create: (context) => PulsarPartitionedTopicProduceViewModel(
+                  vm.pulsarInstancePo,
+                  vm.tenantResp,
+                  vm.namespaceResp,
+                  vm.topicResp),
+              child: PulsarPartitionedTopicProduceWidget(),
+            ).build(context),
+          ],
         ),
-        topicsFuture
-      ],
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            'Pulsar Tenant ${vm.tenant} -> Namespace ${vm.namespace} -> Topic ${vm.topic}'),
       ),
-      body: body,
     );
   }
 }

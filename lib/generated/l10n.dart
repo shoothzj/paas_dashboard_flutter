@@ -100,6 +100,16 @@ class S {
     );
   }
 
+  /// `Basic`
+  String get basic {
+    return Intl.message(
+      'Basic',
+      name: 'basic',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `ConfirmDelete?`
   String get confirmDeleteQuestion {
     return Intl.message(
@@ -260,6 +270,36 @@ class S {
     );
   }
 
+  /// `Produce`
+  String get produce {
+    return Intl.message(
+      'Produce',
+      name: 'produce',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Producer List`
+  String get producerList {
+    return Intl.message(
+      'Producer List',
+      name: 'producerList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `partition number`
+  String get partitionNum {
+    return Intl.message(
+      'partition number',
+      name: 'partitionNum',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Clear Backlog`
   String get clearBacklog {
     return Intl.message(
@@ -280,11 +320,11 @@ class S {
     );
   }
 
-  /// `Subscriptions`
-  String get subscriptions {
+  /// `Subscription list`
+  String get subscriptionList {
     return Intl.message(
-      'Subscriptions',
-      name: 'subscriptions',
+      'Subscription list',
+      name: 'subscriptionList',
       desc: '',
       args: [],
     );

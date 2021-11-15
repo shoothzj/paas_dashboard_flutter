@@ -39,7 +39,8 @@ class _PulsarInstanceState extends State<PulsarInstanceScreen> {
         body: TabBarView(
           children: [
             ChangeNotifierProvider(
-              create: (context) => PulsarClusterViewModel(vm.pulsarInstancePo),
+              create: (context) =>
+                  PulsarClusterViewModel(vm.pulsarInstancePo.deepCopy()),
               child: PulsarBasicWidget(),
             ).build(context),
             ChangeNotifierProvider(

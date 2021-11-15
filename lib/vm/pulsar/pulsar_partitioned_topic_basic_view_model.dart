@@ -1,20 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/vm/base_load_view_model.dart';
 
-class PulsarPartitionedTopicViewModel extends ChangeNotifier {
+class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarPartitionedTopicViewModel(this.pulsarInstancePo, this.tenantResp,
+  PulsarPartitionedTopicBasicViewModel(this.pulsarInstancePo, this.tenantResp,
       this.namespaceResp, this.topicResp);
 
-  PulsarPartitionedTopicViewModel deepCopy() {
-    return new PulsarPartitionedTopicViewModel(pulsarInstancePo.deepCopy(),
+  PulsarPartitionedTopicBasicViewModel deepCopy() {
+    return new PulsarPartitionedTopicBasicViewModel(pulsarInstancePo.deepCopy(),
         tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 

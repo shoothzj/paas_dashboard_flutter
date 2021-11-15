@@ -2,6 +2,9 @@
 
 Flutter Paas Dashboard
 
+## 其他语言文档
+- [English Doc](README_en.md)
+
 # 运行
 ## web
 如需在Web下运行，需要关闭`chrome`的安全开关,步骤如下,参考链接: https://stackoverflow.com/questions/65630743/how-to-solve-flutter-web-api-cors-error-only-with-dart-code
