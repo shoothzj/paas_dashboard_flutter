@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
           return RouteGen.pulsarNamespace(args);
         }
         if (settings.name == PageRouteConst.PulsarTopic) {
-          final args = settings.arguments as PulsarTopicViewModel;
+          final args = settings.arguments as PulsarPartitionedTopicViewModel;
           return RouteGen.pulsarPartitionedTopic(args);
         }
       },

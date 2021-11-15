@@ -7,7 +7,7 @@ class PulsarTopicModule {
 }
 
 class TopicPageContext {
-  final PulsarTopicViewModel pulsarTopicViewModel;
+  final PulsarPartitionedTopicViewModel pulsarTopicViewModel;
   final PulsarTopicModule topicModule;
 
   TopicPageContext(this.pulsarTopicViewModel, this.topicModule);

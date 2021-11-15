@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "aboutAuthor": MessageLookupByLibrary.simpleMessage("About author"),
         "appName": MessageLookupByLibrary.simpleMessage("Paas Dashboard"),
+        "basic": MessageLookupByLibrary.simpleMessage("Basic"),
         "brokersName": MessageLookupByLibrary.simpleMessage("Broker Instance"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clearBacklog": MessageLookupByLibrary.simpleMessage("Clear Backlog"),
@@ -43,6 +44,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("name"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("Namespace Name"),
         "namespaces": MessageLookupByLibrary.simpleMessage("Namespaces"),
+        "partitionNum":
+            MessageLookupByLibrary.simpleMessage("partition number"),
+        "produce": MessageLookupByLibrary.simpleMessage("Produce"),
+        "producerList": MessageLookupByLibrary.simpleMessage("Producer List"),
         "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
         "searchByNamespace":
             MessageLookupByLibrary.simpleMessage("Search by Namespace Name"),
@@ -51,9 +56,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchByTopic":
             MessageLookupByLibrary.simpleMessage("Search by Topic Name"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "subscriptionList":
+            MessageLookupByLibrary.simpleMessage("Subscription list"),
         "subscriptionName":
             MessageLookupByLibrary.simpleMessage("Subscription Name"),
-        "subscriptions": MessageLookupByLibrary.simpleMessage("Subscriptions"),
         "tenantName": MessageLookupByLibrary.simpleMessage("Tenant Name"),
         "tenants": MessageLookupByLibrary.simpleMessage("Tenants"),
         "topicName": MessageLookupByLibrary.simpleMessage("Topic Name"),

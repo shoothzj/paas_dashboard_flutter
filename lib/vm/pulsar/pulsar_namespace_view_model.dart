@@ -6,7 +6,7 @@ import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
 
 class PulsarNamespaceViewModel
-    extends BaseLoadListPageViewModel<PulsarTopicViewModel> {
+    extends BaseLoadListPageViewModel<PulsarPartitionedTopicViewModel> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
@@ -48,7 +48,7 @@ class PulsarNamespaceViewModel
       final results =
           await PulsarTopicAPi.getTopics(host, port, tenant, namespace);
       this.fullList = results
-          .map((e) => PulsarTopicViewModel(
+          .map((e) => PulsarPartitionedTopicViewModel(
               pulsarInstancePo, tenantResp, namespaceResp, e))
           .toList();
       this.displayList = this.fullList;
