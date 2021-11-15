@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/ui/component/clear_backlog_button.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
@@ -53,12 +54,9 @@ class PulsarPartitionedTopicScreenState
                     DataCell(
                       Text(data.rateOut.toString()),
                     ),
-                    DataCell(TextButton(
-                      child: Text(S.of(context).clearBacklog),
-                      onPressed: () {
-                        vm.clearBacklog(data.subscriptionName);
-                      },
-                    )),
+                    DataCell(ClearBacklogButton(() {
+                      vm.clearBacklog(data.subscriptionName);
+                    })),
                   ]))
               .toList()),
     );

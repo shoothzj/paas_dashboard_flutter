@@ -270,6 +270,16 @@ class S {
     );
   }
 
+  /// `ConfirmClear?`
+  String get confirmClearBacklog {
+    return Intl.message(
+      'ConfirmClear?',
+      name: 'confirmClearBacklog',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Subscriptions`
   String get subscriptions {
     return Intl.message(
