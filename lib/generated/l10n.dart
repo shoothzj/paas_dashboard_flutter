@@ -110,6 +110,16 @@ class S {
     );
   }
 
+  /// `detail`
+  String get detail {
+    return Intl.message(
+      'detail',
+      name: 'detail',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `ConfirmDelete?`
   String get confirmDeleteQuestion {
     return Intl.message(
@@ -290,11 +300,41 @@ class S {
     );
   }
 
-  /// `partition number`
+  /// `Partition number`
   String get partitionNum {
     return Intl.message(
-      'partition number',
+      'Partition number',
       name: 'partitionNum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Partition List`
+  String get partitionList {
+    return Intl.message(
+      'Partition List',
+      name: 'partitionList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `consume`
+  String get consume {
+    return Intl.message(
+      'consume',
+      name: 'consume',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Consumer List`
+  String get consumerList {
+    return Intl.message(
+      'Consumer List',
+      name: 'consumerList',
       desc: '',
       args: [],
     );
@@ -315,6 +355,16 @@ class S {
     return Intl.message(
       'ConfirmClear?',
       name: 'confirmClearBacklog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `subscription`
+  String get subscription {
+    return Intl.message(
+      'subscription',
+      name: 'subscription',
       desc: '',
       args: [],
     );

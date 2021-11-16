@@ -21,6 +21,7 @@ class PulsarPartitionedTopicProduceWidgetState
     super.initState();
     final vm = Provider.of<PulsarPartitionedTopicProduceViewModel>(context,
         listen: false);
+    vm.fetchProducers();
   }
 
   @override
@@ -33,8 +34,45 @@ class PulsarPartitionedTopicProduceWidgetState
     }
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processOpException(vm, context);
-    var refreshButton =
-        TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
+    var subscriptionFuture = SingleChildScrollView(
+      child: DataTable(
+          showCheckboxColumn: false,
+          columns: [
+            DataColumn(label: Text('ProducerName')),
+            DataColumn(label: Text('MsgRateIn')),
+            DataColumn(label: Text('MsgThroughputIn')),
+            DataColumn(label: Text('ClientVersion')),
+            DataColumn(label: Text('AverageMsgSize')),
+            DataColumn(label: Text('Address')),
+          ],
+          rows: vm.displayList
+              .map((data) => DataRow(cells: [
+                    DataCell(
+                      Text(data.producerName),
+                    ),
+                    DataCell(
+                      Text(data.rateIn.toString()),
+                    ),
+                    DataCell(
+                      Text(data.throughputIn.toString()),
+                    ),
+                    DataCell(
+                      Text(data.clientVersion.toString()),
+                    ),
+                    DataCell(
+                      Text(data.averageMsgSize.toString()),
+                    ),
+                    DataCell(
+                      Text(data.address.toString()),
+                    ),
+                  ]))
+              .toList()),
+    );
+    var refreshButton = TextButton(
+        onPressed: () {
+          vm.fetchProducers();
+        },
+        child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
         Container(
@@ -49,6 +87,7 @@ class PulsarPartitionedTopicProduceWidgetState
           S.of(context).producerList,
           style: TextStyle(fontSize: 22),
         ),
+        subscriptionFuture,
       ],
     );
     return body;

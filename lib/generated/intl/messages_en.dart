@@ -32,11 +32,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ConfirmClear?"),
         "confirmDeleteQuestion":
             MessageLookupByLibrary.simpleMessage("ConfirmDelete?"),
+        "consume": MessageLookupByLibrary.simpleMessage("consume"),
+        "consumerList": MessageLookupByLibrary.simpleMessage("Consumer List"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteNamespace":
             MessageLookupByLibrary.simpleMessage("Delete Namespace"),
         "deleteTenant": MessageLookupByLibrary.simpleMessage("Delete Tenant"),
         "deleteTopic": MessageLookupByLibrary.simpleMessage("Delete Topic"),
+        "detail": MessageLookupByLibrary.simpleMessage("detail"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
         "isLeader": MessageLookupByLibrary.simpleMessage("Is Leader"),
         "languageSettings":
@@ -44,8 +47,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("name"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("Namespace Name"),
         "namespaces": MessageLookupByLibrary.simpleMessage("Namespaces"),
+        "partitionList": MessageLookupByLibrary.simpleMessage("Partition List"),
         "partitionNum":
-            MessageLookupByLibrary.simpleMessage("partition number"),
+            MessageLookupByLibrary.simpleMessage("Partition number"),
         "produce": MessageLookupByLibrary.simpleMessage("Produce"),
         "producerList": MessageLookupByLibrary.simpleMessage("Producer List"),
         "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
@@ -56,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchByTopic":
             MessageLookupByLibrary.simpleMessage("Search by Topic Name"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "subscription": MessageLookupByLibrary.simpleMessage("subscription"),
         "subscriptionList":
             MessageLookupByLibrary.simpleMessage("Subscription list"),
         "subscriptionName":

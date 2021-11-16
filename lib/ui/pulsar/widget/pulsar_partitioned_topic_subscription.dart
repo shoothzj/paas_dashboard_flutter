@@ -36,7 +36,7 @@ class PulsarPartitionedTopicSubscriptionWidgetState
     }
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processOpException(vm, context);
-    var topicsFuture = SingleChildScrollView(
+    var subscriptionFuture = SingleChildScrollView(
       child: DataTable(
           showCheckboxColumn: false,
           columns: [
@@ -81,7 +81,7 @@ class PulsarPartitionedTopicSubscriptionWidgetState
           S.of(context).subscriptionList,
           style: TextStyle(fontSize: 22),
         ),
-        topicsFuture
+        subscriptionFuture
       ],
     );
     return body;
