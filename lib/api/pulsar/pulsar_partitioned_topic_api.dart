@@ -4,10 +4,13 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_stat_api.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_partitioned_topic_detail.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_produce.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_subscription.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
+import 'package:paas_dashboard_flutter/ui/util/string_util.dart';
 
-class PulsarTopicAPi {
+class PulsarPartitionedTopicAPi {
   static Future<String> createPartitionTopic(String host, int port,
       String tenant, String namespace, String topic, int partitionNum) async {
     var url =
@@ -63,11 +66,12 @@ class PulsarTopicAPi {
     List<SubscriptionResp> respList = new List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("subscriptions")) {
-      Map subscriptionsMap = statsMap["subscriptions"] as Map<String,dynamic>;
+      Map subscriptionsMap = statsMap["subscriptions"] as Map<String, dynamic>;
       subscriptionsMap.forEach((key, value) {
         double rateOut = value["msgRateOut"];
         int backlog = value["msgBacklog"];
-        SubscriptionResp subscriptionDetail = new SubscriptionResp(key, backlog, rateOut);
+        SubscriptionResp subscriptionDetail =
+            new SubscriptionResp(key, backlog, rateOut);
         respList.add(subscriptionDetail);
       });
     }
@@ -107,5 +111,50 @@ class PulsarTopicAPi {
       }
     }
     return "";
+  }
+
+  static Future<List<ProducerResp>> getProducers(String host, int port,
+      String tenant, String namespace, String topic) async {
+    String data = "";
+    await PulsarStatAPi.partitionedTopicStats(
+            host, port, tenant, namespace, topic)
+        .then((value) => {data = value});
+    List<ProducerResp> respList = new List.empty(growable: true);
+    Map statsMap = json.decode(data) as Map;
+    if (statsMap.containsKey("publishers")) {
+      List publisherList = statsMap["publishers"] as List<dynamic>;
+      publisherList.forEach((element) {
+        String producerName = StringUtil.nullStr(element["producerName"]);
+        double rateIn = element["msgRateIn"];
+        double throughputIn = element["msgThroughputIn"];
+        String clientVersion = StringUtil.nullStr(element["clientVersion"]);
+        double averageMsgSize = element["averageMsgSize"];
+        String address = StringUtil.nullStr(element["address"]);
+        ProducerResp producerResp = new ProducerResp(producerName, rateIn,
+            throughputIn, clientVersion, averageMsgSize, address);
+        respList.add(producerResp);
+      });
+    }
+    return respList;
+  }
+
+  static Future<List<PulsarPartitionedTopicDetailResp>> getDetails(String host,
+      int port, String tenant, String namespace, String topic) async {
+    String data = "";
+    await PulsarStatAPi.partitionedTopicStats(
+            host, port, tenant, namespace, topic)
+        .then((value) => {data = value});
+    List<PulsarPartitionedTopicDetailResp> respList =
+        new List.empty(growable: true);
+    Map statsMap = json.decode(data) as Map;
+    if (statsMap.containsKey("partitions")) {
+      Map partitionsMap = statsMap["partitions"] as Map<String, dynamic>;
+      partitionsMap.forEach((key, value) {
+        int backlog = value["backlogSize"];
+        var resp = new PulsarPartitionedTopicDetailResp(key, backlog);
+        respList.add(resp);
+      });
+    }
+    return respList;
   }
 }

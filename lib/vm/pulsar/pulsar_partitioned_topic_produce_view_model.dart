@@ -1,3 +1,4 @@
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_produce.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
@@ -49,5 +50,19 @@ class PulsarPartitionedTopicProduceViewModel
 
   String get topic {
     return this.topicResp.topicName;
+  }
+
+  Future<void> fetchProducers() async {
+    try {
+      final results = await PulsarPartitionedTopicAPi.getProducers(
+          host, port, tenant, namespace, topic);
+      this.fullList = results;
+      this.displayList = this.fullList;
+      loadSuccess();
+    } on Exception catch (e) {
+      loadException = e;
+      loading = false;
+    }
+    notifyListeners();
   }
 }

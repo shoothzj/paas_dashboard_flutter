@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic_basic.dart';
+import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic_detail.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic_produce.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic_subscription.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_basic_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_detail_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_produce_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_subscription_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
@@ -24,15 +27,16 @@ class _PulsarPartitionedTopicState extends State<PulsarPartitionedTopic> {
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarPartitionedTopicViewModel>(context);
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Pulsar ${vm.topic} Dashboard'),
+          title: Text('Pulsar Partitioned Topic ${vm.topic}'),
           bottom: TabBar(
             tabs: [
-              Tab(text: "Basic"),
-              Tab(text: "Subscription"),
-              Tab(text: "Produce"),
+              Tab(text: S.of(context).basic),
+              Tab(text: S.of(context).detail),
+              Tab(text: S.of(context).subscription),
+              Tab(text: S.of(context).produce),
             ],
           ),
         ),
@@ -45,6 +49,14 @@ class _PulsarPartitionedTopicState extends State<PulsarPartitionedTopic> {
                   vm.namespaceResp,
                   vm.topicResp),
               child: PulsarPartitionedTopicBasicWidget(),
+            ).build(context),
+            ChangeNotifierProvider(
+              create: (context) => new PulsarPartitionedTopicDetailViewModel(
+                  vm.pulsarInstancePo,
+                  vm.tenantResp,
+                  vm.namespaceResp,
+                  vm.topicResp),
+              child: PulsarPartitionedTopicDetailWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) =>

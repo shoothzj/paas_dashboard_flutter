@@ -1,4 +1,4 @@
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
@@ -45,8 +45,8 @@ class PulsarNamespaceViewModel
 
   Future<void> fetchTopics() async {
     try {
-      final results =
-          await PulsarTopicAPi.getTopics(host, port, tenant, namespace);
+      final results = await PulsarPartitionedTopicAPi.getTopics(
+          host, port, tenant, namespace);
       this.fullList = results
           .map((e) => PulsarPartitionedTopicViewModel(
               pulsarInstancePo, tenantResp, namespaceResp, e))
@@ -77,7 +77,7 @@ class PulsarNamespaceViewModel
 
   Future<void> createTopic(String topic, int partition) async {
     try {
-      await PulsarTopicAPi.createPartitionTopic(
+      await PulsarPartitionedTopicAPi.createPartitionTopic(
           host, port, tenant, namespace, topic, partition);
       await fetchTopics();
     } on Exception catch (e) {
@@ -88,7 +88,7 @@ class PulsarNamespaceViewModel
 
   Future<void> deleteTopic(String topic) async {
     try {
-      await PulsarTopicAPi.deletePartitionTopic(
+      await PulsarPartitionedTopicAPi.deletePartitionTopic(
           host, port, tenant, namespace, topic);
       await fetchTopics();
     } on Exception catch (e) {

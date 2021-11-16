@@ -1,23 +1,23 @@
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_subscription.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_partitioned_topic_detail.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
 
-class PulsarPartitionedTopicSubscriptionViewModel
-    extends BaseLoadListViewModel<SubscriptionResp> {
+class PulsarPartitionedTopicDetailViewModel
+    extends BaseLoadListViewModel<PulsarPartitionedTopicDetailResp> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarPartitionedTopicSubscriptionViewModel(this.pulsarInstancePo,
-      this.tenantResp, this.namespaceResp, this.topicResp);
+  PulsarPartitionedTopicDetailViewModel(this.pulsarInstancePo, this.tenantResp,
+      this.namespaceResp, this.topicResp);
 
-  PulsarPartitionedTopicSubscriptionViewModel deepCopy() {
-    return new PulsarPartitionedTopicSubscriptionViewModel(
+  PulsarPartitionedTopicDetailViewModel deepCopy() {
+    return new PulsarPartitionedTopicDetailViewModel(
         pulsarInstancePo.deepCopy(),
         tenantResp.deepCopy(),
         namespaceResp.deepCopy(),
@@ -52,9 +52,9 @@ class PulsarPartitionedTopicSubscriptionViewModel
     return this.topicResp.topicName;
   }
 
-  Future<void> fetchSubscriptions() async {
+  Future<void> fetchPartitions() async {
     try {
-      final results = await PulsarPartitionedTopicAPi.getSubscription(
+      final results = await PulsarPartitionedTopicAPi.getDetails(
           host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
@@ -64,16 +64,5 @@ class PulsarPartitionedTopicSubscriptionViewModel
       loading = false;
     }
     notifyListeners();
-  }
-
-  Future<void> clearBacklog(String subscriptionName) async {
-    try {
-      await PulsarPartitionedTopicAPi.clearBacklog(
-          host, port, tenant, namespace, topic, subscriptionName);
-      await fetchSubscriptions();
-    } on Exception catch (e) {
-      opException = e;
-      notifyListeners();
-    }
   }
 }
