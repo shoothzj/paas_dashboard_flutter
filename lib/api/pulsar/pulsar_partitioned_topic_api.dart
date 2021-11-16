@@ -43,6 +43,23 @@ class PulsarPartitionedTopicAPi {
     return response.body;
   }
 
+  static Future<String> modifyPartitionTopic(String host, int port,
+      String tenant, String namespace, String topic, int partitionNum) async {
+    var url =
+        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: partitionNum.toString());
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+    return response.body;
+  }
+
   static Future<List<TopicResp>> getTopics(
       String host, int port, String tenant, String namespace) async {
     var url =
