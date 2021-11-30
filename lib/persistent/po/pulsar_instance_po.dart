@@ -1,13 +1,16 @@
-import 'package:paas_dashboard_flutter/persistent/po/http_endpoint.dart';
 
-class PulsarInstancePo extends HttpEndpoint {
+class PulsarInstancePo {
   final int id;
+  final String name;
+  final String host;
+  final int port;
+  final String functionHost;
+  final int functionPort;
 
-  PulsarInstancePo(this.id, String name, String host, int port)
-      : super(name, host, port);
+  PulsarInstancePo(this.id, this.name, this.host, this.port, this.functionHost, this.functionPort);
 
   PulsarInstancePo deepCopy() {
-    return new PulsarInstancePo(id, name, host, port);
+    return new PulsarInstancePo(id, name, host, port, functionHost, functionPort);
   }
 
   Map<String, dynamic> toMap() {
@@ -16,11 +19,13 @@ class PulsarInstancePo extends HttpEndpoint {
       'name': name,
       'host': host,
       'port': port,
+      'function_host': functionHost,
+      'function_port': functionPort,
     };
   }
 
   @override
   String toString() {
-    return 'PulsarInstance{id: $id, name: $name, host: $host, port: port}';
+    return 'PulsarInstance{id: $id, name: $name, host: $host, port: $port, functionHost: $functionHost, functionPort: $functionPort}';
   }
 }

@@ -19,8 +19,9 @@ class Persistent {
     return api!;
   }
 
-  static Future<void> savePulsar(String name, String host, int port) async {
-    return (await getApi()).savePulsar(name, host, port);
+  static Future<void> savePulsar(String name, String host, int port,
+      String functionHost, int functionPort) async {
+    return (await getApi()).savePulsar(name, host, port, functionHost, functionPort);
   }
 
   static Future<void> deletePulsar(int id) async {

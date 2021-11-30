@@ -31,6 +31,14 @@ class PulsarInstanceViewModel
     return this.pulsarInstancePo.port;
   }
 
+  String get functionHost {
+    return this.pulsarInstancePo.functionHost;
+  }
+
+  int get functionPort {
+    return this.pulsarInstancePo.functionPort;
+  }
+
   Future<void> fetchTenants() async {
     try {
       final results = await PulsarTenantAPi.getTenants(host, port);

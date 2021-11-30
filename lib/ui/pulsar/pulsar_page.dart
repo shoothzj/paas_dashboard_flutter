@@ -30,8 +30,10 @@ class _PulsarPageState extends State<PulsarPage> {
         columns: [
           DataColumn(label: Text('Id')),
           DataColumn(label: Text('Name')),
-          DataColumn(label: Text('Address')),
+          DataColumn(label: Text('Host')),
           DataColumn(label: Text('Port')),
+          DataColumn(label: Text('FunctionHost')),
+          DataColumn(label: Text('FunctionPort')),
           DataColumn(label: Text('Delete instance')),
         ],
         rows: vm.instances
@@ -46,6 +48,8 @@ class _PulsarPageState extends State<PulsarPage> {
                       DataCell(Text(itemRow.name)),
                       DataCell(Text(itemRow.host)),
                       DataCell(Text(itemRow.port.toString())),
+                      DataCell(Text(itemRow.functionHost)),
+                      DataCell(Text(itemRow.functionPort.toString())),
                       DataCellUtil.newDellDataCell(() {
                         vm.deletePulsar(itemRow.id);
                       }),
@@ -86,12 +90,14 @@ class _PulsarPageState extends State<PulsarPage> {
     final vm = Provider.of<PulsarInstanceListViewModel>(context, listen: false);
     var list = [
       FormFieldDef('Instance Name'),
-      FormFieldDef('Instance Host'),
-      FormFieldDef('Instance Port')
+      FormFieldDef('Host'),
+      FormFieldDef('Port'),
+      FormFieldDef('Function Host'),
+      FormFieldDef('Function Port'),
     ];
-    return FormUtil.createButton3("Pulsar Instance", list, context,
-        (name, host, port) {
-      vm.createPulsar(name, host, int.parse(port));
+    return FormUtil.createButton5("Pulsar Instance", list, context,
+        (name, host, port, functionHost, functionPort) {
+      vm.createPulsar(name, host, int.parse(port), functionHost, int.parse(functionPort));
     });
   }
 }

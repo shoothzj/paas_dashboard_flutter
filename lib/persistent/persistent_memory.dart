@@ -4,7 +4,7 @@ import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 
 class PersistentMemory implements PersistentApi {
   @override
-  Future<void> savePulsar(String name, String host, int port) {
+  Future<void> savePulsar(String name, String host, int port, String functionHost, int functionPort) {
     // TODO: implement savePulsar
     throw UnimplementedError();
   }
@@ -17,7 +17,7 @@ class PersistentMemory implements PersistentApi {
 
   @override
   Future<List<PulsarInstancePo>> pulsarInstances() async {
-    return [new PulsarInstancePo(0, "example", "localhost", 8080)];
+    return [new PulsarInstancePo(0, "example", "localhost", 8080, "localhost", 6650)];
   }
 
   @override
