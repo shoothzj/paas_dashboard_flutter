@@ -10,6 +10,30 @@ class FormUtil {
   static const String CANCEL = 'cancel';
   static const String CREATE = 'create';
 
+  static ButtonStyleButton createButton5(
+      String resourceName,
+      List<FormFieldDef> formFieldDefList,
+      BuildContext context,
+      Function(String, String, String, String, String) callback) {
+    if (formFieldDefList.length != 5) {
+      throw AssertionError('args not match');
+    }
+    return createButton(resourceName, formFieldDefList, context,
+            (list) => callback(list[0], list[1], list[2], list[3], list[4]));
+  }
+
+  static ButtonStyleButton createButton4(
+      String resourceName,
+      List<FormFieldDef> formFieldDefList,
+      BuildContext context,
+      Function(String, String, String, String) callback) {
+    if (formFieldDefList.length != 4) {
+      throw AssertionError('args not match');
+    }
+    return createButton(resourceName, formFieldDefList, context,
+            (list) => callback(list[0], list[1], list[2], list[3]));
+  }
+
   static ButtonStyleButton createButton3(
       String resourceName,
       List<FormFieldDef> formFieldDefList,
