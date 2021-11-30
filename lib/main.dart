@@ -15,6 +15,7 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -76,9 +77,13 @@ class MyApp extends StatelessWidget {
           final args = settings.arguments as PulsarNamespaceViewModel;
           return RouteGen.pulsarNamespace(args);
         }
-        if (settings.name == PageRouteConst.PulsarTopic) {
+        if (settings.name == PageRouteConst.PulsarPartitionedTopic) {
           final args = settings.arguments as PulsarPartitionedTopicViewModel;
           return RouteGen.pulsarPartitionedTopic(args);
+        }
+        if (settings.name == PageRouteConst.PulsarTopic) {
+          final args = settings.arguments as PulsarTopicViewModel;
+          return RouteGen.pulsarTopic(args);
         }
       },
     );

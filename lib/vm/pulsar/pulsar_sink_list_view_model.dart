@@ -1,21 +1,21 @@
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_sink_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
-import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_sink_view_model.dart';
 
-class PulsarNamespaceViewModel
-    extends BaseLoadListPageViewModel<PulsarPartitionedTopicViewModel> {
+class PulsarSinkListViewModel
+    extends BaseLoadListPageViewModel<PulsarSinkViewModel> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
 
-  PulsarNamespaceViewModel(
+  PulsarSinkListViewModel(
       this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
 
-  PulsarNamespaceViewModel deepCopy() {
-    return new PulsarNamespaceViewModel(pulsarInstancePo.deepCopy(),
+  PulsarSinkListViewModel deepCopy() {
+    return new PulsarSinkListViewModel(pulsarInstancePo.deepCopy(),
         tenantResp.deepCopy(), namespaceResp.deepCopy());
   }
 
@@ -43,12 +43,12 @@ class PulsarNamespaceViewModel
     return this.namespaceResp.namespace;
   }
 
-  Future<void> fetchTopics() async {
+  Future<void> fetchSinks() async {
     try {
-      final results = await PulsarPartitionedTopicAPi.getTopics(
-          host, port, tenant, namespace);
+      final results =
+          await PulsarSinkAPi.getSinkList(host, port, tenant, namespace);
       this.fullList = results
-          .map((e) => PulsarPartitionedTopicViewModel(
+          .map((e) => PulsarSinkViewModel(
               pulsarInstancePo, tenantResp, namespaceResp, e))
           .toList();
       this.displayList = this.fullList;
@@ -69,28 +69,16 @@ class PulsarNamespaceViewModel
     if (!loading && loadException == null) {
       this.displayList = this
           .fullList
-          .where((element) => element.topic.contains(str))
+          .where((element) => element.sinkName.contains(str))
           .toList();
     }
     notifyListeners();
   }
 
-  Future<void> createPartitionedTopic(String topic, int partition) async {
+  Future<void> deleteSink(String name) async {
     try {
-      await PulsarPartitionedTopicAPi.createPartitionTopic(
-          host, port, tenant, namespace, topic, partition);
-      await fetchTopics();
-    } on Exception catch (e) {
-      opException = e;
-      notifyListeners();
-    }
-  }
-
-  Future<void> deletePartitionedTopic(String topic) async {
-    try {
-      await PulsarPartitionedTopicAPi.deletePartitionTopic(
-          host, port, tenant, namespace, topic);
-      await fetchTopics();
+      await PulsarSinkAPi.deleteSink(host, port, tenant, namespace, name);
+      await fetchSinks();
     } on Exception catch (e) {
       opException = e;
       notifyListeners();

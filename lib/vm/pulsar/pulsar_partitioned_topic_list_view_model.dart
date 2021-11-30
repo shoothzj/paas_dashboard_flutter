@@ -75,7 +75,7 @@ class PulsarPartitionedTopicListViewModel
     notifyListeners();
   }
 
-  Future<void> createTopic(String topic, int partition) async {
+  Future<void> createPartitionedTopic(String topic, int partition) async {
     try {
       await PulsarPartitionedTopicAPi.createPartitionTopic(
           host, port, tenant, namespace, topic, partition);
@@ -86,7 +86,7 @@ class PulsarPartitionedTopicListViewModel
     }
   }
 
-  Future<void> deleteTopic(String topic) async {
+  Future<void> deletePartitionedTopic(String topic) async {
     try {
       await PulsarPartitionedTopicAPi.deletePartitionTopic(
           host, port, tenant, namespace, topic);

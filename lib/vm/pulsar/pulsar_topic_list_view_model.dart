@@ -1,21 +1,21 @@
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
-import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_view_model.dart';
 
-class PulsarNamespaceViewModel
-    extends BaseLoadListPageViewModel<PulsarPartitionedTopicViewModel> {
+class PulsarTopicListViewModel
+    extends BaseLoadListPageViewModel<PulsarTopicViewModel> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
 
-  PulsarNamespaceViewModel(
+  PulsarTopicListViewModel(
       this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
 
-  PulsarNamespaceViewModel deepCopy() {
-    return new PulsarNamespaceViewModel(pulsarInstancePo.deepCopy(),
+  PulsarTopicListViewModel deepCopy() {
+    return new PulsarTopicListViewModel(pulsarInstancePo.deepCopy(),
         tenantResp.deepCopy(), namespaceResp.deepCopy());
   }
 
@@ -45,10 +45,10 @@ class PulsarNamespaceViewModel
 
   Future<void> fetchTopics() async {
     try {
-      final results = await PulsarPartitionedTopicAPi.getTopics(
-          host, port, tenant, namespace);
+      final results =
+          await PulsarTopicAPi.getTopics(host, port, tenant, namespace);
       this.fullList = results
-          .map((e) => PulsarPartitionedTopicViewModel(
+          .map((e) => PulsarTopicViewModel(
               pulsarInstancePo, tenantResp, namespaceResp, e))
           .toList();
       this.displayList = this.fullList;
@@ -75,10 +75,9 @@ class PulsarNamespaceViewModel
     notifyListeners();
   }
 
-  Future<void> createPartitionedTopic(String topic, int partition) async {
+  Future<void> createTopic(String topic) async {
     try {
-      await PulsarPartitionedTopicAPi.createPartitionTopic(
-          host, port, tenant, namespace, topic, partition);
+      await PulsarTopicAPi.createTopic(host, port, tenant, namespace, topic);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;
@@ -86,10 +85,9 @@ class PulsarNamespaceViewModel
     }
   }
 
-  Future<void> deletePartitionedTopic(String topic) async {
+  Future<void> deleteTopic(String topic) async {
     try {
-      await PulsarPartitionedTopicAPi.deletePartitionTopic(
-          host, port, tenant, namespace, topic);
+      await PulsarTopicAPi.deleteTopic(host, port, tenant, namespace, topic);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;

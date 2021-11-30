@@ -1,21 +1,21 @@
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_source_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
-import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_view_model.dart';
 
-class PulsarNamespaceViewModel
-    extends BaseLoadListPageViewModel<PulsarPartitionedTopicViewModel> {
+class PulsarSourceListViewModel
+    extends BaseLoadListPageViewModel<PulsarSourceViewModel> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
 
-  PulsarNamespaceViewModel(
+  PulsarSourceListViewModel(
       this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
 
-  PulsarNamespaceViewModel deepCopy() {
-    return new PulsarNamespaceViewModel(pulsarInstancePo.deepCopy(),
+  PulsarSourceListViewModel deepCopy() {
+    return new PulsarSourceListViewModel(pulsarInstancePo.deepCopy(),
         tenantResp.deepCopy(), namespaceResp.deepCopy());
   }
 
@@ -45,10 +45,10 @@ class PulsarNamespaceViewModel
 
   Future<void> fetchTopics() async {
     try {
-      final results = await PulsarPartitionedTopicAPi.getTopics(
-          host, port, tenant, namespace);
+      final results =
+          await PulsarSourceAPi.getSourceList(host, port, tenant, namespace);
       this.fullList = results
-          .map((e) => PulsarPartitionedTopicViewModel(
+          .map((e) => PulsarSourceViewModel(
               pulsarInstancePo, tenantResp, namespaceResp, e))
           .toList();
       this.displayList = this.fullList;
@@ -69,27 +69,15 @@ class PulsarNamespaceViewModel
     if (!loading && loadException == null) {
       this.displayList = this
           .fullList
-          .where((element) => element.topic.contains(str))
+          .where((element) => element.sourceName.contains(str))
           .toList();
     }
     notifyListeners();
   }
 
-  Future<void> createPartitionedTopic(String topic, int partition) async {
+  Future<void> deleteSource(String topic) async {
     try {
-      await PulsarPartitionedTopicAPi.createPartitionTopic(
-          host, port, tenant, namespace, topic, partition);
-      await fetchTopics();
-    } on Exception catch (e) {
-      opException = e;
-      notifyListeners();
-    }
-  }
-
-  Future<void> deletePartitionedTopic(String topic) async {
-    try {
-      await PulsarPartitionedTopicAPi.deletePartitionTopic(
-          host, port, tenant, namespace, topic);
+      await PulsarSourceAPi.deleteSource(host, port, tenant, namespace, topic);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;

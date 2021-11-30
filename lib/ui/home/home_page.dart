@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/ui/home/home_drawer.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage() : super();

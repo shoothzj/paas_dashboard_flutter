@@ -6,26 +6,25 @@ import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
-import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
-import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_list_view_model.dart';
 import 'package:provider/provider.dart';
 
-class PulsarPartitionedTopicListWidget extends StatefulWidget {
-  PulsarPartitionedTopicListWidget();
+class PulsarTopicListWidget extends StatefulWidget {
+  PulsarTopicListWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarPartitionedTopicListWidgetState();
+    return new PulsarTopicListWidgetState();
   }
 }
 
-class PulsarPartitionedTopicListWidgetState extends State<PulsarPartitionedTopicListWidget> {
+class PulsarTopicListWidgetState extends State<PulsarTopicListWidget> {
   final searchTextController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarPartitionedTopicListViewModel>(context, listen: false);
+    final vm = Provider.of<PulsarTopicListViewModel>(context, listen: false);
     vm.fetchTopics();
     searchTextController.addListener(() {
       vm.filter(searchTextController.text);
@@ -40,7 +39,7 @@ class PulsarPartitionedTopicListWidgetState extends State<PulsarPartitionedTopic
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<PulsarPartitionedTopicListViewModel>(context);
+    final vm = Provider.of<PulsarTopicListViewModel>(context);
     if (vm.loading) {
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
@@ -49,18 +48,18 @@ class PulsarPartitionedTopicListWidgetState extends State<PulsarPartitionedTopic
     ExceptionUtil.processLoadExceptionPageable(vm, context);
     ExceptionUtil.processOpExceptionPageable(vm, context);
     vm.setDataConverter((item) => DataRow(
-        onSelectChanged: (bool? selected) {
-          Navigator.pushNamed(context, PageRouteConst.PulsarPartitionedTopic,
-              arguments: item.deepCopy());
-        },
-        cells: [
-          DataCell(
-            Text(item.topic),
-          ),
-          DataCellUtil.newDellDataCell(() {
-            vm.deletePartitionedTopic(item.topic);
-          }),
-        ]));
+            onSelectChanged: (bool? selected) {
+              Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
+                  arguments: item.deepCopy());
+            },
+            cells: [
+              DataCell(
+                Text(item.topic),
+              ),
+              DataCellUtil.newDellDataCell(() {
+                vm.deleteTopic(item.topic);
+              }),
+            ]));
     var topicsTable = SingleChildScrollView(
       child: PaginatedDataTable(
           showCheckboxColumn: false,
@@ -95,11 +94,10 @@ class PulsarPartitionedTopicListWidgetState extends State<PulsarPartitionedTopic
   }
 
   ButtonStyleButton createPartitionTopicButton(BuildContext context) {
-    var list = [FormFieldDef('Topic Name'), FormFieldDef('Partition Number')];
-    return FormUtil.createButton2("Partitioned Topic", list, context,
-            (topic, partition) async {
-          final vm = Provider.of<PulsarNamespaceViewModel>(context, listen: false);
-          vm.createPartitionedTopic(topic, int.parse(partition));
-        });
+    var list = [FormFieldDef('Topic Name')];
+    return FormUtil.createButton1("Topic", list, context, (topic) async {
+      final vm = Provider.of<PulsarTopicListViewModel>(context, listen: false);
+      vm.createTopic(topic);
+    });
   }
 }
