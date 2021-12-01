@@ -23,6 +23,23 @@ class SinkConfigReq {
   }
 }
 
+class SinkConfigResp {
+  final String name;
+  final String tenant;
+  final String namespace;
+  final List<dynamic> inputs;
+  final Map configs;
+  final String archive;
+
+  SinkConfigResp(this.name, this.tenant, this.namespace, this.inputs,
+      this.configs, this.archive);
+
+  factory SinkConfigResp.fromJson(Map map) {
+    return SinkConfigResp(map["name"], map["tenant"], map["namespace"],
+        map["inputs"], map["configs"], map["archive"]);
+  }
+}
+
 class SinkResp {
   final String sinkName;
 
@@ -30,6 +47,11 @@ class SinkResp {
 
   SinkResp deepCopy() {
     return new SinkResp(this.sinkName);
+  }
+
+  @override
+  String toString() {
+    return 'SinkResp{sinkName: $sinkName}';
   }
 }
 

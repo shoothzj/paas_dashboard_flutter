@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/component/searchable_title.dart';
 import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
@@ -45,8 +46,12 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
     }
     ExceptionUtil.processLoadExceptionPageable(vm, context);
     ExceptionUtil.processOpExceptionPageable(vm, context);
-    vm.setDataConverter(
-        (item) => DataRow(onSelectChanged: (bool? selected) {}, cells: [
+    vm.setDataConverter((item) => DataRow(
+            onSelectChanged: (bool? selected) {
+              Navigator.pushNamed(context, PageRouteConst.PulsarSource,
+                  arguments: item.deepCopy());
+            },
+            cells: [
               DataCell(
                 Text(item.sourceName),
               ),
