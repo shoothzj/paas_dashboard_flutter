@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 
-class PulsarNamespaceAPi {
+class PulsarNamespaceApi {
 
   static Future<void> createNamespace(String host, int port, String tenant, String namespace) async {
     var url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';

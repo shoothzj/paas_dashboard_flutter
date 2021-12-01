@@ -54,7 +54,7 @@ class PulsarPartitionedTopicProduceViewModel
 
   Future<void> fetchProducers() async {
     try {
-      final results = await PulsarPartitionedTopicAPi.getProducers(
+      final results = await PulsarPartitionedTopicApi.getProducers(
           host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;

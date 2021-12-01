@@ -41,7 +41,7 @@ class PulsarInstanceViewModel
 
   Future<void> fetchTenants() async {
     try {
-      final results = await PulsarTenantAPi.getTenants(host, port);
+      final results = await PulsarTenantApi.getTenants(host, port);
       this.fullList = results
           .map((e) => PulsarTenantViewModel(pulsarInstancePo, e))
           .toList();
@@ -72,7 +72,7 @@ class PulsarInstanceViewModel
 
   Future<void> createTenant(String tenant) async {
     try {
-      await PulsarTenantAPi.createTenant(host, port, tenant);
+      await PulsarTenantApi.createTenant(host, port, tenant);
       await fetchTenants();
     } on Exception catch (e) {
       opException = e;
@@ -82,7 +82,7 @@ class PulsarInstanceViewModel
 
   Future<void> deleteTenants(String tenant) async {
     try {
-      await PulsarTenantAPi.deleteTenant(host, port, tenant);
+      await PulsarTenantApi.deleteTenant(host, port, tenant);
       await fetchTenants();
     } on Exception catch (e) {
       opException = e;

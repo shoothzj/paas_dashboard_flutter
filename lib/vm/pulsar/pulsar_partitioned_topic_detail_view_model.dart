@@ -54,7 +54,7 @@ class PulsarPartitionedTopicDetailViewModel
 
   Future<void> fetchPartitions() async {
     try {
-      final results = await PulsarPartitionedTopicAPi.getDetails(
+      final results = await PulsarPartitionedTopicApi.getDetails(
           host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;

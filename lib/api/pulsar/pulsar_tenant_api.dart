@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 
-class PulsarTenantAPi {
+class PulsarTenantApi {
   static Future<void> createTenant(String host, int port, String tenant) async {
     String tenantInfo = "";
     await getTenantInfo(host, port, tenant).then((value) => tenantInfo = value);

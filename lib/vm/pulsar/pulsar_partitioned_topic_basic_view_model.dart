@@ -50,7 +50,7 @@ class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
 
   Future<void> fetchPartitions() async {
     try {
-      final results = await PulsarPartitionedTopicAPi.getDetails(
+      final results = await PulsarPartitionedTopicApi.getDetails(
           host, port, tenant, namespace, topic);
       partitionNum = results.length.toString();
       loadSuccess();
@@ -63,7 +63,7 @@ class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
 
   Future<void> modifyTopicPartition(String topic, int partition) async {
     try {
-      await PulsarPartitionedTopicAPi.modifyPartitionTopic(
+      await PulsarPartitionedTopicApi.modifyPartitionTopic(
           host, port, tenant, namespace, topic, partition);
       await fetchPartitions();
     } on Exception catch (e) {

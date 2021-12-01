@@ -6,11 +6,11 @@ import 'package:paas_dashboard_flutter/api/http_util.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_cluster.dart';
 
-class PulsarClusterAPi {
+class PulsarClusterApi {
   static Future<List<ClusterResp>> cluster(String host, int port) async {
     String version = await getVersion(host, port);
     String tenantInfo =
-        await PulsarTenantAPi.getTenantInfo(host, port, "public");
+        await PulsarTenantApi.getTenantInfo(host, port, "public");
     String cluster =
         ((json.decode(tenantInfo) as Map)["allowedClusters"] as List)[0];
     String url = 'http://$host:${port.toString()}/admin/v2/brokers/$cluster';

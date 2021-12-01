@@ -35,6 +35,14 @@ class PulsarSinkListViewModel
     return this.pulsarInstancePo.port;
   }
 
+  String get functionHost {
+    return this.pulsarInstancePo.functionHost;
+  }
+
+  int get functionPort {
+    return this.pulsarInstancePo.functionPort;
+  }
+
   String get tenant {
     return this.tenantResp.tenant;
   }
@@ -43,10 +51,22 @@ class PulsarSinkListViewModel
     return this.namespaceResp.namespace;
   }
 
+  Future<void> createSink(String sinkName, String subName, String inputTopic,
+      String sinkType, String config) async {
+    try {
+      await PulsarSinkApi.createSink(functionHost, functionPort, tenant,
+          namespace, sinkName, subName, inputTopic, sinkType, config);
+      await fetchSinks();
+    } on Exception catch (e) {
+      opException = e;
+      notifyListeners();
+    }
+  }
+
   Future<void> fetchSinks() async {
     try {
       final results =
-          await PulsarSinkAPi.getSinkList(host, port, tenant, namespace);
+          await PulsarSinkApi.getSinkList(functionHost, functionPort, tenant, namespace);
       this.fullList = results
           .map((e) => PulsarSinkViewModel(
               pulsarInstancePo, tenantResp, namespaceResp, e))
@@ -77,7 +97,7 @@ class PulsarSinkListViewModel
 
   Future<void> deleteSink(String name) async {
     try {
-      await PulsarSinkAPi.deleteSink(host, port, tenant, namespace, name);
+      await PulsarSinkApi.deleteSink(functionHost, functionPort, tenant, namespace, name);
       await fetchSinks();
     } on Exception catch (e) {
       opException = e;

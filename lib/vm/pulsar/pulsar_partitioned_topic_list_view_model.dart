@@ -45,7 +45,7 @@ class PulsarPartitionedTopicListViewModel
 
   Future<void> fetchTopics() async {
     try {
-      final results = await PulsarPartitionedTopicAPi.getTopics(
+      final results = await PulsarPartitionedTopicApi.getTopics(
           host, port, tenant, namespace);
       this.fullList = results
           .map((e) => PulsarPartitionedTopicViewModel(
@@ -77,7 +77,7 @@ class PulsarPartitionedTopicListViewModel
 
   Future<void> createPartitionedTopic(String topic, int partition) async {
     try {
-      await PulsarPartitionedTopicAPi.createPartitionTopic(
+      await PulsarPartitionedTopicApi.createPartitionTopic(
           host, port, tenant, namespace, topic, partition);
       await fetchTopics();
     } on Exception catch (e) {
@@ -88,7 +88,7 @@ class PulsarPartitionedTopicListViewModel
 
   Future<void> deletePartitionedTopic(String topic) async {
     try {
-      await PulsarPartitionedTopicAPi.deletePartitionTopic(
+      await PulsarPartitionedTopicApi.deletePartitionTopic(
           host, port, tenant, namespace, topic);
       await fetchTopics();
     } on Exception catch (e) {

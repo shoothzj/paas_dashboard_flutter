@@ -54,7 +54,7 @@ class PulsarPartitionedTopicSubscriptionViewModel
 
   Future<void> fetchSubscriptions() async {
     try {
-      final results = await PulsarPartitionedTopicAPi.getSubscription(
+      final results = await PulsarPartitionedTopicApi.getSubscription(
           host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
@@ -68,7 +68,7 @@ class PulsarPartitionedTopicSubscriptionViewModel
 
   Future<void> clearBacklog(String subscriptionName) async {
     try {
-      await PulsarPartitionedTopicAPi.clearBacklog(
+      await PulsarPartitionedTopicApi.clearBacklog(
           host, port, tenant, namespace, topic, subscriptionName);
       await fetchSubscriptions();
     } on Exception catch (e) {
