@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
 
-class PulsarStatAPi {
+class PulsarStatApi {
   static Future<String> partitionedTopicStats(String host, int port,
       String tenant, String namespace, String topic) async {
     var url =

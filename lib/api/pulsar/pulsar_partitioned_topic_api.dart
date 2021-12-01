@@ -10,7 +10,7 @@ import 'package:paas_dashboard_flutter/module/pulsar/pulsar_subscription.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/ui/util/string_util.dart';
 
-class PulsarPartitionedTopicAPi {
+class PulsarPartitionedTopicApi {
   static Future<String> createPartitionTopic(String host, int port,
       String tenant, String namespace, String topic, int partitionNum) async {
     var url =
@@ -77,7 +77,7 @@ class PulsarPartitionedTopicAPi {
   static Future<List<SubscriptionResp>> getSubscription(String host, int port,
       String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatAPi.partitionedTopicStats(
+    await PulsarStatApi.partitionedTopicStats(
             host, port, tenant, namespace, topic)
         .then((value) => {data = value});
     List<SubscriptionResp> respList = new List.empty(growable: true);
@@ -115,7 +115,7 @@ class PulsarPartitionedTopicAPi {
       String namespace,
       String topic,
       String subscription) async {
-    String data = PulsarStatAPi.partitionedTopicStats(
+    String data = PulsarStatApi.partitionedTopicStats(
         host, port, tenant, namespace, topic) as String;
 
     Map statsMap = json.decode(data) as Map;
@@ -133,7 +133,7 @@ class PulsarPartitionedTopicAPi {
   static Future<List<ProducerResp>> getProducers(String host, int port,
       String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatAPi.partitionedTopicStats(
+    await PulsarStatApi.partitionedTopicStats(
             host, port, tenant, namespace, topic)
         .then((value) => {data = value});
     List<ProducerResp> respList = new List.empty(growable: true);
@@ -158,7 +158,7 @@ class PulsarPartitionedTopicAPi {
   static Future<List<PulsarPartitionedTopicDetailResp>> getDetails(String host,
       int port, String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatAPi.partitionedTopicStats(
+    await PulsarStatApi.partitionedTopicStats(
             host, port, tenant, namespace, topic)
         .then((value) => {data = value});
     List<PulsarPartitionedTopicDetailResp> respList =

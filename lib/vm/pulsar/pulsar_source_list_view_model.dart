@@ -35,6 +35,14 @@ class PulsarSourceListViewModel
     return this.pulsarInstancePo.port;
   }
 
+  String get functionHost {
+    return this.pulsarInstancePo.functionHost;
+  }
+
+  int get functionPort {
+    return this.pulsarInstancePo.functionPort;
+  }
+
   String get tenant {
     return this.tenantResp.tenant;
   }
@@ -43,10 +51,22 @@ class PulsarSourceListViewModel
     return this.namespaceResp.namespace;
   }
 
-  Future<void> fetchTopics() async {
+  Future<void> createSource(String sourceName, String outputTopic,
+      String sourceType, String config) async {
+    try {
+      await PulsarSourceApi.createSource(functionHost, functionPort, tenant,
+          namespace, sourceName, outputTopic, sourceType, config);
+      await fetchSources();
+    } on Exception catch (e) {
+      opException = e;
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchSources() async {
     try {
       final results =
-          await PulsarSourceAPi.getSourceList(host, port, tenant, namespace);
+          await PulsarSourceApi.getSourceList(functionHost, functionPort, tenant, namespace);
       this.fullList = results
           .map((e) => PulsarSourceViewModel(
               pulsarInstancePo, tenantResp, namespaceResp, e))
@@ -77,8 +97,8 @@ class PulsarSourceListViewModel
 
   Future<void> deleteSource(String topic) async {
     try {
-      await PulsarSourceAPi.deleteSource(host, port, tenant, namespace, topic);
-      await fetchTopics();
+      await PulsarSourceApi.deleteSource(functionHost, functionPort, tenant, namespace, topic);
+      await fetchSources();
     } on Exception catch (e) {
       opException = e;
       notifyListeners();

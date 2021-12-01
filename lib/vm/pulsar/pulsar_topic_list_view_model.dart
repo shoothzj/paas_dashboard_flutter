@@ -46,7 +46,7 @@ class PulsarTopicListViewModel
   Future<void> fetchTopics() async {
     try {
       final results =
-          await PulsarTopicAPi.getTopics(host, port, tenant, namespace);
+          await PulsarTopicApi.getTopics(host, port, tenant, namespace);
       this.fullList = results
           .map((e) => PulsarTopicViewModel(
               pulsarInstancePo, tenantResp, namespaceResp, e))
@@ -77,7 +77,7 @@ class PulsarTopicListViewModel
 
   Future<void> createTopic(String topic) async {
     try {
-      await PulsarTopicAPi.createTopic(host, port, tenant, namespace, topic);
+      await PulsarTopicApi.createTopic(host, port, tenant, namespace, topic);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;
@@ -87,7 +87,7 @@ class PulsarTopicListViewModel
 
   Future<void> deleteTopic(String topic) async {
     try {
-      await PulsarTopicAPi.deleteTopic(host, port, tenant, namespace, topic);
+      await PulsarTopicApi.deleteTopic(host, port, tenant, namespace, topic);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;

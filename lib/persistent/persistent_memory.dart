@@ -17,7 +17,7 @@ class PersistentMemory implements PersistentApi {
 
   @override
   Future<List<PulsarInstancePo>> pulsarInstances() async {
-    return [new PulsarInstancePo(0, "example", "localhost", 8080, "localhost", 6650)];
+    return [new PulsarInstancePo(0, "example", "localhost", 8080, "localhost", 8080)];
   }
 
   @override

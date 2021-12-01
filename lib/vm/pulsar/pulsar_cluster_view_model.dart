@@ -28,7 +28,7 @@ class PulsarClusterViewModel extends BaseLoadListPageViewModel<ClusterResp> {
 
   Future<void> fetchPulsarCluster() async {
     try {
-      this.fullList = await PulsarClusterAPi.cluster(host, port);
+      this.fullList = await PulsarClusterApi.cluster(host, port);
       this.displayList = this.fullList;
       loadSuccess();
     } on Exception catch (e) {

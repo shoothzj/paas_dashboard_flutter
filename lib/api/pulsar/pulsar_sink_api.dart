@@ -1,11 +1,33 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:clipboard/clipboard.dart';
 import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_sink.dart';
 
-class PulsarSinkAPi {
+class PulsarSinkApi {
+  static Future<void> createSink(
+      String host,
+      int port,
+      String tenant,
+      String namespace,
+      String sinkName,
+      String subName,
+      String inputTopic,
+      String sinkType,
+      String config) async {
+    String url =
+        'http://$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sinkName';
+    List<String> inputs = [inputTopic];
+    SinkConfigReq sinkConfigReq = new SinkConfigReq(tenant, namespace, sinkName,
+        subName, inputs, json.decode(config), "builtin://$sinkType");
+    String curlCommand = "curl '$url' -F sinkConfig='" +
+        jsonEncode(sinkConfigReq) +
+        ";type=application/json'";
+    await FlutterClipboard.copy(curlCommand);
+  }
+
   static Future<void> deleteSink(String host, int port, String tenant,
       String namespace, String sinkName) async {
     var url =

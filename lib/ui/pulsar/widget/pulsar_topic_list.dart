@@ -69,7 +69,7 @@ class PulsarTopicListWidgetState extends State<PulsarTopicListWidget> {
           ],
           source: vm),
     );
-    var formButton = createPartitionTopicButton(context);
+    var formButton = createTopicButton(context);
     var refreshButton = TextButton(
         onPressed: () {
           vm.fetchTopics();
@@ -93,7 +93,7 @@ class PulsarTopicListWidgetState extends State<PulsarTopicListWidget> {
     return body;
   }
 
-  ButtonStyleButton createPartitionTopicButton(BuildContext context) {
+  ButtonStyleButton createTopicButton(BuildContext context) {
     var list = [FormFieldDef('Topic Name')];
     return FormUtil.createButton1("Topic", list, context, (topic) async {
       final vm = Provider.of<PulsarTopicListViewModel>(context, listen: false);

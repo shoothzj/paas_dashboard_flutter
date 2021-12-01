@@ -48,10 +48,10 @@ class PersistentDb implements PersistentApi {
   static initTable(Database db) async {
     log('init tables start');
     await db.execute(
-      'CREATE TABLE pulsar_instances(id INTEGER PRIMARY KEY, name TEXT, broker_host TEXT, broker_port INTEGER, function_host TEXT, function_port INTEGER)',
+      'CREATE TABLE pulsar_instances(id INTEGER PRIMARY KEY, name TEXT, host TEXT, port INTEGER, function_host TEXT, function_port INTEGER)',
     );
     await db.execute(
-      'INSERT INTO pulsar_instances(name, host, port) VALUES ("example", "localhost", 8080)',
+      'INSERT INTO pulsar_instances(name, host, port, function_host, function_port) VALUES ("example", "localhost", 8080, "localhost", 8080)',
     );
     await db.execute(
       'CREATE TABLE bookkeeper_instances(id INTEGER PRIMARY KEY, name TEXT, host TEXT, port INTEGER)',
@@ -64,7 +64,7 @@ class PersistentDb implements PersistentApi {
   @override
   Future<void> savePulsar(String name, String host, int port, String functionHost, int functionPort) async {
     var aux = await getInstance();
-    var list = [name, host, port];
+    var list = [name, host, port, functionHost, functionPort];
     aux.database.execute(
         'INSERT INTO pulsar_instances(name, host, port, function_host, function_port) VALUES (?, ?, ?, ?, ?)',
         list);

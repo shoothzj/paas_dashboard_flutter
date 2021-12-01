@@ -9,7 +9,7 @@ import 'package:paas_dashboard_flutter/module/pulsar/pulsar_subscription.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/ui/util/string_util.dart';
 
-class PulsarTopicAPi {
+class PulsarTopicApi {
   static Future<String> createTopic(String host, int port, String tenant,
       String namespace, String topic) async {
     var url =
@@ -57,7 +57,7 @@ class PulsarTopicAPi {
   static Future<List<SubscriptionResp>> getSubscription(String host, int port,
       String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatAPi.topicStats(host, port, tenant, namespace, topic)
+    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic)
         .then((value) => {data = value});
     List<SubscriptionResp> respList = new List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
@@ -94,7 +94,7 @@ class PulsarTopicAPi {
       String namespace,
       String topic,
       String subscription) async {
-    String data = PulsarStatAPi.topicStats(host, port, tenant, namespace, topic)
+    String data = PulsarStatApi.topicStats(host, port, tenant, namespace, topic)
         as String;
 
     Map statsMap = json.decode(data) as Map;
@@ -112,7 +112,7 @@ class PulsarTopicAPi {
   static Future<List<ProducerResp>> getProducers(String host, int port,
       String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatAPi.topicStats(host, port, tenant, namespace, topic)
+    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic)
         .then((value) => {data = value});
     List<ProducerResp> respList = new List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
