@@ -50,15 +50,15 @@ class PulsarSinkListWidgetState extends State<PulsarSinkListWidget> {
     vm.setDataConverter((item) => DataRow(
             onSelectChanged: (bool? selected) {
               Navigator.pushNamed(
-                  context, PageRouteConst.PulsarPartitionedTopic,
+                  context, PageRouteConst.PulsarSink,
                   arguments: item.deepCopy());
             },
             cells: [
               DataCell(
-                Text(item.name),
+                Text(item.sinkName),
               ),
               DataCellUtil.newDellDataCell(() {
-                vm.deleteSink(item.name);
+                vm.deleteSink(item.sinkName);
               }),
             ]));
     var topicsTable = SingleChildScrollView(

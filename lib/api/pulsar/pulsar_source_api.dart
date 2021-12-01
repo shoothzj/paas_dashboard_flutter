@@ -51,4 +51,18 @@ class PulsarSourceApi {
     List jsonResponse = json.decode(response.body) as List;
     return jsonResponse.map((name) => new SourceResp(name)).toList();
   }
+
+  static Future<SourceConfigResp> getSource(
+      String host, int port, String tenant, String namespace, String sourceName) async {
+    var url =
+        'http://$host:${port.toString()}/admin/v3/sources/$tenant/$namespace/$sourceName';
+    final response = await http.get(Uri.parse(url));
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+    Map jsonResponse = json.decode(response.body) as Map;
+    return SourceConfigResp.fromJson(jsonResponse);
+  }
 }

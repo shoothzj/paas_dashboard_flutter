@@ -14,6 +14,8 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_sink_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_view_model.dart';
 import 'package:provider/provider.dart';
@@ -84,6 +86,14 @@ class MyApp extends StatelessWidget {
         if (settings.name == PageRouteConst.PulsarTopic) {
           final args = settings.arguments as PulsarTopicViewModel;
           return RouteGen.pulsarTopic(args);
+        }
+        if (settings.name == PageRouteConst.PulsarSource) {
+          final args = settings.arguments as PulsarSourceViewModel;
+          return RouteGen.pulsarSource(args);
+        }
+        if (settings.name == PageRouteConst.PulsarSink) {
+          final args = settings.arguments as PulsarSinkViewModel;
+          return RouteGen.pulsarSink(args);
         }
       },
     );

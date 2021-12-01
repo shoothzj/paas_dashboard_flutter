@@ -53,4 +53,18 @@ class PulsarSinkApi {
     List jsonResponse = json.decode(response.body) as List;
     return jsonResponse.map((name) => new SinkResp(name)).toList();
   }
+
+  static Future<SinkConfigResp> getSink(
+      String host, int port, String tenant, String namespace, String sinkName) async {
+    var url =
+        'http://$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sinkName';
+    final response = await http.get(Uri.parse(url));
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+    Map jsonResponse = json.decode(response.body) as Map;
+    return SinkConfigResp.fromJson(jsonResponse);
+  }
 }
