@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_detail_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PulsarPartitionedTopicDetailWidget extends StatefulWidget {
@@ -42,12 +45,23 @@ class PulsarPartitionedTopicDetailWidgetState
             DataColumn(label: Text('BacklogSize')),
           ],
           rows: vm.displayList
-              .map((data) => DataRow(cells: [
-                    DataCell(
-                      Text(data.topicName),
+              .map((itemRow) => DataRow(
+                      onSelectChanged: (bool? selected) {
+                        var split = itemRow.topicName.split("/");
+                        var topicResp = TopicResp(split[split.length - 1]);
+                        Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
+                            arguments: new PulsarTopicViewModel(
+                                vm.pulsarInstancePo,
+                                vm.tenantResp,
+                                vm.namespaceResp,
+                                topicResp));
+                      },
+                      cells: [
+                        DataCell(
+                          Text(itemRow.topicName),
                     ),
                     DataCell(
-                      Text(data.backlogSize.toString()),
+                      Text(itemRow.backlogSize.toString()),
                     ),
                   ]))
               .toList()),
