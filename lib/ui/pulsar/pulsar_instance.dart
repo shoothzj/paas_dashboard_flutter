@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_basic.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_details.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_message_query.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_cluster_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +21,7 @@ class _PulsarInstanceState extends State<PulsarInstanceScreen> {
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarInstanceViewModel>(context);
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text('Pulsar ${vm.name} Dashboard'),
@@ -32,7 +31,6 @@ class _PulsarInstanceState extends State<PulsarInstanceScreen> {
                 text: "Basic",
               ),
               Tab(text: "Details"),
-              Tab(text: "MessageQuery"),
             ],
           ),
         ),
@@ -46,10 +44,6 @@ class _PulsarInstanceState extends State<PulsarInstanceScreen> {
             ChangeNotifierProvider(
               create: (context) => vm.deepCopy(),
               child: PulsarTenantsWidget(),
-            ).build(context),
-            ChangeNotifierProvider(
-              create: (context) => vm.deepCopy(),
-              child: PulsarMessageQueryWidget(),
             ).build(context),
           ],
         ),
