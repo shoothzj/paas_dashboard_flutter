@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_namespace_backlog_quota.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic_list.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_sink_list.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_source_list.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_topic_list.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_backlog_quota_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_sink_list_view_model.dart';
@@ -34,13 +36,14 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarNamespaceViewModel>(context);
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
               'Pulsar Namespace Tenant ${vm.tenant} -> Namespace ${vm.namespace}'),
           bottom: TabBar(
             tabs: [
+              Tab(text: "BacklogQuota"),
               Tab(text: "PartitionedTopics"),
               Tab(text: "Topics"),
               Tab(text: "Source"),
@@ -50,6 +53,11 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
         ),
         body: TabBarView(
           children: [
+            ChangeNotifierProvider(
+              create: (context) => PulsarNamespaceBacklogQuotaViewModel(
+                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+              child: PulsarNamespaceBacklogQuotaWidget(),
+            ).build(context),
             ChangeNotifierProvider(
               create: (context) => PulsarPartitionedTopicListViewModel(
                   vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
