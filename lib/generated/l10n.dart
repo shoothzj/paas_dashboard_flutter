@@ -50,51 +50,21 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `About author`
+  String get aboutAuthor {
+    return Intl.message(
+      'About author',
+      name: 'aboutAuthor',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Paas Dashboard`
   String get appName {
     return Intl.message(
       'Paas Dashboard',
       name: 'appName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Refresh`
-  String get refresh {
-    return Intl.message(
-      'Refresh',
-      name: 'refresh',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Delete`
-  String get delete {
-    return Intl.message(
-      'Delete',
-      name: 'delete',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Cancel`
-  String get cancel {
-    return Intl.message(
-      'Cancel',
-      name: 'cancel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Confirm`
-  String get confirm {
-    return Intl.message(
-      'Confirm',
-      name: 'confirm',
       desc: '',
       args: [],
     );
@@ -110,26 +80,6 @@ class S {
     );
   }
 
-  /// `detail`
-  String get detail {
-    return Intl.message(
-      'detail',
-      name: 'detail',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `ConfirmDelete?`
-  String get confirmDeleteQuestion {
-    return Intl.message(
-      'ConfirmDelete?',
-      name: 'confirmDeleteQuestion',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Broker Instance`
   String get brokersName {
     return Intl.message(
@@ -140,181 +90,51 @@ class S {
     );
   }
 
-  /// `Is Leader`
-  String get isLeader {
+  /// `Cancel`
+  String get cancel {
     return Intl.message(
-      'Is Leader',
-      name: 'isLeader',
+      'Cancel',
+      name: 'cancel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Version`
-  String get versionName {
+  /// `Clear Backlog`
+  String get clearBacklog {
     return Intl.message(
-      'Version',
-      name: 'versionName',
+      'Clear Backlog',
+      name: 'clearBacklog',
       desc: '',
       args: [],
     );
   }
 
-  /// `Tenants`
-  String get tenants {
+  /// `Confirm`
+  String get confirm {
     return Intl.message(
-      'Tenants',
-      name: 'tenants',
+      'Confirm',
+      name: 'confirm',
       desc: '',
       args: [],
     );
   }
 
-  /// `Search by Tenant Name`
-  String get searchByTenant {
+  /// `ConfirmClear?`
+  String get confirmClearBacklog {
     return Intl.message(
-      'Search by Tenant Name',
-      name: 'searchByTenant',
+      'ConfirmClear?',
+      name: 'confirmClearBacklog',
       desc: '',
       args: [],
     );
   }
 
-  /// `Tenant Name`
-  String get tenantName {
+  /// `ConfirmDelete?`
+  String get confirmDeleteQuestion {
     return Intl.message(
-      'Tenant Name',
-      name: 'tenantName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Delete Tenant`
-  String get deleteTenant {
-    return Intl.message(
-      'Delete Tenant',
-      name: 'deleteTenant',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Namespaces`
-  String get namespaces {
-    return Intl.message(
-      'Namespaces',
-      name: 'namespaces',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Search by Namespace Name`
-  String get searchByNamespace {
-    return Intl.message(
-      'Search by Namespace Name',
-      name: 'searchByNamespace',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Namespace Name`
-  String get namespaceName {
-    return Intl.message(
-      'Namespace Name',
-      name: 'namespaceName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Delete Namespace`
-  String get deleteNamespace {
-    return Intl.message(
-      'Delete Namespace',
-      name: 'deleteNamespace',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Topics`
-  String get topics {
-    return Intl.message(
-      'Topics',
-      name: 'topics',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Search by Topic Name`
-  String get searchByTopic {
-    return Intl.message(
-      'Search by Topic Name',
-      name: 'searchByTopic',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Topic Name`
-  String get topicName {
-    return Intl.message(
-      'Topic Name',
-      name: 'topicName',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Delete Topic`
-  String get deleteTopic {
-    return Intl.message(
-      'Delete Topic',
-      name: 'deleteTopic',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Produce`
-  String get produce {
-    return Intl.message(
-      'Produce',
-      name: 'produce',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Producer List`
-  String get producerList {
-    return Intl.message(
-      'Producer List',
-      name: 'producerList',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Partition number`
-  String get partitionNum {
-    return Intl.message(
-      'Partition number',
-      name: 'partitionNum',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Partition List`
-  String get partitionList {
-    return Intl.message(
-      'Partition List',
-      name: 'partitionList',
+      'ConfirmDelete?',
+      name: 'confirmDeleteQuestion',
       desc: '',
       args: [],
     );
@@ -340,21 +160,201 @@ class S {
     );
   }
 
-  /// `Clear Backlog`
-  String get clearBacklog {
+  /// `Delete`
+  String get delete {
     return Intl.message(
-      'Clear Backlog',
-      name: 'clearBacklog',
+      'Delete',
+      name: 'delete',
       desc: '',
       args: [],
     );
   }
 
-  /// `ConfirmClear?`
-  String get confirmClearBacklog {
+  /// `Delete Namespace`
+  String get deleteNamespace {
     return Intl.message(
-      'ConfirmClear?',
-      name: 'confirmClearBacklog',
+      'Delete Namespace',
+      name: 'deleteNamespace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Tenant`
+  String get deleteTenant {
+    return Intl.message(
+      'Delete Tenant',
+      name: 'deleteTenant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Topic`
+  String get deleteTopic {
+    return Intl.message(
+      'Delete Topic',
+      name: 'deleteTopic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `detail`
+  String get detail {
+    return Intl.message(
+      'detail',
+      name: 'detail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `email`
+  String get email {
+    return Intl.message(
+      'email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Is Leader`
+  String get isLeader {
+    return Intl.message(
+      'Is Leader',
+      name: 'isLeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language Settings`
+  String get languageSettings {
+    return Intl.message(
+      'Language Settings',
+      name: 'languageSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `name`
+  String get name {
+    return Intl.message(
+      'name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Namespace Name`
+  String get namespaceName {
+    return Intl.message(
+      'Namespace Name',
+      name: 'namespaceName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Namespaces`
+  String get namespaces {
+    return Intl.message(
+      'Namespaces',
+      name: 'namespaces',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Partition List`
+  String get partitionList {
+    return Intl.message(
+      'Partition List',
+      name: 'partitionList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Partition number`
+  String get partitionNum {
+    return Intl.message(
+      'Partition number',
+      name: 'partitionNum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Produce`
+  String get produce {
+    return Intl.message(
+      'Produce',
+      name: 'produce',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Producer List`
+  String get producerList {
+    return Intl.message(
+      'Producer List',
+      name: 'producerList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh`
+  String get refresh {
+    return Intl.message(
+      'Refresh',
+      name: 'refresh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by Namespace Name`
+  String get searchByNamespace {
+    return Intl.message(
+      'Search by Namespace Name',
+      name: 'searchByNamespace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by Tenant Name`
+  String get searchByTenant {
+    return Intl.message(
+      'Search by Tenant Name',
+      name: 'searchByTenant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by Topic Name`
+  String get searchByTopic {
+    return Intl.message(
+      'Search by Topic Name',
+      name: 'searchByTopic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
       desc: '',
       args: [],
     );
@@ -390,51 +390,51 @@ class S {
     );
   }
 
-  /// `About author`
-  String get aboutAuthor {
+  /// `Tenant Name`
+  String get tenantName {
     return Intl.message(
-      'About author',
-      name: 'aboutAuthor',
+      'Tenant Name',
+      name: 'tenantName',
       desc: '',
       args: [],
     );
   }
 
-  /// `Settings`
-  String get settings {
+  /// `Tenants`
+  String get tenants {
     return Intl.message(
-      'Settings',
-      name: 'settings',
+      'Tenants',
+      name: 'tenants',
       desc: '',
       args: [],
     );
   }
 
-  /// `Language Settings`
-  String get languageSettings {
+  /// `Topic Name`
+  String get topicName {
     return Intl.message(
-      'Language Settings',
-      name: 'languageSettings',
+      'Topic Name',
+      name: 'topicName',
       desc: '',
       args: [],
     );
   }
 
-  /// `name`
-  String get name {
+  /// `Topics`
+  String get topics {
     return Intl.message(
-      'name',
-      name: 'name',
+      'Topics',
+      name: 'topics',
       desc: '',
       args: [],
     );
   }
 
-  /// `email`
-  String get email {
+  /// `Version`
+  String get versionName {
     return Intl.message(
-      'email',
-      name: 'email',
+      'Version',
+      name: 'versionName',
       desc: '',
       args: [],
     );
