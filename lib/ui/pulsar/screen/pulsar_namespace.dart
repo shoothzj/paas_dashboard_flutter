@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_namespace_backlog_quota.dart';
+import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_namespace_policies.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic_list.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_sink_list.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_source_list.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_topic_list.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_backlog_quota_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_policies_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_sink_list_view_model.dart';
@@ -36,7 +38,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarNamespaceViewModel>(context);
     return DefaultTabController(
-      length: 5,
+      length: 6,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -48,6 +50,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
               Tab(text: "Topics"),
               Tab(text: "Source"),
               Tab(text: "Sink"),
+              Tab(text: "Policies"),
             ],
           ),
         ),
@@ -77,6 +80,11 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
               create: (context) => PulsarSinkListViewModel(
                   vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
               child: PulsarSinkListWidget(),
+            ).build(context),
+            ChangeNotifierProvider(
+              create: (context) => PulsarNamespacePoliciesViewModel(
+                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+              child: PulsarNamespacePoliciesWidget(),
             ).build(context),
           ],
         ),
