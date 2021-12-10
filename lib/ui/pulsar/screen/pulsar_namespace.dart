@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_namespace_backlog_quota.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_namespace_policies.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic_list.dart';
@@ -42,7 +43,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-              'Pulsar Namespace Tenant ${vm.tenant} -> Namespace ${vm.namespace}'),
+              'Pulsar ${S.of(context).tenant} ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace}'),
           bottom: TabBar(
             tabs: [
               Tab(text: "BacklogQuota"),

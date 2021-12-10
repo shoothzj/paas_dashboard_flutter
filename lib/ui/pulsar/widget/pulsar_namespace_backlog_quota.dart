@@ -62,7 +62,7 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
             shrinkWrap: true,
             children: [
               Text(
-                'LimitSize is ${vm.limitSize}',
+                'LimitSize is ${vm.limitSizeDisplayStr}',
                 style: new TextStyle(fontSize: 20),
               ),
             ],
@@ -75,7 +75,7 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
             shrinkWrap: true,
             children: [
               Text(
-                'LimitTime is ${vm.limitTime}',
+                'LimitTime is ${vm.limitTimeDisplayStr}',
                 style: new TextStyle(fontSize: 20),
               ),
             ],
@@ -88,7 +88,7 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
             shrinkWrap: true,
             children: [
               Text(
-                'Policy is ${vm.retentionPolicy}',
+                'Policy is ${vm.retentionPolicyDisplayStr}',
                 style: new TextStyle(fontSize: 20),
               ),
             ],

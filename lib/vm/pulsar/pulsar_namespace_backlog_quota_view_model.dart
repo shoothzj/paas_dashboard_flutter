@@ -8,9 +8,9 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
-  int limitSize = -1;
-  int limitTime = -1;
-  String retentionPolicy = "unset";
+  int? limitSize;
+  int? limitTime;
+  String? retentionPolicy;
 
   PulsarNamespaceBacklogQuotaViewModel(
       this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
@@ -44,13 +44,43 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
     return this.namespaceResp.namespace;
   }
 
+  String get limitSizeDisplayStr {
+    if (loading) {
+      return "loading";
+    }
+    if (limitSize == null) {
+      return "unset";
+    }
+    return limitSize!.toString();
+  }
+
+  String get limitTimeDisplayStr {
+    if (loading) {
+      return "loading";
+    }
+    if (limitTime == null) {
+      return "unset";
+    }
+    return limitTime!.toString();
+  }
+
+  String get retentionPolicyDisplayStr {
+    if (loading) {
+      return "loading";
+    }
+    if (retentionPolicy == null) {
+      return "unset";
+    }
+    return retentionPolicy!;
+  }
+
   Future<void> fetchBacklogQuota() async {
     try {
       final BacklogQuotaResp resp = await PulsarNamespaceApi.getBacklogQuota(
           host, port, tenant, namespace);
-      this.limitSize = resp.limitSize == null ? -1 : resp.limitSize!;
-      this.limitTime = resp.limitTime == null ? -1 : resp.limitTime!;
-      this.retentionPolicy = resp.policy == null ? "null" : resp.policy!;
+      this.limitSize = resp.limitSize;
+      this.limitTime = resp.limitTime;
+      this.retentionPolicy = resp.policy;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;

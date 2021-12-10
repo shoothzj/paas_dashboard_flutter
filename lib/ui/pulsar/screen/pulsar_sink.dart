@@ -25,7 +25,7 @@ class _PulsarSinkScreenState extends State<PulsarSinkScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-              'Pulsar Sink Tenant ${vm.tenant} -> Namespace ${vm.namespace} -> Topic ${vm.sinkName}'),
+              'Pulsar Sink ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace} -> Topic ${vm.sinkName}'),
           bottom: TabBar(
             tabs: [
               Tab(text: S.of(context).basic),

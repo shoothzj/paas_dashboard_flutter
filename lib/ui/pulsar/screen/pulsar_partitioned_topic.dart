@@ -31,7 +31,7 @@ class _PulsarPartitionedTopicState extends State<PulsarPartitionedTopic> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-              'Pulsar Partitioned Topic Tenant ${vm.tenant} -> Namespace ${vm.namespace} -> Topic ${vm.topic}'),
+              'Pulsar Partitioned Topic ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace} -> Topic ${vm.topic}'),
           bottom: TabBar(
             tabs: [
               Tab(text: S.of(context).basic),

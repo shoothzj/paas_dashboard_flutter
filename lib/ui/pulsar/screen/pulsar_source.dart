@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_source_basic.dart';
-import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_topic_basic.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_basic_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_view_model.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +25,7 @@ class _PulsarSourceScreenState extends State<PulsarSourceScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-              'Pulsar Source Tenant ${vm.tenant} -> Namespace ${vm.namespace} -> Topic ${vm.sourceName}'),
+              'Pulsar Source ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace} -> Topic ${vm.sourceName}'),
           bottom: TabBar(
             tabs: [
               Tab(text: S.of(context).basic),
