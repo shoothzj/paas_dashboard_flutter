@@ -7,6 +7,8 @@ class AuthorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Author> authors = [
       Author('fu_turer', "futurer@outlook.com"),
+      Author('goflutterjava', "goflutterjava@gmail.com"),
+      Author('lovehzj', "1922919664@qq.com"),
       Author('shoothzj', 'shoothzj@gmail.com')
     ];
     List<String> name = ['fu_turer', 'shoothzj'];

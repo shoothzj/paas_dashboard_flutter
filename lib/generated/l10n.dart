@@ -150,6 +150,16 @@ class S {
     );
   }
 
+  /// `consumer`
+  String get consumer {
+    return Intl.message(
+      'consumer',
+      name: 'consumer',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Consumer List`
   String get consumerList {
     return Intl.message(
@@ -245,6 +255,16 @@ class S {
     return Intl.message(
       'name',
       name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `namespace`
+  String get namespace {
+    return Intl.message(
+      'namespace',
+      name: 'namespace',
       desc: '',
       args: [],
     );
@@ -360,6 +380,16 @@ class S {
     );
   }
 
+  /// `Submit`
+  String get submit {
+    return Intl.message(
+      'Submit',
+      name: 'submit',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `subscription`
   String get subscription {
     return Intl.message(
@@ -385,6 +415,16 @@ class S {
     return Intl.message(
       'Subscription Name',
       name: 'subscriptionName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `tenant`
+  String get tenant {
+    return Intl.message(
+      'tenant',
+      name: 'tenant',
       desc: '',
       args: [],
     );

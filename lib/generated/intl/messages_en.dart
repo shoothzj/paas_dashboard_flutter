@@ -8,7 +8,6 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
-// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -34,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmDeleteQuestion":
             MessageLookupByLibrary.simpleMessage("ConfirmDelete?"),
         "consume": MessageLookupByLibrary.simpleMessage("consume"),
+        "consumer": MessageLookupByLibrary.simpleMessage("consumer"),
         "consumerList": MessageLookupByLibrary.simpleMessage("Consumer List"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteNamespace":
@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "languageSettings":
             MessageLookupByLibrary.simpleMessage("Language Settings"),
         "name": MessageLookupByLibrary.simpleMessage("name"),
+        "namespace": MessageLookupByLibrary.simpleMessage("namespace"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("Namespace Name"),
         "namespaces": MessageLookupByLibrary.simpleMessage("Namespaces"),
         "partitionList": MessageLookupByLibrary.simpleMessage("Partition List"),
@@ -61,11 +62,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchByTopic":
             MessageLookupByLibrary.simpleMessage("Search by Topic Name"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "subscription": MessageLookupByLibrary.simpleMessage("subscription"),
         "subscriptionList":
             MessageLookupByLibrary.simpleMessage("Subscription list"),
         "subscriptionName":
             MessageLookupByLibrary.simpleMessage("Subscription Name"),
+        "tenant": MessageLookupByLibrary.simpleMessage("tenant"),
         "tenantName": MessageLookupByLibrary.simpleMessage("Tenant Name"),
         "tenants": MessageLookupByLibrary.simpleMessage("Tenants"),
         "topicName": MessageLookupByLibrary.simpleMessage("Topic Name"),

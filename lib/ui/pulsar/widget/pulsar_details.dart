@@ -95,7 +95,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
   ButtonStyleButton createTenant(BuildContext context, String host, int port) {
     final vm = Provider.of<PulsarInstanceViewModel>(context, listen: false);
     var list = [FormFieldDef(S.of(context).tenantName)];
-    return FormUtil.createButton1("Pulsar Tenant", list, context,
+    return FormUtil.createButton1("Pulsar ${S.of(context).tenant}", list, context,
         (tenant) async {
       vm.createTenant(tenant);
     });

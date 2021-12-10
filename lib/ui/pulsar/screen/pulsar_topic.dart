@@ -29,7 +29,7 @@ class _PulsarTopicState extends State<PulsarTopic> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-              'Pulsar Topic Tenant ${vm.tenant} -> Namespace ${vm.namespace} -> Topic ${vm.topic}'),
+              'Pulsar Topic ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace} -> Topic ${vm.topic}'),
           bottom: TabBar(
             tabs: [
               Tab(text: S.of(context).basic),

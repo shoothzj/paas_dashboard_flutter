@@ -8,7 +8,6 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
-// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -32,6 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmClearBacklog": MessageLookupByLibrary.simpleMessage("确认清理积压吗？"),
         "confirmDeleteQuestion": MessageLookupByLibrary.simpleMessage("确认删除吗？"),
         "consume": MessageLookupByLibrary.simpleMessage("消费"),
+        "consumer": MessageLookupByLibrary.simpleMessage("消费者"),
         "consumerList": MessageLookupByLibrary.simpleMessage("消费者列表"),
         "delete": MessageLookupByLibrary.simpleMessage("删除"),
         "deleteNamespace": MessageLookupByLibrary.simpleMessage("删除命名空间"),
@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "isLeader": MessageLookupByLibrary.simpleMessage("是否是主节点"),
         "languageSettings": MessageLookupByLibrary.simpleMessage("语言设置"),
         "name": MessageLookupByLibrary.simpleMessage("名称"),
+        "namespace": MessageLookupByLibrary.simpleMessage("命名空间"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("命名空间名称"),
         "namespaces": MessageLookupByLibrary.simpleMessage("命名空间列表"),
         "partitionList": MessageLookupByLibrary.simpleMessage("partition 列表"),
@@ -53,9 +54,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchByTenant": MessageLookupByLibrary.simpleMessage("按租户名称搜索"),
         "searchByTopic": MessageLookupByLibrary.simpleMessage("按 Topic 名称搜索"),
         "settings": MessageLookupByLibrary.simpleMessage("设置"),
+        "submit": MessageLookupByLibrary.simpleMessage("提交"),
         "subscription": MessageLookupByLibrary.simpleMessage("订阅"),
         "subscriptionList": MessageLookupByLibrary.simpleMessage("订阅列表"),
         "subscriptionName": MessageLookupByLibrary.simpleMessage("订阅名称"),
+        "tenant": MessageLookupByLibrary.simpleMessage("租户"),
         "tenantName": MessageLookupByLibrary.simpleMessage("租户名称"),
         "tenants": MessageLookupByLibrary.simpleMessage("租户列表"),
         "topicName": MessageLookupByLibrary.simpleMessage("Topic 名称"),
