@@ -62,6 +62,71 @@ class PulsarPartitionedTopicBasicWidgetState
             ],
           ),
         ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
+                'storageSize :  ${vm.storageSize}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
+                'MsgRateIn :  ${vm.msgRateIn}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
+                'MsgRateOut :  ${vm.msgRateOut}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
+                'MsgInCounter :  ${vm.msgInCounter}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
+                'MsgOutCounter :  ${vm.msgOutCounter}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
       ],
     );
     return body;
