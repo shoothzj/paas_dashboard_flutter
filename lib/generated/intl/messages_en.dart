@@ -8,7 +8,6 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
-// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -35,7 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmDeleteQuestion":
             MessageLookupByLibrary.simpleMessage("ConfirmDelete?"),
         "consume": MessageLookupByLibrary.simpleMessage("consume"),
-        "consumer": MessageLookupByLibrary.simpleMessage("consumer"),
+        "consumer": MessageLookupByLibrary.simpleMessage("Consumer"),
         "consumerList": MessageLookupByLibrary.simpleMessage("Consumer List"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteNamespace":
@@ -74,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tenant": MessageLookupByLibrary.simpleMessage("tenant"),
         "tenantName": MessageLookupByLibrary.simpleMessage("Tenant Name"),
         "tenants": MessageLookupByLibrary.simpleMessage("Tenants"),
+        "topicDetail": MessageLookupByLibrary.simpleMessage("topic detail"),
         "topicName": MessageLookupByLibrary.simpleMessage("Topic Name"),
         "topics": MessageLookupByLibrary.simpleMessage("Topics"),
         "unit": MessageLookupByLibrary.simpleMessage("unit"),

@@ -4,9 +4,11 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_stat_api.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_consume.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_produce.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_subscription.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic_base.dart';
 import 'package:paas_dashboard_flutter/ui/util/string_util.dart';
 
 class PulsarTopicApi {
@@ -109,6 +111,71 @@ class PulsarTopicApi {
     return "";
   }
 
+  static Future<List<ConsumerResp>> getConsumers(String host, int port,
+      String tenant, String namespace, String topic) async {
+    String data = "";
+    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic)
+        .then((value) => {data = value});
+    List<ConsumerResp> respList = new List.empty(growable: true);
+    Map statsMap = json.decode(data) as Map;
+    if (statsMap.containsKey("subscriptions")) {
+      Map subscriptionsMap = statsMap["subscriptions"] as Map;
+      subscriptionsMap.forEach((key, value) {
+        Map subMap = value as Map;
+        if (subMap.containsKey("consumers")) {
+          List consumers = subMap["consumers"] as List;
+          consumers.forEach((element) {
+            Map consumer = element as Map;
+            double rateOut = 0;
+            double throughputOut = 0;
+            String clientVersion = "";
+            String address = "";
+            String consumerName = "";
+            double availablePermits = 0;
+            double unackedMessages = 0;
+            double lastConsumedTimestamp = 0;
+            if (consumer.containsKey("consumerName")) {
+              consumerName = consumer["consumerName"];
+            }
+            if (consumer.containsKey("address")) {
+              address = consumer["address"];
+            }
+            if (consumer.containsKey("clientVersion")) {
+              clientVersion = consumer["clientVersion"];
+            }
+            if (consumer.containsKey("throughputOut")) {
+              throughputOut = consumer["throughputOut"];
+            }
+            if (consumer.containsKey("rateOut")) {
+              rateOut = consumer["rateOut"];
+            }
+            if (consumer.containsKey("availablePermits")) {
+              availablePermits = consumer["availablePermits"];
+            }
+            if (consumer.containsKey("unackedMessages")) {
+              unackedMessages = consumer["unackedMessages"];
+            }
+            if (consumer.containsKey("lastConsumedTimestamp")) {
+              lastConsumedTimestamp = consumer["lastConsumedTimestamp"];
+            }
+            ConsumerResp consumerResp = new ConsumerResp(
+                consumerName,
+                key,
+                rateOut,
+                throughputOut,
+                availablePermits,
+                unackedMessages,
+                lastConsumedTimestamp,
+                clientVersion,
+                address);
+            respList.add(consumerResp);
+          });
+        }
+      });
+    }
+    return respList;
+  }
+
   static Future<List<ProducerResp>> getProducers(String host, int port,
       String tenant, String namespace, String topic) async {
     String data = "";
@@ -131,5 +198,43 @@ class PulsarTopicApi {
       });
     }
     return respList;
+  }
+
+  static Future<PulsarTopicBaseResp> getBase(String host, int port,
+      String tenant, String namespace, String topic) async {
+    String data = "";
+    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic)
+        .then((value) => {data = value});
+
+    Map statsMap = json.decode(data) as Map;
+    String topicName = topic;
+    int partitionNum = 0;
+    double msgRateIn = 0;
+    double msgRateOut = 0;
+    double msgInCounter = 0;
+    double msgOutCounter = 0;
+    double storageSize = 0;
+
+    if (statsMap.containsKey("metadata")) {
+      Map metadata = statsMap["metadata"] as Map;
+      partitionNum = metadata["partitions"];
+    }
+    if (statsMap.containsKey("msgRateIn")) {
+      msgRateIn = statsMap["msgRateIn"];
+    }
+    if (statsMap.containsKey("msgRateOut")) {
+      msgRateOut = statsMap["msgRateOut"];
+    }
+    if (statsMap.containsKey("msgInCounter")) {
+      msgInCounter = statsMap["msgInCounter"];
+    }
+    if (statsMap.containsKey("msgOutCounter")) {
+      msgOutCounter = statsMap["msgOutCounter"];
+    }
+    if (statsMap.containsKey("storageSize")) {
+      storageSize = statsMap["storageSize"];
+    }
+    return new PulsarTopicBaseResp(topicName, partitionNum, msgRateIn,
+        msgRateOut, msgInCounter, msgOutCounter, storageSize);
   }
 }

@@ -11,6 +11,11 @@ class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
   String partitionNum = "";
+  double msgRateIn = 0;
+  double msgRateOut = 0;
+  double msgInCounter = 0;
+  double msgOutCounter = 0;
+  double storageSize = 0;
 
   PulsarPartitionedTopicBasicViewModel(this.pulsarInstancePo, this.tenantResp,
       this.namespaceResp, this.topicResp);
@@ -50,9 +55,14 @@ class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
 
   Future<void> fetchPartitions() async {
     try {
-      final results = await PulsarPartitionedTopicApi.getDetails(
+      final results = await PulsarPartitionedTopicApi.getBase(
           host, port, tenant, namespace, topic);
-      partitionNum = results.length.toString();
+      partitionNum = results.partitionNum.toString();
+      msgRateIn = results.msgRateIn;
+      msgRateOut = results.msgRateOut;
+      msgInCounter = results.msgInCounter;
+      msgOutCounter = results.msgOutCounter;
+      storageSize = results.storageSize;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;

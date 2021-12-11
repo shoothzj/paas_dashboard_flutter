@@ -160,10 +160,10 @@ class S {
     );
   }
 
-  /// `consumer`
+  /// `Consumer`
   String get consumer {
     return Intl.message(
-      'consumer',
+      'Consumer',
       name: 'consumer',
       desc: '',
       args: [],
@@ -465,6 +465,16 @@ class S {
     return Intl.message(
       'Tenants',
       name: 'tenants',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `topic detail`
+  String get topicDetail {
+    return Intl.message(
+      'topic detail',
+      name: 'topicDetail',
       desc: '',
       args: [],
     );

@@ -8,7 +8,6 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
-// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -64,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tenant": MessageLookupByLibrary.simpleMessage("租户"),
         "tenantName": MessageLookupByLibrary.simpleMessage("租户名称"),
         "tenants": MessageLookupByLibrary.simpleMessage("租户列表"),
+        "topicDetail": MessageLookupByLibrary.simpleMessage("主题详情"),
         "topicName": MessageLookupByLibrary.simpleMessage("Topic 名称"),
         "topics": MessageLookupByLibrary.simpleMessage("Topic 列表"),
         "unit": MessageLookupByLibrary.simpleMessage("单位"),

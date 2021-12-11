@@ -14,11 +14,12 @@ class PulsarTopicBasicWidget extends StatefulWidget {
   }
 }
 
-class PulsarTopicBasicWidgetState
-    extends State<PulsarTopicBasicWidget> {
+class PulsarTopicBasicWidgetState extends State<PulsarTopicBasicWidget> {
   @override
   void initState() {
     super.initState();
+    final vm = Provider.of<PulsarTopicBasicViewModel>(context, listen: false);
+    vm.fetchPartitions();
   }
 
   @override
@@ -31,8 +32,11 @@ class PulsarTopicBasicWidgetState
     }
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processOpException(vm, context);
-    var refreshButton =
-    TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
+    var refreshButton = TextButton(
+        onPressed: () {
+          vm.fetchPartitions();
+        },
+        child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
         Container(
@@ -43,9 +47,73 @@ class PulsarTopicBasicWidgetState
             children: [refreshButton],
           ),
         ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
+                'StorageSize :  ${vm.storageSize}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
+                'MsgRateIn :  ${vm.msgRateIn}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
+                'MsgRateOut :  ${vm.msgRateOut}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
+                'MsgInCounter :  ${vm.msgInCounter}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
+                'MsgOutCounter :  ${vm.msgOutCounter}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
       ],
     );
     return body;
   }
-
 }
