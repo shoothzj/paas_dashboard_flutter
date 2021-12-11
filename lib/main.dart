@@ -7,9 +7,11 @@ import 'package:paas_dashboard_flutter/ui/bk/bk_page.dart';
 import 'package:paas_dashboard_flutter/ui/general/author_screen.dart';
 import 'package:paas_dashboard_flutter/ui/general/settings_screen.dart';
 import 'package:paas_dashboard_flutter/ui/home/home_page.dart';
+import 'package:paas_dashboard_flutter/ui/kubernetes/k8s_page.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/general/settings_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/kubernetes/k8s_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
@@ -61,6 +63,10 @@ class MyApp extends StatelessWidget {
               create: (context) => BkInstanceListViewModel(),
               child: BkPage(),
             ),
+        PageRouteConst.Kubernetes: (context) => ChangeNotifierProvider(
+          create: (context) => K8sInstanceListViewModel(),
+          child: K8sPage(),
+        ),
         PageRouteConst.Pulsar: (context) => ChangeNotifierProvider(
               create: (context) => PulsarInstanceListViewModel(),
               child: PulsarPage(),

@@ -5,6 +5,9 @@ Flutter Paas Dashboard
 ## 其他语言文档
 - [English Doc](README_en.md)
 
+# 安装
+- [Install Doc](install.md)
+
 # 开发环境准备
 ```bash
 flutter config --enable-macos-desktop

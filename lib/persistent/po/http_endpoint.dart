@@ -7,6 +7,6 @@ class HttpEndpoint {
 
   @override
   String toString() {
-    return 'HttpEndpoint{name: $name, host: $host, port: port}';
+    return 'HttpEndpoint{name: $name, host: $host, port: $port}';
   }
 }

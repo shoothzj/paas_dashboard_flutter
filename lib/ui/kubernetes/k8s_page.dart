@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/vm/kubernetes/k8s_instance_list_view_model.dart';
+import 'package:provider/provider.dart';
+
+class K8sPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new _K8sPageState();
+  }
+}
+
+class _K8sPageState extends State<K8sPage> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<K8sInstanceListViewModel>(context, listen: false)
+        .fetchBkInstances();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<K8sInstanceListViewModel>(context);
+    var refreshButton = TextButton(
+        onPressed: () {
+          setState(() {
+            vm.fetchBkInstances();
+          });
+        },
+        child: Text(S.of(context).refresh));
+    var body = ListView(
+      children: [
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [refreshButton],
+          ),
+        ),
+        Center(
+          child: Text('Kubernetes Instance List'),
+        ),
+        SingleChildScrollView(
+          child: DataTable(
+            showCheckboxColumn: false,
+            columns: [
+              DataColumn(label: Text('Id')),
+              DataColumn(label: Text('Name')),
+            ],
+            rows: vm.instances
+                .map((itemRow) =>
+                DataRow(onSelectChanged: (bool? selected) {}, cells: [
+                  DataCell(Text(itemRow.id.toString())),
+                  DataCell(Text(itemRow.name)),
+                ]))
+                .toList(),
+          ),
+        ),
+      ],
+    );
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Kubernetes Dashboard'),
+        ),
+        body: body);
+  }
+}
