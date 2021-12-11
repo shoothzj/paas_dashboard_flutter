@@ -1,8 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:paas_dashboard_flutter/module/ssh/ssh_step.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent_api.dart';
 import 'package:paas_dashboard_flutter/persistent/po/bk_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -59,6 +61,19 @@ class PersistentDb implements PersistentApi {
     await db.execute(
       'INSERT INTO bookkeeper_instances(name, host, port) VALUES ("example", "localhost", 8080)',
     );
+    await db.execute(
+      'CREATE TABLE zookeeper_instances(id INTEGER PRIMARY KEY, name TEXT, host TEXT, port INTEGER)',
+    );
+    await db.execute(
+      'INSERT INTO zookeeper_instances(name, host, port) VALUES ("example", "localhost", 8080)',
+    );
+    // type: api、host
+    await db.execute(
+      'CREATE TABLE kubernetes_instances(id INTEGER PRIMARY KEY, name TEXT, type TEXT, content TEXT)',
+    );
+    await db.execute(
+      'INSERT INTO kubernetes_instances(name, type, content) VALUES ("example", "host", "{}")',
+    );
   }
 
   @override
@@ -111,6 +126,24 @@ class PersistentDb implements PersistentApi {
       var aux = maps[i];
       return BkInstancePo(aux['id'], aux['name'], aux['host'], aux['port']);
     });
+  }
+
+  @override
+  Future<void> saveKubernetesSsh(String name, List<SshStep> sshSteps) {
+    // TODO: implement saveKubernetesSsh
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteKubernetes(int id) {
+    // TODO: implement deleteKubernetes
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<K8sInstancePo>> kubernetesInstances() {
+    // TODO: implement k8sInstances
+    throw UnimplementedError();
   }
 
 }
