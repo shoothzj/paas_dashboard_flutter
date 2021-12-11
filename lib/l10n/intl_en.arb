@@ -3,6 +3,7 @@
   "appName": "Paas Dashboard",
   "basic": "Basic",
   "brokersName": "Broker Instance",
+  "byte": "byte",
   "cancel": "Cancel",
   "clearBacklog": "Clear Backlog",
   "confirm": "Confirm",
@@ -31,6 +32,7 @@
   "searchByNamespace": "Search by Namespace Name",
   "searchByTenant": "Search by Tenant Name",
   "searchByTopic": "Search by Topic Name",
+  "second": "second",
   "settings": "Settings",
   "submit": "Submit",
   "subscription": "subscription",
@@ -41,5 +43,6 @@
   "tenants": "Tenants",
   "topicName": "Topic Name",
   "topics": "Topics",
+  "unit": "unit",
   "versionName": "Version"
 }

@@ -90,6 +90,16 @@ class S {
     );
   }
 
+  /// `byte`
+  String get byte {
+    return Intl.message(
+      'byte',
+      name: 'byte',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Cancel`
   String get cancel {
     return Intl.message(
@@ -370,6 +380,16 @@ class S {
     );
   }
 
+  /// `second`
+  String get second {
+    return Intl.message(
+      'second',
+      name: 'second',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Settings`
   String get settings {
     return Intl.message(
@@ -465,6 +485,16 @@ class S {
     return Intl.message(
       'Topics',
       name: 'topics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `unit`
+  String get unit {
+    return Intl.message(
+      'unit',
+      name: 'unit',
       desc: '',
       args: [],
     );

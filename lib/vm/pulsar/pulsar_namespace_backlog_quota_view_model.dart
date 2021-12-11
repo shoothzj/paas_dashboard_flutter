@@ -44,6 +44,13 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
     return this.namespaceResp.namespace;
   }
 
+  set limitSizeDisplayStr(String displayStr) {
+    if (displayStr == "unset") {
+      return;
+    }
+    this.limitSize = int.parse(displayStr);
+  }
+
   String get limitSizeDisplayStr {
     if (loading) {
       return "loading";
@@ -54,6 +61,13 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
     return limitSize!.toString();
   }
 
+  set limitTimeDisplayStr(String displayStr) {
+    if (displayStr == "unset") {
+      return;
+    }
+    this.limitTime = int.parse(displayStr);
+  }
+
   String get limitTimeDisplayStr {
     if (loading) {
       return "loading";
@@ -62,6 +76,13 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
       return "unset";
     }
     return limitTime!.toString();
+  }
+
+  set retentionPolicyDisplayStr(String displayStr) {
+    if (displayStr == "unset") {
+      return;
+    }
+    this.retentionPolicy = displayStr;
   }
 
   String get retentionPolicyDisplayStr {
@@ -89,16 +110,16 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
     notifyListeners();
   }
 
-  Future<void> updateBacklogQuota(
-      String limit, String limitTime, String policy) async {
+  Future<void> updateBacklogQuota() async {
     try {
-      if (limitTime == "") {
-        await PulsarNamespaceApi.updateBacklogQuota(
-            host, port, tenant, namespace, int.parse(limit), null, policy);
-      } else {
-        await PulsarNamespaceApi.updateBacklogQuota(host, port, tenant,
-            namespace, int.parse(limit), int.parse(limitTime), policy);
+      if (limitSize == null) {
+        return;
       }
+      if (retentionPolicy == null) {
+        return;
+      }
+      await PulsarNamespaceApi.updateBacklogQuota(host, port, tenant, namespace,
+          limitSize!, limitTime, retentionPolicy!);
       await fetchBacklogQuota();
     } on Exception catch (e) {
       opException = e;

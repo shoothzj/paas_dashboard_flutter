@@ -43,7 +43,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-              'Pulsar ${S.of(context).tenant} ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace}'),
+              'Pulsar ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace}'),
           bottom: TabBar(
             tabs: [
               Tab(text: "BacklogQuota"),
