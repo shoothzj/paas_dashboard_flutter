@@ -54,7 +54,11 @@ class PulsarNamespaceApi {
           'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     Map jsonResponse = json.decode(response.body) as Map;
-    return BacklogQuotaResp.fromJson(jsonResponse["destination_storage"]);
+    var destinationStorageResp = jsonResponse["destination_storage"];
+    if (destinationStorageResp == null) {
+      return new BacklogQuotaResp(null, null, null);
+    }
+    return BacklogQuotaResp.fromJson(destinationStorageResp);
   }
 
   static Future<void> updateBacklogQuota(String host, int port, String tenant,

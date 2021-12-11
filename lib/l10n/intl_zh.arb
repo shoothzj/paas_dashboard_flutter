@@ -3,6 +3,7 @@
   "appName": "Paas 仪表盘",
   "basic": "基础信息",
   "brokersName": "Pulsar 实例",
+  "byte": "比特",
   "cancel": "取消",
   "clearBacklog": "清理积压",
   "confirm": "确认",
@@ -31,6 +32,7 @@
   "searchByNamespace": "按命名空间名称搜索",
   "searchByTenant": "按租户名称搜索",
   "searchByTopic": "按 Topic 名称搜索",
+  "second": "秒",
   "settings": "设置",
   "submit": "提交",
   "subscription": "订阅",
@@ -41,5 +43,6 @@
   "tenants": "租户列表",
   "topicName": "Topic 名称",
   "topics": "Topic 列表",
+  "unit": "单位",
   "versionName": "版本"
 }

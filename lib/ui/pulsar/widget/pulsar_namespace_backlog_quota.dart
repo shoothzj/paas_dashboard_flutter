@@ -39,7 +39,17 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
     }
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processLoadException(vm, context);
-    var formButton = modifyBacklogQuotaButton(context);
+    var limitSizeEditingController = TextEditingController(text: vm.limitSizeDisplayStr);
+    var limitTimeEditingController = TextEditingController(text: vm.limitTimeDisplayStr);
+    var policyEditingController = TextEditingController(text: vm.retentionPolicyDisplayStr);
+    var formButton = TextButton(
+        onPressed: () {
+          vm.limitSizeDisplayStr = limitSizeEditingController.value.text;
+          vm.limitTimeDisplayStr = limitTimeEditingController.value.text;
+          vm.retentionPolicyDisplayStr = policyEditingController.value.text;
+          vm.updateBacklogQuota();
+        },
+        child: Text(S.of(context).submit));
     var refreshButton = TextButton(
         onPressed: () {
           vm.fetchBacklogQuota();
@@ -57,55 +67,40 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
         ),
         Container(
           height: 50,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            children: [
-              Text(
-                'LimitSize is ${vm.limitSizeDisplayStr}',
-                style: new TextStyle(fontSize: 20),
-              ),
-            ],
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "LimitSize"),
+            controller: limitSizeEditingController,
           ),
         ),
         Container(
-          height: 50,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            children: [
-              Text(
-                'LimitTime is ${vm.limitTimeDisplayStr}',
-                style: new TextStyle(fontSize: 20),
-              ),
-            ],
-          ),
+          child: Text("${S.of(context).unit}: ${S.of(context).byte}"),
         ),
         Container(
           height: 50,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            children: [
-              Text(
-                'Policy is ${vm.retentionPolicyDisplayStr}',
-                style: new TextStyle(fontSize: 20),
-              ),
-            ],
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "LimitTime"),
+            controller: limitTimeEditingController,
           ),
+        ),
+        Container(
+          child: Text("${S.of(context).unit}: ${S.of(context).second}"),
+        ),
+        Container(
+          height: 50,
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "Policy"),
+            controller: policyEditingController,
+          ),
+        ),
+        Container(
+          child: SelectableText(
+              "Policy enum: {producer_request_hold, producer_exception, consumer_backlog_eviction}",
+          toolbarOptions: ToolbarOptions(
+            paste: true
+          ),),
         ),
       ],
     );
     return body;
-  }
-
-  ButtonStyleButton modifyBacklogQuotaButton(BuildContext context) {
-    var list = [FormFieldDef('New Limit Size'), FormFieldDef('New Limit Time'), FormFieldDef('New Policy')];
-    return FormUtil.updateButton3("New Backlog Quota", list, context,
-            (limitSize, limitTime, policy) async {
-          final vm = Provider.of<PulsarNamespaceBacklogQuotaViewModel>(context,
-              listen: false);
-          vm.updateBacklogQuota(limitSize, limitTime, policy);
-        });
   }
 }
