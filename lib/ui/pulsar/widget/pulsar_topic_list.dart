@@ -49,8 +49,7 @@ class PulsarTopicListWidgetState extends State<PulsarTopicListWidget> {
     ExceptionUtil.processOpExceptionPageable(vm, context);
     vm.setDataConverter((item) => DataRow(
             onSelectChanged: (bool? selected) {
-              Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
-                  arguments: item.deepCopy());
+              Navigator.pushNamed(context, PageRouteConst.PulsarTopic, arguments: item.deepCopy());
             },
             cells: [
               DataCell(
@@ -85,8 +84,7 @@ class PulsarTopicListWidgetState extends State<PulsarTopicListWidget> {
             children: [formButton, refreshButton],
           ),
         ),
-        SearchableTitle(S.of(context).topics, S.of(context).searchByTopic,
-            searchTextController),
+        SearchableTitle(S.of(context).topics, S.of(context).searchByTopic, searchTextController),
         topicsTable
       ],
     );

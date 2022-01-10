@@ -17,8 +17,7 @@ class PulsarTenantApi {
         body: tenantInfo);
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception(
-          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
   }
 
@@ -27,8 +26,7 @@ class PulsarTenantApi {
     final response = await http.delete(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception(
-          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
   }
 
@@ -37,21 +35,18 @@ class PulsarTenantApi {
     final response = await http.get(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception(
-          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     List jsonResponse = json.decode(response.body) as List;
     return jsonResponse.map((name) => new TenantResp.fromJson(name)).toList();
   }
 
-  static Future<String> getTenantInfo(
-      String host, int port, String tenant) async {
+  static Future<String> getTenantInfo(String host, int port, String tenant) async {
     var url = 'http://$host:${port.toString()}/admin/v2/tenants/public';
     final response = await http.get(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception(
-          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     return response.body;
   }

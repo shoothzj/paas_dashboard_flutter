@@ -14,12 +14,11 @@ class PulsarSinkBasicViewModel extends BaseLoadViewModel {
   Map configs = {};
   String archive = "";
 
-  PulsarSinkBasicViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.sinkResp);
+  PulsarSinkBasicViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.sinkResp);
 
   PulsarSinkBasicViewModel deepCopy() {
-    return new PulsarSinkBasicViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy(), sinkResp.deepCopy());
+    return new PulsarSinkBasicViewModel(
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), sinkResp.deepCopy());
   }
 
   int get id {
@@ -52,8 +51,7 @@ class PulsarSinkBasicViewModel extends BaseLoadViewModel {
 
   Future<void> fetch() async {
     try {
-      final SinkConfigResp sinkConfigResp =
-          await PulsarSinkApi.getSink(host, port, tenant, namespace, sinkName);
+      final SinkConfigResp sinkConfigResp = await PulsarSinkApi.getSink(host, port, tenant, namespace, sinkName);
       this.inputs = sinkConfigResp.inputs;
       this.configs = sinkConfigResp.configs;
       this.archive = sinkConfigResp.archive;

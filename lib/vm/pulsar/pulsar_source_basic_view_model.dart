@@ -14,12 +14,11 @@ class PulsarSourceBasicViewModel extends BaseLoadViewModel {
   Map configs = {};
   String archive = "";
 
-  PulsarSourceBasicViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.sourceResp);
+  PulsarSourceBasicViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.sourceResp);
 
   PulsarSourceBasicViewModel deepCopy() {
-    return new PulsarSourceBasicViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy(), sourceResp.deepCopy());
+    return new PulsarSourceBasicViewModel(
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), sourceResp.deepCopy());
   }
 
   int get id {
@@ -52,8 +51,8 @@ class PulsarSourceBasicViewModel extends BaseLoadViewModel {
 
   Future<void> fetch() async {
     try {
-      final SourceConfigResp sourceConfigResp = await PulsarSourceApi.getSource(
-          host, port, tenant, namespace, sourceName);
+      final SourceConfigResp sourceConfigResp =
+          await PulsarSourceApi.getSource(host, port, tenant, namespace, sourceName);
       this.topicName = sourceConfigResp.topicName;
       this.configs = sourceConfigResp.configs;
       this.archive = sourceConfigResp.archive;

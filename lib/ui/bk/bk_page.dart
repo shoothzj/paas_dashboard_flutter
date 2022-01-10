@@ -16,8 +16,7 @@ class _BkPageState extends State<BkPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<BkInstanceListViewModel>(context, listen: false)
-        .fetchBkInstances();
+    Provider.of<BkInstanceListViewModel>(context, listen: false).fetchBkInstances();
   }
 
   @override
@@ -55,8 +54,7 @@ class _BkPageState extends State<BkPage> {
               DataColumn(label: Text('Delete instance')),
             ],
             rows: vm.instances
-                .map((itemRow) =>
-                    DataRow(onSelectChanged: (bool? selected) {}, cells: [
+                .map((itemRow) => DataRow(onSelectChanged: (bool? selected) {}, cells: [
                       DataCell(Text(itemRow.id.toString())),
                       DataCell(Text(itemRow.name)),
                       DataCell(Text(itemRow.host)),
@@ -79,13 +77,8 @@ class _BkPageState extends State<BkPage> {
 
   ButtonStyleButton createInstanceButton(BuildContext context) {
     final vm = Provider.of<BkInstanceListViewModel>(context, listen: false);
-    var list = [
-      FormFieldDef('Instance Name'),
-      FormFieldDef('Instance Host'),
-      FormFieldDef('Instance Port')
-    ];
-    return FormUtil.createButton3("Bookkeeper Instance", list, context,
-        (name, host, port) {
+    var list = [FormFieldDef('Instance Name'), FormFieldDef('Instance Host'), FormFieldDef('Instance Port')];
+    return FormUtil.createButton3("Bookkeeper Instance", list, context, (name, host, port) {
       vm.createBk(name, host, int.parse(port));
     });
   }

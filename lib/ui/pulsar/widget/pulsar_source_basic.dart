@@ -32,8 +32,7 @@ class PulsarSourceBasicWidgetState extends State<PulsarSourceBasicWidget> {
     }
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processOpException(vm, context);
-    var refreshButton =
-        TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
+    var refreshButton = TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
         Container(

@@ -6,8 +6,7 @@ class SourceConfigReq {
   final Map configs;
   final String archive;
 
-  SourceConfigReq(this.name, this.tenant, this.namespace, this.topicName,
-      this.configs, this.archive);
+  SourceConfigReq(this.name, this.tenant, this.namespace, this.topicName, this.configs, this.archive);
 
   Map toJson() {
     Map map = new Map();
@@ -29,12 +28,11 @@ class SourceConfigResp {
   final Map configs;
   final String archive;
 
-  SourceConfigResp(this.name, this.tenant, this.namespace, this.topicName,
-      this.configs, this.archive);
+  SourceConfigResp(this.name, this.tenant, this.namespace, this.topicName, this.configs, this.archive);
 
   factory SourceConfigResp.fromJson(Map map) {
-    return SourceConfigResp(map["name"], map["tenant"], map["namespace"],
-        map["topicName"], map["configs"], map["archive"]);
+    return SourceConfigResp(
+        map["name"], map["tenant"], map["namespace"], map["topicName"], map["configs"], map["archive"]);
   }
 }
 

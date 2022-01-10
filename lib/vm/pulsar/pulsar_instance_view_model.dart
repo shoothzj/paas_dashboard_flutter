@@ -5,8 +5,7 @@ import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 
-class PulsarInstanceViewModel
-    extends BaseLoadListPageViewModel<PulsarTenantViewModel> {
+class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantViewModel> {
   final PulsarInstancePo pulsarInstancePo;
 
   PulsarInstanceViewModel(this.pulsarInstancePo);
@@ -42,9 +41,7 @@ class PulsarInstanceViewModel
   Future<void> fetchTenants() async {
     try {
       final results = await PulsarTenantApi.getTenants(host, port);
-      this.fullList = results
-          .map((e) => PulsarTenantViewModel(pulsarInstancePo, e))
-          .toList();
+      this.fullList = results.map((e) => PulsarTenantViewModel(pulsarInstancePo, e)).toList();
       this.displayList = this.fullList;
       loadSuccess();
     } on Exception catch (e) {
@@ -62,10 +59,7 @@ class PulsarInstanceViewModel
       return;
     }
     if (!loading && loadException == null) {
-      this.displayList = this
-          .fullList
-          .where((element) => element.tenant.contains(str))
-          .toList();
+      this.displayList = this.fullList.where((element) => element.tenant.contains(str)).toList();
     }
     notifyListeners();
   }

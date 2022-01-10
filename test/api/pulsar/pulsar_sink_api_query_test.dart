@@ -4,8 +4,8 @@ import 'package:paas_dashboard_flutter/module/pulsar/const.dart';
 
 void main() {
   test("test_create_sink", () async {
-    var list = await PulsarSinkApi.getSinkList(PulsarConst.defaultHost,
-        PulsarConst.defaultFunctionPort, "public", "default");
+    var list =
+        await PulsarSinkApi.getSinkList(PulsarConst.defaultHost, PulsarConst.defaultFunctionPort, "public", "default");
     print(list);
   });
 }

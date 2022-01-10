@@ -47,8 +47,7 @@ class MongoDatabaseListWidgetState extends State<MongoDatabaseListWidget> {
     ExceptionUtil.processOpExceptionPageable(vm, context);
     vm.setDataConverter((item) => DataRow(
             onSelectChanged: (bool? selected) {
-              Navigator.pushNamed(context, PageRouteConst.MongoDatabase,
-                  arguments: item.deepCopy());
+              Navigator.pushNamed(context, PageRouteConst.MongoDatabase, arguments: item.deepCopy());
             },
             cells: [
               DataCell(
@@ -78,8 +77,7 @@ class MongoDatabaseListWidgetState extends State<MongoDatabaseListWidget> {
             children: [refreshButton],
           ),
         ),
-        SearchableTitle(
-            "database list", "search by database name", searchTextController),
+        SearchableTitle("database list", "search by database name", searchTextController),
         topicsTable
       ],
     );

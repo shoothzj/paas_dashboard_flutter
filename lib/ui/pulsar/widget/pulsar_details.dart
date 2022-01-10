@@ -49,8 +49,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
     ExceptionUtil.processOpExceptionPageable(vm, context);
     vm.setDataConverter((item) => DataRow(
             onSelectChanged: (bool? selected) {
-              Navigator.pushNamed(context, PageRouteConst.PulsarTenant,
-                  arguments: item.deepCopy());
+              Navigator.pushNamed(context, PageRouteConst.PulsarTenant, arguments: item.deepCopy());
             },
             cells: [
               DataCell(
@@ -76,8 +75,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
             children: [formButton, refreshButton],
           ),
         ),
-        SearchableTitle(S.of(context).tenants, S.of(context).searchByTenant,
-            searchTextController),
+        SearchableTitle(S.of(context).tenants, S.of(context).searchByTenant, searchTextController),
         SingleChildScrollView(
           child: PaginatedDataTable(
               showCheckboxColumn: false,
@@ -95,8 +93,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
   ButtonStyleButton createTenant(BuildContext context, String host, int port) {
     final vm = Provider.of<PulsarInstanceViewModel>(context, listen: false);
     var list = [FormFieldDef(S.of(context).tenantName)];
-    return FormUtil.createButton1(
-        "Pulsar ${S.of(context).tenant}", list, context, (tenant) async {
+    return FormUtil.createButton1("Pulsar ${S.of(context).tenant}", list, context, (tenant) async {
       vm.createTenant(tenant);
     });
   }

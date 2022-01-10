@@ -6,8 +6,7 @@ class MysqlInstancePo {
   final String username;
   final String password;
 
-  MysqlInstancePo(
-      this.id, this.name, this.host, this.port, this.username, this.password);
+  MysqlInstancePo(this.id, this.name, this.host, this.port, this.username, this.password);
 
   MysqlInstancePo deepCopy() {
     return new MysqlInstancePo(id, name, host, port, username, password);

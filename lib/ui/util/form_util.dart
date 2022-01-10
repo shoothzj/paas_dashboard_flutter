@@ -10,80 +10,57 @@ class FormUtil {
   static const String CANCEL = 'cancel';
   static const String CREATE = 'create';
 
-  static ButtonStyleButton createButton5(
-      String resourceName,
-      List<FormFieldDef> formFieldDefList,
-      BuildContext context,
+  static ButtonStyleButton createButton5(String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context,
       Function(String, String, String, String, String) callback) {
     if (formFieldDefList.length != 5) {
       throw AssertionError('args not match');
     }
-    return createButton(resourceName, formFieldDefList, context,
-        (list) => callback(list[0], list[1], list[2], list[3], list[4]));
+    return createButton(
+        resourceName, formFieldDefList, context, (list) => callback(list[0], list[1], list[2], list[3], list[4]));
   }
 
-  static ButtonStyleButton createButton4(
-      String resourceName,
-      List<FormFieldDef> formFieldDefList,
-      BuildContext context,
+  static ButtonStyleButton createButton4(String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context,
       Function(String, String, String, String) callback) {
     if (formFieldDefList.length != 4) {
       throw AssertionError('args not match');
     }
-    return createButton(resourceName, formFieldDefList, context,
-        (list) => callback(list[0], list[1], list[2], list[3]));
+    return createButton(
+        resourceName, formFieldDefList, context, (list) => callback(list[0], list[1], list[2], list[3]));
   }
 
-  static ButtonStyleButton createButton3(
-      String resourceName,
-      List<FormFieldDef> formFieldDefList,
-      BuildContext context,
+  static ButtonStyleButton createButton3(String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context,
       Function(String, String, String) callback) {
     if (formFieldDefList.length != 3) {
       throw AssertionError('args not match');
     }
-    return createButton(resourceName, formFieldDefList, context,
-        (list) => callback(list[0], list[1], list[2]));
+    return createButton(resourceName, formFieldDefList, context, (list) => callback(list[0], list[1], list[2]));
   }
 
-  static ButtonStyleButton createButton2(
-      String resourceName,
-      List<FormFieldDef> formFieldDefList,
-      BuildContext context,
+  static ButtonStyleButton createButton2(String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context,
       Function(String, String) callback) {
     if (formFieldDefList.length != 2) {
       throw AssertionError('args not match');
     }
-    return createButton(resourceName, formFieldDefList, context,
-        (list) => callback(list[0], list[1]));
+    return createButton(resourceName, formFieldDefList, context, (list) => callback(list[0], list[1]));
   }
 
   static ButtonStyleButton createButton1(
-      String resourceName,
-      List<FormFieldDef> formFieldDefList,
-      BuildContext context,
-      Function(String) callback) {
+      String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context, Function(String) callback) {
     if (formFieldDefList.length != 1) {
       throw AssertionError('args not match');
     }
-    return createButton(
-        resourceName, formFieldDefList, context, (list) => callback(list[0]));
+    return createButton(resourceName, formFieldDefList, context, (list) => callback(list[0]));
   }
 
   static ButtonStyleButton createButton(
-      String resourceName,
-      List<FormFieldDef> formFieldDefList,
-      BuildContext context,
-      Function(List<String>) callback) {
+      String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context, Function(List<String>) callback) {
     return TextButton(
         onPressed: () {
-          var editControllerList =
-              formFieldDefList.map((e) => TextEditingController()).toList();
+          var editControllerList = formFieldDefList.map((e) => TextEditingController()).toList();
           List<TextFormField> formFieldsList = List.generate(
               formFieldDefList.length,
               (index) => TextFormField(
-                    decoration: InputDecoration(
-                        labelText: formFieldDefList[index].fieldName),
+                    decoration: InputDecoration(labelText: formFieldDefList[index].fieldName),
                     controller: editControllerList[index],
                   ));
           showDialog(
@@ -100,9 +77,7 @@ class FormUtil {
                     ElevatedButton(
                       child: Text(CREATE),
                       onPressed: () {
-                        var list = editControllerList
-                            .map((e) => e.value.text)
-                            .toList();
+                        var list = editControllerList.map((e) => e.value.text).toList();
                         callback(list);
                         Navigator.of(context).pop();
                       },
@@ -120,56 +95,39 @@ class FormUtil {
         child: Text('Create ' + resourceName));
   }
 
-  static ButtonStyleButton updateButton3(
-      String resourceName,
-      List<FormFieldDef> formFieldDefList,
-      BuildContext context,
+  static ButtonStyleButton updateButton3(String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context,
       Function(String, String, String) callback) {
     if (formFieldDefList.length != 3) {
       throw AssertionError('args not match');
     }
-    return updateButton(resourceName, formFieldDefList, context,
-        (list) => callback(list[0], list[1], list[2]));
+    return updateButton(resourceName, formFieldDefList, context, (list) => callback(list[0], list[1], list[2]));
   }
 
-  static ButtonStyleButton updateButton2(
-      String resourceName,
-      List<FormFieldDef> formFieldDefList,
-      BuildContext context,
+  static ButtonStyleButton updateButton2(String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context,
       Function(String, String) callback) {
     if (formFieldDefList.length != 2) {
       throw AssertionError('args not match');
     }
-    return updateButton(resourceName, formFieldDefList, context,
-        (list) => callback(list[0], list[1]));
+    return updateButton(resourceName, formFieldDefList, context, (list) => callback(list[0], list[1]));
   }
 
   static ButtonStyleButton updateButton1(
-      String resourceName,
-      List<FormFieldDef> formFieldDefList,
-      BuildContext context,
-      Function(String) callback) {
+      String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context, Function(String) callback) {
     if (formFieldDefList.length != 1) {
       throw AssertionError('args not match');
     }
-    return updateButton(
-        resourceName, formFieldDefList, context, (list) => callback(list[0]));
+    return updateButton(resourceName, formFieldDefList, context, (list) => callback(list[0]));
   }
 
   static ButtonStyleButton updateButton(
-      String resourceName,
-      List<FormFieldDef> formFieldDefList,
-      BuildContext context,
-      Function(List<String>) callback) {
+      String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context, Function(List<String>) callback) {
     return TextButton(
         onPressed: () {
-          var editControllerList =
-              formFieldDefList.map((e) => TextEditingController()).toList();
+          var editControllerList = formFieldDefList.map((e) => TextEditingController()).toList();
           List<TextFormField> formFieldsList = List.generate(
               formFieldDefList.length,
               (index) => TextFormField(
-                    decoration: InputDecoration(
-                        labelText: formFieldDefList[index].fieldName),
+                    decoration: InputDecoration(labelText: formFieldDefList[index].fieldName),
                     controller: editControllerList[index],
                   ));
           showDialog(
@@ -186,9 +144,7 @@ class FormUtil {
                     ElevatedButton(
                       child: Text(CREATE),
                       onPressed: () {
-                        var list = editControllerList
-                            .map((e) => e.value.text)
-                            .toList();
+                        var list = editControllerList.map((e) => e.value.text).toList();
                         callback(list);
                         Navigator.of(context).pop();
                       },

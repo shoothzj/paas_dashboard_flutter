@@ -35,11 +35,8 @@ class _PulsarSourceScreenState extends State<PulsarSourceScreen> {
         body: TabBarView(
           children: [
             ChangeNotifierProvider(
-              create: (context) => PulsarSourceBasicViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.sourceResp),
+              create: (context) =>
+                  PulsarSourceBasicViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.sourceResp),
               child: PulsarSourceBasicWidget(),
             ).build(context),
           ],

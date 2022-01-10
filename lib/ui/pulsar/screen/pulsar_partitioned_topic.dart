@@ -48,43 +48,27 @@ class _PulsarPartitionedTopicState extends State<PulsarPartitionedTopic> {
           children: [
             ChangeNotifierProvider(
               create: (context) => PulsarPartitionedTopicBasicViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.topicResp),
+                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarPartitionedTopicBasicWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) => new PulsarPartitionedTopicDetailViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.topicResp),
+                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarPartitionedTopicDetailWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) =>
-                  new PulsarPartitionedTopicSubscriptionViewModel(
-                      vm.pulsarInstancePo,
-                      vm.tenantResp,
-                      vm.namespaceResp,
-                      vm.topicResp),
+              create: (context) => new PulsarPartitionedTopicSubscriptionViewModel(
+                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarPartitionedTopicSubscriptionWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) => PulsarPartitionedTopicConsumeViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.topicResp),
+                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarPartitionedTopicConsumeWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) => PulsarPartitionedTopicProduceViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.topicResp),
+                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarPartitionedTopicProduceWidget(),
             ).build(context),
           ],

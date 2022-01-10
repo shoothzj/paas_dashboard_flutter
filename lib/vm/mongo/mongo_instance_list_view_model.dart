@@ -11,8 +11,7 @@ class MongoInstanceListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createMongo(
-      String name, String addr, String username, String password) async {
+  Future<void> createMongo(String name, String addr, String username, String password) async {
     Persistent.saveMongo(name, addr, username, password);
     fetchMongoInstances();
   }

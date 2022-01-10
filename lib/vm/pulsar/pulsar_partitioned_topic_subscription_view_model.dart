@@ -6,22 +6,18 @@ import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
 
-class PulsarPartitionedTopicSubscriptionViewModel
-    extends BaseLoadListViewModel<SubscriptionResp> {
+class PulsarPartitionedTopicSubscriptionViewModel extends BaseLoadListViewModel<SubscriptionResp> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarPartitionedTopicSubscriptionViewModel(this.pulsarInstancePo,
-      this.tenantResp, this.namespaceResp, this.topicResp);
+  PulsarPartitionedTopicSubscriptionViewModel(
+      this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   PulsarPartitionedTopicSubscriptionViewModel deepCopy() {
     return new PulsarPartitionedTopicSubscriptionViewModel(
-        pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(),
-        namespaceResp.deepCopy(),
-        topicResp.deepCopy());
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 
   int get id {
@@ -54,8 +50,7 @@ class PulsarPartitionedTopicSubscriptionViewModel
 
   Future<void> fetchSubscriptions() async {
     try {
-      final results = await PulsarPartitionedTopicApi.getSubscription(
-          host, port, tenant, namespace, topic);
+      final results = await PulsarPartitionedTopicApi.getSubscription(host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadSuccess();
@@ -68,8 +63,7 @@ class PulsarPartitionedTopicSubscriptionViewModel
 
   Future<void> clearBacklog(String subscriptionName) async {
     try {
-      await PulsarPartitionedTopicApi.clearBacklog(
-          host, port, tenant, namespace, topic, subscriptionName);
+      await PulsarPartitionedTopicApi.clearBacklog(host, port, tenant, namespace, topic, subscriptionName);
       await fetchSubscriptions();
     } on Exception catch (e) {
       opException = e;

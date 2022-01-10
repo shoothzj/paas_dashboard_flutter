@@ -19,15 +19,13 @@ class PulsarPartitionedTopicListWidget extends StatefulWidget {
   }
 }
 
-class PulsarPartitionedTopicListWidgetState
-    extends State<PulsarPartitionedTopicListWidget> {
+class PulsarPartitionedTopicListWidgetState extends State<PulsarPartitionedTopicListWidget> {
   final searchTextController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarPartitionedTopicListViewModel>(context,
-        listen: false);
+    final vm = Provider.of<PulsarPartitionedTopicListViewModel>(context, listen: false);
     vm.fetchTopics();
     searchTextController.addListener(() {
       vm.filter(searchTextController.text);
@@ -52,9 +50,7 @@ class PulsarPartitionedTopicListWidgetState
     ExceptionUtil.processOpExceptionPageable(vm, context);
     vm.setDataConverter((item) => DataRow(
             onSelectChanged: (bool? selected) {
-              Navigator.pushNamed(
-                  context, PageRouteConst.PulsarPartitionedTopic,
-                  arguments: item.deepCopy());
+              Navigator.pushNamed(context, PageRouteConst.PulsarPartitionedTopic, arguments: item.deepCopy());
             },
             cells: [
               DataCell(
@@ -89,8 +85,7 @@ class PulsarPartitionedTopicListWidgetState
             children: [formButton, refreshButton],
           ),
         ),
-        SearchableTitle(S.of(context).topics, S.of(context).searchByTopic,
-            searchTextController),
+        SearchableTitle(S.of(context).topics, S.of(context).searchByTopic, searchTextController),
         topicsTable
       ],
     );
@@ -99,8 +94,7 @@ class PulsarPartitionedTopicListWidgetState
 
   ButtonStyleButton createPartitionTopicButton(BuildContext context) {
     var list = [FormFieldDef('Topic Name'), FormFieldDef('Partition Number')];
-    return FormUtil.createButton2("Partitioned Topic", list, context,
-        (topic, partition) async {
+    return FormUtil.createButton2("Partitioned Topic", list, context, (topic, partition) async {
       final vm = Provider.of<PulsarNamespaceViewModel>(context, listen: false);
       vm.createPartitionedTopic(topic, int.parse(partition));
     });

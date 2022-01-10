@@ -35,8 +35,7 @@ class _MongoInstanceState extends State<MongoInstanceScreen> {
         body: TabBarView(
           children: [
             ChangeNotifierProvider(
-              create: (context) =>
-                  MongoDatabaseListViewModel(vm.mongoInstancePo.deepCopy()),
+              create: (context) => MongoDatabaseListViewModel(vm.mongoInstancePo.deepCopy()),
               child: MongoDatabaseListWidget(),
             ).build(context),
           ],

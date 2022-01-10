@@ -8,12 +8,11 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
 
-  PulsarNamespacePoliciesViewModel(
-      this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
+  PulsarNamespacePoliciesViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
 
   PulsarNamespacePoliciesViewModel deepCopy() {
-    return new PulsarNamespacePoliciesViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy());
+    return new PulsarNamespacePoliciesViewModel(
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy());
   }
 
   int get id {

@@ -3,8 +3,7 @@ import 'package:paas_dashboard_flutter/persistent/po/http_endpoint.dart';
 class BkInstancePo extends HttpEndpoint {
   final int id;
 
-  BkInstancePo(this.id, String name, String host, int port)
-      : super(name, host, port);
+  BkInstancePo(this.id, String name, String host, int port) : super(name, host, port);
 
   Map<String, dynamic> toMap() {
     return {

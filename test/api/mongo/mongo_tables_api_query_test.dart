@@ -4,8 +4,7 @@ import 'package:paas_dashboard_flutter/module/mongo/const.dart';
 
 void main() {
   test("test_query_tables", () async {
-    var list = await MongoTablesApi.getTableList(
-        MongoConst.defaultAddr, "", "", "admin");
+    var list = await MongoTablesApi.getTableList(MongoConst.defaultAddr, "", "", "admin");
     print(list);
   });
 }

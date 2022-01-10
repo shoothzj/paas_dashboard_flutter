@@ -10,12 +10,11 @@ class PulsarTopicViewModel extends ChangeNotifier {
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarTopicViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.topicResp);
+  PulsarTopicViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   PulsarTopicViewModel deepCopy() {
-    return new PulsarTopicViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
+    return new PulsarTopicViewModel(
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 
   int get id {

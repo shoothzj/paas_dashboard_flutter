@@ -49,8 +49,7 @@ class PulsarSinkListWidgetState extends State<PulsarSinkListWidget> {
     ExceptionUtil.processOpExceptionPageable(vm, context);
     vm.setDataConverter((item) => DataRow(
             onSelectChanged: (bool? selected) {
-              Navigator.pushNamed(context, PageRouteConst.PulsarSink,
-                  arguments: item.deepCopy());
+              Navigator.pushNamed(context, PageRouteConst.PulsarSink, arguments: item.deepCopy());
             },
             cells: [
               DataCell(
@@ -85,8 +84,7 @@ class PulsarSinkListWidgetState extends State<PulsarSinkListWidget> {
             children: [formButton, refreshButton],
           ),
         ),
-        SearchableTitle(
-            "sink list", "search by sink name", searchTextController),
+        SearchableTitle("sink list", "search by sink name", searchTextController),
         topicsTable
       ],
     );
@@ -101,8 +99,7 @@ class PulsarSinkListWidgetState extends State<PulsarSinkListWidget> {
       FormFieldDef('Sink type'),
       FormFieldDef('Config')
     ];
-    return FormUtil.createButton5("Sink", list, context,
-        (sinkName, subName, inputTopic, sinkType, config) async {
+    return FormUtil.createButton5("Sink", list, context, (sinkName, subName, inputTopic, sinkType, config) async {
       final vm = Provider.of<PulsarSinkListViewModel>(context, listen: false);
       vm.createSink(sinkName, subName, inputTopic, sinkType, config);
       final scaffold = ScaffoldMessenger.of(context);

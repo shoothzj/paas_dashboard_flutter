@@ -16,8 +16,7 @@ class _MysqlPageState extends State<MysqlPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<MysqlInstanceListViewModel>(context, listen: false)
-        .fetchMysqlInstances();
+    Provider.of<MysqlInstanceListViewModel>(context, listen: false).fetchMysqlInstances();
   }
 
   @override
@@ -57,9 +56,7 @@ class _MysqlPageState extends State<MysqlPage> {
             rows: vm.instances
                 .map((itemRow) => DataRow(
                         onSelectChanged: (bool? selected) {
-                          Navigator.pushNamed(
-                              context, PageRouteConst.MysqlInstance,
-                              arguments: itemRow.deepCopy());
+                          Navigator.pushNamed(context, PageRouteConst.MysqlInstance, arguments: itemRow.deepCopy());
                         },
                         cells: [
                           DataCell(Text(itemRow.id.toString())),
@@ -89,8 +86,7 @@ class _MysqlPageState extends State<MysqlPage> {
       FormFieldDef('Username'),
       FormFieldDef('Password'),
     ];
-    return FormUtil.createButton5("Mysql Instance", list, context,
-        (name, host, port, username, password) {
+    return FormUtil.createButton5("Mysql Instance", list, context, (name, host, port, username, password) {
       vm.createMysql(name, host, int.parse(port), username, password);
     });
   }

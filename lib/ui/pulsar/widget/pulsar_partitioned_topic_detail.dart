@@ -17,13 +17,11 @@ class PulsarPartitionedTopicDetailWidget extends StatefulWidget {
   }
 }
 
-class PulsarPartitionedTopicDetailWidgetState
-    extends State<PulsarPartitionedTopicDetailWidget> {
+class PulsarPartitionedTopicDetailWidgetState extends State<PulsarPartitionedTopicDetailWidget> {
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarPartitionedTopicDetailViewModel>(context,
-        listen: false);
+    final vm = Provider.of<PulsarPartitionedTopicDetailViewModel>(context, listen: false);
     vm.fetchPartitions();
   }
 
@@ -51,10 +49,7 @@ class PulsarPartitionedTopicDetailWidgetState
                         var topicResp = TopicResp(split[split.length - 1]);
                         Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
                             arguments: new PulsarTopicViewModel(
-                                vm.pulsarInstancePo,
-                                vm.tenantResp,
-                                vm.namespaceResp,
-                                topicResp));
+                                vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, topicResp));
                       },
                       cells: [
                         DataCell(

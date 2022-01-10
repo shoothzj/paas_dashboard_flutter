@@ -14,8 +14,7 @@ class _K8sPageState extends State<K8sPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<K8sInstanceListViewModel>(context, listen: false)
-        .fetchKubernetesInstances();
+    Provider.of<K8sInstanceListViewModel>(context, listen: false).fetchKubernetesInstances();
   }
 
   @override
@@ -49,8 +48,7 @@ class _K8sPageState extends State<K8sPage> {
               DataColumn(label: Text('Name')),
             ],
             rows: vm.instances
-                .map((itemRow) =>
-                    DataRow(onSelectChanged: (bool? selected) {}, cells: [
+                .map((itemRow) => DataRow(onSelectChanged: (bool? selected) {}, cells: [
                       DataCell(Text(itemRow.id.toString())),
                       DataCell(Text(itemRow.name)),
                     ]))

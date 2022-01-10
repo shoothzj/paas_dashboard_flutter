@@ -48,8 +48,7 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
     ExceptionUtil.processOpExceptionPageable(vm, context);
     vm.setDataConverter((item) => DataRow(
             onSelectChanged: (bool? selected) {
-              Navigator.pushNamed(context, PageRouteConst.PulsarSource,
-                  arguments: item.deepCopy());
+              Navigator.pushNamed(context, PageRouteConst.PulsarSource, arguments: item.deepCopy());
             },
             cells: [
               DataCell(
@@ -84,8 +83,7 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
             children: [formButton, refreshButton],
           ),
         ),
-        SearchableTitle(
-            "source list", "search by source name", searchTextController),
+        SearchableTitle("source list", "search by source name", searchTextController),
         topicsTable
       ],
     );
@@ -99,8 +97,7 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
       FormFieldDef('Source type'),
       FormFieldDef('Config')
     ];
-    return FormUtil.createButton4("Source", list, context,
-        (sourceName, outputTopic, sourceType, config) async {
+    return FormUtil.createButton4("Source", list, context, (sourceName, outputTopic, sourceType, config) async {
       final vm = Provider.of<PulsarSourceListViewModel>(context, listen: false);
       vm.createSource(sourceName, outputTopic, sourceType, config);
       final scaffold = ScaffoldMessenger.of(context);

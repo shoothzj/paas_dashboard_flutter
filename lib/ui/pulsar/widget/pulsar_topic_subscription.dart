@@ -15,13 +15,11 @@ class PulsarTopicSubscriptionWidget extends StatefulWidget {
   }
 }
 
-class PulsarTopicSubscriptionWidgetState
-    extends State<PulsarTopicSubscriptionWidget> {
+class PulsarTopicSubscriptionWidgetState extends State<PulsarTopicSubscriptionWidget> {
   @override
   void initState() {
     super.initState();
-    final vm =
-        Provider.of<PulsarTopicSubscriptionViewModel>(context, listen: false);
+    final vm = Provider.of<PulsarTopicSubscriptionViewModel>(context, listen: false);
     vm.fetchSubscriptions();
   }
 

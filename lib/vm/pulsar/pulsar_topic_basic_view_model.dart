@@ -16,12 +16,11 @@ class PulsarTopicBasicViewModel extends BaseLoadViewModel {
   double msgOutCounter = 0;
   double storageSize = 0;
 
-  PulsarTopicBasicViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.topicResp);
+  PulsarTopicBasicViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   PulsarTopicBasicViewModel deepCopy() {
-    return new PulsarTopicBasicViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
+    return new PulsarTopicBasicViewModel(
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 
   int get id {
@@ -54,8 +53,7 @@ class PulsarTopicBasicViewModel extends BaseLoadViewModel {
 
   Future<void> fetchPartitions() async {
     try {
-      final results =
-          await PulsarTopicApi.getBase(host, port, tenant, namespace, topic);
+      final results = await PulsarTopicApi.getBase(host, port, tenant, namespace, topic);
       msgRateIn = results.msgRateIn;
       msgRateOut = results.msgRateOut;
       msgInCounter = results.msgInCounter;

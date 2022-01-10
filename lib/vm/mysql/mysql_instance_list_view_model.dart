@@ -11,8 +11,7 @@ class MysqlInstanceListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createMysql(String name, String host, int port, String username,
-      String password) async {
+  Future<void> createMysql(String name, String host, int port, String username, String password) async {
     Persistent.saveMysql(name, host, port, username, password);
     fetchMysqlInstances();
   }

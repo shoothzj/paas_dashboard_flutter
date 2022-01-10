@@ -24,8 +24,7 @@ class AuthorScreen extends StatelessWidget {
             DataColumn(label: Text(S.of(context).email)),
           ],
           rows: authors
-              .map((itemRow) =>
-                  DataRow(onSelectChanged: (bool? selected) {}, cells: [
+              .map((itemRow) => DataRow(onSelectChanged: (bool? selected) {}, cells: [
                     DataCell(Text(itemRow.name)),
                     DataCell(Text(itemRow.email)),
                   ]))

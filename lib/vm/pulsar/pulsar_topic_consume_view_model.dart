@@ -12,12 +12,11 @@ class PulsarTopicConsumeViewModel extends BaseLoadListViewModel<ConsumerResp> {
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarTopicConsumeViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.topicResp);
+  PulsarTopicConsumeViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   PulsarTopicConsumeViewModel deepCopy() {
-    return new PulsarTopicConsumeViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
+    return new PulsarTopicConsumeViewModel(
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 
   int get id {
@@ -50,8 +49,7 @@ class PulsarTopicConsumeViewModel extends BaseLoadListViewModel<ConsumerResp> {
 
   Future<void> fetchConsumers() async {
     try {
-      final results = await PulsarTopicApi.getConsumers(
-          host, port, tenant, namespace, topic);
+      final results = await PulsarTopicApi.getConsumers(host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadSuccess();

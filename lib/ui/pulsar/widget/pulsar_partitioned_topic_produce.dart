@@ -14,13 +14,11 @@ class PulsarPartitionedTopicProduceWidget extends StatefulWidget {
   }
 }
 
-class PulsarPartitionedTopicProduceWidgetState
-    extends State<PulsarPartitionedTopicProduceWidget> {
+class PulsarPartitionedTopicProduceWidgetState extends State<PulsarPartitionedTopicProduceWidget> {
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarPartitionedTopicProduceViewModel>(context,
-        listen: false);
+    final vm = Provider.of<PulsarPartitionedTopicProduceViewModel>(context, listen: false);
     vm.fetchProducers();
   }
 
