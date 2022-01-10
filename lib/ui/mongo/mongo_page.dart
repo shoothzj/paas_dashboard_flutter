@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
@@ -53,13 +54,18 @@ class _MongoPageState extends State<MongoPage> {
               DataColumn(label: Text('Username')),
             ],
             rows: vm.instances
-                .map((itemRow) =>
-                    DataRow(onSelectChanged: (bool? selected) {}, cells: [
-                      DataCell(Text(itemRow.id.toString())),
-                      DataCell(Text(itemRow.name)),
-                      DataCell(Text(itemRow.addr)),
-                      DataCell(Text(itemRow.username)),
-                    ]))
+                .map((itemRow) => DataRow(
+                        onSelectChanged: (bool? selected) {
+                          Navigator.pushNamed(
+                              context, PageRouteConst.MongoInstance,
+                              arguments: itemRow.deepCopy());
+                        },
+                        cells: [
+                          DataCell(Text(itemRow.id.toString())),
+                          DataCell(Text(itemRow.name)),
+                          DataCell(Text(itemRow.addr)),
+                          DataCell(Text(itemRow.username)),
+                        ]))
                 .toList(),
           ),
         ),

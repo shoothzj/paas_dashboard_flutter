@@ -14,7 +14,9 @@ import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/general/settings_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/kubernetes/k8s_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mongo/mongo_database_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
@@ -85,6 +87,14 @@ class MyApp extends StatelessWidget {
             ),
       },
       onGenerateRoute: (settings) {
+        if (settings.name == PageRouteConst.MongoInstance) {
+          final args = settings.arguments as MongoInstanceViewModel;
+          return RouteGen.mongoInstance(args);
+        }
+        if (settings.name == PageRouteConst.MongoDatabase) {
+          final args = settings.arguments as MongoDatabaseViewModel;
+          return RouteGen.mongoDatabase(args);
+        }
         if (settings.name == PageRouteConst.PulsarInstance) {
           final args = settings.arguments as PulsarInstanceViewModel;
           return RouteGen.pulsarInstance(args);

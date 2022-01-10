@@ -1,9 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 
-class MongoInstanceViewModel {
+class MongoInstanceViewModel extends ChangeNotifier {
   final MongoInstancePo mongoInstancePo;
 
   MongoInstanceViewModel(this.mongoInstancePo);
+
+  MongoInstanceViewModel deepCopy() {
+    return new MongoInstanceViewModel(mongoInstancePo.deepCopy());
+  }
 
   int get id {
     return this.mongoInstancePo.id;
