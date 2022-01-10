@@ -20,5 +20,4 @@ class BkInstanceViewModel {
   int get port {
     return this.bkInstancePo.port;
   }
-
 }

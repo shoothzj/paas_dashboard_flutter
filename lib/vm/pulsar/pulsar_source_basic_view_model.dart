@@ -64,5 +64,4 @@ class PulsarSourceBasicViewModel extends BaseLoadViewModel {
     }
     notifyListeners();
   }
-
 }

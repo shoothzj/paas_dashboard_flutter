@@ -1,4 +1,3 @@
-
 class PulsarInstancePo {
   final int id;
   final String name;
@@ -7,10 +6,12 @@ class PulsarInstancePo {
   final String functionHost;
   final int functionPort;
 
-  PulsarInstancePo(this.id, this.name, this.host, this.port, this.functionHost, this.functionPort);
+  PulsarInstancePo(this.id, this.name, this.host, this.port, this.functionHost,
+      this.functionPort);
 
   PulsarInstancePo deepCopy() {
-    return new PulsarInstancePo(id, name, host, port, functionHost, functionPort);
+    return new PulsarInstancePo(
+        id, name, host, port, functionHost, functionPort);
   }
 
   Map<String, dynamic> toMap() {

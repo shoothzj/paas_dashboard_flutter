@@ -42,5 +42,3 @@ class BacklogQuotaResp {
     return BacklogQuotaResp(map["limitSize"], map["limitTime"], map["policy"]);
   }
 }
-
-

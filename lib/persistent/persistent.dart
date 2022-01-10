@@ -5,6 +5,8 @@ import 'package:paas_dashboard_flutter/persistent/persistent_db.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent_memory.dart';
 import 'package:paas_dashboard_flutter/persistent/po/bk_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 
 class Persistent {
@@ -23,7 +25,8 @@ class Persistent {
 
   static Future<void> savePulsar(String name, String host, int port,
       String functionHost, int functionPort) async {
-    return (await getApi()).savePulsar(name, host, port, functionHost, functionPort);
+    return (await getApi())
+        .savePulsar(name, host, port, functionHost, functionPort);
   }
 
   static Future<void> deletePulsar(int id) async {
@@ -46,7 +49,8 @@ class Persistent {
     return (await getApi()).bookkeeperInstances();
   }
 
-  static Future<void> saveKubernetesSsh(String name, List<SshStep> sshSteps) async {
+  static Future<void> saveKubernetesSsh(
+      String name, List<SshStep> sshSteps) async {
     return (await getApi()).saveKubernetesSsh(name, sshSteps);
   }
 
@@ -56,6 +60,32 @@ class Persistent {
 
   static Future<List<K8sInstancePo>> kubernetesInstances() async {
     return (await getApi()).kubernetesInstances();
+  }
+
+  static Future<void> saveMongo(
+      String name, String addr, String username, String password) async {
+    return (await getApi()).saveMongo(name, addr, username, password);
+  }
+
+  static Future<void> deleteMongo(int id) async {
+    return (await getApi()).deleteMongo(id);
+  }
+
+  static Future<List<MongoInstancePo>> mongoInstances() async {
+    return (await getApi()).mongoInstances();
+  }
+
+  static Future<void> saveMysql(String name, String host, int port,
+      String username, String password) async {
+    return (await getApi()).saveMysql(name, host, port, username, password);
+  }
+
+  static Future<void> deleteMysql(int id) async {
+    return (await getApi()).deleteMysql(id);
+  }
+
+  static Future<List<MysqlInstancePo>> mysqlInstances() async {
+    return (await getApi()).mysqlInstances();
   }
 
   static bool supportDb() {

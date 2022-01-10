@@ -3,7 +3,6 @@ import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_sink_basic_view_model.dart';
-import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_basic_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PulsarSinkBasicWidget extends StatefulWidget {
@@ -15,13 +14,11 @@ class PulsarSinkBasicWidget extends StatefulWidget {
   }
 }
 
-class PulsarSinkBasicWidgetState
-    extends State<PulsarSinkBasicWidget> {
+class PulsarSinkBasicWidgetState extends State<PulsarSinkBasicWidget> {
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarSinkBasicViewModel>(context,
-        listen: false);
+    final vm = Provider.of<PulsarSinkBasicViewModel>(context, listen: false);
     vm.fetch();
   }
 
@@ -36,7 +33,7 @@ class PulsarSinkBasicWidgetState
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processOpException(vm, context);
     var refreshButton =
-    TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
+        TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
         Container(
@@ -90,5 +87,4 @@ class PulsarSinkBasicWidgetState
     );
     return body;
   }
-
 }

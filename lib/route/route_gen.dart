@@ -61,16 +61,16 @@ class RouteGen {
   static Route pulsarSource(PulsarSourceViewModel viewModel) {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
-          create: (context) => viewModel,
-          child: PulsarSourceScreen(),
-        ));
+              create: (context) => viewModel,
+              child: PulsarSourceScreen(),
+            ));
   }
 
   static Route pulsarSink(PulsarSinkViewModel viewModel) {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
-          create: (context) => viewModel,
-          child: PulsarSinkScreen(),
-        ));
+              create: (context) => viewModel,
+              child: PulsarSinkScreen(),
+            ));
   }
 }

@@ -8,10 +8,14 @@ import 'package:paas_dashboard_flutter/ui/general/author_screen.dart';
 import 'package:paas_dashboard_flutter/ui/general/settings_screen.dart';
 import 'package:paas_dashboard_flutter/ui/home/home_page.dart';
 import 'package:paas_dashboard_flutter/ui/kubernetes/k8s_page.dart';
+import 'package:paas_dashboard_flutter/ui/mongo/mongo_page.dart';
+import 'package:paas_dashboard_flutter/ui/mysql/mysql_page.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/general/settings_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/kubernetes/k8s_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
@@ -64,9 +68,17 @@ class MyApp extends StatelessWidget {
               child: BkPage(),
             ),
         PageRouteConst.Kubernetes: (context) => ChangeNotifierProvider(
-          create: (context) => K8sInstanceListViewModel(),
-          child: K8sPage(),
-        ),
+              create: (context) => K8sInstanceListViewModel(),
+              child: K8sPage(),
+            ),
+        PageRouteConst.Mongo: (context) => ChangeNotifierProvider(
+              create: (context) => MongoInstanceListViewModel(),
+              child: MongoPage(),
+            ),
+        PageRouteConst.Mysql: (context) => ChangeNotifierProvider(
+              create: (context) => MysqlInstanceListViewModel(),
+              child: MysqlPage(),
+            ),
         PageRouteConst.Pulsar: (context) => ChangeNotifierProvider(
               create: (context) => PulsarInstanceListViewModel(),
               child: PulsarPage(),

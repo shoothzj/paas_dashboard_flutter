@@ -65,8 +65,8 @@ class PulsarSourceListViewModel
 
   Future<void> fetchSources() async {
     try {
-      final results =
-          await PulsarSourceApi.getSourceList(functionHost, functionPort, tenant, namespace);
+      final results = await PulsarSourceApi.getSourceList(
+          functionHost, functionPort, tenant, namespace);
       this.fullList = results
           .map((e) => PulsarSourceViewModel(
               pulsarInstancePo, tenantResp, namespaceResp, e))
@@ -97,7 +97,8 @@ class PulsarSourceListViewModel
 
   Future<void> deleteSource(String topic) async {
     try {
-      await PulsarSourceApi.deleteSource(functionHost, functionPort, tenant, namespace, topic);
+      await PulsarSourceApi.deleteSource(
+          functionHost, functionPort, tenant, namespace, topic);
       await fetchSources();
     } on Exception catch (e) {
       opException = e;

@@ -12,7 +12,6 @@ class TenantResp {
   }
 }
 
-
 class TenantInfoResp {
   final String adminRoles;
   final String allowedClusters;

@@ -59,17 +59,18 @@ class PulsarPartitionedTopicDetailWidgetState
                       cells: [
                         DataCell(
                           Text(itemRow.topicName),
-                    ),
-                    DataCell(
-                      Text(itemRow.backlogSize.toString()),
-                    ),
-                  ]))
+                        ),
+                        DataCell(
+                          Text(itemRow.backlogSize.toString()),
+                        ),
+                      ]))
               .toList()),
     );
-    var refreshButton =
-        TextButton(onPressed: () {
+    var refreshButton = TextButton(
+        onPressed: () {
           vm.fetchPartitions();
-        }, child: Text(S.of(context).refresh));
+        },
+        child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
         Container(

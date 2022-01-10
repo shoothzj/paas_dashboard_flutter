@@ -49,8 +49,7 @@ class PulsarSinkListWidgetState extends State<PulsarSinkListWidget> {
     ExceptionUtil.processOpExceptionPageable(vm, context);
     vm.setDataConverter((item) => DataRow(
             onSelectChanged: (bool? selected) {
-              Navigator.pushNamed(
-                  context, PageRouteConst.PulsarSink,
+              Navigator.pushNamed(context, PageRouteConst.PulsarSink,
                   arguments: item.deepCopy());
             },
             cells: [

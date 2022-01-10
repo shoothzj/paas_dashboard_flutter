@@ -13,15 +13,12 @@ class PulsarTopicSubscriptionViewModel
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarTopicSubscriptionViewModel(this.pulsarInstancePo,
-      this.tenantResp, this.namespaceResp, this.topicResp);
+  PulsarTopicSubscriptionViewModel(this.pulsarInstancePo, this.tenantResp,
+      this.namespaceResp, this.topicResp);
 
   PulsarTopicSubscriptionViewModel deepCopy() {
-    return new PulsarTopicSubscriptionViewModel(
-        pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(),
-        namespaceResp.deepCopy(),
-        topicResp.deepCopy());
+    return new PulsarTopicSubscriptionViewModel(pulsarInstancePo.deepCopy(),
+        tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 
   int get id {

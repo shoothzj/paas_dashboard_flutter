@@ -6,23 +6,27 @@ import 'package:paas_dashboard_flutter/api/http_util.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 
 class PulsarNamespaceApi {
-
-  static Future<void> createNamespace(String host, int port, String tenant, String namespace) async {
-    var url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
+  static Future<void> createNamespace(
+      String host, int port, String tenant, String namespace) async {
+    var url =
+        'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
     final response = await http.put(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
   }
 
   static Future<void> deleteNamespace(
       String host, int port, String tenant, String namespace) async {
-    var url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
+    var url =
+        'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
     final response = await http.delete(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
   }
 
@@ -32,7 +36,8 @@ class PulsarNamespaceApi {
     final response = await http.get(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     List jsonResponse = json.decode(response.body) as List;
     return jsonResponse
@@ -40,14 +45,13 @@ class PulsarNamespaceApi {
         .toList();
   }
 
-  static Future<BacklogQuotaResp> getBacklogQuota(String host, int port, String tenant,
-      String namespace) async {
+  static Future<BacklogQuotaResp> getBacklogQuota(
+      String host, int port, String tenant, String namespace) async {
     String url =
         'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/backlogQuotaMap';
-    var response = await http.get(Uri.parse(url),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        });
+    var response = await http.get(Uri.parse(url), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
       throw Exception(
@@ -65,7 +69,8 @@ class PulsarNamespaceApi {
       String namespace, int limit, int? limitTime, String policy) async {
     String url =
         'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/backlogQuota';
-    BacklogQuotaReq backlogQuotaReq = new BacklogQuotaReq(limit, limitTime, policy);
+    BacklogQuotaReq backlogQuotaReq =
+        new BacklogQuotaReq(limit, limitTime, policy);
     var response = await http.post(Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -77,5 +82,4 @@ class PulsarNamespaceApi {
           'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
   }
-
 }

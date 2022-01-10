@@ -1,3 +1,1 @@
-class SqlConst {
-
-}
+class SqlConst {}

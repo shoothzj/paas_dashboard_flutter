@@ -99,8 +99,8 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
 
   ButtonStyleButton createNamespace(BuildContext context) {
     var list = [FormFieldDef('Namespace Name')];
-    return FormUtil.createButton1("Pulsar ${S.of(context).namespace}", list, context,
-        (namespace) async {
+    return FormUtil.createButton1(
+        "Pulsar ${S.of(context).namespace}", list, context, (namespace) async {
       final vm = Provider.of<PulsarTenantViewModel>(context, listen: false);
       vm.createNamespace(namespace);
     });

@@ -9,9 +9,17 @@ Flutter Paas Dashboard
 - [Install Doc](install.md)
 
 # 开发环境准备
+## macos
 ```bash
 flutter config --enable-macos-desktop
 ```
+## windows
+```bash
+flutter config --enable-windows-desktop
+```
+## 开发注意事项
+### 数据存储位置
+- macos ~/Library/Containers/com.github.shoothzj.paasDashboardFlutter/Data
 
 # 运行
 ## web

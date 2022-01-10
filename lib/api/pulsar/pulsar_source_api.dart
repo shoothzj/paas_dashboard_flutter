@@ -18,8 +18,8 @@ class PulsarSourceApi {
       String config) async {
     String url =
         'http://$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sourceName';
-    SourceConfigReq sinkConfigReq = new SourceConfigReq(sourceName, tenant, namespace, outputTopic,
-        json.decode(config), "builtin://$sourceType");
+    SourceConfigReq sinkConfigReq = new SourceConfigReq(sourceName, tenant,
+        namespace, outputTopic, json.decode(config), "builtin://$sourceType");
     String curlCommand = "curl '$url' -F sourceConfig='" +
         jsonEncode(sinkConfigReq) +
         ";type=application/json'";
@@ -52,8 +52,8 @@ class PulsarSourceApi {
     return jsonResponse.map((name) => new SourceResp(name)).toList();
   }
 
-  static Future<SourceConfigResp> getSource(
-      String host, int port, String tenant, String namespace, String sourceName) async {
+  static Future<SourceConfigResp> getSource(String host, int port,
+      String tenant, String namespace, String sourceName) async {
     var url =
         'http://$host:${port.toString()}/admin/v3/sources/$tenant/$namespace/$sourceName';
     final response = await http.get(Uri.parse(url));

@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
-import 'package:paas_dashboard_flutter/vm/kubernetes/k8s_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
+import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
 
-class K8sPage extends StatefulWidget {
+class MongoPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _K8sPageState();
+    return new _MongoPageState();
   }
 }
 
-class _K8sPageState extends State<K8sPage> {
+class _MongoPageState extends State<MongoPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<K8sInstanceListViewModel>(context, listen: false)
-        .fetchKubernetesInstances();
+    Provider.of<MongoInstanceListViewModel>(context, listen: false)
+        .fetchMongoInstances();
   }
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<K8sInstanceListViewModel>(context);
+    final vm = Provider.of<MongoInstanceListViewModel>(context);
+    var formButton = createInstanceButton(context);
     var refreshButton = TextButton(
         onPressed: () {
           setState(() {
-            vm.fetchKubernetesInstances();
+            vm.fetchMongoInstances();
           });
         },
         child: Text(S.of(context).refresh));
@@ -35,11 +37,11 @@ class _K8sPageState extends State<K8sPage> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [refreshButton],
+            children: [formButton, refreshButton],
           ),
         ),
         Center(
-          child: Text('Kubernetes Instance List'),
+          child: Text('Mongo Instance List'),
         ),
         SingleChildScrollView(
           child: DataTable(
@@ -47,12 +49,16 @@ class _K8sPageState extends State<K8sPage> {
             columns: [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
+              DataColumn(label: Text('Addr')),
+              DataColumn(label: Text('Username')),
             ],
             rows: vm.instances
                 .map((itemRow) =>
                     DataRow(onSelectChanged: (bool? selected) {}, cells: [
                       DataCell(Text(itemRow.id.toString())),
                       DataCell(Text(itemRow.name)),
+                      DataCell(Text(itemRow.addr)),
+                      DataCell(Text(itemRow.username)),
                     ]))
                 .toList(),
           ),
@@ -61,8 +67,22 @@ class _K8sPageState extends State<K8sPage> {
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text('Kubernetes Dashboard'),
+          title: Text('Mongo Dashboard'),
         ),
         body: body);
+  }
+
+  ButtonStyleButton createInstanceButton(BuildContext context) {
+    final vm = Provider.of<MongoInstanceListViewModel>(context, listen: false);
+    var list = [
+      FormFieldDef('Instance Name'),
+      FormFieldDef('Addr'),
+      FormFieldDef('Username'),
+      FormFieldDef('Password'),
+    ];
+    return FormUtil.createButton4("Mongo Instance", list, context,
+        (name, addr, username, password) {
+      vm.createMongo(name, addr, username, password);
+    });
   }
 }

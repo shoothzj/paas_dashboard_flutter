@@ -3,7 +3,8 @@ import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
 
 void main() {
   test("test_fetch_subscriptions", () async {
-    var subscription = await PulsarTopicApi.getSubscription("localhost", 8080, "public", "default", "test_fetch_topic");
+    var subscription = await PulsarTopicApi.getSubscription(
+        "localhost", 8080, "public", "default", "test_fetch_topic");
     print(subscription);
   });
 }
