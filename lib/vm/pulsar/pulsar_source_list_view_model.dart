@@ -5,18 +5,15 @@ import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_view_model.dart';
 
-class PulsarSourceListViewModel
-    extends BaseLoadListPageViewModel<PulsarSourceViewModel> {
+class PulsarSourceListViewModel extends BaseLoadListPageViewModel<PulsarSourceViewModel> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
 
-  PulsarSourceListViewModel(
-      this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
+  PulsarSourceListViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
 
   PulsarSourceListViewModel deepCopy() {
-    return new PulsarSourceListViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy());
+    return new PulsarSourceListViewModel(pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy());
   }
 
   int get id {
@@ -51,11 +48,10 @@ class PulsarSourceListViewModel
     return this.namespaceResp.namespace;
   }
 
-  Future<void> createSource(String sourceName, String outputTopic,
-      String sourceType, String config) async {
+  Future<void> createSource(String sourceName, String outputTopic, String sourceType, String config) async {
     try {
-      await PulsarSourceApi.createSource(functionHost, functionPort, tenant,
-          namespace, sourceName, outputTopic, sourceType, config);
+      await PulsarSourceApi.createSource(
+          functionHost, functionPort, tenant, namespace, sourceName, outputTopic, sourceType, config);
       await fetchSources();
     } on Exception catch (e) {
       opException = e;
@@ -65,12 +61,9 @@ class PulsarSourceListViewModel
 
   Future<void> fetchSources() async {
     try {
-      final results = await PulsarSourceApi.getSourceList(
-          functionHost, functionPort, tenant, namespace);
-      this.fullList = results
-          .map((e) => PulsarSourceViewModel(
-              pulsarInstancePo, tenantResp, namespaceResp, e))
-          .toList();
+      final results = await PulsarSourceApi.getSourceList(functionHost, functionPort, tenant, namespace);
+      this.fullList =
+          results.map((e) => PulsarSourceViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
       this.displayList = this.fullList;
       loadSuccess();
     } on Exception catch (e) {
@@ -87,18 +80,14 @@ class PulsarSourceListViewModel
       return;
     }
     if (!loading && loadException == null) {
-      this.displayList = this
-          .fullList
-          .where((element) => element.sourceName.contains(str))
-          .toList();
+      this.displayList = this.fullList.where((element) => element.sourceName.contains(str)).toList();
     }
     notifyListeners();
   }
 
   Future<void> deleteSource(String topic) async {
     try {
-      await PulsarSourceApi.deleteSource(
-          functionHost, functionPort, tenant, namespace, topic);
+      await PulsarSourceApi.deleteSource(functionHost, functionPort, tenant, namespace, topic);
       await fetchSources();
     } on Exception catch (e) {
       opException = e;

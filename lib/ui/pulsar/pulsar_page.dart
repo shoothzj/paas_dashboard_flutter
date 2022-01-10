@@ -17,8 +17,7 @@ class _PulsarPageState extends State<PulsarPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<PulsarInstanceListViewModel>(context, listen: false)
-        .fetchPulsarInstances();
+    Provider.of<PulsarInstanceListViewModel>(context, listen: false).fetchPulsarInstances();
   }
 
   @override
@@ -39,9 +38,7 @@ class _PulsarPageState extends State<PulsarPage> {
         rows: vm.instances
             .map((itemRow) => DataRow(
                     onSelectChanged: (bool? selected) {
-                      Navigator.pushNamed(
-                          context, PageRouteConst.PulsarInstance,
-                          arguments: itemRow.deepCopy());
+                      Navigator.pushNamed(context, PageRouteConst.PulsarInstance, arguments: itemRow.deepCopy());
                     },
                     cells: [
                       DataCell(Text(itemRow.id.toString())),
@@ -95,10 +92,8 @@ class _PulsarPageState extends State<PulsarPage> {
       FormFieldDef('Function Host'),
       FormFieldDef('Function Port'),
     ];
-    return FormUtil.createButton5("Pulsar Instance", list, context,
-        (name, host, port, functionHost, functionPort) {
-      vm.createPulsar(
-          name, host, int.parse(port), functionHost, int.parse(functionPort));
+    return FormUtil.createButton5("Pulsar Instance", list, context, (name, host, port, functionHost, functionPort) {
+      vm.createPulsar(name, host, int.parse(port), functionHost, int.parse(functionPort));
     });
   }
 }

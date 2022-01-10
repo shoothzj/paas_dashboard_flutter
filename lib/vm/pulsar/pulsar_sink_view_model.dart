@@ -10,12 +10,11 @@ class PulsarSinkViewModel extends ChangeNotifier {
   final NamespaceResp namespaceResp;
   final SinkResp sinkResp;
 
-  PulsarSinkViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.sinkResp);
+  PulsarSinkViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.sinkResp);
 
   PulsarSinkViewModel deepCopy() {
-    return new PulsarSinkViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy(), sinkResp.deepCopy());
+    return new PulsarSinkViewModel(
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), sinkResp.deepCopy());
   }
 
   int get id {

@@ -4,8 +4,7 @@ import 'package:paas_dashboard_flutter/module/mongo/const.dart';
 
 void main() {
   test("test_query_databases", () async {
-    var list =
-        await MongoDatabaseApi.getDatabaseList(MongoConst.defaultAddr, "", "");
+    var list = await MongoDatabaseApi.getDatabaseList(MongoConst.defaultAddr, "", "");
     print(list);
   });
 }

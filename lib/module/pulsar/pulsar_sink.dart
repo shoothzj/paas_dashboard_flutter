@@ -7,8 +7,8 @@ class SinkConfigReq {
   final Map configs;
   final String archive;
 
-  SinkConfigReq(this.tenant, this.namespace, this.name,
-      this.sourceSubscriptionName, this.inputs, this.configs, this.archive);
+  SinkConfigReq(
+      this.tenant, this.namespace, this.name, this.sourceSubscriptionName, this.inputs, this.configs, this.archive);
 
   Map toJson() {
     Map map = new Map();
@@ -31,12 +31,10 @@ class SinkConfigResp {
   final Map configs;
   final String archive;
 
-  SinkConfigResp(this.name, this.tenant, this.namespace, this.inputs,
-      this.configs, this.archive);
+  SinkConfigResp(this.name, this.tenant, this.namespace, this.inputs, this.configs, this.archive);
 
   factory SinkConfigResp.fromJson(Map map) {
-    return SinkConfigResp(map["name"], map["tenant"], map["namespace"],
-        map["inputs"], map["configs"], map["archive"]);
+    return SinkConfigResp(map["name"], map["tenant"], map["namespace"], map["inputs"], map["configs"], map["archive"]);
   }
 }
 

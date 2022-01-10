@@ -63,8 +63,7 @@ class RouteGen {
             ));
   }
 
-  static Route pulsarPartitionedTopic(
-      PulsarPartitionedTopicViewModel viewModel) {
+  static Route pulsarPartitionedTopic(PulsarPartitionedTopicViewModel viewModel) {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,

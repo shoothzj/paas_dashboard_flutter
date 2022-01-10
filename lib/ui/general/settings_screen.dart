@@ -37,16 +37,8 @@ class SettingsScreenState extends State<SettingsScreen> {
         leading: Icon(Icons.language),
         initiallyExpanded: false,
         children: [
-          RadioListTile(
-              title: Text('English'),
-              value: 'en',
-              groupValue: vm.language,
-              onChanged: _changed),
-          RadioListTile(
-              title: Text('汉语'),
-              value: 'zh',
-              groupValue: vm.language,
-              onChanged: _changed),
+          RadioListTile(title: Text('English'), value: 'en', groupValue: vm.language, onChanged: _changed),
+          RadioListTile(title: Text('汉语'), value: 'zh', groupValue: vm.language, onChanged: _changed),
         ],
       ),
     );

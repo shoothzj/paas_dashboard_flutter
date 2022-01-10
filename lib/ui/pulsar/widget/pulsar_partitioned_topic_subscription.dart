@@ -15,20 +15,17 @@ class PulsarPartitionedTopicSubscriptionWidget extends StatefulWidget {
   }
 }
 
-class PulsarPartitionedTopicSubscriptionWidgetState
-    extends State<PulsarPartitionedTopicSubscriptionWidget> {
+class PulsarPartitionedTopicSubscriptionWidgetState extends State<PulsarPartitionedTopicSubscriptionWidget> {
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarPartitionedTopicSubscriptionViewModel>(context,
-        listen: false);
+    final vm = Provider.of<PulsarPartitionedTopicSubscriptionViewModel>(context, listen: false);
     vm.fetchSubscriptions();
   }
 
   @override
   Widget build(BuildContext context) {
-    final vm =
-        Provider.of<PulsarPartitionedTopicSubscriptionViewModel>(context);
+    final vm = Provider.of<PulsarPartitionedTopicSubscriptionViewModel>(context);
     if (vm.loading) {
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();

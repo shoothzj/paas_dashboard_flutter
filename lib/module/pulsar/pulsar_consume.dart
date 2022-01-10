@@ -9,27 +9,11 @@ class ConsumerResp {
   final String clientVersion;
   final String address;
 
-  ConsumerResp(
-      this.consumerName,
-      this.subscriptionName,
-      this.rateOut,
-      this.throughputOut,
-      this.availablePermits,
-      this.unackedMessages,
-      this.lastConsumedTimestamp,
-      this.clientVersion,
-      this.address);
+  ConsumerResp(this.consumerName, this.subscriptionName, this.rateOut, this.throughputOut, this.availablePermits,
+      this.unackedMessages, this.lastConsumedTimestamp, this.clientVersion, this.address);
 
   ConsumerResp deepCopy() {
-    return new ConsumerResp(
-        consumerName,
-        subscriptionName,
-        rateOut,
-        throughputOut,
-        availablePermits,
-        unackedMessages,
-        lastConsumedTimestamp,
-        clientVersion,
-        address);
+    return new ConsumerResp(consumerName, subscriptionName, rateOut, throughputOut, availablePermits, unackedMessages,
+        lastConsumedTimestamp, clientVersion, address);
   }
 }

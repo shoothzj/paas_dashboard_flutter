@@ -23,10 +23,8 @@ class Persistent {
     return api!;
   }
 
-  static Future<void> savePulsar(String name, String host, int port,
-      String functionHost, int functionPort) async {
-    return (await getApi())
-        .savePulsar(name, host, port, functionHost, functionPort);
+  static Future<void> savePulsar(String name, String host, int port, String functionHost, int functionPort) async {
+    return (await getApi()).savePulsar(name, host, port, functionHost, functionPort);
   }
 
   static Future<void> deletePulsar(int id) async {
@@ -49,8 +47,7 @@ class Persistent {
     return (await getApi()).bookkeeperInstances();
   }
 
-  static Future<void> saveKubernetesSsh(
-      String name, List<SshStep> sshSteps) async {
+  static Future<void> saveKubernetesSsh(String name, List<SshStep> sshSteps) async {
     return (await getApi()).saveKubernetesSsh(name, sshSteps);
   }
 
@@ -62,8 +59,7 @@ class Persistent {
     return (await getApi()).kubernetesInstances();
   }
 
-  static Future<void> saveMongo(
-      String name, String addr, String username, String password) async {
+  static Future<void> saveMongo(String name, String addr, String username, String password) async {
     return (await getApi()).saveMongo(name, addr, username, password);
   }
 
@@ -75,8 +71,7 @@ class Persistent {
     return (await getApi()).mongoInstances();
   }
 
-  static Future<void> saveMysql(String name, String host, int port,
-      String username, String password) async {
+  static Future<void> saveMysql(String name, String host, int port, String username, String password) async {
     return (await getApi()).saveMysql(name, host, port, username, password);
   }
 

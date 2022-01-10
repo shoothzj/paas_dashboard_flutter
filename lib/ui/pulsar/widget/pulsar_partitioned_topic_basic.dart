@@ -15,13 +15,11 @@ class PulsarPartitionedTopicBasicWidget extends StatefulWidget {
   }
 }
 
-class PulsarPartitionedTopicBasicWidgetState
-    extends State<PulsarPartitionedTopicBasicWidget> {
+class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopicBasicWidget> {
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarPartitionedTopicBasicViewModel>(context,
-        listen: false);
+    final vm = Provider.of<PulsarPartitionedTopicBasicViewModel>(context, listen: false);
     vm.fetchPartitions();
   }
 
@@ -36,8 +34,7 @@ class PulsarPartitionedTopicBasicWidgetState
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processOpException(vm, context);
     var formButton = modifyPartitionTopicButton(context);
-    var refreshButton =
-        TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
+    var refreshButton = TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
         Container(
@@ -134,10 +131,8 @@ class PulsarPartitionedTopicBasicWidgetState
 
   ButtonStyleButton modifyPartitionTopicButton(BuildContext context) {
     var list = [FormFieldDef('New Partition Number')];
-    return FormUtil.updateButton1("Topic Partitions", list, context,
-        (partition) async {
-      final vm = Provider.of<PulsarPartitionedTopicBasicViewModel>(context,
-          listen: false);
+    return FormUtil.updateButton1("Topic Partitions", list, context, (partition) async {
+      final vm = Provider.of<PulsarPartitionedTopicBasicViewModel>(context, listen: false);
       vm.modifyTopicPartition(vm.topic, int.parse(partition));
     });
   }

@@ -4,8 +4,7 @@ import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
 
-class PulsarTenantViewModel
-    extends BaseLoadListPageViewModel<PulsarNamespaceViewModel> {
+class PulsarTenantViewModel extends BaseLoadListPageViewModel<PulsarNamespaceViewModel> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
 
@@ -15,8 +14,7 @@ class PulsarTenantViewModel
   PulsarTenantViewModel(this.pulsarInstancePo, this.tenantResp);
 
   PulsarTenantViewModel deepCopy() {
-    return new PulsarTenantViewModel(
-        pulsarInstancePo.deepCopy(), tenantResp.deepCopy());
+    return new PulsarTenantViewModel(pulsarInstancePo.deepCopy(), tenantResp.deepCopy());
   }
 
   int get id {
@@ -41,11 +39,8 @@ class PulsarTenantViewModel
 
   Future<void> fetchNamespaces() async {
     try {
-      final results =
-          await PulsarNamespaceApi.getNamespaces(host, port, tenant);
-      this.fullList = results
-          .map((e) => PulsarNamespaceViewModel(pulsarInstancePo, tenantResp, e))
-          .toList();
+      final results = await PulsarNamespaceApi.getNamespaces(host, port, tenant);
+      this.fullList = results.map((e) => PulsarNamespaceViewModel(pulsarInstancePo, tenantResp, e)).toList();
       this.displayList = this.fullList;
       loadSuccess();
     } on Exception catch (e) {
@@ -62,10 +57,7 @@ class PulsarTenantViewModel
       return;
     }
     if (!loading && loadException == null) {
-      this.displayList = this
-          .fullList
-          .where((element) => element.namespace.contains(str))
-          .toList();
+      this.displayList = this.fullList.where((element) => element.namespace.contains(str)).toList();
     }
     notifyListeners();
   }

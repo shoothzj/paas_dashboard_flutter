@@ -16,8 +16,7 @@ class _MongoPageState extends State<MongoPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<MongoInstanceListViewModel>(context, listen: false)
-        .fetchMongoInstances();
+    Provider.of<MongoInstanceListViewModel>(context, listen: false).fetchMongoInstances();
   }
 
   @override
@@ -56,9 +55,7 @@ class _MongoPageState extends State<MongoPage> {
             rows: vm.instances
                 .map((itemRow) => DataRow(
                         onSelectChanged: (bool? selected) {
-                          Navigator.pushNamed(
-                              context, PageRouteConst.MongoInstance,
-                              arguments: itemRow.deepCopy());
+                          Navigator.pushNamed(context, PageRouteConst.MongoInstance, arguments: itemRow.deepCopy());
                         },
                         cells: [
                           DataCell(Text(itemRow.id.toString())),
@@ -86,8 +83,7 @@ class _MongoPageState extends State<MongoPage> {
       FormFieldDef('Username'),
       FormFieldDef('Password'),
     ];
-    return FormUtil.createButton4("Mongo Instance", list, context,
-        (name, addr, username, password) {
+    return FormUtil.createButton4("Mongo Instance", list, context, (name, addr, username, password) {
       vm.createMongo(name, addr, username, password);
     });
   }

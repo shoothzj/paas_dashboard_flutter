@@ -10,12 +10,11 @@ class PulsarSourceViewModel extends ChangeNotifier {
   final NamespaceResp namespaceResp;
   final SourceResp sourceResp;
 
-  PulsarSourceViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.sourceResp);
+  PulsarSourceViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.sourceResp);
 
   PulsarSourceViewModel deepCopy() {
-    return new PulsarSourceViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy(), sourceResp.deepCopy());
+    return new PulsarSourceViewModel(
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), sourceResp.deepCopy());
   }
 
   int get id {

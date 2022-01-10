@@ -12,12 +12,11 @@ class PulsarTopicProduceViewModel extends BaseLoadListViewModel<ProducerResp> {
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarTopicProduceViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.topicResp);
+  PulsarTopicProduceViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   PulsarTopicProduceViewModel deepCopy() {
-    return new PulsarTopicProduceViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
+    return new PulsarTopicProduceViewModel(
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 
   int get id {
@@ -50,8 +49,7 @@ class PulsarTopicProduceViewModel extends BaseLoadListViewModel<ProducerResp> {
 
   Future<void> fetchProducers() async {
     try {
-      final results = await PulsarTopicApi.getProducers(
-          host, port, tenant, namespace, topic);
+      final results = await PulsarTopicApi.getProducers(host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadSuccess();

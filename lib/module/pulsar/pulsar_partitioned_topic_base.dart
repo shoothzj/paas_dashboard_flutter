@@ -7,17 +7,11 @@ class PulsarPartitionedTopicBaseResp {
   final double msgOutCounter;
   final double storageSize;
 
-  PulsarPartitionedTopicBaseResp(
-      this.topicName,
-      this.partitionNum,
-      this.msgRateIn,
-      this.msgRateOut,
-      this.msgInCounter,
-      this.msgOutCounter,
-      this.storageSize);
+  PulsarPartitionedTopicBaseResp(this.topicName, this.partitionNum, this.msgRateIn, this.msgRateOut, this.msgInCounter,
+      this.msgOutCounter, this.storageSize);
 
   PulsarPartitionedTopicBaseResp deepCopy() {
-    return new PulsarPartitionedTopicBaseResp(topicName, partitionNum,
-        msgRateIn, msgRateOut, msgInCounter, msgOutCounter, storageSize);
+    return new PulsarPartitionedTopicBaseResp(
+        topicName, partitionNum, msgRateIn, msgRateOut, msgInCounter, msgOutCounter, storageSize);
   }
 }

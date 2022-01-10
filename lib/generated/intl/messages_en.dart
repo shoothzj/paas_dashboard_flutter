@@ -30,47 +30,37 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clearBacklog": MessageLookupByLibrary.simpleMessage("Clear Backlog"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
-        "confirmClearBacklog":
-            MessageLookupByLibrary.simpleMessage("ConfirmClear?"),
-        "confirmDeleteQuestion":
-            MessageLookupByLibrary.simpleMessage("ConfirmDelete?"),
+        "confirmClearBacklog": MessageLookupByLibrary.simpleMessage("ConfirmClear?"),
+        "confirmDeleteQuestion": MessageLookupByLibrary.simpleMessage("ConfirmDelete?"),
         "consume": MessageLookupByLibrary.simpleMessage("consume"),
         "consumer": MessageLookupByLibrary.simpleMessage("Consumer"),
         "consumerList": MessageLookupByLibrary.simpleMessage("Consumer List"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
-        "deleteNamespace":
-            MessageLookupByLibrary.simpleMessage("Delete Namespace"),
+        "deleteNamespace": MessageLookupByLibrary.simpleMessage("Delete Namespace"),
         "deleteTenant": MessageLookupByLibrary.simpleMessage("Delete Tenant"),
         "deleteTopic": MessageLookupByLibrary.simpleMessage("Delete Topic"),
         "detail": MessageLookupByLibrary.simpleMessage("detail"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
         "isLeader": MessageLookupByLibrary.simpleMessage("Is Leader"),
-        "languageSettings":
-            MessageLookupByLibrary.simpleMessage("Language Settings"),
+        "languageSettings": MessageLookupByLibrary.simpleMessage("Language Settings"),
         "name": MessageLookupByLibrary.simpleMessage("name"),
         "namespace": MessageLookupByLibrary.simpleMessage("namespace"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("Namespace Name"),
         "namespaces": MessageLookupByLibrary.simpleMessage("Namespaces"),
         "partitionList": MessageLookupByLibrary.simpleMessage("Partition List"),
-        "partitionNum":
-            MessageLookupByLibrary.simpleMessage("Partition number"),
+        "partitionNum": MessageLookupByLibrary.simpleMessage("Partition number"),
         "produce": MessageLookupByLibrary.simpleMessage("Produce"),
         "producerList": MessageLookupByLibrary.simpleMessage("Producer List"),
         "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
-        "searchByNamespace":
-            MessageLookupByLibrary.simpleMessage("Search by Namespace Name"),
-        "searchByTenant":
-            MessageLookupByLibrary.simpleMessage("Search by Tenant Name"),
-        "searchByTopic":
-            MessageLookupByLibrary.simpleMessage("Search by Topic Name"),
+        "searchByNamespace": MessageLookupByLibrary.simpleMessage("Search by Namespace Name"),
+        "searchByTenant": MessageLookupByLibrary.simpleMessage("Search by Tenant Name"),
+        "searchByTopic": MessageLookupByLibrary.simpleMessage("Search by Topic Name"),
         "second": MessageLookupByLibrary.simpleMessage("second"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "subscription": MessageLookupByLibrary.simpleMessage("subscription"),
-        "subscriptionList":
-            MessageLookupByLibrary.simpleMessage("Subscription list"),
-        "subscriptionName":
-            MessageLookupByLibrary.simpleMessage("Subscription Name"),
+        "subscriptionList": MessageLookupByLibrary.simpleMessage("Subscription list"),
+        "subscriptionName": MessageLookupByLibrary.simpleMessage("Subscription Name"),
         "tenant": MessageLookupByLibrary.simpleMessage("tenant"),
         "tenantName": MessageLookupByLibrary.simpleMessage("Tenant Name"),
         "tenants": MessageLookupByLibrary.simpleMessage("Tenants"),

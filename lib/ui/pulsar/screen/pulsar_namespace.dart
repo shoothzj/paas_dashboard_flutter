@@ -42,8 +42,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
       length: 6,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-              'Pulsar ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace}'),
+          title: Text('Pulsar ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace}'),
           bottom: TabBar(
             tabs: [
               Tab(text: "BacklogQuota"),
@@ -58,33 +57,30 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
         body: TabBarView(
           children: [
             ChangeNotifierProvider(
-              create: (context) => PulsarNamespaceBacklogQuotaViewModel(
-                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+              create: (context) =>
+                  PulsarNamespaceBacklogQuotaViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
               child: PulsarNamespaceBacklogQuotaWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => PulsarPartitionedTopicListViewModel(
-                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+              create: (context) =>
+                  PulsarPartitionedTopicListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
               child: PulsarPartitionedTopicListWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => PulsarTopicListViewModel(
-                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+              create: (context) => PulsarTopicListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
               child: PulsarTopicListWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => PulsarSourceListViewModel(
-                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+              create: (context) => PulsarSourceListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
               child: PulsarSourceListWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => PulsarSinkListViewModel(
-                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+              create: (context) => PulsarSinkListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
               child: PulsarSinkListWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => PulsarNamespacePoliciesViewModel(
-                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+              create: (context) =>
+                  PulsarNamespacePoliciesViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
               child: PulsarNamespacePoliciesWidget(),
             ).build(context),
           ],

@@ -6,22 +6,17 @@ import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
 
-class PulsarPartitionedTopicDetailViewModel
-    extends BaseLoadListViewModel<PulsarPartitionedTopicDetailResp> {
+class PulsarPartitionedTopicDetailViewModel extends BaseLoadListViewModel<PulsarPartitionedTopicDetailResp> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarPartitionedTopicDetailViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.topicResp);
+  PulsarPartitionedTopicDetailViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   PulsarPartitionedTopicDetailViewModel deepCopy() {
     return new PulsarPartitionedTopicDetailViewModel(
-        pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(),
-        namespaceResp.deepCopy(),
-        topicResp.deepCopy());
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 
   int get id {
@@ -54,8 +49,7 @@ class PulsarPartitionedTopicDetailViewModel
 
   Future<void> fetchPartitions() async {
     try {
-      final results = await PulsarPartitionedTopicApi.getDetails(
-          host, port, tenant, namespace, topic);
+      final results = await PulsarPartitionedTopicApi.getDetails(host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadSuccess();

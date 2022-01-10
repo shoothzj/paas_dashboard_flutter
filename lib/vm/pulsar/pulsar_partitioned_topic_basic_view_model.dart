@@ -17,12 +17,11 @@ class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
   double msgOutCounter = 0;
   double storageSize = 0;
 
-  PulsarPartitionedTopicBasicViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.topicResp);
+  PulsarPartitionedTopicBasicViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   PulsarPartitionedTopicBasicViewModel deepCopy() {
-    return new PulsarPartitionedTopicBasicViewModel(pulsarInstancePo.deepCopy(),
-        tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
+    return new PulsarPartitionedTopicBasicViewModel(
+        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 
   int get id {
@@ -55,8 +54,7 @@ class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
 
   Future<void> fetchPartitions() async {
     try {
-      final results = await PulsarPartitionedTopicApi.getBase(
-          host, port, tenant, namespace, topic);
+      final results = await PulsarPartitionedTopicApi.getBase(host, port, tenant, namespace, topic);
       partitionNum = results.partitionNum.toString();
       msgRateIn = results.msgRateIn;
       msgRateOut = results.msgRateOut;
@@ -73,8 +71,7 @@ class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
 
   Future<void> modifyTopicPartition(String topic, int partition) async {
     try {
-      await PulsarPartitionedTopicApi.modifyPartitionTopic(
-          host, port, tenant, namespace, topic, partition);
+      await PulsarPartitionedTopicApi.modifyPartitionTopic(host, port, tenant, namespace, topic, partition);
       await fetchPartitions();
     } on Exception catch (e) {
       opException = e;

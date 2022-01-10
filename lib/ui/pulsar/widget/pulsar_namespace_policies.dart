@@ -14,13 +14,11 @@ class PulsarNamespacePoliciesWidget extends StatefulWidget {
   }
 }
 
-class PulsarNamespacePoliciesWidgetState
-    extends State<PulsarNamespacePoliciesWidget> {
+class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWidget> {
   @override
   void initState() {
     super.initState();
-    final vm =
-        Provider.of<PulsarNamespacePoliciesViewModel>(context, listen: false);
+    final vm = Provider.of<PulsarNamespacePoliciesViewModel>(context, listen: false);
   }
 
   @override
@@ -37,8 +35,7 @@ class PulsarNamespacePoliciesWidgetState
       });
     }
     ExceptionUtil.processLoadException(vm, context);
-    var refreshButton =
-        TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
+    var refreshButton = TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
         Container(

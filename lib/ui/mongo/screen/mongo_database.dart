@@ -41,8 +41,7 @@ class MongoDatabaseScreenState extends State<MongoDatabaseScreen> {
         body: TabBarView(
           children: [
             ChangeNotifierProvider(
-              create: (context) =>
-                  MongoTableListViewModel(vm.mongoInstancePo, vm.databaseResp),
+              create: (context) => MongoTableListViewModel(vm.mongoInstancePo, vm.databaseResp),
               child: MongoTableListWidget(),
             ).build(context),
           ],

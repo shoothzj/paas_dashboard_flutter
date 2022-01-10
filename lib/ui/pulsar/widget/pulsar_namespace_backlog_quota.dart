@@ -14,13 +14,11 @@ class PulsarNamespaceBacklogQuotaWidget extends StatefulWidget {
   }
 }
 
-class PulsarNamespaceBacklogQuotaWidgetState
-    extends State<PulsarNamespaceBacklogQuotaWidget> {
+class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklogQuotaWidget> {
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarNamespaceBacklogQuotaViewModel>(context,
-        listen: false);
+    final vm = Provider.of<PulsarNamespaceBacklogQuotaViewModel>(context, listen: false);
     vm.fetchBacklogQuota();
   }
 
@@ -39,12 +37,9 @@ class PulsarNamespaceBacklogQuotaWidgetState
     }
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processLoadException(vm, context);
-    var limitSizeEditingController =
-        TextEditingController(text: vm.limitSizeDisplayStr);
-    var limitTimeEditingController =
-        TextEditingController(text: vm.limitTimeDisplayStr);
-    var policyEditingController =
-        TextEditingController(text: vm.retentionPolicyDisplayStr);
+    var limitSizeEditingController = TextEditingController(text: vm.limitSizeDisplayStr);
+    var limitTimeEditingController = TextEditingController(text: vm.limitTimeDisplayStr);
+    var policyEditingController = TextEditingController(text: vm.retentionPolicyDisplayStr);
     var formButton = TextButton(
         onPressed: () {
           vm.limitSizeDisplayStr = limitSizeEditingController.value.text;

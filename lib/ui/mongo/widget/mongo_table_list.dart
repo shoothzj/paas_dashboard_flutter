@@ -44,12 +44,11 @@ class MongoTableListWidgetState extends State<MongoTableListWidget> {
     }
     ExceptionUtil.processLoadExceptionPageable(vm, context);
     ExceptionUtil.processOpExceptionPageable(vm, context);
-    vm.setDataConverter(
-        (item) => DataRow(onSelectChanged: (bool? selected) {}, cells: [
-              DataCell(
-                Text(item.tableName),
-              ),
-            ]));
+    vm.setDataConverter((item) => DataRow(onSelectChanged: (bool? selected) {}, cells: [
+          DataCell(
+            Text(item.tableName),
+          ),
+        ]));
     var topicsTable = SingleChildScrollView(
       child: PaginatedDataTable(
           showCheckboxColumn: false,
@@ -73,8 +72,7 @@ class MongoTableListWidgetState extends State<MongoTableListWidget> {
             children: [refreshButton],
           ),
         ),
-        SearchableTitle(
-            "table list", "search by table name", searchTextController),
+        SearchableTitle("table list", "search by table name", searchTextController),
         topicsTable
       ],
     );

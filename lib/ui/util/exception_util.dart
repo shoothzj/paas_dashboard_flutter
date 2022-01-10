@@ -16,8 +16,7 @@ class ExceptionUtil {
     vm.opException = null;
   }
 
-  static void processOpExceptionPageable(
-      BaseLoadListPageViewModel vm, BuildContext context) {
+  static void processOpExceptionPageable(BaseLoadListPageViewModel vm, BuildContext context) {
     if (vm.opException == null) {
       return;
     }
@@ -38,8 +37,7 @@ class ExceptionUtil {
     });
   }
 
-  static void processLoadExceptionPageable(
-      BaseLoadListPageViewModel vm, BuildContext context) {
+  static void processLoadExceptionPageable(BaseLoadListPageViewModel vm, BuildContext context) {
     if (vm.loadException == null) {
       return;
     }

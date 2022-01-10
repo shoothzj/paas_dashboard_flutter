@@ -17,19 +17,15 @@ class NavDrawer extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.green,
                 image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage(
-                        'assets/images/background/joy_valley_slide.png'))),
+                    fit: BoxFit.fill, image: AssetImage('assets/images/background/joy_valley_slide.png'))),
           ),
           ListTile(
             title: Text(S.of(context).aboutAuthor),
-            onTap: () =>
-                {Navigator.of(context).pushNamed(PageRouteConst.Author)},
+            onTap: () => {Navigator.of(context).pushNamed(PageRouteConst.Author)},
           ),
           ListTile(
             title: Text(S.of(context).settings),
-            onTap: () =>
-                {Navigator.of(context).pushNamed(PageRouteConst.Settings)},
+            onTap: () => {Navigator.of(context).pushNamed(PageRouteConst.Settings)},
           ),
         ],
       ),

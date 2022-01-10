@@ -11,8 +11,7 @@ class MongoTableViewModel extends ChangeNotifier {
   MongoTableViewModel(this.mongoInstancePo, this.databaseResp, this.tableResp);
 
   MongoTableViewModel deepCopy() {
-    return new MongoTableViewModel(mongoInstancePo.deepCopy(),
-        databaseResp.deepCopy(), tableResp.deepCopy());
+    return new MongoTableViewModel(mongoInstancePo.deepCopy(), databaseResp.deepCopy(), tableResp.deepCopy());
   }
 
   String get name {
