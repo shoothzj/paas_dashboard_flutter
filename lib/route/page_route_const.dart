@@ -5,6 +5,8 @@ class PageRouteConst {
   static const String Bookkeeper = '/bookkeeper';
   static const String Kubernetes = '/kubernetes';
   static const String Mongo = '/mongo';
+  static const String MongoInstance = '/mongo/instance';
+  static const String MongoDatabase = '/mongo/instance/database';
   static const String Mysql = '/mysql';
   static const String Pulsar = '/pulsar';
   static const String PulsarInstance = '/pulsar/instance';

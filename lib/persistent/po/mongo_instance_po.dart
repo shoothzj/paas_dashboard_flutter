@@ -7,10 +7,17 @@ class MongoInstancePo {
 
   MongoInstancePo(this.id, this.name, this.addr, this.username, this.password);
 
+  MongoInstancePo deepCopy() {
+    return new MongoInstancePo(id, name, addr, username, password);
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
+      'addr': addr,
+      'username': username,
+      'password': password,
     };
   }
 

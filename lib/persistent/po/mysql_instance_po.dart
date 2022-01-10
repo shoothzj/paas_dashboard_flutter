@@ -13,6 +13,10 @@ class MysqlInstancePo {
     return {
       'id': id,
       'name': name,
+      'host': host,
+      'port': port,
+      'username': username,
+      'password': password,
     };
   }
 
