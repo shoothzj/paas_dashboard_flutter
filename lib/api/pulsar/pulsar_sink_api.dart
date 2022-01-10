@@ -54,8 +54,8 @@ class PulsarSinkApi {
     return jsonResponse.map((name) => new SinkResp(name)).toList();
   }
 
-  static Future<SinkConfigResp> getSink(
-      String host, int port, String tenant, String namespace, String sinkName) async {
+  static Future<SinkConfigResp> getSink(String host, int port, String tenant,
+      String namespace, String sinkName) async {
     var url =
         'http://$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sinkName';
     final response = await http.get(Uri.parse(url));

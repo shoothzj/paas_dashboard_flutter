@@ -1,4 +1,3 @@
-
 class K8sInstancePo {
   final int id;
   final String name;
@@ -14,6 +13,6 @@ class K8sInstancePo {
 
   @override
   String toString() {
-    return 'BookKeeperInstance{id: $id, name: $name}';
+    return 'K8sInstance{id: $id, name: $name}';
   }
 }

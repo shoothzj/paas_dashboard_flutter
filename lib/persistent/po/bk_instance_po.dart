@@ -19,5 +19,4 @@ class BkInstancePo extends HttpEndpoint {
   String toString() {
     return 'BookKeeperInstance{id: $id, name: $name, host: $host, port: $port}';
   }
-
 }

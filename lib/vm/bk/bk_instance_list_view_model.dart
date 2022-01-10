@@ -20,5 +20,4 @@ class BkInstanceListViewModel extends ChangeNotifier {
     Persistent.deleteBookkeeper(id);
     fetchBkInstances();
   }
-
 }

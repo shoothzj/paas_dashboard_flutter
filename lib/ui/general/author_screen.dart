@@ -11,7 +11,6 @@ class AuthorScreen extends StatelessWidget {
       Author('lovehzj', "1922919664@qq.com"),
       Author('shoothzj', 'shoothzj@gmail.com')
     ];
-    List<String> name = ['fu_turer', 'shoothzj'];
 
     return Scaffold(
       appBar: AppBar(

@@ -84,8 +84,8 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
             children: [formButton, refreshButton],
           ),
         ),
-        SearchableTitle("source list", "search by source name",
-            searchTextController),
+        SearchableTitle(
+            "source list", "search by source name", searchTextController),
         topicsTable
       ],
     );
@@ -100,15 +100,15 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
       FormFieldDef('Config')
     ];
     return FormUtil.createButton4("Source", list, context,
-            (sourceName, outputTopic, sourceType, config) async {
-          final vm = Provider.of<PulsarSourceListViewModel>(context, listen: false);
-          vm.createSource(sourceName, outputTopic, sourceType, config);
-          final scaffold = ScaffoldMessenger.of(context);
-          scaffold.showSnackBar(
-            SnackBar(
-              content: const Text('Dart 目前不支持复杂ContentType请求，Curl命令已复制到剪切版'),
-            ),
-          );
-        });
+        (sourceName, outputTopic, sourceType, config) async {
+      final vm = Provider.of<PulsarSourceListViewModel>(context, listen: false);
+      vm.createSource(sourceName, outputTopic, sourceType, config);
+      final scaffold = ScaffoldMessenger.of(context);
+      scaffold.showSnackBar(
+        SnackBar(
+          content: const Text('Dart 目前不支持复杂ContentType请求，Curl命令已复制到剪切版'),
+        ),
+      );
+    });
   }
 }

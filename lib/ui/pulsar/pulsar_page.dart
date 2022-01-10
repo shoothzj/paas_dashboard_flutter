@@ -97,7 +97,8 @@ class _PulsarPageState extends State<PulsarPage> {
     ];
     return FormUtil.createButton5("Pulsar Instance", list, context,
         (name, host, port, functionHost, functionPort) {
-      vm.createPulsar(name, host, int.parse(port), functionHost, int.parse(functionPort));
+      vm.createPulsar(
+          name, host, int.parse(port), functionHost, int.parse(functionPort));
     });
   }
 }

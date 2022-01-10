@@ -5,6 +5,8 @@ import 'package:paas_dashboard_flutter/module/ssh/ssh_step.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent_api.dart';
 import 'package:paas_dashboard_flutter/persistent/po/bk_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -74,10 +76,23 @@ class PersistentDb implements PersistentApi {
     await db.execute(
       'INSERT INTO kubernetes_instances(name, type, content) VALUES ("example", "host", "{}")',
     );
+    await db.execute(
+      'CREATE TABLE mongo_instances(id INTEGER PRIMARY KEY, name TEXT, addr TEXT, username TEXT, password TEXT)',
+    );
+    await db.execute(
+      'INSERT INTO mongo_instances(name, addr, username, password) VALUES ("example", "mongodb://localhost:27017", "", "")',
+    );
+    await db.execute(
+      'CREATE TABLE mysql_instances(id INTEGER PRIMARY KEY, name TEXT, host TEXT, port INTEGER, username TEXT, password TEXT)',
+    );
+    await db.execute(
+      'INSERT INTO mysql_instances(name, host, port, username, password) VALUES ("example", "localhost", 3306, "hzj", "Mysql@123")',
+    );
   }
 
   @override
-  Future<void> savePulsar(String name, String host, int port, String functionHost, int functionPort) async {
+  Future<void> savePulsar(String name, String host, int port,
+      String functionHost, int functionPort) async {
     var aux = await getInstance();
     var list = [name, host, port, functionHost, functionPort];
     aux.database.execute(
@@ -95,10 +110,11 @@ class PersistentDb implements PersistentApi {
   Future<List<PulsarInstancePo>> pulsarInstances() async {
     var aux = await getInstance();
     final List<Map<String, dynamic>> maps =
-    await aux.database.query('pulsar_instances');
+        await aux.database.query('pulsar_instances');
     return List.generate(maps.length, (i) {
       var aux = maps[i];
-      return PulsarInstancePo(aux['id'], aux['name'], aux['host'], aux['port'], aux['function_host'], aux['function_port']);
+      return PulsarInstancePo(aux['id'], aux['name'], aux['host'], aux['port'],
+          aux['function_host'], aux['function_port']);
     });
   }
 
@@ -114,7 +130,8 @@ class PersistentDb implements PersistentApi {
   @override
   Future<void> deleteBookkeeper(int id) async {
     var aux = await getInstance();
-    aux.database.delete('bookkeeper_instances', where: 'id = ?', whereArgs: [id]);
+    aux.database
+        .delete('bookkeeper_instances', where: 'id = ?', whereArgs: [id]);
   }
 
   @override
@@ -146,4 +163,59 @@ class PersistentDb implements PersistentApi {
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> deleteMongo(int id) {
+    // TODO: implement deleteMongo
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<MongoInstancePo>> mongoInstances() async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps =
+        await aux.database.query('mongo_instances');
+    return List.generate(maps.length, (i) {
+      var aux = maps[i];
+      return MongoInstancePo(aux['id'], aux['name'], aux['addr'],
+          aux['username'], aux['password']);
+    });
+  }
+
+  @override
+  Future<void> saveMongo(
+      String name, String addr, String username, String password) async {
+    var aux = await getInstance();
+    var list = [name, addr, username, password];
+    aux.database.execute(
+        'INSERT INTO mongo_instances(name, addr, username, password) VALUES (?, ?, ?, ?)',
+        list);
+  }
+
+  @override
+  Future<void> deleteMysql(int id) {
+    // TODO: implement deleteMysql
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<MysqlInstancePo>> mysqlInstances() async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps =
+        await aux.database.query('mysql_instances');
+    return List.generate(maps.length, (i) {
+      var aux = maps[i];
+      return MysqlInstancePo(aux['id'], aux['name'], aux['host'], aux['port'],
+          aux['username'], aux['password']);
+    });
+  }
+
+  @override
+  Future<void> saveMysql(String name, String host, int port, String username,
+      String password) async {
+    var aux = await getInstance();
+    var list = [name, host, port, username, password];
+    aux.database.execute(
+        'INSERT INTO mysql_instances(name, host, port, username, password) VALUES (?, ?, ?, ?, ?)',
+        list);
+  }
 }

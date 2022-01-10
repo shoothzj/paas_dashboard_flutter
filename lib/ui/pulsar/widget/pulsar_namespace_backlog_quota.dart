@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
-import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_backlog_quota_view_model.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +14,13 @@ class PulsarNamespaceBacklogQuotaWidget extends StatefulWidget {
   }
 }
 
-class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklogQuotaWidget> {
-
+class PulsarNamespaceBacklogQuotaWidgetState
+    extends State<PulsarNamespaceBacklogQuotaWidget> {
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarNamespaceBacklogQuotaViewModel>(context, listen: false);
+    final vm = Provider.of<PulsarNamespaceBacklogQuotaViewModel>(context,
+        listen: false);
     vm.fetchBacklogQuota();
   }
 
@@ -39,9 +39,12 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
     }
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processLoadException(vm, context);
-    var limitSizeEditingController = TextEditingController(text: vm.limitSizeDisplayStr);
-    var limitTimeEditingController = TextEditingController(text: vm.limitTimeDisplayStr);
-    var policyEditingController = TextEditingController(text: vm.retentionPolicyDisplayStr);
+    var limitSizeEditingController =
+        TextEditingController(text: vm.limitSizeDisplayStr);
+    var limitTimeEditingController =
+        TextEditingController(text: vm.limitTimeDisplayStr);
+    var policyEditingController =
+        TextEditingController(text: vm.retentionPolicyDisplayStr);
     var formButton = TextButton(
         onPressed: () {
           vm.limitSizeDisplayStr = limitSizeEditingController.value.text;
@@ -94,10 +97,9 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
         ),
         Container(
           child: SelectableText(
-              "Policy enum: {producer_request_hold, producer_exception, consumer_backlog_eviction}",
-          toolbarOptions: ToolbarOptions(
-            paste: true
-          ),),
+            "Policy enum: {producer_request_hold, producer_exception, consumer_backlog_eviction}",
+            toolbarOptions: ToolbarOptions(paste: true),
+          ),
         ),
       ],
     );

@@ -1,5 +1,4 @@
 class HttpUtil {
-
   static bool abnormal(int code) {
     return code < 200 || code >= 300;
   }

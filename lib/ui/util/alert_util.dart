@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AlertUtil {
-
   static void exceptionDialog(Exception exception, BuildContext context) {
-    showDialog(context: context, builder: (context) {
-      return AlertUtil.create(exception, context);
-    });
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertUtil.create(exception, context);
+        });
   }
 
   static AlertDialog create(Object? error, BuildContext context) {
@@ -18,7 +19,7 @@ class AlertUtil {
         ),
       ),
       content: Text(
-        "${error}",
+        "$error",
         style: TextStyle(
           color: Colors.blueAccent,
         ),

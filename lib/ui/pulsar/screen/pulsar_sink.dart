@@ -35,11 +35,8 @@ class _PulsarSinkScreenState extends State<PulsarSinkScreen> {
         body: TabBarView(
           children: [
             ChangeNotifierProvider(
-              create: (context) => PulsarSinkBasicViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.sinkResp),
+              create: (context) => PulsarSinkBasicViewModel(vm.pulsarInstancePo,
+                  vm.tenantResp, vm.namespaceResp, vm.sinkResp),
               child: PulsarSinkBasicWidget(),
             ).build(context),
           ],

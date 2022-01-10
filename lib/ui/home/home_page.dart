@@ -26,11 +26,13 @@ class HomePage extends StatelessWidget {
               children: [
                 buildPaasCard(context, "pulsar"),
                 buildPaasCard(context, "bookkeeper"),
-                buildPaasCard(context, "zookeeper"),
-                buildPaasCard(context, "elasticsearch"),
+                buildPaasCard(context, "mongo"),
+                buildPaasCard(context, "mysql"),
                 buildPaasCard(context, "kubernetes"),
+                buildPaasCard(context, "elasticsearch"),
                 buildPaasCard(context, "kafka"),
                 buildPaasCard(context, "flink"),
+                buildPaasCard(context, "zookeeper"),
               ],
             ),
           )
@@ -50,7 +52,10 @@ class HomePage extends StatelessWidget {
           children: [
             Image.asset('assets/images/icons/$name.png'),
             Center(
-              child: Text(name, style: TextStyle(color: Colors.black),),
+              child: Text(
+                name,
+                style: TextStyle(color: Colors.black),
+              ),
             )
           ],
         ),

@@ -19,7 +19,7 @@ class FormUtil {
       throw AssertionError('args not match');
     }
     return createButton(resourceName, formFieldDefList, context,
-            (list) => callback(list[0], list[1], list[2], list[3], list[4]));
+        (list) => callback(list[0], list[1], list[2], list[3], list[4]));
   }
 
   static ButtonStyleButton createButton4(
@@ -31,7 +31,7 @@ class FormUtil {
       throw AssertionError('args not match');
     }
     return createButton(resourceName, formFieldDefList, context,
-            (list) => callback(list[0], list[1], list[2], list[3]));
+        (list) => callback(list[0], list[1], list[2], list[3]));
   }
 
   static ButtonStyleButton createButton3(

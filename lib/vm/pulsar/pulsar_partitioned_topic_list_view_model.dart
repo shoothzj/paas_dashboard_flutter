@@ -49,7 +49,7 @@ class PulsarPartitionedTopicListViewModel
           host, port, tenant, namespace);
       this.fullList = results
           .map((e) => PulsarPartitionedTopicViewModel(
-          pulsarInstancePo, tenantResp, namespaceResp, e))
+              pulsarInstancePo, tenantResp, namespaceResp, e))
           .toList();
       this.displayList = this.fullList;
       loadSuccess();

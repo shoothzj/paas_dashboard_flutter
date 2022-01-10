@@ -52,8 +52,8 @@ class PulsarSinkBasicViewModel extends BaseLoadViewModel {
 
   Future<void> fetch() async {
     try {
-      final SinkConfigResp sinkConfigResp = await PulsarSinkApi.getSink(
-          host, port, tenant, namespace, sinkName);
+      final SinkConfigResp sinkConfigResp =
+          await PulsarSinkApi.getSink(host, port, tenant, namespace, sinkName);
       this.inputs = sinkConfigResp.inputs;
       this.configs = sinkConfigResp.configs;
       this.archive = sinkConfigResp.archive;
@@ -64,5 +64,4 @@ class PulsarSinkBasicViewModel extends BaseLoadViewModel {
     }
     notifyListeners();
   }
-
 }
