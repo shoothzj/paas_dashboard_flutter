@@ -198,6 +198,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  mysql1:
+    dependency: "direct main"
+    description:
+      name: mysql1
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.19.2"
   nested:
     dependency: transitive
     description:

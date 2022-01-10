@@ -5,6 +5,10 @@ class MysqlInstanceViewModel {
 
   MysqlInstanceViewModel(this.mysqlInstancePo);
 
+  MysqlInstanceViewModel deepCopy() {
+    return new MysqlInstanceViewModel(mysqlInstancePo.deepCopy());
+  }
+
   int get id {
     return this.mysqlInstancePo.id;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class _MysqlPageState extends State<MysqlPage> {
   void initState() {
     super.initState();
     Provider.of<MysqlInstanceListViewModel>(context, listen: false)
-        .fetchMongoInstances();
+        .fetchMysqlInstances();
   }
 
   @override
@@ -26,7 +27,7 @@ class _MysqlPageState extends State<MysqlPage> {
     var refreshButton = TextButton(
         onPressed: () {
           setState(() {
-            vm.fetchMongoInstances();
+            vm.fetchMysqlInstances();
           });
         },
         child: Text(S.of(context).refresh));
@@ -41,7 +42,7 @@ class _MysqlPageState extends State<MysqlPage> {
           ),
         ),
         Center(
-          child: Text('Mongo Instance List'),
+          child: Text('Mysql Instance List'),
         ),
         SingleChildScrollView(
           child: DataTable(
@@ -54,14 +55,19 @@ class _MysqlPageState extends State<MysqlPage> {
               DataColumn(label: Text('Username')),
             ],
             rows: vm.instances
-                .map((itemRow) =>
-                    DataRow(onSelectChanged: (bool? selected) {}, cells: [
-                      DataCell(Text(itemRow.id.toString())),
-                      DataCell(Text(itemRow.name)),
-                      DataCell(Text(itemRow.host)),
-                      DataCell(Text(itemRow.port.toString())),
-                      DataCell(Text(itemRow.username)),
-                    ]))
+                .map((itemRow) => DataRow(
+                        onSelectChanged: (bool? selected) {
+                          Navigator.pushNamed(
+                              context, PageRouteConst.MysqlInstance,
+                              arguments: itemRow.deepCopy());
+                        },
+                        cells: [
+                          DataCell(Text(itemRow.id.toString())),
+                          DataCell(Text(itemRow.name)),
+                          DataCell(Text(itemRow.host)),
+                          DataCell(Text(itemRow.port.toString())),
+                          DataCell(Text(itemRow.username)),
+                        ]))
                 .toList(),
           ),
         ),
@@ -69,7 +75,7 @@ class _MysqlPageState extends State<MysqlPage> {
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text('Mongo Dashboard'),
+          title: Text('Mysql Dashboard'),
         ),
         body: body);
   }

@@ -9,6 +9,10 @@ class MysqlInstancePo {
   MysqlInstancePo(
       this.id, this.name, this.host, this.port, this.username, this.password);
 
+  MysqlInstancePo deepCopy() {
+    return new MysqlInstancePo(id, name, host, port, username, password);
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
