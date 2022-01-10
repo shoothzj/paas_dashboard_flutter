@@ -8,6 +8,8 @@ class PageRouteConst {
   static const String MongoInstance = '/mongo/instance';
   static const String MongoDatabase = '/mongo/instance/database';
   static const String Mysql = '/mysql';
+  static const String MysqlInstance = '/mysql/instance';
+  static const String MysqlDatabase = '/mysql/instance/database';
   static const String Pulsar = '/pulsar';
   static const String PulsarInstance = '/pulsar/instance';
   static const String PulsarTenant = '/pulsar/instance/tenant';
