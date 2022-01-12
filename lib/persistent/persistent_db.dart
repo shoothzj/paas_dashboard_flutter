@@ -13,6 +13,7 @@ import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/sql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/zk_instance_po.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -93,6 +94,9 @@ class PersistentDb implements PersistentApi {
     );
     await db.execute(
       'INSERT INTO mysql_instances(name, host, port, username, password) VALUES ("example", "${MysqlConst.defaultHost}", ${MysqlConst.defaultPort}, "${MysqlConst.defaultUsername}", "${MysqlConst.defaultPassword}")',
+    );
+    await db.execute(
+      'CREATE TABLE sql_list(id INTEGER PRIMARY KEY, name TEXT, sql TEXT)',
     );
   }
 
@@ -186,9 +190,9 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
-  Future<void> deleteMongo(int id) {
-    // TODO: implement deleteMongo
-    throw UnimplementedError();
+  Future<void> deleteMongo(int id) async {
+    var aux = await getInstance();
+    aux.database.delete('mongo_instances', where: 'id = ?', whereArgs: [id]);
   }
 
   @override
@@ -209,9 +213,9 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
-  Future<void> deleteMysql(int id) {
-    // TODO: implement deleteMysql
-    throw UnimplementedError();
+  Future<void> deleteMysql(int id) async {
+    var aux = await getInstance();
+    aux.database.delete('mysql_instances', where: 'id = ?', whereArgs: [id]);
   }
 
   @override
@@ -230,5 +234,28 @@ class PersistentDb implements PersistentApi {
     var list = [name, host, port, username, password];
     aux.database
         .execute('INSERT INTO mysql_instances(name, host, port, username, password) VALUES (?, ?, ?, ?, ?)', list);
+  }
+
+  @override
+  Future<void> deleteSql(int id) async {
+    var aux = await getInstance();
+    aux.database.delete('sql_list', where: 'id = ?', whereArgs: [id]);
+  }
+
+  @override
+  Future<void> saveSql(String name, String sql) async {
+    var aux = await getInstance();
+    var list = [name, sql];
+    aux.database.execute('INSERT INTO sql_list(name, sql) VALUES (?, ?)', list);
+  }
+
+  @override
+  Future<List<SqlPo>> sqlList() async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps = await aux.database.query('sql_list');
+    return List.generate(maps.length, (i) {
+      var aux = maps[i];
+      return SqlPo(aux['id'], aux['name'], aux['sql']);
+    });
   }
 }

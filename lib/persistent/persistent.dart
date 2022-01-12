@@ -8,6 +8,7 @@ import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/sql_instance_po.dart';
 
 class Persistent {
   static PersistentApi? api;
@@ -81,6 +82,18 @@ class Persistent {
 
   static Future<List<MysqlInstancePo>> mysqlInstances() async {
     return (await getApi()).mysqlInstances();
+  }
+
+  static Future<void> saveSql(String name, String sql) async {
+    return (await getApi()).saveSql(name, sql);
+  }
+
+  static Future<void> deleteSql(int id) async {
+    return (await getApi()).deleteSql(id);
+  }
+
+  static Future<List<SqlPo>> sqlList() async {
+    return (await getApi()).sqlList();
   }
 
   static bool supportDb() {

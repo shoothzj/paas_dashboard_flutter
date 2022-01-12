@@ -3,31 +3,31 @@ import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
-import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/sql/sql_list_view_model.dart';
 import 'package:provider/provider.dart';
 
-class MongoPage extends StatefulWidget {
+class SqlListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _MongoPageState();
+    return new _SqlListPageState();
   }
 }
 
-class _MongoPageState extends State<MongoPage> {
+class _SqlListPageState extends State<SqlListPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<MongoInstanceListViewModel>(context, listen: false).fetchMongoInstances();
+    Provider.of<SqlListViewModel>(context, listen: false).fetchSqlList();
   }
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<MongoInstanceListViewModel>(context);
+    final vm = Provider.of<SqlListViewModel>(context);
     var formButton = createInstanceButton(context);
     var refreshButton = TextButton(
         onPressed: () {
           setState(() {
-            vm.fetchMongoInstances();
+            vm.fetchSqlList();
           });
         },
         child: Text(S.of(context).refresh));
@@ -42,7 +42,7 @@ class _MongoPageState extends State<MongoPage> {
           ),
         ),
         Center(
-          child: Text('Mongo Instance List'),
+          child: Text('Sql List'),
         ),
         SingleChildScrollView(
           child: DataTable(
@@ -50,22 +50,20 @@ class _MongoPageState extends State<MongoPage> {
             columns: [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
-              DataColumn(label: Text('Addr')),
-              DataColumn(label: Text('Username')),
-              DataColumn(label: Text('Delete instance')),
+              DataColumn(label: Text('Sql')),
+              DataColumn(label: Text('Delete sql')),
             ],
             rows: vm.instances
                 .map((itemRow) => DataRow(
                         onSelectChanged: (bool? selected) {
-                          Navigator.pushNamed(context, PageRouteConst.MongoInstance, arguments: itemRow.deepCopy());
+                          Navigator.pushNamed(context, PageRouteConst.SqlExecute, arguments: itemRow.deepCopy());
                         },
                         cells: [
                           DataCell(Text(itemRow.id.toString())),
                           DataCell(Text(itemRow.name)),
-                          DataCell(Text(itemRow.addr)),
-                          DataCell(Text(itemRow.username)),
+                          DataCell(Text(itemRow.sql)),
                           DataCellUtil.newDellDataCell(() {
-                            vm.deleteMongo(itemRow.id);
+                            vm.deleteSql(itemRow.id);
                           }),
                         ]))
                 .toList(),
@@ -75,21 +73,19 @@ class _MongoPageState extends State<MongoPage> {
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text('Mongo Dashboard'),
+          title: Text('Sql Dashboard'),
         ),
         body: body);
   }
 
   ButtonStyleButton createInstanceButton(BuildContext context) {
-    final vm = Provider.of<MongoInstanceListViewModel>(context, listen: false);
+    final vm = Provider.of<SqlListViewModel>(context, listen: false);
     var list = [
-      FormFieldDef('Instance Name'),
-      FormFieldDef('Addr'),
-      FormFieldDef('Username'),
-      FormFieldDef('Password'),
+      FormFieldDef('Sql Name'),
+      FormFieldDef('Sql'),
     ];
-    return FormUtil.createButton4("Mongo Instance", list, context, (name, addr, username, password) {
-      vm.createMongo(name, addr, username, password);
+    return FormUtil.createButton2("Sql", list, context, (name, sql) {
+      vm.createSql(name, sql);
     });
   }
 }

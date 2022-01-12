@@ -39,6 +39,7 @@
   "subscription": "subscription",
   "subscriptionList": "Subscription list",
   "subscriptionName": "Subscription Name",
+  "sqlQuery": "sql query",
   "tenant": "tenant",
   "tenantName": "Tenant Name",
   "tenants": "Tenants",

@@ -11,6 +11,7 @@ import 'package:paas_dashboard_flutter/ui/kubernetes/k8s_page.dart';
 import 'package:paas_dashboard_flutter/ui/mongo/mongo_page.dart';
 import 'package:paas_dashboard_flutter/ui/mysql/mysql_page.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
+import 'package:paas_dashboard_flutter/ui/sql/sql_list_page.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/general/settings_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/kubernetes/k8s_instance_list_view_model.dart';
@@ -26,6 +27,8 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_sink_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/sql/sql_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/sql/sql_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -61,10 +64,6 @@ class MyApp extends StatelessWidget {
       routes: {
         PageRouteConst.Root: (context) => HomePage(),
         PageRouteConst.Author: (context) => AuthorScreen(),
-        PageRouteConst.Settings: (context) => ChangeNotifierProvider(
-              create: (context) => SettingsViewModel(),
-              child: SettingsScreen(),
-            ),
         PageRouteConst.Bookkeeper: (context) => ChangeNotifierProvider(
               create: (context) => BkInstanceListViewModel(),
               child: BkPage(),
@@ -84,6 +83,14 @@ class MyApp extends StatelessWidget {
         PageRouteConst.Pulsar: (context) => ChangeNotifierProvider(
               create: (context) => PulsarInstanceListViewModel(),
               child: PulsarPage(),
+            ),
+        PageRouteConst.Settings: (context) => ChangeNotifierProvider(
+              create: (context) => SettingsViewModel(),
+              child: SettingsScreen(),
+            ),
+        PageRouteConst.Sql: (context) => ChangeNotifierProvider(
+              create: (context) => SqlListViewModel(),
+              child: SqlListPage(),
             ),
       },
       onGenerateRoute: (settings) {
@@ -122,6 +129,10 @@ class MyApp extends StatelessWidget {
         if (settings.name == PageRouteConst.PulsarSink) {
           final args = settings.arguments as PulsarSinkViewModel;
           return RouteGen.pulsarSink(args);
+        }
+        if (settings.name == PageRouteConst.SqlExecute) {
+          final args = settings.arguments as SqlViewModel;
+          return RouteGen.sqlExecute(args);
         }
       },
     );

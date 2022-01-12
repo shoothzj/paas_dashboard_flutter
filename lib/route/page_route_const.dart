@@ -1,7 +1,6 @@
 class PageRouteConst {
   static const String Root = '/';
   static const String Author = '/author';
-  static const String Settings = '/settings';
   static const String Bookkeeper = '/bookkeeper';
   static const String Kubernetes = '/kubernetes';
   static const String Mongo = '/mongo';
@@ -18,4 +17,7 @@ class PageRouteConst {
   static const String PulsarTopic = '/pulsar/instance/tenant/namespace/topic';
   static const String PulsarSource = '/pulsar/instance/tenant/namespace/source';
   static const String PulsarSink = '/pulsar/instance/tenant/namespace/sink';
+  static const String Settings = '/settings';
+  static const String Sql = '/sql';
+  static const String SqlExecute = '/sql/execute';
 }
