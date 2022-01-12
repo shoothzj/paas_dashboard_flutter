@@ -20,6 +20,10 @@ class NavDrawer extends StatelessWidget {
                     fit: BoxFit.fill, image: AssetImage('assets/images/background/joy_valley_slide.png'))),
           ),
           ListTile(
+            title: Text(S.of(context).codeQuery),
+            onTap: () => {Navigator.of(context).pushNamed(PageRouteConst.Code)},
+          ),
+          ListTile(
             title: Text(S.of(context).sqlQuery),
             onTap: () => {Navigator.of(context).pushNamed(PageRouteConst.Sql)},
           ),

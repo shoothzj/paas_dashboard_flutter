@@ -1,5 +1,6 @@
 import 'package:paas_dashboard_flutter/module/ssh/ssh_step.dart';
 import 'package:paas_dashboard_flutter/persistent/po/bk_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/code_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
@@ -63,4 +64,12 @@ abstract class PersistentApi {
   Future<List<SqlPo>> sqlList();
 
   Future<SqlPo?> sqlInstance(String name);
+
+  Future<void> saveCode(String name, String code);
+
+  Future<void> deleteCode(int id);
+
+  Future<List<CodePo>> codeList();
+
+  Future<CodePo?> codeInstance(String name);
 }

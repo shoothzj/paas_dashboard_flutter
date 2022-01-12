@@ -4,6 +4,7 @@ import 'package:paas_dashboard_flutter/persistent/persistent_api.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent_db.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent_memory.dart';
 import 'package:paas_dashboard_flutter/persistent/po/bk_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/code_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
@@ -119,6 +120,18 @@ class Persistent {
 
   static Future<List<SqlPo>> sqlList() async {
     return (await getApi()).sqlList();
+  }
+
+  static Future<void> saveCode(String name, String sql) async {
+    return (await getApi()).saveCode(name, sql);
+  }
+
+  static Future<void> deleteCode(int id) async {
+    return (await getApi()).deleteCode(id);
+  }
+
+  static Future<List<CodePo>> codeList() async {
+    return (await getApi()).codeList();
   }
 
   static bool supportDb() {

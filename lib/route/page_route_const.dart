@@ -2,6 +2,8 @@ class PageRouteConst {
   static const String Root = '/';
   static const String Author = '/author';
   static const String Bookkeeper = '/bookkeeper';
+  static const String Code = '/code';
+  static const String CodeExecute = '/code/execute';
   static const String Kubernetes = '/kubernetes';
   static const String Mongo = '/mongo';
   static const String MongoInstance = '/mongo/instance';
