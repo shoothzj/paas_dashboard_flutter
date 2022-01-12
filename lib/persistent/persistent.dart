@@ -9,6 +9,7 @@ import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/sql_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/zk_instance_po.dart';
 
 class Persistent {
   static PersistentApi? api;
@@ -36,6 +37,10 @@ class Persistent {
     return (await getApi()).pulsarInstances();
   }
 
+  static Future<PulsarInstancePo?> pulsarInstance(String name) async {
+    return await ((await getApi()).pulsarInstance(name));
+  }
+
   static Future<void> saveBookkeeper(String name, String host, int port) async {
     return (await getApi()).saveBookkeeper(name, host, port);
   }
@@ -46,6 +51,26 @@ class Persistent {
 
   static Future<List<BkInstancePo>> bookkeeperInstances() async {
     return (await getApi()).bookkeeperInstances();
+  }
+
+  static Future<BkInstancePo?> bookkeeperInstance(String name) async {
+    return await ((await getApi()).bookkeeperInstance(name));
+  }
+
+  static Future<void> saveZooKeeper(String name, String host, int port) async {
+    return (await getApi()).saveZooKeeper(name, host, port);
+  }
+
+  static Future<void> deleteZooKeeper(int id) async {
+    return (await getApi()).deleteZooKeeper(id);
+  }
+
+  static Future<List<ZkInstancePo>> zooKeeperInstances() async {
+    return (await getApi()).zooKeeperInstances();
+  }
+
+  static Future<ZkInstancePo?> zooKeeperInstance(String name) async {
+    return await ((await getApi()).zooKeeperInstance(name));
   }
 
   static Future<void> saveKubernetesSsh(String name, List<SshStep> sshSteps) async {

@@ -126,6 +126,19 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
+  Future<PulsarInstancePo?> pulsarInstance(String name) async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps =
+        await aux.database.query('pulsar_instances', where: "name = ?", whereArgs: [name]);
+    if (maps.length == 0) {
+      return null;
+    }
+    var current = maps[0];
+    return PulsarInstancePo(current['id'], current['name'], current['host'], current['port'], current['function_host'],
+        current['function_port']);
+  }
+
+  @override
   Future<void> saveBookkeeper(String name, String host, int port) async {
     var aux = await getInstance();
     var list = [name, host, port];
@@ -146,6 +159,18 @@ class PersistentDb implements PersistentApi {
       var aux = maps[i];
       return BkInstancePo(aux['id'], aux['name'], aux['host'], aux['port']);
     });
+  }
+
+  @override
+  Future<BkInstancePo?> bookkeeperInstance(String name) async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps =
+        await aux.database.query('pulsar_instances', where: "name = ?", whereArgs: [name]);
+    if (maps.length == 0) {
+      return null;
+    }
+    var current = maps[0];
+    return BkInstancePo(current['id'], current['name'], current['host'], current['port']);
   }
 
   @override
@@ -172,6 +197,18 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
+  Future<ZkInstancePo?> zooKeeperInstance(String name) async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps =
+        await aux.database.query('zookeeper_instances', where: "name = ?", whereArgs: [name]);
+    if (maps.length == 0) {
+      return null;
+    }
+    var current = maps[0];
+    return ZkInstancePo(current['id'], current['name'], current['host'], current['port']);
+  }
+
+  @override
   Future<void> saveKubernetesSsh(String name, List<SshStep> sshSteps) {
     // TODO: implement saveKubernetesSsh
     throw UnimplementedError();
@@ -190,6 +227,12 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
+  Future<K8sInstancePo?> kubernetesInstance(String name) {
+    // TODO: implement kubernetesInstance
+    throw UnimplementedError();
+  }
+
+  @override
   Future<void> deleteMongo(int id) async {
     var aux = await getInstance();
     aux.database.delete('mongo_instances', where: 'id = ?', whereArgs: [id]);
@@ -203,6 +246,18 @@ class PersistentDb implements PersistentApi {
       var aux = maps[i];
       return MongoInstancePo(aux['id'], aux['name'], aux['addr'], aux['username'], aux['password']);
     });
+  }
+
+  @override
+  Future<MongoInstancePo?> mongoInstance(String name) async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps =
+        await aux.database.query('mongo_instances', where: "name = ?", whereArgs: [name]);
+    if (maps.length == 0) {
+      return null;
+    }
+    var current = maps[0];
+    return MongoInstancePo(current['id'], current['name'], current['addr'], current['username'], current['password']);
   }
 
   @override
@@ -237,6 +292,19 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
+  Future<MysqlInstancePo?> mysqlInstance(String name) async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps =
+        await aux.database.query('mysql_instances', where: "name = ?", whereArgs: [name]);
+    if (maps.length == 0) {
+      return null;
+    }
+    var current = maps[0];
+    return MysqlInstancePo(
+        current['id'], current['name'], current['host'], current['port'], current['username'], current['password']);
+  }
+
+  @override
   Future<void> deleteSql(int id) async {
     var aux = await getInstance();
     aux.database.delete('sql_list', where: 'id = ?', whereArgs: [id]);
@@ -257,5 +325,16 @@ class PersistentDb implements PersistentApi {
       var aux = maps[i];
       return SqlPo(aux['id'], aux['name'], aux['sql']);
     });
+  }
+
+  @override
+  Future<SqlPo?> sqlInstance(String name) async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps = await aux.database.query('sql_list', where: "name = ?", whereArgs: [name]);
+    if (maps.length == 0) {
+      return null;
+    }
+    var current = maps[0];
+    return SqlPo(current['id'], current['name'], current['sql']);
   }
 }
