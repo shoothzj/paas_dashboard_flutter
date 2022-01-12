@@ -35,6 +35,15 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
+  Future<PulsarInstancePo?> pulsarInstance(String name) async {
+    if (name != "example") {
+      return null;
+    }
+    return new PulsarInstancePo(0, "example", PulsarConst.defaultHost, PulsarConst.defaultBrokerPort,
+        PulsarConst.defaultHost, PulsarConst.defaultFunctionPort);
+  }
+
+  @override
   Future<void> saveBookkeeper(String name, String host, int port) {
     // TODO: implement saveBookkeeper
     throw UnimplementedError();
@@ -49,6 +58,14 @@ class PersistentMemory implements PersistentApi {
   @override
   Future<List<BkInstancePo>> bookkeeperInstances() async {
     return [new BkInstancePo(0, "example", BkConst.defaultHost, BkConst.defaultPort)];
+  }
+
+  @override
+  Future<BkInstancePo?> bookkeeperInstance(String name) async {
+    if (name != "example") {
+      return null;
+    }
+    return new BkInstancePo(0, "example", BkConst.defaultHost, BkConst.defaultPort);
   }
 
   @override
@@ -69,6 +86,14 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
+  Future<ZkInstancePo?> zooKeeperInstance(String name) async {
+    if (name != "example") {
+      return null;
+    }
+    return new ZkInstancePo(0, "example", ZkConst.defaultHost, ZkConst.defaultPort);
+  }
+
+  @override
   Future<void> saveKubernetesSsh(String name, List<SshStep> sshSteps) {
     // TODO: implement saveKubernetesSsh
     throw UnimplementedError();
@@ -86,6 +111,14 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
+  Future<K8sInstancePo?> kubernetesInstance(String name) async {
+    if (name != "example") {
+      return null;
+    }
+    return new K8sInstancePo(0, "example");
+  }
+
+  @override
   Future<void> deleteMongo(int id) {
     throw UnimplementedError();
   }
@@ -93,6 +126,14 @@ class PersistentMemory implements PersistentApi {
   @override
   Future<List<MongoInstancePo>> mongoInstances() async {
     return [new MongoInstancePo(0, "example", MongoConst.defaultAddr, "", "")];
+  }
+
+  @override
+  Future<MongoInstancePo?> mongoInstance(String name) async {
+    if (name != "example") {
+      return null;
+    }
+    return new MongoInstancePo(0, "example", MongoConst.defaultAddr, "", "");
   }
 
   @override
@@ -121,6 +162,15 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
+  Future<MysqlInstancePo?> mysqlInstance(String name) async {
+    if (name != "example") {
+      return null;
+    }
+    return new MysqlInstancePo(0, "example", MysqlConst.defaultHost, MysqlConst.defaultPort, MysqlConst.defaultUsername,
+        MysqlConst.defaultPassword);
+  }
+
+  @override
   Future<void> deleteSql(int id) {
     // TODO: implement deleteSql
     throw UnimplementedError();
@@ -135,6 +185,12 @@ class PersistentMemory implements PersistentApi {
   @override
   Future<List<SqlPo>> sqlList() {
     // TODO: implement sqlList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SqlPo?> sqlInstance(String name) {
+    // TODO: implement sqlInstance
     throw UnimplementedError();
   }
 }

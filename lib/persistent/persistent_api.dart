@@ -14,11 +14,15 @@ abstract class PersistentApi {
 
   Future<List<PulsarInstancePo>> pulsarInstances();
 
+  Future<PulsarInstancePo?> pulsarInstance(String name);
+
   Future<void> saveBookkeeper(String name, String host, int port);
 
   Future<void> deleteBookkeeper(int id);
 
   Future<List<BkInstancePo>> bookkeeperInstances();
+
+  Future<BkInstancePo?> bookkeeperInstance(String name);
 
   Future<void> saveZooKeeper(String name, String host, int port);
 
@@ -26,11 +30,15 @@ abstract class PersistentApi {
 
   Future<List<ZkInstancePo>> zooKeeperInstances();
 
+  Future<ZkInstancePo?> zooKeeperInstance(String name);
+
   Future<void> saveKubernetesSsh(String name, List<SshStep> sshSteps);
 
   Future<void> deleteKubernetes(int id);
 
   Future<List<K8sInstancePo>> kubernetesInstances();
+
+  Future<K8sInstancePo?> kubernetesInstance(String name);
 
   Future<void> saveMongo(String name, String addr, String username, String password);
 
@@ -38,15 +46,21 @@ abstract class PersistentApi {
 
   Future<List<MongoInstancePo>> mongoInstances();
 
+  Future<MongoInstancePo?> mongoInstance(String name);
+
   Future<void> saveMysql(String name, String host, int port, String username, String password);
 
   Future<void> deleteMysql(int id);
 
   Future<List<MysqlInstancePo>> mysqlInstances();
 
+  Future<MysqlInstancePo?> mysqlInstance(String name);
+
   Future<void> saveSql(String name, String sql);
 
   Future<void> deleteSql(int id);
 
   Future<List<SqlPo>> sqlList();
+
+  Future<SqlPo?> sqlInstance(String name);
 }
