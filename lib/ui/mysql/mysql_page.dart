@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
+import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +53,7 @@ class _MysqlPageState extends State<MysqlPage> {
               DataColumn(label: Text('Host')),
               DataColumn(label: Text('Port')),
               DataColumn(label: Text('Username')),
+              DataColumn(label: Text('Delete instance')),
             ],
             rows: vm.instances
                 .map((itemRow) => DataRow(
@@ -64,6 +66,9 @@ class _MysqlPageState extends State<MysqlPage> {
                           DataCell(Text(itemRow.host)),
                           DataCell(Text(itemRow.port.toString())),
                           DataCell(Text(itemRow.username)),
+                          DataCellUtil.newDellDataCell(() {
+                            vm.deleteMysql(itemRow.id);
+                          }),
                         ]))
                 .toList(),
           ),

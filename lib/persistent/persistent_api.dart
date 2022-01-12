@@ -4,6 +4,7 @@ import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/sql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/zk_instance_po.dart';
 
 abstract class PersistentApi {
@@ -42,4 +43,10 @@ abstract class PersistentApi {
   Future<void> deleteMysql(int id);
 
   Future<List<MysqlInstancePo>> mysqlInstances();
+
+  Future<void> saveSql(String name, String sql);
+
+  Future<void> deleteSql(int id);
+
+  Future<List<SqlPo>> sqlList();
 }

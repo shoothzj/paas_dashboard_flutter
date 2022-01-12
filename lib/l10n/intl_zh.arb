@@ -39,6 +39,7 @@
   "subscription": "订阅",
   "subscriptionList": "订阅列表",
   "subscriptionName": "订阅名称",
+  "sqlQuery": "sql 查询",
   "tenant": "租户",
   "tenantName": "租户名称",
   "tenants": "租户列表",

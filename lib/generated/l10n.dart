@@ -438,6 +438,16 @@ class S {
     );
   }
 
+  /// `sql query`
+  String get sqlQuery {
+    return Intl.message(
+      'sql query',
+      name: 'sqlQuery',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `tenant`
   String get tenant {
     return Intl.message(

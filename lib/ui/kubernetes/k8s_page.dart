@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/vm/kubernetes/k8s_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -46,11 +47,15 @@ class _K8sPageState extends State<K8sPage> {
             columns: [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
+              DataColumn(label: Text('Delete instance')),
             ],
             rows: vm.instances
                 .map((itemRow) => DataRow(onSelectChanged: (bool? selected) {}, cells: [
                       DataCell(Text(itemRow.id.toString())),
                       DataCell(Text(itemRow.name)),
+                      DataCellUtil.newDellDataCell(() {
+                        vm.deleteKubernetes(itemRow.id);
+                      }),
                     ]))
                 .toList(),
           ),
