@@ -55,7 +55,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
               DataCell(
                 Text(item.tenant),
               ),
-              DataCellUtil.newDellDataCell(() {
+              DataCellUtil.newDelDataCell(() {
                 vm.deleteTenants(item.tenant);
               }),
             ]));

@@ -21,6 +21,7 @@
   "detail": "detail",
   "email": "email",
   "execute": "execute",
+  "forceDelete": "forceDelete",
   "isLeader": "Is Leader",
   "languageSettings": "Language Settings",
   "name": "name",

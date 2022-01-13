@@ -53,7 +53,7 @@ class _K8sPageState extends State<K8sPage> {
                 .map((itemRow) => DataRow(onSelectChanged: (bool? selected) {}, cells: [
                       DataCell(Text(itemRow.id.toString())),
                       DataCell(Text(itemRow.name)),
-                      DataCellUtil.newDellDataCell(() {
+                      DataCellUtil.newDelDataCell(() {
                         vm.deleteKubernetes(itemRow.id);
                       }),
                     ]))

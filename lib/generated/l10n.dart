@@ -258,6 +258,16 @@ class S {
     );
   }
 
+  /// `forceDelete`
+  String get forceDelete {
+    return Intl.message(
+      'forceDelete',
+      name: 'forceDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Is Leader`
   String get isLeader {
     return Intl.message(

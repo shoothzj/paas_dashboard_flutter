@@ -55,7 +55,7 @@ class PulsarSinkListWidgetState extends State<PulsarSinkListWidget> {
               DataCell(
                 Text(item.sinkName),
               ),
-              DataCellUtil.newDellDataCell(() {
+              DataCellUtil.newDelDataCell(() {
                 vm.deleteSink(item.sinkName);
               }),
             ]));

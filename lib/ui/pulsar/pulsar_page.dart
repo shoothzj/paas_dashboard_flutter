@@ -47,7 +47,7 @@ class _PulsarPageState extends State<PulsarPage> {
                       DataCell(Text(itemRow.port.toString())),
                       DataCell(Text(itemRow.functionHost)),
                       DataCell(Text(itemRow.functionPort.toString())),
-                      DataCellUtil.newDellDataCell(() {
+                      DataCellUtil.newDelDataCell(() {
                         vm.deletePulsar(itemRow.id);
                       }),
                     ]))
