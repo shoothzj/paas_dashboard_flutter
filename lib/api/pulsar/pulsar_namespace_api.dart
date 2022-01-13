@@ -66,4 +66,145 @@ class PulsarNamespaceApi {
       throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
   }
+
+  static Future<PolicyResp> getPolicy(String host, int port, String tenant, String namespace) async {
+    String url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
+    var response =
+        await http.get(Uri.parse(url), headers: <String, String>{'Content-Type': 'application/json; charset=utf-8'});
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+    Map jsonResponse = json.decode(response.body) as Map;
+    return PolicyResp.fromJson(jsonResponse);
+  }
+
+  static Future<void> setAutoTopicCreation(String host, int port, String tenant, String namespace,
+      bool? allowAutoTopicCreation, String? topicType, int? defaultNumPartitions) async {
+    String url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/autoTopicCreation';
+    TopicAutoCreateReq topicAutoCreateReq =
+        new TopicAutoCreateReq(allowAutoTopicCreation, topicType, defaultNumPartitions);
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: json.encode(topicAutoCreateReq));
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+  }
+
+  static Future<void> setMessageTTLSecond(
+      String host, int port, String tenant, String namespace, int? messageTTLSecond) async {
+    String url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/messageTTL';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: messageTTLSecond.toString());
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+  }
+
+  static Future<void> setMaxProducersPerTopic(
+      String host, int port, String tenant, String namespace, int? maxProducersPerTopic) async {
+    String url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxProducersPerTopic';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: maxProducersPerTopic.toString());
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+  }
+
+  static Future<void> setMaxConsumersPerTopic(
+      String host, int port, String tenant, String namespace, int? maxConsumersPerTopic) async {
+    String url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxConsumersPerTopic';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: maxConsumersPerTopic.toString());
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+  }
+
+  static Future<void> setMaxConsumersPerSubscription(
+      String host, int port, String tenant, String namespace, int? maxConsumersPerSubscription) async {
+    String url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxConsumersPerSubscription';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: maxConsumersPerSubscription.toString());
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+  }
+
+  static Future<void> setMaxUnackedMessagesPerConsumer(
+      String host, int port, String tenant, String namespace, int? maxUnackedMessagesPerConsumer) async {
+    String url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxUnackedMessagesPerConsumer';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: maxUnackedMessagesPerConsumer.toString());
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+  }
+
+  static Future<void> setMaxUnackedMessagesPerSubscription(
+      String host, int port, String tenant, String namespace, int? maxUnackedMessagesPerSubscription) async {
+    String url =
+        'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxUnackedMessagesPerSubscription';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: maxUnackedMessagesPerSubscription.toString());
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+  }
+
+  static Future<void> setMaxSubscriptionsPerTopic(
+      String host, int port, String tenant, String namespace, int? maxSubscriptionsPerTopic) async {
+    String url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxSubscriptionsPerTopic';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: maxSubscriptionsPerTopic.toString());
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+  }
+
+  static Future<void> setMaxTopicsPerNamespace(
+      String host, int port, String tenant, String namespace, int? maxTopicsPerNamespace) async {
+    String url = 'http://$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxTopicsPerNamespace';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: maxTopicsPerNamespace.toString());
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+    }
+  }
 }

@@ -19,6 +19,7 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
   void initState() {
     super.initState();
     final vm = Provider.of<PulsarNamespacePoliciesViewModel>(context, listen: false);
+    vm.fetchPolicy();
   }
 
   @override
@@ -35,7 +36,21 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
       });
     }
     ExceptionUtil.processLoadException(vm, context);
-    var refreshButton = TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
+    var autoTopicCreationController = TextEditingController(text: vm.isAllowAutoTopicCreateDisplayStr);
+    var messageTTLController = TextEditingController(text: vm.messageTTLDisplayStr);
+    var maxProducersPerTopicController = TextEditingController(text: vm.maxProducersPerTopicDisplayStr);
+    var maxConsumersPerTopicController = TextEditingController(text: vm.maxConsumersPerTopicDisplayStr);
+    var maxConsumerPerSubscriptionController = TextEditingController(text: vm.maxConsumersPerSubscriptionDisplayStr);
+    var maxUnAckedPerConsumersController = TextEditingController(text: vm.maxUnackedMessagesPerConsumerDisplayStr);
+    var maxUnAckedPerSubscriptionController =
+        TextEditingController(text: vm.maxUnackedMessagesPerSubscriptionDisplayStr);
+    var maxSubscriptionController = TextEditingController(text: vm.maxSubscriptionsPerTopicDisplayStr);
+    var maxTopicsPerNamespacesController = TextEditingController(text: vm.maxTopicsPerNamespaceDisplayStr);
+    var refreshButton = TextButton(
+        onPressed: () {
+          vm.fetchPolicy();
+        },
+        child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
         Container(
@@ -44,6 +59,259 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             children: [refreshButton],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "autoTopicCreation"),
+            controller: autoTopicCreationController,
+          ),
+        ),
+        Container(
+          height: 20,
+          padding: EdgeInsets.only(left: 0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    vm.isAllowAutoTopicCreation = (autoTopicCreationController.value.text == "true" ||
+                        autoTopicCreationController.value.text == "TRUE");
+                    vm.updateAutoTopicCreate();
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey),
+                      overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
+                  child: Text(S.of(context).submit,
+                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "messageTTLSecond"),
+            controller: messageTTLController,
+          ),
+        ),
+        Container(
+          height: 20,
+          padding: EdgeInsets.only(left: 0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    vm.messageTTLInSeconds = int.parse(messageTTLController.value.text);
+                    vm.setMessageTTLSecond();
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey),
+                      overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
+                  child: Text(S.of(context).submit,
+                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "maxProducersPerTopic"),
+            controller: maxProducersPerTopicController,
+          ),
+        ),
+        Container(
+          height: 20,
+          padding: EdgeInsets.only(left: 0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    vm.maxProducersPerTopic = int.parse(maxProducersPerTopicController.value.text);
+                    vm.setMaxProducersPerTopic();
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey),
+                      overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
+                  child: Text(S.of(context).submit,
+                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "maxConsumersPerTopic"),
+            controller: maxConsumersPerTopicController,
+          ),
+        ),
+        Container(
+          height: 20,
+          padding: EdgeInsets.only(left: 0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    vm.maxConsumersPerTopic = int.parse(maxConsumersPerTopicController.value.text);
+                    vm.setMaxConsumersPerTopic();
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey),
+                      overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
+                  child: Text(S.of(context).submit,
+                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "maxConsumersPerSubscription"),
+            controller: maxConsumerPerSubscriptionController,
+          ),
+        ),
+        Container(
+          height: 20,
+          padding: EdgeInsets.only(left: 0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    vm.maxConsumersPerSubscription = int.parse(maxConsumerPerSubscriptionController.value.text);
+                    vm.setMaxConsumersPerSubscription();
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey),
+                      overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
+                  child: Text(S.of(context).submit,
+                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "maxUnackedMessagesPerConsumer"),
+            controller: maxUnAckedPerConsumersController,
+          ),
+        ),
+        Container(
+          height: 20,
+          padding: EdgeInsets.only(left: 0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    vm.maxUnackedMessagesPerConsumer = int.parse(maxUnAckedPerConsumersController.value.text);
+                    vm.setMaxUnackedMessagesPerConsumer();
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey),
+                      overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
+                  child: Text(S.of(context).submit,
+                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "maxUnackedMessagesPerSubscription"),
+            controller: maxUnAckedPerSubscriptionController,
+          ),
+        ),
+        Container(
+          height: 20,
+          padding: EdgeInsets.only(left: 0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    vm.maxUnackedMessagesPerSubscription = int.parse(maxUnAckedPerSubscriptionController.value.text);
+                    vm.setMaxUnackedMessagesPerSubscription();
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey),
+                      overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
+                  child: Text(S.of(context).submit,
+                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "maxSubscriptionsPerTopic"),
+            controller: maxSubscriptionController,
+          ),
+        ),
+        Container(
+          height: 20,
+          padding: EdgeInsets.only(left: 0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    vm.maxSubscriptionsPerTopic = int.parse(maxSubscriptionController.value.text);
+                    vm.setMaxSubscriptionsPerTopic();
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey),
+                      overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
+                  child: Text(S.of(context).submit,
+                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: TextFormField(
+            decoration: InputDecoration(labelText: "maxTopicsPerNamespace"),
+            controller: maxTopicsPerNamespacesController,
+          ),
+        ),
+        Container(
+          height: 20,
+          padding: EdgeInsets.only(left: 0),
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    vm.maxTopicsPerNamespace = int.parse(maxTopicsPerNamespacesController.value.text);
+                    vm.setMaxTopicsPerNamespace();
+                  },
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      backgroundColor: MaterialStateProperty.all(Colors.grey),
+                      overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
+                  child: Text(S.of(context).submit,
+                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+            ],
           ),
         ),
       ],
