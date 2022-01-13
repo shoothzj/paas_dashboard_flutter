@@ -145,6 +145,7 @@ class MyApp extends StatelessWidget {
           final args = settings.arguments as SqlViewModel;
           return RouteGen.sqlExecute(args);
         }
+        throw UnimplementedError();
       },
     );
   }
