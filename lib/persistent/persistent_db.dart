@@ -9,6 +9,7 @@ import 'package:paas_dashboard_flutter/module/ssh/ssh_step.dart';
 import 'package:paas_dashboard_flutter/module/zk/const.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent_api.dart';
 import 'package:paas_dashboard_flutter/persistent/po/bk_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/code_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
@@ -97,6 +98,9 @@ class PersistentDb implements PersistentApi {
     );
     await db.execute(
       'CREATE TABLE sql_list(id INTEGER PRIMARY KEY, name TEXT, sql TEXT)',
+    );
+    await db.execute(
+      'CREATE TABLE code_list(id INTEGER PRIMARY KEY, name TEXT, code TEXT)',
     );
   }
 
@@ -336,5 +340,39 @@ class PersistentDb implements PersistentApi {
     }
     var current = maps[0];
     return SqlPo(current['id'], current['name'], current['sql']);
+  }
+
+  @override
+  Future<List<CodePo>> codeList() async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps = await aux.database.query('code_list');
+    return List.generate(maps.length, (i) {
+      var aux = maps[i];
+      return CodePo(aux['id'], aux['name'], aux['code']);
+    });
+  }
+
+  @override
+  Future<void> deleteCode(int id) async {
+    var aux = await getInstance();
+    aux.database.delete('code_list', where: 'id = ?', whereArgs: [id]);
+  }
+
+  @override
+  Future<void> saveCode(String name, String code) async {
+    var aux = await getInstance();
+    var list = [name, code];
+    aux.database.execute('INSERT INTO code_list(name, code) VALUES (?, ?)', list);
+  }
+
+  @override
+  Future<CodePo?> codeInstance(String name) async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps = await aux.database.query('code_list', where: "name = ?", whereArgs: [name]);
+    if (maps.length == 0) {
+      return null;
+    }
+    var current = maps[0];
+    return CodePo(current['id'], current['name'], current['code']);
   }
 }

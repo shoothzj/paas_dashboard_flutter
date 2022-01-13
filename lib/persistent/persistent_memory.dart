@@ -6,6 +6,7 @@ import 'package:paas_dashboard_flutter/module/ssh/ssh_step.dart';
 import 'package:paas_dashboard_flutter/module/zk/const.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent_api.dart';
 import 'package:paas_dashboard_flutter/persistent/po/bk_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/code_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
@@ -191,6 +192,30 @@ class PersistentMemory implements PersistentApi {
   @override
   Future<SqlPo?> sqlInstance(String name) {
     // TODO: implement sqlInstance
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<CodePo>> codeList() {
+    // TODO: implement codeList
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteCode(int id) {
+    // TODO: implement deleteCode
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> saveCode(String name, String code) {
+    // TODO: implement saveCode
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<CodePo?> codeInstance(String name) {
+    // TODO: implement codeInstance
     throw UnimplementedError();
   }
 }

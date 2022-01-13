@@ -4,6 +4,7 @@ import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/route/route_gen.dart';
 import 'package:paas_dashboard_flutter/ui/bk/bk_page.dart';
+import 'package:paas_dashboard_flutter/ui/code/code_list_page.dart';
 import 'package:paas_dashboard_flutter/ui/general/author_screen.dart';
 import 'package:paas_dashboard_flutter/ui/general/settings_screen.dart';
 import 'package:paas_dashboard_flutter/ui/home/home_page.dart';
@@ -13,6 +14,8 @@ import 'package:paas_dashboard_flutter/ui/mysql/mysql_page.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
 import 'package:paas_dashboard_flutter/ui/sql/sql_list_page.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/code/code_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/code/code_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/general/settings_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/kubernetes/k8s_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_database_view_model.dart';
@@ -68,6 +71,10 @@ class MyApp extends StatelessWidget {
               create: (context) => BkInstanceListViewModel(),
               child: BkPage(),
             ),
+        PageRouteConst.Code: (context) => ChangeNotifierProvider(
+              create: (context) => CodeListViewModel(),
+              child: CodeListPage(),
+            ),
         PageRouteConst.Kubernetes: (context) => ChangeNotifierProvider(
               create: (context) => K8sInstanceListViewModel(),
               child: K8sPage(),
@@ -94,6 +101,10 @@ class MyApp extends StatelessWidget {
             ),
       },
       onGenerateRoute: (settings) {
+        if (settings.name == PageRouteConst.CodeExecute) {
+          final args = settings.arguments as CodeViewModel;
+          return RouteGen.codeExecute(args);
+        }
         if (settings.name == PageRouteConst.MongoInstance) {
           final args = settings.arguments as MongoInstanceViewModel;
           return RouteGen.mongoInstance(args);

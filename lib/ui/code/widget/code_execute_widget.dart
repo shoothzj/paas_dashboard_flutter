@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
-import 'package:paas_dashboard_flutter/vm/sql/sql_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/code/code_view_model.dart';
 import 'package:provider/provider.dart';
 
-class SqlExecuteWidget extends StatefulWidget {
-  SqlExecuteWidget();
+class CodeExecuteWidget extends StatefulWidget {
+  CodeExecuteWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new SqlExecuteWidgetState();
+    return new CodeExecuteWidgetState();
   }
 }
 
-class SqlExecuteWidgetState extends State<SqlExecuteWidget> {
+class CodeExecuteWidgetState extends State<CodeExecuteWidget> {
   @override
   void initState() {
     super.initState();
@@ -25,12 +25,12 @@ class SqlExecuteWidgetState extends State<SqlExecuteWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<SqlViewModel>(context);
+    final vm = Provider.of<CodeViewModel>(context);
     var body = ListView(
       children: [
         Container(
           height: 50,
-          child: Text(vm.sql),
+          child: Text(vm.code),
         ),
         TextButton(
             onPressed: () {

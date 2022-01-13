@@ -118,6 +118,16 @@ class S {
     );
   }
 
+  /// `code query`
+  String get codeQuery {
+    return Intl.message(
+      'code query',
+      name: 'codeQuery',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Confirm`
   String get confirm {
     return Intl.message(
@@ -233,6 +243,16 @@ class S {
     return Intl.message(
       'email',
       name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `execute`
+  String get execute {
+    return Intl.message(
+      'execute',
+      name: 'execute',
       desc: '',
       args: [],
     );

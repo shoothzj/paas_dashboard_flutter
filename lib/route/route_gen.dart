@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/ui/code/screen/code_execute_screen.dart';
 import 'package:paas_dashboard_flutter/ui/mongo/mongo_instance.dart';
 import 'package:paas_dashboard_flutter/ui/mongo/screen/mongo_database.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_instance.dart';
@@ -9,6 +10,7 @@ import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_source.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/ui/sql/screen/sql_execute_screen.dart';
+import 'package:paas_dashboard_flutter/vm/code/code_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_database_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
@@ -22,6 +24,15 @@ import 'package:paas_dashboard_flutter/vm/sql/sql_view_model.dart';
 import 'package:provider/provider.dart';
 
 class RouteGen {
+  static Route codeExecute(CodeViewModel viewModel) {
+    // deep copy view model
+    return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: CodeExecuteScreen(),
+            ));
+  }
+
   static Route mongoInstance(MongoInstanceViewModel viewModel) {
     // deep copy view model
     return MaterialPageRoute(
