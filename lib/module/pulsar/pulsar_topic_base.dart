@@ -3,9 +3,9 @@ class PulsarTopicBaseResp {
   final int partitionNum;
   final double msgRateIn;
   final double msgRateOut;
-  final double msgInCounter;
-  final double msgOutCounter;
-  final double storageSize;
+  final int msgInCounter;
+  final int msgOutCounter;
+  final int storageSize;
 
   PulsarTopicBaseResp(this.topicName, this.partitionNum, this.msgRateIn, this.msgRateOut, this.msgInCounter,
       this.msgOutCounter, this.storageSize);
