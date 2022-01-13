@@ -59,7 +59,7 @@ class _BkPageState extends State<BkPage> {
                       DataCell(Text(itemRow.name)),
                       DataCell(Text(itemRow.host)),
                       DataCell(Text(itemRow.port.toString())),
-                      DataCellUtil.newDellDataCell(() {
+                      DataCellUtil.newDelDataCell(() {
                         vm.deleteBk(itemRow.id);
                       }),
                     ]))

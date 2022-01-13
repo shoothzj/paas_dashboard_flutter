@@ -21,6 +21,7 @@
   "detail": "详细信息",
   "email": "邮箱",
   "execute": "执行",
+  "forceDelete": "强制删除",
   "isLeader": "是否是主节点",
   "languageSettings": "语言设置",
   "name": "名称",

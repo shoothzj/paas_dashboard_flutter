@@ -66,7 +66,7 @@ class _MysqlPageState extends State<MysqlPage> {
                           DataCell(Text(itemRow.host)),
                           DataCell(Text(itemRow.port.toString())),
                           DataCell(Text(itemRow.username)),
-                          DataCellUtil.newDellDataCell(() {
+                          DataCellUtil.newDelDataCell(() {
                             vm.deleteMysql(itemRow.id);
                           }),
                         ]))

@@ -54,7 +54,7 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
               DataCell(
                 Text(item.sourceName),
               ),
-              DataCellUtil.newDellDataCell(() {
+              DataCellUtil.newDelDataCell(() {
                 vm.deleteSource(item.sourceName);
               }),
             ]));

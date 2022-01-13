@@ -64,7 +64,7 @@ class _MongoPageState extends State<MongoPage> {
                           DataCell(Text(itemRow.name)),
                           DataCell(Text(itemRow.addr)),
                           DataCell(Text(itemRow.username)),
-                          DataCellUtil.newDellDataCell(() {
+                          DataCellUtil.newDelDataCell(() {
                             vm.deleteMongo(itemRow.id);
                           }),
                         ]))

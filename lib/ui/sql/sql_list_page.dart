@@ -62,7 +62,7 @@ class _SqlListPageState extends State<SqlListPage> {
                           DataCell(Text(itemRow.id.toString())),
                           DataCell(Text(itemRow.name)),
                           DataCell(Text(itemRow.sql)),
-                          DataCellUtil.newDellDataCell(() {
+                          DataCellUtil.newDelDataCell(() {
                             vm.deleteSql(itemRow.id);
                           }),
                         ]))

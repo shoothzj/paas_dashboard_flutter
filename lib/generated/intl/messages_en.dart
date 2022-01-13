@@ -8,6 +8,7 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -42,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "detail": MessageLookupByLibrary.simpleMessage("detail"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
         "execute": MessageLookupByLibrary.simpleMessage("execute"),
+        "forceDelete": MessageLookupByLibrary.simpleMessage("forceDelete"),
         "isLeader": MessageLookupByLibrary.simpleMessage("Is Leader"),
         "languageSettings": MessageLookupByLibrary.simpleMessage("Language Settings"),
         "name": MessageLookupByLibrary.simpleMessage("name"),

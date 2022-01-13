@@ -55,7 +55,7 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
               DataCell(
                 Text(item.namespace),
               ),
-              DataCellUtil.newDellDataCell(() {
+              DataCellUtil.newDelDataCell(() {
                 vm.deleteNamespace(item.namespace);
               }),
             ]));

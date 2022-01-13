@@ -62,7 +62,7 @@ class _CodeListPageState extends State<CodeListPage> {
                           DataCell(Text(itemRow.id.toString())),
                           DataCell(Text(itemRow.name)),
                           DataCell(Text(itemRow.code)),
-                          DataCellUtil.newDellDataCell(() {
+                          DataCellUtil.newDelDataCell(() {
                             vm.deleteCode(itemRow.id);
                           }),
                         ]))
