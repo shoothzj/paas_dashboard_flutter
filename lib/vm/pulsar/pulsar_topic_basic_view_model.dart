@@ -12,9 +12,9 @@ class PulsarTopicBasicViewModel extends BaseLoadViewModel {
   final TopicResp topicResp;
   double msgRateIn = 0;
   double msgRateOut = 0;
-  double msgInCounter = 0;
-  double msgOutCounter = 0;
-  double storageSize = 0;
+  int msgInCounter = 0;
+  int msgOutCounter = 0;
+  int storageSize = 0;
 
   PulsarTopicBasicViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
