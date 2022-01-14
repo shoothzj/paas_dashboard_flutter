@@ -58,6 +58,16 @@ class S {
     );
   }
 
+  /// `An Error Occurred`
+  String get anErrorOccurred {
+    return Intl.message(
+      'An Error Occurred',
+      name: 'anErrorOccurred',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Paas Dashboard`
   String get appName {
     return Intl.message(

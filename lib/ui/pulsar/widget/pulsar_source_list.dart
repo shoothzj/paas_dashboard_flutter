@@ -25,6 +25,7 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
   void initState() {
     super.initState();
     final vm = Provider.of<PulsarSourceListViewModel>(context, listen: false);
+    vm.fetchSources();
     searchTextController.addListener(() {
       vm.filter(searchTextController.text);
     });

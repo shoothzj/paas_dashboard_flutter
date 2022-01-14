@@ -6,6 +6,7 @@ import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_partitioned_topic
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_sink_list.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_source_list.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/widget/pulsar_topic_list.dart';
+import 'package:paas_dashboard_flutter/ui/util/colored_tab_bar.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_backlog_quota_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_policies_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
@@ -39,50 +40,93 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarNamespaceViewModel>(context);
     return DefaultTabController(
-      length: 6,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: Text('Pulsar ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace}'),
           bottom: TabBar(
             tabs: [
-              Tab(text: "BacklogQuota"),
-              Tab(text: "PartitionedTopics"),
-              Tab(text: "Topics"),
-              Tab(text: "Source"),
-              Tab(text: "Sink"),
-              Tab(text: "Policies"),
+              Tab(text: "Policy"),
+              Tab(text: "Topic"),
+              Tab(text: "Function"),
             ],
           ),
         ),
         body: TabBarView(
           children: [
-            ChangeNotifierProvider(
-              create: (context) =>
-                  PulsarNamespaceBacklogQuotaViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-              child: PulsarNamespaceBacklogQuotaWidget(),
-            ).build(context),
-            ChangeNotifierProvider(
-              create: (context) =>
-                  PulsarPartitionedTopicListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-              child: PulsarPartitionedTopicListWidget(),
-            ).build(context),
-            ChangeNotifierProvider(
-              create: (context) => PulsarTopicListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-              child: PulsarTopicListWidget(),
-            ).build(context),
-            ChangeNotifierProvider(
-              create: (context) => PulsarSourceListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-              child: PulsarSourceListWidget(),
-            ).build(context),
-            ChangeNotifierProvider(
-              create: (context) => PulsarSinkListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-              child: PulsarSinkListWidget(),
-            ).build(context),
-            ChangeNotifierProvider(
-              create: (context) =>
-                  PulsarNamespacePoliciesViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-              child: PulsarNamespacePoliciesWidget(),
-            ).build(context),
+            DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                appBar: ColoredTabBar(
+                    Colors.black,
+                    TabBar(
+                      tabs: [
+                        Tab(text: "BacklogQuota"),
+                        Tab(text: "Policies"),
+                      ],
+                    )),
+                body: TabBarView(children: [
+                  ChangeNotifierProvider(
+                    create: (context) =>
+                        PulsarNamespaceBacklogQuotaViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+                    child: PulsarNamespaceBacklogQuotaWidget(),
+                  ).build(context),
+                  ChangeNotifierProvider(
+                    create: (context) =>
+                        PulsarNamespacePoliciesViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+                    child: PulsarNamespacePoliciesWidget(),
+                  ).build(context),
+                ]),
+              ),
+            ),
+            DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                appBar: ColoredTabBar(
+                    Colors.black,
+                    TabBar(
+                      tabs: [
+                        Tab(text: "PartitionedTopic"),
+                        Tab(text: "Topic"),
+                      ],
+                    )),
+                body: TabBarView(children: [
+                  ChangeNotifierProvider(
+                    create: (context) =>
+                        PulsarPartitionedTopicListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+                    child: PulsarPartitionedTopicListWidget(),
+                  ).build(context),
+                  ChangeNotifierProvider(
+                    create: (context) => PulsarTopicListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+                    child: PulsarTopicListWidget(),
+                  ).build(context),
+                ]),
+              ),
+            ),
+            DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                appBar: ColoredTabBar(
+                    Colors.black,
+                    TabBar(
+                      tabs: [
+                        Tab(text: "Source"),
+                        Tab(text: "Sink"),
+                      ],
+                    )),
+                body: TabBarView(children: [
+                  ChangeNotifierProvider(
+                    create: (context) =>
+                        PulsarSourceListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+                    child: PulsarSourceListWidget(),
+                  ).build(context),
+                  ChangeNotifierProvider(
+                    create: (context) => PulsarSinkListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
+                    child: PulsarSinkListWidget(),
+                  ).build(context),
+                ]),
+              ),
+            )
           ],
         ),
       ),

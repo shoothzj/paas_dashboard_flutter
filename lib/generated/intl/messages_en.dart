@@ -23,6 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "aboutAuthor": MessageLookupByLibrary.simpleMessage("About author"),
+        "anErrorOccurred": MessageLookupByLibrary.simpleMessage("An Error Occurred"),
         "appName": MessageLookupByLibrary.simpleMessage("Paas Dashboard"),
         "basic": MessageLookupByLibrary.simpleMessage("Basic"),
         "brokersName": MessageLookupByLibrary.simpleMessage("Broker Instance"),
