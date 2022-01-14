@@ -29,8 +29,8 @@ class PulsarPartitionedTopicApi {
   }
 
   static Future<String> deletePartitionTopic(
-      String host, int port, String tenant, String namespace, String topic) async {
-    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
+      String host, int port, String tenant, String namespace, String topic, bool force) async {
+    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions?force=$force';
     var response = await http.delete(Uri.parse(url), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });

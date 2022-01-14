@@ -78,7 +78,7 @@ class PulsarNamespaceViewModel extends BaseLoadListPageViewModel<PulsarPartition
 
   Future<void> deletePartitionedTopic(String topic) async {
     try {
-      await PulsarPartitionedTopicApi.deletePartitionTopic(host, port, tenant, namespace, topic);
+      await PulsarPartitionedTopicApi.deletePartitionTopic(host, port, tenant, namespace, topic, false);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;

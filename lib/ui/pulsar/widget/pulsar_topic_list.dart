@@ -55,8 +55,8 @@ class PulsarTopicListWidgetState extends State<PulsarTopicListWidget> {
               DataCell(
                 Text(item.topic),
               ),
-              DataCellUtil.newDelDataCell(() {
-                vm.deleteTopic(item.topic);
+              DataCellUtil.newForceDelDataCell((force) {
+                vm.deleteTopic(item.topic, force);
               }),
             ]));
     var topicsTable = SingleChildScrollView(
