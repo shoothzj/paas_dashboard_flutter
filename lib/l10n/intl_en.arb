@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "aboutAuthor": "About author",
+  "anErrorOccurred": "An Error Occurred",
   "appName": "Paas Dashboard",
   "basic": "Basic",
   "brokersName": "Broker Instance",

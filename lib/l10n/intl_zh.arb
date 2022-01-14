@@ -1,6 +1,7 @@
 {
   "@@locale": "zh",
   "aboutAuthor": "关于作者",
+  "anErrorOccurred": "一个异常发生了",
   "appName": "Paas 仪表盘",
   "basic": "基础信息",
   "brokersName": "Pulsar 实例",
