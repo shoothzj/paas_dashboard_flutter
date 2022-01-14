@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'zh';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
+
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "aboutAuthor": MessageLookupByLibrary.simpleMessage("关于作者"),
         "anErrorOccurred": MessageLookupByLibrary.simpleMessage("一个异常发生了"),
@@ -54,8 +55,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "partitionList": MessageLookupByLibrary.simpleMessage("partition 列表"),
         "partitionNum": MessageLookupByLibrary.simpleMessage("partition 个数"),
         "produce": MessageLookupByLibrary.simpleMessage("生产"),
+        "producer": MessageLookupByLibrary.simpleMessage("生产者"),
         "producerList": MessageLookupByLibrary.simpleMessage("生产者列表"),
         "refresh": MessageLookupByLibrary.simpleMessage("刷新"),
+        "searchByMessageIdWithHint":
+            MessageLookupByLibrary.simpleMessage("通过messageId查询消息，格式ledgerId*entryId，按enter键进行查询。"),
         "searchByNamespace": MessageLookupByLibrary.simpleMessage("按命名空间名称搜索"),
         "searchByTenant": MessageLookupByLibrary.simpleMessage("按租户名称搜索"),
         "searchByTopic": MessageLookupByLibrary.simpleMessage("按 Topic 名称搜索"),

@@ -1,21 +1,21 @@
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_consume.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_produce.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
 
-class PulsarPartitionedTopicProduceViewModel extends BaseLoadListViewModel<ProducerResp> {
+class PulsarTopicConsumerViewModel extends BaseLoadListViewModel<ConsumerResp> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarPartitionedTopicProduceViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
+  PulsarTopicConsumerViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
-  PulsarPartitionedTopicProduceViewModel deepCopy() {
-    return new PulsarPartitionedTopicProduceViewModel(
+  PulsarTopicConsumerViewModel deepCopy() {
+    return new PulsarTopicConsumerViewModel(
         pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 
@@ -47,9 +47,9 @@ class PulsarPartitionedTopicProduceViewModel extends BaseLoadListViewModel<Produ
     return this.topicResp.topicName;
   }
 
-  Future<void> fetchProducers() async {
+  Future<void> fetchConsumers() async {
     try {
-      final results = await PulsarPartitionedTopicApi.getProducers(host, port, tenant, namespace, topic);
+      final results = await PulsarTopicApi.getConsumers(host, port, tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadSuccess();

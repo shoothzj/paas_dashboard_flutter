@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
+
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "aboutAuthor": MessageLookupByLibrary.simpleMessage("About author"),
         "anErrorOccurred": MessageLookupByLibrary.simpleMessage("An Error Occurred"),
@@ -54,8 +55,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "partitionList": MessageLookupByLibrary.simpleMessage("Partition List"),
         "partitionNum": MessageLookupByLibrary.simpleMessage("Partition number"),
         "produce": MessageLookupByLibrary.simpleMessage("Produce"),
+        "producer": MessageLookupByLibrary.simpleMessage("Producer"),
         "producerList": MessageLookupByLibrary.simpleMessage("Producer List"),
         "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
+        "searchByMessageIdWithHint": MessageLookupByLibrary.simpleMessage(
+            "Search by MessageId, type is ledgerId*entryId, submit with enter key"),
         "searchByNamespace": MessageLookupByLibrary.simpleMessage("Search by Namespace Name"),
         "searchByTenant": MessageLookupByLibrary.simpleMessage("Search by Tenant Name"),
         "searchByTopic": MessageLookupByLibrary.simpleMessage("Search by Topic Name"),
