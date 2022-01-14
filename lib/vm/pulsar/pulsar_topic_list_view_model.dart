@@ -75,9 +75,9 @@ class PulsarTopicListViewModel extends BaseLoadListPageViewModel<PulsarTopicView
     }
   }
 
-  Future<void> deleteTopic(String topic) async {
+  Future<void> deleteTopic(String topic, bool force) async {
     try {
-      await PulsarTopicApi.deleteTopic(host, port, tenant, namespace, topic);
+      await PulsarTopicApi.deleteTopic(host, port, tenant, namespace, topic, force);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;

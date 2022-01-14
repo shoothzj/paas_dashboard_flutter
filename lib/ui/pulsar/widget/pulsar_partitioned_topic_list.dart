@@ -56,8 +56,8 @@ class PulsarPartitionedTopicListWidgetState extends State<PulsarPartitionedTopic
               DataCell(
                 Text(item.topic),
               ),
-              DataCellUtil.newDelDataCell(() {
-                vm.deletePartitionedTopic(item.topic);
+              DataCellUtil.newForceDelDataCell((force) {
+                vm.deletePartitionedTopic(item.topic, force);
               }),
             ]));
     var topicsTable = SingleChildScrollView(

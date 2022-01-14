@@ -77,9 +77,9 @@ class PulsarPartitionedTopicListViewModel extends BaseLoadListPageViewModel<Puls
     }
   }
 
-  Future<void> deletePartitionedTopic(String topic) async {
+  Future<void> deletePartitionedTopic(String topic, bool force) async {
     try {
-      await PulsarPartitionedTopicApi.deletePartitionTopic(host, port, tenant, namespace, topic);
+      await PulsarPartitionedTopicApi.deletePartitionTopic(host, port, tenant, namespace, topic, force);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;
