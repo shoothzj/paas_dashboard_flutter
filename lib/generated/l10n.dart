@@ -368,6 +368,16 @@ class S {
     );
   }
 
+  /// `Producer`
+  String get producer {
+    return Intl.message(
+      'Producer',
+      name: 'producer',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Producer List`
   String get producerList {
     return Intl.message(
@@ -383,6 +393,16 @@ class S {
     return Intl.message(
       'Refresh',
       name: 'refresh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by MessageId, type is ledgerId*entryId, submit with enter key`
+  String get searchByMessageIdWithHint {
+    return Intl.message(
+      'Search by MessageId, type is ledgerId*entryId, submit with enter key',
+      name: 'searchByMessageIdWithHint',
       desc: '',
       args: [],
     );
@@ -581,8 +601,10 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   @override
   bool isSupported(Locale locale) => _isSupported(locale);
+
   @override
   Future<S> load(Locale locale) => S.load(locale);
+
   @override
   bool shouldReload(AppLocalizationDelegate old) => false;
 

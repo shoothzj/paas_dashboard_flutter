@@ -9,7 +9,8 @@ class AuthorScreen extends StatelessWidget {
       Author('fu_turer', "futurer@outlook.com"),
       Author('goflutterjava', "goflutterjava@gmail.com"),
       Author('lovehzj', "1922919664@qq.com"),
-      Author('shoothzj', 'shoothzj@gmail.com')
+      Author('shoothzj', 'shoothzj@gmail.com'),
+      Author('zxJin-x', 'jinzhixin096@gmail.com'),
     ];
 
     return Scaffold(

@@ -2,29 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
-import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_produce_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_producer_view_model.dart';
 import 'package:provider/provider.dart';
 
-class PulsarTopicProduceWidget extends StatefulWidget {
-  PulsarTopicProduceWidget();
+class PulsarTopicProducerWidget extends StatefulWidget {
+  PulsarTopicProducerWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTopicProduceWidgetState();
+    return new PulsarTopicProducerWidgetState();
   }
 }
 
-class PulsarTopicProduceWidgetState extends State<PulsarTopicProduceWidget> {
+class PulsarTopicProducerWidgetState extends State<PulsarTopicProducerWidget> {
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarTopicProduceViewModel>(context, listen: false);
+    final vm = Provider.of<PulsarTopicProducerViewModel>(context, listen: false);
     vm.fetchProducers();
   }
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<PulsarTopicProduceViewModel>(context);
+    final vm = Provider.of<PulsarTopicProducerViewModel>(context);
     if (vm.loading) {
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
