@@ -9,6 +9,7 @@ import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/redis_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/sql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/zk_instance_po.dart';
 
@@ -132,6 +133,22 @@ class Persistent {
 
   static Future<List<CodePo>> codeList() async {
     return (await getApi()).codeList();
+  }
+
+  static Future<void> saveRedis(String name, String host, int port, String username, String password) async {
+    return (await getApi()).saveRedis(name, host, port, username, password);
+  }
+
+  static Future<void> deleteRedis(int id) async {
+    return (await getApi()).deleteRedis(id);
+  }
+
+  static Future<List<RedisInstancePo>> redisInstances() async {
+    return (await getApi()).redisInstances();
+  }
+
+  static Future<RedisInstancePo?> redisInstance(String name) async {
+    return await ((await getApi()).redisInstance(name));
   }
 
   static bool supportDb() {

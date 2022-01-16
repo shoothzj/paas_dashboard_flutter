@@ -5,6 +5,7 @@ import 'package:paas_dashboard_flutter/module/bk/const.dart';
 import 'package:paas_dashboard_flutter/module/mongo/const.dart';
 import 'package:paas_dashboard_flutter/module/mysql/const.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/const.dart';
+import 'package:paas_dashboard_flutter/module/redis/const.dart';
 import 'package:paas_dashboard_flutter/module/ssh/ssh_step.dart';
 import 'package:paas_dashboard_flutter/module/zk/const.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent_api.dart';
@@ -14,6 +15,7 @@ import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/redis_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/sql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/zk_instance_po.dart';
 import 'package:path/path.dart';
@@ -102,6 +104,12 @@ class PersistentDb implements PersistentApi {
     await db.execute(
       'CREATE TABLE code_list(id INTEGER PRIMARY KEY, name TEXT, code TEXT)',
     );
+    await db.execute(
+      'CREATE TABLE redis_instances(id INTEGER PRIMARY KEY, name TEXT, host TEXT, port INTEGER, username TEXT, password TEXT)',
+    );
+    await db.execute(
+      'INSERT INTO redis_instances(name, host, port, username, password) VALUES ("example", "${RedisConst.defaultHost}", ${RedisConst.defaultPort}, "${RedisConst.defaultUsername}", "${RedisConst.defaultPassword}")',
+    );
   }
 
   @override
@@ -178,16 +186,16 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
-  Future<void> deleteZooKeeper(int id) async {
-    var aux = await getInstance();
-    aux.database.delete('zookeeper_instances', where: 'id = ?', whereArgs: [id]);
-  }
-
-  @override
   Future<void> saveZooKeeper(String name, String host, int port) async {
     var aux = await getInstance();
     var list = [name, host, port];
     aux.database.execute('INSERT INTO zookeeper_instances(name, host, port) VALUES (?, ?, ?)', list);
+  }
+
+  @override
+  Future<void> deleteZooKeeper(int id) async {
+    var aux = await getInstance();
+    aux.database.delete('zookeeper_instances', where: 'id = ?', whereArgs: [id]);
   }
 
   @override
@@ -237,6 +245,13 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
+  Future<void> saveMongo(String name, String addr, String username, String password) async {
+    var aux = await getInstance();
+    var list = [name, addr, username, password];
+    aux.database.execute('INSERT INTO mongo_instances(name, addr, username, password) VALUES (?, ?, ?, ?)', list);
+  }
+
+  @override
   Future<void> deleteMongo(int id) async {
     var aux = await getInstance();
     aux.database.delete('mongo_instances', where: 'id = ?', whereArgs: [id]);
@@ -265,10 +280,11 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
-  Future<void> saveMongo(String name, String addr, String username, String password) async {
+  Future<void> saveMysql(String name, String host, int port, String username, String password) async {
     var aux = await getInstance();
-    var list = [name, addr, username, password];
-    aux.database.execute('INSERT INTO mongo_instances(name, addr, username, password) VALUES (?, ?, ?, ?)', list);
+    var list = [name, host, port, username, password];
+    aux.database
+        .execute('INSERT INTO mysql_instances(name, host, port, username, password) VALUES (?, ?, ?, ?, ?)', list);
   }
 
   @override
@@ -288,14 +304,6 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
-  Future<void> saveMysql(String name, String host, int port, String username, String password) async {
-    var aux = await getInstance();
-    var list = [name, host, port, username, password];
-    aux.database
-        .execute('INSERT INTO mysql_instances(name, host, port, username, password) VALUES (?, ?, ?, ?, ?)', list);
-  }
-
-  @override
   Future<MysqlInstancePo?> mysqlInstance(String name) async {
     var aux = await getInstance();
     final List<Map<String, dynamic>> maps =
@@ -309,16 +317,16 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
-  Future<void> deleteSql(int id) async {
-    var aux = await getInstance();
-    aux.database.delete('sql_list', where: 'id = ?', whereArgs: [id]);
-  }
-
-  @override
   Future<void> saveSql(String name, String sql) async {
     var aux = await getInstance();
     var list = [name, sql];
     aux.database.execute('INSERT INTO sql_list(name, sql) VALUES (?, ?)', list);
+  }
+
+  @override
+  Future<void> deleteSql(int id) async {
+    var aux = await getInstance();
+    aux.database.delete('sql_list', where: 'id = ?', whereArgs: [id]);
   }
 
   @override
@@ -343,13 +351,10 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
-  Future<List<CodePo>> codeList() async {
+  Future<void> saveCode(String name, String code) async {
     var aux = await getInstance();
-    final List<Map<String, dynamic>> maps = await aux.database.query('code_list');
-    return List.generate(maps.length, (i) {
-      var aux = maps[i];
-      return CodePo(aux['id'], aux['name'], aux['code']);
-    });
+    var list = [name, code];
+    aux.database.execute('INSERT INTO code_list(name, code) VALUES (?, ?)', list);
   }
 
   @override
@@ -359,10 +364,13 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
-  Future<void> saveCode(String name, String code) async {
+  Future<List<CodePo>> codeList() async {
     var aux = await getInstance();
-    var list = [name, code];
-    aux.database.execute('INSERT INTO code_list(name, code) VALUES (?, ?)', list);
+    final List<Map<String, dynamic>> maps = await aux.database.query('code_list');
+    return List.generate(maps.length, (i) {
+      var aux = maps[i];
+      return CodePo(aux['id'], aux['name'], aux['code']);
+    });
   }
 
   @override
@@ -374,5 +382,42 @@ class PersistentDb implements PersistentApi {
     }
     var current = maps[0];
     return CodePo(current['id'], current['name'], current['code']);
+  }
+
+  @override
+  Future<void> saveRedis(String name, String host, int port, String username, String password) async {
+    var aux = await getInstance();
+    var list = [name, host, port, username, password];
+    aux.database
+        .execute('INSERT INTO redis_instances(name, host, port, username, password) VALUES (?, ?, ?, ?, ?)', list);
+  }
+
+  @override
+  Future<void> deleteRedis(int id) async {
+    var aux = await getInstance();
+    aux.database.delete('redis_instances', where: 'id = ?', whereArgs: [id]);
+  }
+
+  @override
+  Future<List<RedisInstancePo>> redisInstances() async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps = await aux.database.query('redis_instances');
+    return List.generate(maps.length, (i) {
+      var aux = maps[i];
+      return RedisInstancePo(aux['id'], aux['name'], aux['host'], aux['port'], aux['username'], aux['password']);
+    });
+  }
+
+  @override
+  Future<RedisInstancePo?> redisInstance(String name) async {
+    var aux = await getInstance();
+    final List<Map<String, dynamic>> maps =
+        await aux.database.query('redis_instances', where: "name = ?", whereArgs: [name]);
+    if (maps.length == 0) {
+      return null;
+    }
+    var current = maps[0];
+    return RedisInstancePo(
+        current['id'], current['name'], current['host'], current['port'], current['username'], current['password']);
   }
 }

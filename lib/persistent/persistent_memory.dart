@@ -2,6 +2,7 @@ import 'package:paas_dashboard_flutter/module/bk/const.dart';
 import 'package:paas_dashboard_flutter/module/mongo/const.dart';
 import 'package:paas_dashboard_flutter/module/mysql/const.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/const.dart';
+import 'package:paas_dashboard_flutter/module/redis/const.dart';
 import 'package:paas_dashboard_flutter/module/ssh/ssh_step.dart';
 import 'package:paas_dashboard_flutter/module/zk/const.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent_api.dart';
@@ -11,6 +12,7 @@ import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/persistent/po/redis_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/sql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/zk_instance_po.dart';
 
@@ -70,14 +72,14 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
-  Future<void> deleteZooKeeper(int id) {
-    // TODO: implement deleteZooKeeper
+  Future<void> saveZooKeeper(String name, String host, int port) {
+    // TODO: implement saveZooKeeper
     throw UnimplementedError();
   }
 
   @override
-  Future<void> saveZooKeeper(String name, String host, int port) {
-    // TODO: implement saveZooKeeper
+  Future<void> deleteZooKeeper(int id) {
+    // TODO: implement deleteZooKeeper
     throw UnimplementedError();
   }
 
@@ -120,6 +122,11 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
+  Future<void> saveMongo(String name, String addr, String username, String password) {
+    throw UnimplementedError();
+  }
+
+  @override
   Future<void> deleteMongo(int id) {
     throw UnimplementedError();
   }
@@ -138,7 +145,8 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
-  Future<void> saveMongo(String name, String addr, String username, String password) {
+  Future<void> saveMysql(String name, String host, int port, String username, String password) {
+    // TODO: implement saveMysql
     throw UnimplementedError();
   }
 
@@ -157,12 +165,6 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
-  Future<void> saveMysql(String name, String host, int port, String username, String password) {
-    // TODO: implement saveMysql
-    throw UnimplementedError();
-  }
-
-  @override
   Future<MysqlInstancePo?> mysqlInstance(String name) async {
     if (name != "example") {
       return null;
@@ -172,14 +174,14 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
-  Future<void> deleteSql(int id) {
-    // TODO: implement deleteSql
+  Future<void> saveSql(String name, String sql) {
+    // TODO: implement saveSql
     throw UnimplementedError();
   }
 
   @override
-  Future<void> saveSql(String name, String sql) {
-    // TODO: implement saveSql
+  Future<void> deleteSql(int id) {
+    // TODO: implement deleteSql
     throw UnimplementedError();
   }
 
@@ -196,8 +198,8 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
-  Future<List<CodePo>> codeList() {
-    // TODO: implement codeList
+  Future<void> saveCode(String name, String code) {
+    // TODO: implement saveCode
     throw UnimplementedError();
   }
 
@@ -208,8 +210,8 @@ class PersistentMemory implements PersistentApi {
   }
 
   @override
-  Future<void> saveCode(String name, String code) {
-    // TODO: implement saveCode
+  Future<List<CodePo>> codeList() {
+    // TODO: implement codeList
     throw UnimplementedError();
   }
 
@@ -217,5 +219,30 @@ class PersistentMemory implements PersistentApi {
   Future<CodePo?> codeInstance(String name) {
     // TODO: implement codeInstance
     throw UnimplementedError();
+  }
+
+  Future<void> saveRedis(String name, String host, int port, String username, String password) {
+    // TODO: implement sqlInstance
+    throw UnimplementedError();
+  }
+
+  Future<void> deleteRedis(int id) {
+    // TODO: implement sqlInstance
+    throw UnimplementedError();
+  }
+
+  Future<List<RedisInstancePo>> redisInstances() async {
+    return [
+      new RedisInstancePo(0, "example", RedisConst.defaultHost, RedisConst.defaultPort, RedisConst.defaultUsername,
+          RedisConst.defaultPassword)
+    ];
+  }
+
+  Future<RedisInstancePo?> redisInstance(String name) async {
+    if (name != "example") {
+      return null;
+    }
+    return new RedisInstancePo(0, "example", RedisConst.defaultHost, RedisConst.defaultPort, RedisConst.defaultUsername,
+        RedisConst.defaultPassword);
   }
 }

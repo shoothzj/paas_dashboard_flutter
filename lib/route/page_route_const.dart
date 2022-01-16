@@ -19,6 +19,8 @@ class PageRouteConst {
   static const String PulsarTopic = '/pulsar/instance/tenant/namespace/topic';
   static const String PulsarSource = '/pulsar/instance/tenant/namespace/source';
   static const String PulsarSink = '/pulsar/instance/tenant/namespace/sink';
+  static const String Redis = '/redis';
+  static const String RedisInstance = '/redis/instance';
   static const String Settings = '/settings';
   static const String Sql = '/sql';
   static const String SqlExecute = '/sql/execute';
