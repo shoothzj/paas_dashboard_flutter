@@ -12,6 +12,7 @@ import 'package:paas_dashboard_flutter/ui/kubernetes/k8s_page.dart';
 import 'package:paas_dashboard_flutter/ui/mongo/mongo_page.dart';
 import 'package:paas_dashboard_flutter/ui/mysql/mysql_page.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_page.dart';
+import 'package:paas_dashboard_flutter/ui/redis/redis_page.dart';
 import 'package:paas_dashboard_flutter/ui/sql/sql_list_page.dart';
 import 'package:paas_dashboard_flutter/vm/bk/bk_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/code/code_list_view_model.dart';
@@ -30,6 +31,7 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_sink_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/redis/redis_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/sql/sql_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/sql/sql_view_model.dart';
 import 'package:provider/provider.dart';
@@ -90,6 +92,10 @@ class MyApp extends StatelessWidget {
         PageRouteConst.Pulsar: (context) => ChangeNotifierProvider(
               create: (context) => PulsarInstanceListViewModel(),
               child: PulsarPage(),
+            ),
+        PageRouteConst.Redis: (context) => ChangeNotifierProvider(
+              create: (context) => RedisInstanceListViewModel(),
+              child: RedisPage(),
             ),
         PageRouteConst.Settings: (context) => ChangeNotifierProvider(
               create: (context) => SettingsViewModel(),
