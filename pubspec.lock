@@ -310,6 +310,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  redis:
+    dependency: "direct main"
+    description:
+      name: redis
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   sasl_scram:
     dependency: transitive
     description:

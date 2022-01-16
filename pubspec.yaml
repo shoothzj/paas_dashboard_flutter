@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.4
   mongo_dart: ^0.7.4
   mysql1: ^0.19.2
+  redis: ^2.2.0
   dart_eval: ^0.0.4
   http: ^0.13.4
   clipboard: ^0.1.3
