@@ -50,51 +50,33 @@ class _PulsarTopicState extends State<PulsarTopic> {
         body: TabBarView(
           children: [
             ChangeNotifierProvider(
-              create: (context) => PulsarTopicBasicViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.topicResp),
+              create: (context) =>
+                  PulsarTopicBasicViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarTopicBasicWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) => new PulsarTopicSubscriptionViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.topicResp),
+                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarTopicSubscriptionWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => PulsarTopicConsumerViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.topicResp),
+              create: (context) =>
+                  PulsarTopicConsumerViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarTopicConsumerWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => PulsarTopicProducerViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.topicResp),
+              create: (context) =>
+                  PulsarTopicProducerViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarTopicProducerWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => PulsarTopicConsumeViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.topicResp),
+              create: (context) =>
+                  PulsarTopicConsumeViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarTopicConsumeWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => PulsarTopicProduceViewModel(
-                  vm.pulsarInstancePo,
-                  vm.tenantResp,
-                  vm.namespaceResp,
-                  vm.topicResp),
+              create: (context) =>
+                  PulsarTopicProduceViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
               child: PulsarTopicProduceWidget(),
             ).build(context),
           ],

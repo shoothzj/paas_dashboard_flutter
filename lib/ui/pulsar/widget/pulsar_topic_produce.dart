@@ -52,8 +52,7 @@ class PulsarTopicProduceWidgetState extends State<PulsarTopicProduceWidget> {
       FormFieldDef('message key'),
       FormFieldDef('message value'),
     ];
-    return FormUtil.createButton2NoText("Send Message To Pulsar", list, context,
-        (key, value) {
+    return FormUtil.createButton2NoText("Send Message To Pulsar", list, context, (key, value) {
       vm.sendMsg(key, value);
     });
   }
