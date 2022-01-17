@@ -258,6 +258,16 @@ class S {
     );
   }
 
+  /// `entryId`
+  String get entryId {
+    return Intl.message(
+      'entryId',
+      name: 'entryId',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `execute`
   String get execute {
     return Intl.message(
@@ -293,6 +303,16 @@ class S {
     return Intl.message(
       'Language Settings',
       name: 'languageSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `message list`
+  String get messageList {
+    return Intl.message(
+      'message list',
+      name: 'messageList',
       desc: '',
       args: [],
     );
@@ -398,10 +418,20 @@ class S {
     );
   }
 
-  /// `Search by MessageId, type is ledgerId*entryId, submit with enter key`
+  /// `Search by MessageId, type is ledgerId entryId, submit with enter key`
+  String get searchByMessageId {
+    return Intl.message(
+      'Search by MessageId, type is ledgerId entryId, submit with enter key',
+      name: 'searchByMessageId',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by MessageId, single search type should be ledgerId entryId, multi search type should be ledgerId entryId entryId, submit with enter key`
   String get searchByMessageIdWithHint {
     return Intl.message(
-      'Search by MessageId, type is ledgerId*entryId, submit with enter key',
+      'Search by MessageId, single search type should be ledgerId entryId, multi search type should be ledgerId entryId entryId, submit with enter key',
       name: 'searchByMessageIdWithHint',
       desc: '',
       args: [],
@@ -423,6 +453,16 @@ class S {
     return Intl.message(
       'Search by Tenant Name',
       name: 'searchByTenant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search MessageId by timestamp, submit with enter key`
+  String get searchByTimestampWithHint {
+    return Intl.message(
+      'Search MessageId by timestamp, submit with enter key',
+      name: 'searchByTimestampWithHint',
       desc: '',
       args: [],
     );

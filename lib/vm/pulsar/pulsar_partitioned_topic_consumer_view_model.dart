@@ -6,16 +6,16 @@ import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
 
-class PulsarPartitionedTopicConsumeViewModel extends BaseLoadListViewModel<ConsumerResp> {
+class PulsarPartitionedTopicConsumerViewModel extends BaseLoadListViewModel<ConsumerResp> {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarPartitionedTopicConsumeViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
+  PulsarPartitionedTopicConsumerViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
-  PulsarPartitionedTopicConsumeViewModel deepCopy() {
-    return new PulsarPartitionedTopicConsumeViewModel(
+  PulsarPartitionedTopicConsumerViewModel deepCopy() {
+    return new PulsarPartitionedTopicConsumerViewModel(
         pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 

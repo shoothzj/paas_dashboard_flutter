@@ -44,10 +44,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteTopic": MessageLookupByLibrary.simpleMessage("Delete Topic"),
         "detail": MessageLookupByLibrary.simpleMessage("detail"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
+        "entryId": MessageLookupByLibrary.simpleMessage("entryId"),
         "execute": MessageLookupByLibrary.simpleMessage("execute"),
         "forceDelete": MessageLookupByLibrary.simpleMessage("forceDelete"),
         "isLeader": MessageLookupByLibrary.simpleMessage("Is Leader"),
         "languageSettings": MessageLookupByLibrary.simpleMessage("Language Settings"),
+        "messageList": MessageLookupByLibrary.simpleMessage("message list"),
         "name": MessageLookupByLibrary.simpleMessage("name"),
         "namespace": MessageLookupByLibrary.simpleMessage("namespace"),
         "namespaceName": MessageLookupByLibrary.simpleMessage("Namespace Name"),
@@ -58,10 +60,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "producer": MessageLookupByLibrary.simpleMessage("Producer"),
         "producerList": MessageLookupByLibrary.simpleMessage("Producer List"),
         "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
+        "searchByMessageId": MessageLookupByLibrary.simpleMessage(
+            "Search by MessageId, type is ledgerId entryId, submit with enter key"),
         "searchByMessageIdWithHint": MessageLookupByLibrary.simpleMessage(
-            "Search by MessageId, type is ledgerId*entryId, submit with enter key"),
+            "Search by MessageId, single search type should be ledgerId entryId, multi search type should be ledgerId entryId entryId, submit with enter key"),
         "searchByNamespace": MessageLookupByLibrary.simpleMessage("Search by Namespace Name"),
         "searchByTenant": MessageLookupByLibrary.simpleMessage("Search by Tenant Name"),
+        "searchByTimestampWithHint":
+            MessageLookupByLibrary.simpleMessage("Search MessageId by timestamp, submit with enter key"),
         "searchByTopic": MessageLookupByLibrary.simpleMessage("Search by Topic Name"),
         "second": MessageLookupByLibrary.simpleMessage("second"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),

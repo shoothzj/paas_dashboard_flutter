@@ -2,29 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
-import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_consume_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_consumer_view_model.dart';
 import 'package:provider/provider.dart';
 
-class PulsarPartitionedTopicConsumeWidget extends StatefulWidget {
-  PulsarPartitionedTopicConsumeWidget();
+class PulsarPartitionedTopicConsumerWidget extends StatefulWidget {
+  PulsarPartitionedTopicConsumerWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarPartitionedTopicConsumeWidgetState();
+    return new PulsarPartitionedTopicConsumerWidgetState();
   }
 }
 
-class PulsarPartitionedTopicConsumeWidgetState extends State<PulsarPartitionedTopicConsumeWidget> {
+class PulsarPartitionedTopicConsumerWidgetState extends State<PulsarPartitionedTopicConsumerWidget> {
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<PulsarPartitionedTopicConsumeViewModel>(context, listen: false);
+    final vm = Provider.of<PulsarPartitionedTopicConsumerViewModel>(context, listen: false);
     vm.fetchConsumers();
   }
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<PulsarPartitionedTopicConsumeViewModel>(context);
+    final vm = Provider.of<PulsarPartitionedTopicConsumerViewModel>(context);
     if (vm.loading) {
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
