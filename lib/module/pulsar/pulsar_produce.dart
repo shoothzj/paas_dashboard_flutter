@@ -1,15 +1,26 @@
-class ProducerResp {
+class PublishMessagesReq {
   final String producerName;
-  final double rateIn;
-  final double throughputIn;
-  final String clientVersion;
-  final double averageMsgSize;
-  final String address;
+  final List<ProducerMessage> messages;
 
-  ProducerResp(
-      this.producerName, this.rateIn, this.throughputIn, this.clientVersion, this.averageMsgSize, this.address);
+  PublishMessagesReq(this.producerName, this.messages);
 
-  ProducerResp deepCopy() {
-    return new ProducerResp(producerName, rateIn, throughputIn, clientVersion, averageMsgSize, address);
+  Map toJson() {
+    Map map = new Map();
+    map["producerName"] = this.producerName;
+    map["messages"] = this.messages;
+    return map;
+  }
+}
+
+class ProducerMessage {
+  final String payload;
+  final String key;
+
+  ProducerMessage(this.key, this.payload);
+  Map toJson() {
+    Map map = new Map();
+    map["payload"] = this.payload;
+    map["key"] = this.key;
+    return map;
   }
 }

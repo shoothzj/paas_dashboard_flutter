@@ -1,23 +1,17 @@
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_producer.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_view_model.dart';
 
-class PulsarTopicProducerViewModel extends BaseLoadListViewModel<ProducerResp> {
+class PulsarPartitionedTopicProduceViewModel extends BaseLoadListViewModel {
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarTopicProducerViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
-
-  PulsarTopicProducerViewModel deepCopy() {
-    return new PulsarTopicProducerViewModel(
-        pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
-  }
+  PulsarPartitionedTopicProduceViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   int get id {
     return this.pulsarInstancePo.id;
@@ -47,16 +41,11 @@ class PulsarTopicProducerViewModel extends BaseLoadListViewModel<ProducerResp> {
     return this.topicResp.topicName;
   }
 
-  Future<void> fetchProducers() async {
-    try {
-      final results = await PulsarTopicApi.getProducers(host, port, tenant, namespace, topic);
-      this.fullList = results;
-      this.displayList = this.fullList;
-      loadSuccess();
-    } on Exception catch (e) {
-      loadException = e;
-      loading = false;
-    }
-    notifyListeners();
+  String get message {
+    return this.topicResp.topicName;
+  }
+
+  Future<String> sendMsg(key, value) {
+    return PulsarPartitionedTopicApi.sendMsgToPartitionTopic(host, port, tenant, namespace, topic, key, value);
   }
 }
