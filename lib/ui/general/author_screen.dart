@@ -21,11 +21,13 @@ class AuthorScreen extends StatelessWidget {
         child: DataTable(
           showCheckboxColumn: false,
           columns: [
+            DataColumn(label: Text("github id")),
             DataColumn(label: Text(S.of(context).name)),
             DataColumn(label: Text(S.of(context).email)),
           ],
           rows: authors
               .map((itemRow) => DataRow(onSelectChanged: (bool? selected) {}, cells: [
+                    DataCell(Text(itemRow.githubId)),
                     DataCell(Text(itemRow.name)),
                     DataCell(Text(itemRow.email)),
                   ]))

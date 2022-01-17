@@ -2,13 +2,16 @@
 
 Flutter Paas Dashboard
 
-## 其他语言文档
-- [English Doc](README_en.md)
+# Why do we use flutter
+- We don’t want JRE, JDK package is too large
+- We can’t use c sharp because having people develop use mac.
+- We are not good at frontend. Electron is not friendly to us.
+- Golang isn't proper for GUI
 
-# 安装
-- [Install Doc](install.md)
+# Install
+[Install Doc](install.md)
 
-# 开发环境准备
+# Prepare to develop environment
 ## macos
 ```bash
 flutter config --enable-macos-desktop
@@ -17,16 +20,18 @@ flutter config --enable-macos-desktop
 ```bash
 flutter config --enable-windows-desktop
 ```
-## 开发注意事项
-### 数据存储位置
+## others about develop
+### sqlite data location
 - macos ~/Library/Containers/com.github.shoothzj.paasDashboardFlutter/Data
 
-# 运行
+# run
 ## web
-如需在Web下运行，需要关闭`chrome`的安全开关,步骤如下,参考链接: https://stackoverflow.com/questions/65630743/how-to-solve-flutter-web-api-cors-error-only-with-dart-code
+if you need to run on web mode, need to turn off the `chrome` security switch, refer to https://stackoverflow.com/questions/65630743/how-to-solve-flutter-web-api-cors-error-only-with-dart-code
 ```bash
-# 跳转到flutter安装目录
+# jump to flutter install location
 rm -rf bin/cache/flutter_tools.stamp
 ```
-编辑`packages/flutter_tools/lib/src/web/chrome.dart`<br/>
-在`'--disable-extensions',`后面添加`'--disable-web-security',`
+edit `packages/flutter_tools/lib/src/web/chrome.dart`<br/>
+add `'--disable-web-security',` behind `'--disable-extensions',`
+### attention
+the web mode can only use a part of features
