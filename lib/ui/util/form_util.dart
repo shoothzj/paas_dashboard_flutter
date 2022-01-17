@@ -95,6 +95,57 @@ class FormUtil {
         child: Text('Create ' + resourceName));
   }
 
+  static ButtonStyleButton createButton2NoText(String resourceName, List<FormFieldDef> formFieldDefList,
+      BuildContext context, Function(String, String) callback) {
+    if (formFieldDefList.length != 2) {
+      throw AssertionError('args not match');
+    }
+    return createButtonNoText(resourceName, formFieldDefList, context, (list) => callback(list[0], list[1]));
+  }
+
+  static ButtonStyleButton createButtonNoText(
+      String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context, Function(List<String>) callback) {
+    return TextButton(
+        onPressed: () {
+          var editControllerList = formFieldDefList.map((e) => TextEditingController()).toList();
+          List<TextFormField> formFieldsList = List.generate(
+              formFieldDefList.length,
+              (index) => TextFormField(
+                    decoration: InputDecoration(labelText: formFieldDefList[index].fieldName),
+                    controller: editControllerList[index],
+                  ));
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  scrollable: true,
+                  title: Text(resourceName),
+                  content: Form(
+                      child: Column(
+                    children: formFieldsList,
+                  )),
+                  actions: [
+                    ElevatedButton(
+                      child: Text(CREATE),
+                      onPressed: () {
+                        var list = editControllerList.map((e) => e.value.text).toList();
+                        callback(list);
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ElevatedButton(
+                      child: Text(CANCEL),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                );
+              });
+        },
+        child: Text(resourceName));
+  }
+
   static ButtonStyleButton updateButton3(String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context,
       Function(String, String, String) callback) {
     if (formFieldDefList.length != 3) {

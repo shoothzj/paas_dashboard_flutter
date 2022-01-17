@@ -1,6 +1,6 @@
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
-import 'package:paas_dashboard_flutter/module/pulsar/pulsar_produce.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_producer.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';

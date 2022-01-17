@@ -4,10 +4,12 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_stat_api.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/const.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_consume.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_partitioned_topic_base.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_partitioned_topic_detail.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_produce.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_producer.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_subscription.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/ui/util/string_util.dart';
@@ -244,5 +246,24 @@ class PulsarPartitionedTopicApi {
     }
     return new PulsarPartitionedTopicBaseResp(
         topicName, partitionNum, msgRateIn, msgRateOut, msgInCounter, msgOutCounter, storageSize);
+  }
+
+  static Future<String> sendMsgToPartitionTopic(
+      String host, int port, String tenant, String namespace, String topic, String key, String value) async {
+    ProducerMessage producerMessage = new ProducerMessage(key, value);
+    List<ProducerMessage> messageList = new List.empty(growable: true);
+    messageList.add(producerMessage);
+    PublishMessagesReq messagesReq = new PublishMessagesReq(PulsarConst.defaultProducerName, messageList);
+    var url = 'http://$host:${port.toString()}/topics/persistent/$tenant/$namespace/$topic/';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: json.encode(messagesReq));
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      return "send msg failed, " + response.body;
+    }
+    return "send msg success";
   }
 }
