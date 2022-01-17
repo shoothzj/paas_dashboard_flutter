@@ -15,10 +15,9 @@ import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
 import 'package:paas_dashboard_flutter/ui/util/string_util.dart';
 
 class PulsarPartitionedTopicApi {
-  static Future<String> createPartitionTopic(String host, int port,
-      String tenant, String namespace, String topic, int partitionNum) async {
-    var url =
-        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
+  static Future<String> createPartitionTopic(
+      String host, int port, String tenant, String namespace, String topic, int partitionNum) async {
+    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
     var response = await http.put(Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -26,31 +25,27 @@ class PulsarPartitionedTopicApi {
         body: partitionNum.toString());
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception(
-          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     return response.body;
   }
 
-  static Future<String> deletePartitionTopic(String host, int port,
-      String tenant, String namespace, String topic, bool force) async {
-    var url =
-        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions?force=$force';
+  static Future<String> deletePartitionTopic(
+      String host, int port, String tenant, String namespace, String topic, bool force) async {
+    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions?force=$force';
     var response = await http.delete(Uri.parse(url), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception(
-          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     return response.body;
   }
 
-  static Future<String> modifyPartitionTopic(String host, int port,
-      String tenant, String namespace, String topic, int partitionNum) async {
-    var url =
-        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
+  static Future<String> modifyPartitionTopic(
+      String host, int port, String tenant, String namespace, String topic, int partitionNum) async {
+    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
     var response = await http.post(Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -58,32 +53,26 @@ class PulsarPartitionedTopicApi {
         body: partitionNum.toString());
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception(
-          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     return response.body;
   }
 
-  static Future<List<TopicResp>> getTopics(
-      String host, int port, String tenant, String namespace) async {
-    var url =
-        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/partitioned';
+  static Future<List<TopicResp>> getTopics(String host, int port, String tenant, String namespace) async {
+    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/partitioned';
     final response = await http.get(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception(
-          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     List jsonResponse = json.decode(response.body) as List;
     return jsonResponse.map((name) => new TopicResp.fromJson(name)).toList();
   }
 
-  static Future<List<SubscriptionResp>> getSubscription(String host, int port,
-      String tenant, String namespace, String topic) async {
+  static Future<List<SubscriptionResp>> getSubscription(
+      String host, int port, String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatApi.partitionedTopicStats(
-            host, port, tenant, namespace, topic)
-        .then((value) => {data = value});
+    await PulsarStatApi.partitionedTopicStats(host, port, tenant, namespace, topic).then((value) => {data = value});
     List<SubscriptionResp> respList = new List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("subscriptions")) {
@@ -91,36 +80,28 @@ class PulsarPartitionedTopicApi {
       subscriptionsMap.forEach((key, value) {
         double rateOut = value["msgRateOut"];
         int backlog = value["msgBacklog"];
-        SubscriptionResp subscriptionDetail =
-            new SubscriptionResp(key, backlog, rateOut);
+        SubscriptionResp subscriptionDetail = new SubscriptionResp(key, backlog, rateOut);
         respList.add(subscriptionDetail);
       });
     }
     return respList;
   }
 
-  static Future<String> clearBacklog(String host, int port, String tenant,
-      String namespace, String topic, String subscription) async {
+  static Future<String> clearBacklog(
+      String host, int port, String tenant, String namespace, String topic, String subscription) async {
     var url =
         'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/subscription/$subscription/skip_all';
     final response = await http.post(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception(
-          'ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     return response.body;
   }
 
   static Future<String> getSubscriptionBacklog(
-      String host,
-      int port,
-      String tenant,
-      String namespace,
-      String topic,
-      String subscription) async {
-    String data = PulsarStatApi.partitionedTopicStats(
-        host, port, tenant, namespace, topic) as String;
+      String host, int port, String tenant, String namespace, String topic, String subscription) async {
+    String data = PulsarStatApi.partitionedTopicStats(host, port, tenant, namespace, topic) as String;
 
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("subscriptions")) {
@@ -134,12 +115,10 @@ class PulsarPartitionedTopicApi {
     return "";
   }
 
-  static Future<List<ConsumerResp>> getConsumers(String host, int port,
-      String tenant, String namespace, String topic) async {
+  static Future<List<ConsumerResp>> getConsumers(
+      String host, int port, String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatApi.partitionedTopicStats(
-            host, port, tenant, namespace, topic)
-        .then((value) => {data = value});
+    await PulsarStatApi.partitionedTopicStats(host, port, tenant, namespace, topic).then((value) => {data = value});
     List<ConsumerResp> respList = new List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("subscriptions")) {
@@ -182,16 +161,8 @@ class PulsarPartitionedTopicApi {
             if (consumer.containsKey("lastConsumedTimestamp")) {
               lastConsumedTimestamp = consumer["lastConsumedTimestamp"];
             }
-            ConsumerResp consumerResp = new ConsumerResp(
-                consumerName,
-                key,
-                rateOut,
-                throughputOut,
-                availablePermits,
-                unackedMessages,
-                lastConsumedTimestamp,
-                clientVersion,
-                address);
+            ConsumerResp consumerResp = new ConsumerResp(consumerName, key, rateOut, throughputOut, availablePermits,
+                unackedMessages, lastConsumedTimestamp, clientVersion, address);
             respList.add(consumerResp);
           });
         }
@@ -200,12 +171,10 @@ class PulsarPartitionedTopicApi {
     return respList;
   }
 
-  static Future<List<ProducerResp>> getProducers(String host, int port,
-      String tenant, String namespace, String topic) async {
+  static Future<List<ProducerResp>> getProducers(
+      String host, int port, String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatApi.partitionedTopicStats(
-            host, port, tenant, namespace, topic)
-        .then((value) => {data = value});
+    await PulsarStatApi.partitionedTopicStats(host, port, tenant, namespace, topic).then((value) => {data = value});
     List<ProducerResp> respList = new List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("publishers")) {
@@ -217,22 +186,19 @@ class PulsarPartitionedTopicApi {
         String clientVersion = StringUtil.nullStr(element["clientVersion"]);
         double averageMsgSize = element["averageMsgSize"];
         String address = StringUtil.nullStr(element["address"]);
-        ProducerResp producerResp = new ProducerResp(producerName, rateIn,
-            throughputIn, clientVersion, averageMsgSize, address);
+        ProducerResp producerResp =
+            new ProducerResp(producerName, rateIn, throughputIn, clientVersion, averageMsgSize, address);
         respList.add(producerResp);
       });
     }
     return respList;
   }
 
-  static Future<List<PulsarPartitionedTopicDetailResp>> getDetails(String host,
-      int port, String tenant, String namespace, String topic) async {
+  static Future<List<PulsarPartitionedTopicDetailResp>> getDetails(
+      String host, int port, String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatApi.partitionedTopicStats(
-            host, port, tenant, namespace, topic)
-        .then((value) => {data = value});
-    List<PulsarPartitionedTopicDetailResp> respList =
-        new List.empty(growable: true);
+    await PulsarStatApi.partitionedTopicStats(host, port, tenant, namespace, topic).then((value) => {data = value});
+    List<PulsarPartitionedTopicDetailResp> respList = new List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("partitions")) {
       Map partitionsMap = statsMap["partitions"] as Map<String, dynamic>;
@@ -245,12 +211,10 @@ class PulsarPartitionedTopicApi {
     return respList;
   }
 
-  static Future<PulsarPartitionedTopicBaseResp> getBase(String host, int port,
-      String tenant, String namespace, String topic) async {
+  static Future<PulsarPartitionedTopicBaseResp> getBase(
+      String host, int port, String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatApi.partitionedTopicStats(
-            host, port, tenant, namespace, topic)
-        .then((value) => {data = value});
+    await PulsarStatApi.partitionedTopicStats(host, port, tenant, namespace, topic).then((value) => {data = value});
 
     Map statsMap = json.decode(data) as Map;
     String topicName = topic;
@@ -280,25 +244,17 @@ class PulsarPartitionedTopicApi {
     if (statsMap.containsKey("storageSize")) {
       storageSize = statsMap["storageSize"];
     }
-    return new PulsarPartitionedTopicBaseResp(topicName, partitionNum,
-        msgRateIn, msgRateOut, msgInCounter, msgOutCounter, storageSize);
+    return new PulsarPartitionedTopicBaseResp(
+        topicName, partitionNum, msgRateIn, msgRateOut, msgInCounter, msgOutCounter, storageSize);
   }
 
   static Future<String> sendMsgToPartitionTopic(
-      String host,
-      int port,
-      String tenant,
-      String namespace,
-      String topic,
-      String key,
-      String value) async {
+      String host, int port, String tenant, String namespace, String topic, String key, String value) async {
     ProducerMessage producerMessage = new ProducerMessage(key, value);
     List<ProducerMessage> messageList = new List.empty(growable: true);
     messageList.add(producerMessage);
-    PublishMessagesReq messagesReq =
-        new PublishMessagesReq(PulsarConst.defaultProducerName, messageList);
-    var url =
-        'http://$host:${port.toString()}/topics/persistent/$tenant/$namespace/$topic/';
+    PublishMessagesReq messagesReq = new PublishMessagesReq(PulsarConst.defaultProducerName, messageList);
+    var url = 'http://$host:${port.toString()}/topics/persistent/$tenant/$namespace/$topic/';
     var response = await http.post(Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
