@@ -72,7 +72,7 @@ abstract class PersistentApi {
 
   Future<List<CodePo>> codeList();
 
-  Future<void> saveRedis(String name, String host, int port, String username, String password);
+  Future<void> saveRedis(String name, String addr, String username, String password);
 
   Future<void> deleteRedis(int id);
 

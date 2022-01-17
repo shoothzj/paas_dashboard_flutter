@@ -105,10 +105,10 @@ class PersistentDb implements PersistentApi {
       'CREATE TABLE code_list(id INTEGER PRIMARY KEY, name TEXT, code TEXT)',
     );
     await db.execute(
-      'CREATE TABLE redis_instances(id INTEGER PRIMARY KEY, name TEXT, host TEXT, port INTEGER, username TEXT, password TEXT)',
+      'CREATE TABLE redis_instances(id INTEGER PRIMARY KEY, name TEXT, addr TEXT, username TEXT, password TEXT)',
     );
     await db.execute(
-      'INSERT INTO redis_instances(name, host, port, username, password) VALUES ("example", "${RedisConst.defaultHost}", ${RedisConst.defaultPort}, "${RedisConst.defaultUsername}", "${RedisConst.defaultPassword}")',
+      'INSERT INTO redis_instances(name, addr, username, password) VALUES ("example", "${RedisConst.defaultAddr}", "${RedisConst.defaultUsername}", "${RedisConst.defaultPassword}")',
     );
   }
 
@@ -385,11 +385,10 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
-  Future<void> saveRedis(String name, String host, int port, String username, String password) async {
+  Future<void> saveRedis(String name, String addr, String username, String password) async {
     var aux = await getInstance();
-    var list = [name, host, port, username, password];
-    aux.database
-        .execute('INSERT INTO redis_instances(name, host, port, username, password) VALUES (?, ?, ?, ?, ?)', list);
+    var list = [name, addr, username, password];
+    aux.database.execute('INSERT INTO redis_instances(name, addr, username, password) VALUES (?, ?, ?, ?)', list);
   }
 
   @override
@@ -404,7 +403,7 @@ class PersistentDb implements PersistentApi {
     final List<Map<String, dynamic>> maps = await aux.database.query('redis_instances');
     return List.generate(maps.length, (i) {
       var aux = maps[i];
-      return RedisInstancePo(aux['id'], aux['name'], aux['host'], aux['port'], aux['username'], aux['password']);
+      return RedisInstancePo(aux['id'], aux['name'], aux['addr'], aux['username'], aux['password']);
     });
   }
 
@@ -417,7 +416,6 @@ class PersistentDb implements PersistentApi {
       return null;
     }
     var current = maps[0];
-    return RedisInstancePo(
-        current['id'], current['name'], current['host'], current['port'], current['username'], current['password']);
+    return RedisInstancePo(current['id'], current['name'], current['addr'], current['username'], current['password']);
   }
 }
