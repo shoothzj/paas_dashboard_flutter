@@ -11,8 +11,7 @@ class PulsarTopicProduceViewModel extends BaseLoadListViewModel {
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
 
-  PulsarTopicProduceViewModel(this.pulsarInstancePo, this.tenantResp,
-      this.namespaceResp, this.topicResp);
+  PulsarTopicProduceViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   int get id {
     return this.pulsarInstancePo.id;
@@ -47,8 +46,7 @@ class PulsarTopicProduceViewModel extends BaseLoadListViewModel {
   }
 
   Future<String> sendMsg(key, value) {
-    return PulsarTopicApi.sendMsg(
-        host, port, tenant, namespace, getTopic(), getPartition(), key, value);
+    return PulsarTopicApi.sendMsg(host, port, tenant, namespace, getTopic(), getPartition(), key, value);
   }
 
   String getTopic() {
