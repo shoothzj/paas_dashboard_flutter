@@ -4,7 +4,9 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_stat_api.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/const.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_consume.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_produce.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_producer.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_subscription.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic.dart';
@@ -12,46 +14,55 @@ import 'package:paas_dashboard_flutter/module/pulsar/pulsar_topic_base.dart';
 import 'package:paas_dashboard_flutter/ui/util/string_util.dart';
 
 class PulsarTopicApi {
-  static Future<String> createTopic(String host, int port, String tenant, String namespace, String topic) async {
-    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic';
+  static Future<String> createTopic(String host, int port, String tenant,
+      String namespace, String topic) async {
+    var url =
+        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic';
     var response = await http.put(Uri.parse(url), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     return response.body;
   }
 
-  static Future<String> deleteTopic(
-      String host, int port, String tenant, String namespace, String topic, bool force) async {
-    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic?force=$force';
+  static Future<String> deleteTopic(String host, int port, String tenant,
+      String namespace, String topic, bool force) async {
+    var url =
+        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic?force=$force';
     var response = await http.delete(Uri.parse(url), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     return response.body;
   }
 
-  static Future<List<TopicResp>> getTopics(String host, int port, String tenant, String namespace) async {
-    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace';
+  static Future<List<TopicResp>> getTopics(
+      String host, int port, String tenant, String namespace) async {
+    var url =
+        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace';
     final response = await http.get(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     List jsonResponse = json.decode(response.body) as List;
     return jsonResponse.map((name) => new TopicResp.fromJson(name)).toList();
   }
 
-  static Future<List<SubscriptionResp>> getSubscription(
-      String host, int port, String tenant, String namespace, String topic) async {
+  static Future<List<SubscriptionResp>> getSubscription(String host, int port,
+      String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic).then((value) => {data = value});
+    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic)
+        .then((value) => {data = value});
     List<SubscriptionResp> respList = new List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("subscriptions")) {
@@ -59,7 +70,8 @@ class PulsarTopicApi {
       subscriptionsMap.forEach((key, value) {
         double rateOut = value["msgRateOut"];
         int backlog = value["msgBacklog"];
-        SubscriptionResp subscriptionDetail = new SubscriptionResp(key, backlog, rateOut);
+        SubscriptionResp subscriptionDetail =
+            new SubscriptionResp(key, backlog, rateOut);
         respList.add(subscriptionDetail);
       });
     }
@@ -67,7 +79,13 @@ class PulsarTopicApi {
   }
 
   static Future<String> fetchConsumerMessage(
-      String host, int port, String tenant, String namespace, String topic, String ledgerId, String entryId) async {
+      String host,
+      int port,
+      String tenant,
+      String namespace,
+      String topic,
+      String ledgerId,
+      String entryId) async {
     var url =
         'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/ledger/$ledgerId/entry/$entryId';
     var response = await http.get(Uri.parse(url), headers: <String, String>{
@@ -80,9 +98,10 @@ class PulsarTopicApi {
     return response.body;
   }
 
-  static Future<String> fetchMessageId(
-      String host, int port, String tenant, String namespace, String topic, String timestamp) async {
-    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/messageid/$timestamp';
+  static Future<String> fetchMessageId(String host, int port, String tenant,
+      String namespace, String topic, String timestamp) async {
+    var url =
+        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/messageid/$timestamp';
     var response = await http.get(Uri.parse(url), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
@@ -93,21 +112,28 @@ class PulsarTopicApi {
     return response.body;
   }
 
-  static Future<String> clearBacklog(
-      String host, int port, String tenant, String namespace, String topic, String subscription) async {
+  static Future<String> clearBacklog(String host, int port, String tenant,
+      String namespace, String topic, String subscription) async {
     var url =
         'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/subscription/$subscription/skip_all';
     final response = await http.post(Uri.parse(url));
     if (HttpUtil.abnormal(response.statusCode)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      throw Exception(
+          'ErrorCode is ${response.statusCode}, body is ${response.body}');
     }
     return response.body;
   }
 
   static Future<String> getSubscriptionBacklog(
-      String host, int port, String tenant, String namespace, String topic, String subscription) async {
-    String data = PulsarStatApi.topicStats(host, port, tenant, namespace, topic) as String;
+      String host,
+      int port,
+      String tenant,
+      String namespace,
+      String topic,
+      String subscription) async {
+    String data = PulsarStatApi.topicStats(host, port, tenant, namespace, topic)
+        as String;
 
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("subscriptions")) {
@@ -121,10 +147,11 @@ class PulsarTopicApi {
     return "";
   }
 
-  static Future<List<ConsumerResp>> getConsumers(
-      String host, int port, String tenant, String namespace, String topic) async {
+  static Future<List<ConsumerResp>> getConsumers(String host, int port,
+      String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic).then((value) => {data = value});
+    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic)
+        .then((value) => {data = value});
     List<ConsumerResp> respList = new List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("subscriptions")) {
@@ -167,8 +194,16 @@ class PulsarTopicApi {
             if (consumer.containsKey("lastConsumedTimestamp")) {
               lastConsumedTimestamp = consumer["lastConsumedTimestamp"];
             }
-            ConsumerResp consumerResp = new ConsumerResp(consumerName, key, rateOut, throughputOut, availablePermits,
-                unackedMessages, lastConsumedTimestamp, clientVersion, address);
+            ConsumerResp consumerResp = new ConsumerResp(
+                consumerName,
+                key,
+                rateOut,
+                throughputOut,
+                availablePermits,
+                unackedMessages,
+                lastConsumedTimestamp,
+                clientVersion,
+                address);
             respList.add(consumerResp);
           });
         }
@@ -177,10 +212,11 @@ class PulsarTopicApi {
     return respList;
   }
 
-  static Future<List<ProducerResp>> getProducers(
-      String host, int port, String tenant, String namespace, String topic) async {
+  static Future<List<ProducerResp>> getProducers(String host, int port,
+      String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic).then((value) => {data = value});
+    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic)
+        .then((value) => {data = value});
     List<ProducerResp> respList = new List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("publishers")) {
@@ -192,18 +228,19 @@ class PulsarTopicApi {
         String clientVersion = StringUtil.nullStr(element["clientVersion"]);
         double averageMsgSize = element["averageMsgSize"];
         String address = StringUtil.nullStr(element["address"]);
-        ProducerResp producerResp =
-            new ProducerResp(producerName, rateIn, throughputIn, clientVersion, averageMsgSize, address);
+        ProducerResp producerResp = new ProducerResp(producerName, rateIn,
+            throughputIn, clientVersion, averageMsgSize, address);
         respList.add(producerResp);
       });
     }
     return respList;
   }
 
-  static Future<PulsarTopicBaseResp> getBase(
-      String host, int port, String tenant, String namespace, String topic) async {
+  static Future<PulsarTopicBaseResp> getBase(String host, int port,
+      String tenant, String namespace, String topic) async {
     String data = "";
-    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic).then((value) => {data = value});
+    await PulsarStatApi.topicStats(host, port, tenant, namespace, topic)
+        .then((value) => {data = value});
 
     Map statsMap = json.decode(data) as Map;
     String topicName = topic;
@@ -233,7 +270,28 @@ class PulsarTopicApi {
     if (statsMap.containsKey("storageSize")) {
       storageSize = statsMap["storageSize"];
     }
-    return new PulsarTopicBaseResp(
-        topicName, partitionNum, msgRateIn, msgRateOut, msgInCounter, msgOutCounter, storageSize);
+    return new PulsarTopicBaseResp(topicName, partitionNum, msgRateIn,
+        msgRateOut, msgInCounter, msgOutCounter, storageSize);
+  }
+
+  static Future<String> sendMsg(String host, int port, String tenant,
+      String namespace, String topic, String partition, key, value) async {
+    ProducerMessage producerMessage = new ProducerMessage(key, value);
+    List<ProducerMessage> messageList = new List.empty(growable: true);
+    messageList.add(producerMessage);
+    PublishMessagesReq messagesReq =
+        new PublishMessagesReq(PulsarConst.defaultProducerName, messageList);
+    var url =
+        'http://$host:${port.toString()}/topics/persistent/$tenant/$namespace/$topic/partitions/$partition';
+    var response = await http.post(Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: json.encode(messagesReq));
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      return "send msg failed, " + response.body;
+    }
+    return "send msg success";
   }
 }
