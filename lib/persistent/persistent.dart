@@ -135,8 +135,8 @@ class Persistent {
     return (await getApi()).codeList();
   }
 
-  static Future<void> saveRedis(String name, String host, int port, String username, String password) async {
-    return (await getApi()).saveRedis(name, host, port, username, password);
+  static Future<void> saveRedis(String name, String addr, String username, String password) async {
+    return (await getApi()).saveRedis(name, addr, username, password);
   }
 
   static Future<void> deleteRedis(int id) async {

@@ -221,7 +221,7 @@ class PersistentMemory implements PersistentApi {
     throw UnimplementedError();
   }
 
-  Future<void> saveRedis(String name, String host, int port, String username, String password) {
+  Future<void> saveRedis(String name, String addr, String username, String password) {
     // TODO: implement sqlInstance
     throw UnimplementedError();
   }
@@ -233,8 +233,7 @@ class PersistentMemory implements PersistentApi {
 
   Future<List<RedisInstancePo>> redisInstances() async {
     return [
-      new RedisInstancePo(0, "example", RedisConst.defaultHost, RedisConst.defaultPort, RedisConst.defaultUsername,
-          RedisConst.defaultPassword)
+      new RedisInstancePo(0, "example", RedisConst.defaultAddr, RedisConst.defaultUsername, RedisConst.defaultPassword)
     ];
   }
 
@@ -242,7 +241,7 @@ class PersistentMemory implements PersistentApi {
     if (name != "example") {
       return null;
     }
-    return new RedisInstancePo(0, "example", RedisConst.defaultHost, RedisConst.defaultPort, RedisConst.defaultUsername,
-        RedisConst.defaultPassword);
+    return new RedisInstancePo(
+        0, "example", RedisConst.defaultAddr, RedisConst.defaultUsername, RedisConst.defaultPassword);
   }
 }

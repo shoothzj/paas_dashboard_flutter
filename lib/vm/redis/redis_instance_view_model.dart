@@ -17,12 +17,8 @@ class RedisInstanceViewModel {
     return this.redisInstancePo.name;
   }
 
-  String get host {
-    return this.redisInstancePo.host;
-  }
-
-  int get port {
-    return this.redisInstancePo.port;
+  String get addr {
+    return this.redisInstancePo.addr;
   }
 
   String get username {
