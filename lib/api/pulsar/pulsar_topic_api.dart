@@ -68,7 +68,21 @@ class PulsarTopicApi {
 
   static Future<String> fetchConsumerMessage(
       String host, int port, String tenant, String namespace, String topic, String ledgerId, String entryId) async {
-    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/ledger/$ledgerId/entry/$entryId';
+    var url =
+        'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/ledger/$ledgerId/entry/$entryId';
+    var response = await http.get(Uri.parse(url), headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
+    if (HttpUtil.abnormal(response.statusCode)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      return "";
+    }
+    return response.body;
+  }
+
+  static Future<String> fetchMessageId(
+      String host, int port, String tenant, String namespace, String topic, String timestamp) async {
+    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/messageid/$timestamp';
     var response = await http.get(Uri.parse(url), headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
