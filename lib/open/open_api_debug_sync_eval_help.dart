@@ -17,7 +17,6 @@
 // under the License.
 //
 
-
 // Create a library-local lexical scope so that all classes and functions within
 // a library can always access each other. Inherit from the empty scope.
 import 'package:dart_eval/dart_eval.dart';
