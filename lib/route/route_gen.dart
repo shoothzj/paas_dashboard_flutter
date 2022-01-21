@@ -21,6 +21,9 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/ui/code/screen/code_execute_screen.dart';
 import 'package:paas_dashboard_flutter/ui/mongo/mongo_instance.dart';
 import 'package:paas_dashboard_flutter/ui/mongo/screen/mongo_database.dart';
+import 'package:paas_dashboard_flutter/ui/mysql/mysql_instance.dart';
+import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_table_data.dart';
+import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_tables.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_partitioned_topic.dart';
@@ -32,6 +35,9 @@ import 'package:paas_dashboard_flutter/ui/sql/screen/sql_execute_screen.dart';
 import 'package:paas_dashboard_flutter/vm/code/code_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_database_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_data_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_model.dart';
@@ -67,6 +73,30 @@ class RouteGen {
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
               child: MongoDatabaseScreen(),
+            ));
+  }
+
+  static Route mysqlInstance(MysqlInstanceViewModel viewModel) {
+    return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: MysqlInstanceScreen(),
+            ));
+  }
+
+  static Route mysqlTables(MysqlTablesViewModel viewModel) {
+    return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: MysqlTablesWidget(),
+            ));
+  }
+
+  static Route mysqlTableDetail(MysqlTableDetailViewModel viewModel) {
+    return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: MysqlTableDataWidget(),
             ));
   }
 

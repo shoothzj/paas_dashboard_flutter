@@ -57,6 +57,7 @@ dependencies:
   sqflite: ^2.0.2
   sqflite_common_ffi: ^2.0.2
   path: ^1.8.0
+  sprintf: ^6.0.0
   flutter_localizations:
     sdk: flutter
 

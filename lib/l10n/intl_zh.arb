@@ -15,6 +15,7 @@
   "consume": "消费",
   "consumer": "消费者",
   "consumerList": "消费者列表",
+  "database": "数据库",
   "delete": "删除",
   "deleteNamespace": "删除命名空间",
   "deleteTenant": "删除租户",
@@ -50,6 +51,7 @@
   "subscriptionList": "订阅列表",
   "subscriptionName": "订阅名称",
   "sqlQuery": "sql 查询",
+  "tables": "数据库表",
   "tenant": "租户",
   "tenantName": "租户名称",
   "tenants": "租户列表",
@@ -57,5 +59,6 @@
   "topicName": "Topic 名称",
   "topics": "Topic 列表",
   "unit": "单位",
+  "userName": "用户名",
   "versionName": "版本"
 }

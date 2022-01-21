@@ -17,46 +17,44 @@
 // under the License.
 //
 
+import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/api/mysql/mysql_databases_api.dart';
+import 'package:paas_dashboard_flutter/module/mysql/mysql_sql_result.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 
-class MysqlInstanceViewModel extends BaseLoadListPageViewModel<String> {
-  final MysqlInstancePo mysqlInstancePo;
+class MysqlTableDetailViewModel extends BaseLoadListPageViewModel<Object> {
+  MysqlInstancePo mysqlInstancePo;
 
-  MysqlInstanceViewModel(this.mysqlInstancePo);
+  String dbname;
 
-  MysqlInstanceViewModel deepCopy() {
-    return new MysqlInstanceViewModel(mysqlInstancePo.deepCopy());
-  }
+  String tableName;
 
-  int get id {
-    return this.mysqlInstancePo.id;
-  }
+  List<String>? columns;
 
-  String get name {
+  String get instanceName {
     return this.mysqlInstancePo.name;
   }
 
-  String get host {
-    return this.mysqlInstancePo.host;
+  String getDbname() {
+    return this.dbname;
   }
 
-  int get port {
-    return this.mysqlInstancePo.port;
+  String getTableName() {
+    return this.tableName;
   }
 
-  String get username {
-    return this.mysqlInstancePo.username;
+  MysqlTableDetailViewModel(this.mysqlInstancePo, this.dbname, this.tableName);
+
+  List<String> getColumns() {
+    return this.columns == null ? [] : this.columns!;
   }
 
-  String get password {
-    return this.mysqlInstancePo.password;
-  }
-
-  Future<void> fetchMysqlUser() async {
+  Future<void> fetchData() async {
     try {
-      this.fullList = await MysqlDatabaseApi.getUsers(host, port, username, password);
+      MysqlSqlResult result = await MysqlDatabaseApi.getData(mysqlInstancePo, dbname, tableName);
+      this.columns = result.getFieldName;
+      this.fullList = result.getData;
       this.displayList = this.fullList;
       loadSuccess();
     } on Exception catch (e) {
@@ -66,7 +64,12 @@ class MysqlInstanceViewModel extends BaseLoadListPageViewModel<String> {
     notifyListeners();
   }
 
-  Future<void> filter(String str) async {
-    notifyListeners();
+  DataRow getConvert(dynamic obj) {
+    List<Object> v = obj;
+    return new DataRow(cells: v.map((e) => DataCell(Text(e.toString()))).toList());
+  }
+
+  MysqlTableDetailViewModel deepCopy() {
+    return new MysqlTableDetailViewModel(mysqlInstancePo.deepCopy(), dbname, tableName);
   }
 }

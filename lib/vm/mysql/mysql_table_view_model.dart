@@ -18,17 +18,21 @@
 //
 
 import 'package:paas_dashboard_flutter/api/mysql/mysql_databases_api.dart';
+import 'package:paas_dashboard_flutter/module/mysql/mysql_table.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
+
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 
-class MysqlInstanceViewModel extends BaseLoadListPageViewModel<String> {
-  final MysqlInstancePo mysqlInstancePo;
+class MysqlTablesViewModel extends BaseLoadListPageViewModel<TableResp> {
+  List<TableResp> tables = <TableResp>[];
 
-  MysqlInstanceViewModel(this.mysqlInstancePo);
+  MysqlInstancePo mysqlInstancePo;
 
-  MysqlInstanceViewModel deepCopy() {
-    return new MysqlInstanceViewModel(mysqlInstancePo.deepCopy());
-  }
+  String dbname;
+
+  String? tableName;
+
+  MysqlTablesViewModel(this.mysqlInstancePo, this.dbname);
 
   int get id {
     return this.mysqlInstancePo.id;
@@ -42,10 +46,6 @@ class MysqlInstanceViewModel extends BaseLoadListPageViewModel<String> {
     return this.mysqlInstancePo.host;
   }
 
-  int get port {
-    return this.mysqlInstancePo.port;
-  }
-
   String get username {
     return this.mysqlInstancePo.username;
   }
@@ -54,9 +54,21 @@ class MysqlInstanceViewModel extends BaseLoadListPageViewModel<String> {
     return this.mysqlInstancePo.password;
   }
 
-  Future<void> fetchMysqlUser() async {
+  int get port {
+    return this.mysqlInstancePo.port;
+  }
+
+  String getDbname() {
+    return this.dbname;
+  }
+
+  String getTableName() {
+    return this.tableName == null ? "" : this.tableName!;
+  }
+
+  Future<void> fetchMysqlTables() async {
     try {
-      this.fullList = await MysqlDatabaseApi.getUsers(host, port, username, password);
+      this.fullList = await MysqlDatabaseApi.getTableList(host, port, username, password, dbname);
       this.displayList = this.fullList;
       loadSuccess();
     } on Exception catch (e) {
@@ -67,6 +79,18 @@ class MysqlInstanceViewModel extends BaseLoadListPageViewModel<String> {
   }
 
   Future<void> filter(String str) async {
+    if (str == "") {
+      this.displayList = this.fullList;
+      notifyListeners();
+      return;
+    }
+    if (!loading && loadException == null) {
+      this.displayList = this.fullList.where((element) => element.tableName.contains(str)).toList();
+    }
     notifyListeners();
+  }
+
+  MysqlTablesViewModel deepCopy() {
+    return new MysqlTablesViewModel(mysqlInstancePo.deepCopy(), dbname);
   }
 }
