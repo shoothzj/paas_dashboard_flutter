@@ -17,20 +17,19 @@
 # under the License.
 #
 
-name: Flutter Format
-
-on:
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'beta'
-      - run: flutter pub get
-      - run: flutter format --set-exit-if-changed -l 120 .
+header:
+  license:
+    spdx-id: Apache-2.0
+    copyright-owner: Apache Software Foundation
+  paths-ignore:
+    - 'lib/l10n/**'
+    - 'macos/**'
+    - 'test/**'
+    - 'windows/**'
+    - 'web/**'
+    - 'pubspec.lock'
+    - 'linux/**'
+    - '**/*.md'
+    - '.metadata'
+    - 'LICENSE'
+    - '.gitignore'

@@ -17,20 +17,28 @@
 # under the License.
 #
 
-name: Flutter Format
+name: "license check"
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
 
 jobs:
-  build:
+  license-check:
+    name: License Check
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check license header
+        uses: apache/skywalking-eyes@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          channel: 'beta'
-      - run: flutter pub get
-      - run: flutter format --set-exit-if-changed -l 120 .
+          config: .licenserc.yaml
