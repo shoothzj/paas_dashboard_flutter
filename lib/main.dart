@@ -42,6 +42,9 @@ import 'package:paas_dashboard_flutter/vm/mongo/mongo_database_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_data_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
@@ -137,6 +140,18 @@ class MyApp extends StatelessWidget {
         if (settings.name == PageRouteConst.MongoDatabase) {
           final args = settings.arguments as MongoDatabaseViewModel;
           return RouteGen.mongoDatabase(args);
+        }
+        if (settings.name == PageRouteConst.MysqlInstance) {
+          final args = settings.arguments as MysqlInstanceViewModel;
+          return RouteGen.mysqlInstance(args);
+        }
+        if (settings.name == PageRouteConst.MysqlDatabase) {
+          final args = settings.arguments as MysqlTablesViewModel;
+          return RouteGen.mysqlTables(args);
+        }
+        if (settings.name == PageRouteConst.MysqlTable) {
+          final args = settings.arguments as MysqlTableDetailViewModel;
+          return RouteGen.mysqlTableDetail(args);
         }
         if (settings.name == PageRouteConst.PulsarInstance) {
           final args = settings.arguments as PulsarInstanceViewModel;

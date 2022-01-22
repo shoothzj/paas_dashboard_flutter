@@ -18,17 +18,16 @@
 //
 
 import 'package:paas_dashboard_flutter/api/mysql/mysql_databases_api.dart';
+import 'package:paas_dashboard_flutter/module/mysql/mysql_database.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 
-class MysqlInstanceViewModel extends BaseLoadListPageViewModel<String> {
+class MysqlDatabaseViewModel extends BaseLoadListPageViewModel<DatabaseResp> {
+  List<DatabaseResp> instance = <DatabaseResp>[];
+
   final MysqlInstancePo mysqlInstancePo;
 
-  MysqlInstanceViewModel(this.mysqlInstancePo);
-
-  MysqlInstanceViewModel deepCopy() {
-    return new MysqlInstanceViewModel(mysqlInstancePo.deepCopy());
-  }
+  MysqlDatabaseViewModel(this.mysqlInstancePo);
 
   int get id {
     return this.mysqlInstancePo.id;
@@ -42,10 +41,6 @@ class MysqlInstanceViewModel extends BaseLoadListPageViewModel<String> {
     return this.mysqlInstancePo.host;
   }
 
-  int get port {
-    return this.mysqlInstancePo.port;
-  }
-
   String get username {
     return this.mysqlInstancePo.username;
   }
@@ -54,9 +49,13 @@ class MysqlInstanceViewModel extends BaseLoadListPageViewModel<String> {
     return this.mysqlInstancePo.password;
   }
 
-  Future<void> fetchMysqlUser() async {
+  int get port {
+    return this.mysqlInstancePo.port;
+  }
+
+  Future<void> fetchMysqlDatabase() async {
     try {
-      this.fullList = await MysqlDatabaseApi.getUsers(host, port, username, password);
+      this.fullList = await MysqlDatabaseApi.getDatabaseList(host, port, username, password);
       this.displayList = this.fullList;
       loadSuccess();
     } on Exception catch (e) {
