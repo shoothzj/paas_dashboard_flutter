@@ -19,29 +19,27 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
-import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_table_index.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_column_view_model.dart';
-import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_data_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_index_view_model.dart';
 import 'package:provider/provider.dart';
 
-import 'mysql_table_column.dart';
+import 'mysql_table_index.dart';
 
-/// MySQL table data list windows
-class MysqlTableDataWidget extends StatefulWidget {
-  MysqlTableDataWidget();
+/// mysql table column windows
+class MysqlTableColumnWidget extends StatefulWidget {
+  MysqlTableColumnWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new _MysqlTableDataState();
+    return new _MysqlTableColumnWidgetState();
   }
 }
 
-class _MysqlTableDataState extends State<MysqlTableDataWidget> {
+class _MysqlTableColumnWidgetState extends State<MysqlTableColumnWidget> {
   @override
   void initState() {
     super.initState();
-    final vm = Provider.of<MysqlTableDataViewModel>(context, listen: false);
+    final vm = Provider.of<MysqlTableColumnViewModel>(context, listen: false);
     vm.fetchData();
   }
 
@@ -52,8 +50,14 @@ class _MysqlTableDataState extends State<MysqlTableDataWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<MysqlTableDataViewModel>(context);
+    final vm = Provider.of<MysqlTableColumnViewModel>(context);
     vm.setDataConverter(vm.getConvert);
+
+    var refreshButton = TextButton(
+        onPressed: () {
+          vm.fetchData();
+        },
+        child: Text(S.of(context).refresh));
 
     var dbsFuture = SingleChildScrollView(
       child: PaginatedDataTable(
@@ -62,14 +66,7 @@ class _MysqlTableDataState extends State<MysqlTableDataWidget> {
         source: vm,
       ),
     );
-    var refreshButton = TextButton(
-        onPressed: () {
-          vm.fetchData();
-        },
-        child: Text(S.of(context).refresh));
-    MysqlTableColumnViewModel tableColumnVm =
-        new MysqlTableColumnViewModel(vm.mysqlInstancePo, vm.dbname, vm.tableName);
-    MysqlTableIndexViewModel indexColumnVm = new MysqlTableIndexViewModel(vm.mysqlInstancePo, vm.dbname, vm.tableName);
+
     var body = ListView(
       children: <Widget>[
         Container(
@@ -84,32 +81,20 @@ class _MysqlTableDataState extends State<MysqlTableDataWidget> {
       ],
     );
 
+    MysqlTableIndexViewModel indexVm =
+        new MysqlTableIndexViewModel(vm.mysqlInstancePo.deepCopy(), vm.dbname, vm.tableName);
+
     return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('Mysql ${vm.instanceName} -> ${vm.getDbname()} DB -> ${vm.getTableName()} table'),
-            bottom: TabBar(
-              tabs: [
-                Tab(text: S.of(context).data),
-                Tab(text: S.of(context).tableColumn),
-                Tab(text: S.of(context).tableIndex),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            children: [
-              body,
-              ChangeNotifierProvider(
-                create: (context) => tableColumnVm.deepCopy(),
-                child: MysqlTableColumnWidget(),
-              ).build(context),
-              ChangeNotifierProvider(
-                create: (context) => indexColumnVm.deepCopy(),
-                child: MysqlTableIndexWidget(),
-              ).build(context)
-            ],
-          ),
-        ));
+      length: 2,
+      child: TabBarView(
+        children: [
+          body,
+          ChangeNotifierProvider(
+            create: (context) => indexVm.deepCopy(),
+            child: MysqlTableIndexWidget(),
+          ).build(context)
+        ],
+      ),
+    );
   }
 }

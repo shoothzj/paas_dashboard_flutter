@@ -22,7 +22,10 @@ import 'package:paas_dashboard_flutter/ui/code/screen/code_execute_screen.dart';
 import 'package:paas_dashboard_flutter/ui/mongo/mongo_instance.dart';
 import 'package:paas_dashboard_flutter/ui/mongo/screen/mongo_database.dart';
 import 'package:paas_dashboard_flutter/ui/mysql/mysql_instance.dart';
+import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_sql_query.dart';
+import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_table_column.dart';
 import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_table_data.dart';
+import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_table_index.dart';
 import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_tables.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/pulsar_instance.dart';
 import 'package:paas_dashboard_flutter/ui/pulsar/screen/pulsar_namespace.dart';
@@ -36,7 +39,10 @@ import 'package:paas_dashboard_flutter/vm/code/code_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_database_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_sql_query_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_column_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_data_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_index_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_view_model.dart';
@@ -84,6 +90,14 @@ class RouteGen {
             ));
   }
 
+  static Route mysqlSql(MysqlSqlQueryViewModel viewModel) {
+    return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: MysqlSqlQueryWidget(),
+            ));
+  }
+
   static Route mysqlTables(MysqlTablesViewModel viewModel) {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
@@ -92,12 +106,25 @@ class RouteGen {
             ));
   }
 
-  static Route mysqlTableDetail(MysqlTableDetailViewModel viewModel) {
+  static Route mysqlTableData(MysqlTableDataViewModel viewModel) {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
               child: MysqlTableDataWidget(),
             ));
+  }
+
+  static Route mysqlTableColumn(MysqlTableColumnViewModel viewModel) {
+    return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: MysqlTableColumnWidget(),
+            ));
+  }
+
+  static Route mysqlTableIndex(MysqlTableIndexViewModel viewModel) {
+    return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(create: (context) => viewModel, child: MysqlTableIndexWidget()));
   }
 
   static Route pulsarInstance(PulsarInstanceViewModel viewModel) {

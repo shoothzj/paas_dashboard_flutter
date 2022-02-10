@@ -23,55 +23,32 @@ import 'package:paas_dashboard_flutter/module/mysql/mysql_sql_result.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 
-class MysqlTableDataViewModel extends BaseLoadListPageViewModel<Object> {
+class MysqlSqlQueryViewModel extends BaseLoadListPageViewModel<Object> {
   MysqlInstancePo mysqlInstancePo;
 
   String dbname;
 
-  String tableName;
-
   List<String>? columns;
 
-  String get instanceName {
-    return this.mysqlInstancePo.name;
+  MysqlSqlQueryViewModel(this.mysqlInstancePo, this.dbname) {
+    columns = [''];
+    this.fullList = [
+      ['']
+    ];
+    this.displayList = this.fullList;
+    loadSuccess();
+    this.setDataConverter(this.getConvert);
   }
 
   String getDbname() {
     return this.dbname;
   }
 
-  String getTableName() {
-    return this.tableName;
-  }
-
-  MysqlTableDataViewModel(this.mysqlInstancePo, this.dbname, this.tableName);
-
   List<String> getColumns() {
-    return this.columns == null ? [''] : this.columns!;
-  }
-
-  Future<void> fetchData() async {
-    try {
-      MysqlSqlResult result = await MysqlDatabaseApi.getData(mysqlInstancePo, dbname, tableName);
-      this.columns = result.getFieldName;
-      this.fullList = result.getData;
-      this.displayList = this.fullList;
-      loadSuccess();
-    } on Exception catch (e) {
-      loadException = e;
-      loading = false;
-    }
-    notifyListeners();
+    return this.columns == null ? [] : this.columns!;
   }
 
   Future<void> fetchSqlData(String sql) async {
-    if (sql.isEmpty) {
-      this.fullList = [''];
-      this.displayList = this.fullList;
-      loadSuccess();
-      notifyListeners();
-      return;
-    }
     try {
       MysqlSqlResult result = await MysqlDatabaseApi.getSqlData(sql, mysqlInstancePo, dbname);
       this.columns = result.getFieldName;
@@ -90,7 +67,7 @@ class MysqlTableDataViewModel extends BaseLoadListPageViewModel<Object> {
     return new DataRow(cells: v.map((e) => DataCell(SelectableText(e.toString()))).toList());
   }
 
-  MysqlTableDataViewModel deepCopy() {
-    return new MysqlTableDataViewModel(mysqlInstancePo.deepCopy(), dbname, tableName);
+  MysqlSqlQueryViewModel deepCopy() {
+    return new MysqlSqlQueryViewModel(mysqlInstancePo.deepCopy(), dbname);
   }
 }

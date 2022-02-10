@@ -26,6 +26,13 @@ import 'package:sprintf/sprintf.dart';
 
 class MysqlDatabaseApi {
   static const String SELECT_ALL = "select * from %s limit 100";
+  static const String SCHEMA_DB = "information_schema";
+
+  static const String TABLE_COLUMN =
+      "select COLUMN_NAME, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE,COLUMN_TYPE  from `COLUMNS` where TABLE_NAME = '%s' and TABLE_SCHEMA = '%s'";
+
+  static const String TABLE_INDEX =
+      "select INDEX_NAME, COLUMN_NAME, SEQ_IN_INDEX, INDEX_TYPE from STATISTICS where TABLE_NAME = '%s' and TABLE_SCHEMA = '%s'";
 
   static Future<List<DatabaseResp>> getDatabaseList(String host, int port, String username, String password) async {
     final setting = new ConnectionSettings(host: host, port: port, user: username, password: password);
@@ -66,6 +73,26 @@ class MysqlDatabaseApi {
     MysqlSqlResult result = MysqlSqlResult.create();
     result.setFieldName = queryResult.fields.map((e) => e.name!.isNotEmpty ? e.name.toString() : "").toList();
     result.setData = data;
+    await conn.close();
+    return result;
+  }
+
+  static Future<MysqlSqlResult> getSqlData(String sql, MysqlInstancePo mysqlConn, String dbname) async {
+    final setting = new ConnectionSettings(
+        host: mysqlConn.host, port: mysqlConn.port, user: mysqlConn.username, password: mysqlConn.password, db: dbname);
+    MysqlSqlResult result = MysqlSqlResult.create();
+    final MySqlConnection conn = await MySqlConnection.connect(setting);
+    var queryResult = await conn.query(sql);
+    if (queryResult.isNotEmpty) {
+      List<List<Object>> data = [];
+      for (var row in queryResult) {
+        if (row.values != null) {
+          data.add(row.values!.map((e) => e == null ? "" : e).toList());
+        }
+      }
+      result.setFieldName = queryResult.fields.map((e) => e.name!.isNotEmpty ? e.name.toString() : "").toList();
+      result.setData = data;
+    }
     await conn.close();
     return result;
   }
