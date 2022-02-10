@@ -43,7 +43,10 @@ import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_list_view_model.d
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_sql_query_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_column_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_data_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_index_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
@@ -149,9 +152,21 @@ class MyApp extends StatelessWidget {
           final args = settings.arguments as MysqlTablesViewModel;
           return RouteGen.mysqlTables(args);
         }
+        if (settings.name == PageRouteConst.MysqlSql) {
+          final args = settings.arguments as MysqlSqlQueryViewModel;
+          return RouteGen.mysqlSql(args);
+        }
         if (settings.name == PageRouteConst.MysqlTable) {
-          final args = settings.arguments as MysqlTableDetailViewModel;
-          return RouteGen.mysqlTableDetail(args);
+          final args = settings.arguments as MysqlTableDataViewModel;
+          return RouteGen.mysqlTableData(args);
+        }
+        if (settings.name == PageRouteConst.MysqlTableColumn) {
+          final args = settings.arguments as MysqlTableColumnViewModel;
+          return RouteGen.mysqlTableColumn(args);
+        }
+        if (settings.name == PageRouteConst.MysqlTableIndex) {
+          final args = settings.arguments as MysqlTableIndexViewModel;
+          return RouteGen.mysqlTableIndex(args);
         }
         if (settings.name == PageRouteConst.PulsarInstance) {
           final args = settings.arguments as PulsarInstanceViewModel;
