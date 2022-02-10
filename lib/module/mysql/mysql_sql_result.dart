@@ -41,6 +41,10 @@ class MysqlSqlResult {
   }
 
   factory MysqlSqlResult.create() {
-    return MysqlSqlResult([], []);
+    return MysqlSqlResult([
+      ''
+    ], [
+      ['']
+    ]);
   }
 }

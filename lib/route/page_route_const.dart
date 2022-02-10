@@ -31,6 +31,9 @@ class PageRouteConst {
   static const String MysqlInstance = '/mysql/instance';
   static const String MysqlDatabase = '/mysql/instance/database';
   static const String MysqlTable = '/mysql/instance/table';
+  static const String MysqlTableColumn = '/mysql/instance/table/column';
+  static const String MysqlTableIndex = '/mysql/instance/table/index';
+  static const String MysqlSql = '/mysql/instance/sql';
   static const String Pulsar = '/pulsar';
   static const String PulsarInstance = '/pulsar/instance';
   static const String PulsarTenant = '/pulsar/instance/tenant';

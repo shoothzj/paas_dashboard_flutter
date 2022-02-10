@@ -21,8 +21,10 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/component/searchable_title.dart';
+import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_sql_query.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
+import 'package:paas_dashboard_flutter/vm/mysql/mysql_sql_query_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_data_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_view_model.dart';
 import 'package:provider/provider.dart';
@@ -76,8 +78,8 @@ class _MysqlTablesState extends State<MysqlTablesWidget> {
               .map((data) => DataRow(
                       onSelectChanged: (bool? select) {
                         vm.tableName = data.tableName;
-                        MysqlTableDetailViewModel detailViewModel =
-                            new MysqlTableDetailViewModel(vm.mysqlInstancePo, vm.dbname, data.tableName);
+                        MysqlTableDataViewModel detailViewModel =
+                            new MysqlTableDataViewModel(vm.mysqlInstancePo, vm.dbname, data.tableName);
                         Navigator.pushNamed(context, PageRouteConst.MysqlTable, arguments: detailViewModel.deepCopy());
                       },
                       cells: [
@@ -106,19 +108,29 @@ class _MysqlTablesState extends State<MysqlTablesWidget> {
         dbsFuture
       ],
     );
+    MysqlSqlQueryViewModel sqlQueryVm = new MysqlSqlQueryViewModel(vm.mysqlInstancePo, vm.dbname);
 
     return DefaultTabController(
-        length: 1,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text('Mysql ${vm.name} -> ${vm.getDbname()} DB'),
             bottom: TabBar(
               tabs: [
-                Tab(text: "Tables"),
+                Tab(text: S.of(context).tables),
+                Tab(text: S.of(context).sqlQuery),
               ],
             ),
           ),
-          body: body,
+          body: TabBarView(
+            children: [
+              body,
+              ChangeNotifierProvider(
+                create: (context) => sqlQueryVm.deepCopy(),
+                child: MysqlSqlQueryWidget(),
+              ).build(context)
+            ],
+          ),
         ));
   }
 }
