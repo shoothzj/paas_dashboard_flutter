@@ -19,6 +19,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/component/searchable_title.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
@@ -69,12 +70,20 @@ class MongoTableListWidgetState extends State<MongoTableListWidget> {
           ),
         ]));
     var topicsTable = SingleChildScrollView(
-      child: PaginatedDataTable(
+      child: DataTable(
           showCheckboxColumn: false,
-          columns: [
-            DataColumn(label: Text("Table")),
-          ],
-          source: vm),
+          columns: [DataColumn(label: Text(S.of(context).tables))],
+          rows: vm.displayList
+              .map((data) => DataRow(
+                      onSelectChanged: (bool? select) {
+                        Navigator.pushNamed(context, PageRouteConst.MongoTable, arguments: data.deepCopy());
+                      },
+                      cells: [
+                        DataCell(
+                          Text(data.tableName),
+                        )
+                      ]))
+              .toList()),
     );
     var refreshButton = TextButton(
         onPressed: () {

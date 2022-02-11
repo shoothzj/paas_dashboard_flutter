@@ -21,9 +21,10 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/api/mysql/mysql_databases_api.dart';
 import 'package:paas_dashboard_flutter/module/mysql/mysql_sql_result.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
+import 'package:paas_dashboard_flutter/ui/component/dynamic_filter_table.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 
-class MysqlTableDataViewModel extends BaseLoadListPageViewModel<Object> {
+class MysqlTableDataViewModel extends BaseLoadListPageViewModel<Object> implements FilterCallBack {
   MysqlInstancePo mysqlInstancePo;
 
   String dbname;
@@ -50,15 +51,18 @@ class MysqlTableDataViewModel extends BaseLoadListPageViewModel<Object> {
     return this.columns == null ? [''] : this.columns!;
   }
 
-  Future<void> fetchData() async {
+  Future<void> fetchData(List<DropDownButtonData>? filters) async {
     try {
-      MysqlSqlResult result = await MysqlDatabaseApi.getData(mysqlInstancePo, dbname, tableName);
+      String where = MysqlDatabaseApi.getWhere(filters);
+
+      MysqlSqlResult result = await MysqlDatabaseApi.getData(mysqlInstancePo, dbname, tableName, where);
       this.columns = result.getFieldName;
       this.fullList = result.getData;
       this.displayList = this.fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
+      opException = e;
       loading = false;
     }
     notifyListeners();
@@ -86,11 +90,21 @@ class MysqlTableDataViewModel extends BaseLoadListPageViewModel<Object> {
   }
 
   DataRow getConvert(dynamic obj) {
-    List<Object> v = obj;
-    return new DataRow(cells: v.map((e) => DataCell(SelectableText(e.toString()))).toList());
+    List<Object?> v = obj;
+    return new DataRow(
+        cells: v
+            .map((e) => DataCell(e == null
+                ? SelectableText("(N/A)", style: new TextStyle(color: Colors.grey))
+                : SelectableText(e.toString())))
+            .toList());
   }
 
   MysqlTableDataViewModel deepCopy() {
     return new MysqlTableDataViewModel(mysqlInstancePo.deepCopy(), dbname, tableName);
+  }
+
+  @override
+  void execute(List<DropDownButtonData> rowData) {
+    fetchData(rowData);
   }
 }

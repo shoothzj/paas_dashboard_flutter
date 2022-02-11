@@ -25,6 +25,7 @@
   "email": "邮箱",
   "entryId": "编号",
   "execute": "执行",
+  "filter": "过滤",
   "forceDelete": "强制删除",
   "isLeader": "是否是主节点",
   "languageSettings": "语言设置",
