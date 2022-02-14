@@ -41,6 +41,7 @@ import 'package:paas_dashboard_flutter/vm/kubernetes/k8s_instance_list_view_mode
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_database_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mongo/mongo_table_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_sql_query_view_model.dart';
@@ -143,6 +144,10 @@ class MyApp extends StatelessWidget {
         if (settings.name == PageRouteConst.MongoDatabase) {
           final args = settings.arguments as MongoDatabaseViewModel;
           return RouteGen.mongoDatabase(args);
+        }
+        if (settings.name == PageRouteConst.MongoTable) {
+          final args = settings.arguments as MongoTableViewModel;
+          return RouteGen.mongoTableData(args);
         }
         if (settings.name == PageRouteConst.MysqlInstance) {
           final args = settings.arguments as MysqlInstanceViewModel;

@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/ui/code/screen/code_execute_screen.dart';
 import 'package:paas_dashboard_flutter/ui/mongo/mongo_instance.dart';
 import 'package:paas_dashboard_flutter/ui/mongo/screen/mongo_database.dart';
+import 'package:paas_dashboard_flutter/ui/mongo/widget/mongo_table_data.dart';
 import 'package:paas_dashboard_flutter/ui/mysql/mysql_instance.dart';
 import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_sql_query.dart';
 import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_table_column.dart';
@@ -38,6 +39,7 @@ import 'package:paas_dashboard_flutter/ui/sql/screen/sql_execute_screen.dart';
 import 'package:paas_dashboard_flutter/vm/code/code_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_database_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/mongo/mongo_table_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_sql_query_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_column_view_model.dart';
@@ -79,6 +81,15 @@ class RouteGen {
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
               child: MongoDatabaseScreen(),
+            ));
+  }
+
+  static Route mongoTableData(MongoTableViewModel viewModel) {
+    // deep copy view model
+    return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+              create: (context) => viewModel,
+              child: MongoTableDataWidget(),
             ));
   }
 

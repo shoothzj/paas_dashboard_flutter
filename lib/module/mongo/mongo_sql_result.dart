@@ -17,18 +17,20 @@
 // under the License.
 //
 
-class MysqlSqlResult {
-  List<String> fieldName;
+import 'dart:collection';
+
+class MongoSqlResult {
+  Set<String> fieldName;
 
   List<List<Object?>> data;
 
-  MysqlSqlResult(this.fieldName, this.data);
+  MongoSqlResult(this.fieldName, this.data);
 
-  List<String> get getFieldName {
+  Set<String> get getFieldName {
     return fieldName;
   }
 
-  set setFieldName(List<String> fieldName) {
+  set setFieldName(Set<String> fieldName) {
     this.fieldName = fieldName;
   }
 
@@ -36,14 +38,12 @@ class MysqlSqlResult {
     return data;
   }
 
-  set setData(List<List<Object?>> data) {
+  set setData(List<List<Object>> data) {
     this.data = data;
   }
 
-  factory MysqlSqlResult.create() {
-    return MysqlSqlResult([
-      ''
-    ], [
+  factory MongoSqlResult.create() {
+    return MongoSqlResult(HashSet.identity(), [
       ['']
     ]);
   }

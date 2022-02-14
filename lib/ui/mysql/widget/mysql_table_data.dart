@@ -19,7 +19,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/ui/component/dynamic_filter_table.dart';
 import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_table_index.dart';
+import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_column_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_data_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_table_index_view_model.dart';
@@ -38,11 +40,16 @@ class MysqlTableDataWidget extends StatefulWidget {
 }
 
 class _MysqlTableDataState extends State<MysqlTableDataWidget> {
+  DynamicFilterTable? filterTable;
+  ColumnNotifier _notifier = new ColumnNotifier();
+
   @override
   void initState() {
     super.initState();
     final vm = Provider.of<MysqlTableDataViewModel>(context, listen: false);
-    vm.fetchData();
+    vm.setDataConverter(vm.getConvert);
+    vm.fetchData(null);
+    filterTable = DynamicFilterTable(_notifier, vm);
   }
 
   @override
@@ -53,31 +60,37 @@ class _MysqlTableDataState extends State<MysqlTableDataWidget> {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<MysqlTableDataViewModel>(context);
-    vm.setDataConverter(vm.getConvert);
-
+    ExceptionUtil.processOpExceptionPageable(vm, context);
     var dbsFuture = SingleChildScrollView(
       child: PaginatedDataTable(
         showCheckboxColumn: false,
-        columns: vm.getColumns().map((e) => DataColumn(label: SelectableText(e))).toList(),
+        columns: vm
+            .getColumns()
+            .map((e) => DataColumn(
+                    label: SelectableText(
+                  e,
+                  style: new TextStyle(color: Colors.red, fontSize: 20),
+                )))
+            .toList(),
         source: vm,
       ),
     );
     var refreshButton = TextButton(
         onPressed: () {
-          vm.fetchData();
+          vm.fetchData(null);
         },
         child: Text(S.of(context).refresh));
     MysqlTableColumnViewModel tableColumnVm =
         new MysqlTableColumnViewModel(vm.mysqlInstancePo, vm.dbname, vm.tableName);
     MysqlTableIndexViewModel indexColumnVm = new MysqlTableIndexViewModel(vm.mysqlInstancePo, vm.dbname, vm.tableName);
+    _notifier.setColumns(vm.getColumns());
     var body = ListView(
       children: <Widget>[
         Container(
-          height: 50,
           child: ListView(
-            scrollDirection: Axis.horizontal,
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            children: [refreshButton],
+            children: [refreshButton, filterTable!],
           ),
         ),
         dbsFuture

@@ -22,10 +22,11 @@ import 'package:paas_dashboard_flutter/module/mysql/mysql_database.dart';
 import 'package:paas_dashboard_flutter/module/mysql/mysql_sql_result.dart';
 import 'package:paas_dashboard_flutter/module/mysql/mysql_table.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
+import 'package:paas_dashboard_flutter/ui/component/dynamic_filter_table.dart';
 import 'package:sprintf/sprintf.dart';
 
 class MysqlDatabaseApi {
-  static const String SELECT_ALL = "select * from %s limit 100";
+  static const String SELECT_ALL = "select * from %s %s limit 100";
   static const String SCHEMA_DB = "information_schema";
 
   static const String TABLE_COLUMN =
@@ -59,21 +60,30 @@ class MysqlDatabaseApi {
     return result;
   }
 
-  static Future<MysqlSqlResult> getData(MysqlInstancePo mysqlConn, String dbname, String? tableName) async {
-    final setting = new ConnectionSettings(
-        host: mysqlConn.host, port: mysqlConn.port, user: mysqlConn.username, password: mysqlConn.password, db: dbname);
-    final MySqlConnection conn = await MySqlConnection.connect(setting);
-    var queryResult = await conn.query(sprintf(SELECT_ALL, [tableName]));
-    List<List<Object>> data = [];
-    for (var row in queryResult) {
-      if (row.values != null) {
-        data.add(row.values!.map((e) => e == null ? "" : e).toList());
-      }
-    }
+  static Future<MysqlSqlResult> getData(
+      MysqlInstancePo mysqlConn, String dbname, String tableName, String where) async {
     MysqlSqlResult result = MysqlSqlResult.create();
-    result.setFieldName = queryResult.fields.map((e) => e.name!.isNotEmpty ? e.name.toString() : "").toList();
-    result.setData = data;
-    await conn.close();
+    try {
+      final setting = new ConnectionSettings(
+          host: mysqlConn.host,
+          port: mysqlConn.port,
+          user: mysqlConn.username,
+          password: mysqlConn.password,
+          db: dbname);
+      final MySqlConnection conn = await MySqlConnection.connect(setting);
+      var queryResult = await conn.query(sprintf(SELECT_ALL, [tableName, where]));
+      List<List<Object?>> data = [];
+      for (var row in queryResult) {
+        if (row.values != null) {
+          data.add(row.values!);
+        }
+      }
+      result.setFieldName = queryResult.fields.map((e) => e.name!.isNotEmpty ? e.name.toString() : "").toList();
+      result.setData = data;
+      await conn.close();
+    } catch (e) {
+      throw Exception('Exception: ${e.toString()}');
+    }
     return result;
   }
 
@@ -107,5 +117,63 @@ class MysqlDatabaseApi {
     }
     await conn.close();
     return result;
+  }
+
+  static String getWhere(List<DropDownButtonData>? filters) {
+    String where = "";
+    if (filters == null || filters.isEmpty) {
+      return where;
+    }
+    where += "where ";
+    for (int i = 0; i < filters.length; i++) {
+      String column = filters[i].column;
+      String op = getWhereOP(filters[i].op);
+      where = where + column + sprintf(op, [getOPValue(filters[i].value!, filters[i].type, filters[i].op)]);
+      if (i != filters.length - 1) {
+        where += filters[i].join ? " and " : " or ";
+      }
+    }
+    return where;
+  }
+
+  static String getOPValue(String value, TYPE type, OP op) {
+    if (OP.BEGIN == op || OP.END == op || OP.CONTAIN == op || OP.EXCLUDE == op || OP.INCLUDE == op) {
+      return value;
+    } else if (OP.NULL == op || OP.NOT_NULL == op) {
+      return "";
+    } else {
+      return type == TYPE.TEXT ? sprintf("'%s'", [value]) : value;
+    }
+  }
+
+  static String getWhereOP(OP op) {
+    switch (op) {
+      case OP.EQ:
+        return " = %s ";
+      case OP.NOT_EQ:
+        return " != %s ";
+      case OP.LT:
+        return " < %s ";
+      case OP.GT:
+        return " > %s ";
+      case OP.LT_EQ:
+        return " <= %s ";
+      case OP.GT_EQ:
+        return " >= %s ";
+      case OP.NULL:
+        return " is null ";
+      case OP.NOT_NULL:
+        return " is not null ";
+      case OP.INCLUDE:
+        return " in (%s) ";
+      case OP.EXCLUDE:
+        return " not in (%s) ";
+      case OP.BEGIN:
+        return " like '%s%%' ";
+      case OP.END:
+        return " like '%%%s' ";
+      case OP.CONTAIN:
+        return " like '%%%s%%' ";
+    }
   }
 }

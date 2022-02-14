@@ -17,7 +17,10 @@
 // under the License.
 //
 
+import 'dart:collection';
+
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:paas_dashboard_flutter/module/mongo/mongo_sql_result.dart';
 import 'package:paas_dashboard_flutter/module/mongo/mongo_table.dart';
 
 class MongoTablesApi {
@@ -26,8 +29,38 @@ class MongoTablesApi {
     var db = await Db.create(addr + "/" + databaseName);
     await db.open();
     var collectionNames = await db.getCollectionNames();
+    db.close();
     return collectionNames.whereType<String>().map((name) {
       return new TableResp(name);
     }).toList();
+  }
+
+  static Future<MongoSqlResult> getTableData(
+      String addr, String username, String password, String databaseName, String tableName) async {
+    var db = await Db.create(addr + "/" + databaseName);
+    await db.open();
+    var collection = db.collection(tableName);
+    SelectorBuilder builder = SelectorBuilder().limit(100);
+    List<Map<String, dynamic>> data = await collection.find(builder).toList();
+    db.close();
+    MongoSqlResult result = MongoSqlResult.create();
+    if (data.isEmpty) {
+      return result;
+    }
+    LinkedHashSet<String> fieldNames = new LinkedHashSet();
+    List<List<Object?>> sqldata = [];
+    data.forEach((element) {
+      fieldNames.addAll(element.keys);
+    });
+    data.forEach((element) {
+      List<Object?> temp = [];
+      fieldNames.forEach((fieldName) {
+        temp.add(element[fieldName]);
+      });
+      sqldata.add(temp);
+    });
+    result.fieldName = fieldNames;
+    result.data = sqldata;
+    return result;
   }
 }

@@ -25,6 +25,7 @@
   "email": "email",
   "entryId": "entryId",
   "execute": "execute",
+  "filter": "filter",
   "forceDelete": "forceDelete",
   "isLeader": "Is Leader",
   "languageSettings": "Language Settings",
