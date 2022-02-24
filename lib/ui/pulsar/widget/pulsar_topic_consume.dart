@@ -23,6 +23,7 @@ import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_consume_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class PulsarTopicConsumeWidget extends StatefulWidget {
   PulsarTopicConsumeWidget();
@@ -92,6 +93,18 @@ class PulsarTopicConsumeWidgetState extends State<PulsarTopicConsumeWidget> {
 
     var body = ListView(
       children: <Widget>[
+        Container(
+            margin: EdgeInsetsDirectional.only(top: 10),
+            child: TextButton(
+              onPressed: () {
+                DatePicker.showDateTimePicker(context, showTitleActions: true, onChanged: (date) {
+                  print("change $date");
+                }, onConfirm: (date) {
+                  searchMessageIdController.text = date.millisecondsSinceEpoch.toString();
+                }, currentTime: DateTime.now(), locale: LocaleType.zh);
+              },
+              child: Text(S.of(context).timePick),
+            )),
         Container(
           margin: EdgeInsetsDirectional.only(top: 10),
           child: TextField(
