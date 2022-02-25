@@ -17,7 +17,10 @@
 // under the License.
 //
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:window_size/window_size.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
@@ -62,7 +65,20 @@ import 'package:paas_dashboard_flutter/vm/sql/sql_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/sql/sql_view_model.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    var window = await getWindowInfo();
+    if (window.screen != null) {
+      final screenFrame = window.screen!.visibleFrame;
+      final width = 1200.0;
+      final height = 800.0;
+      final left = ((screenFrame.width - width) / 2).roundToDouble();
+      final top = ((screenFrame.height - height) / 3).roundToDouble();
+      final frame = Rect.fromLTWH(left, top, width, height);
+      setWindowFrame(frame);
+    }
+  }
   runApp(MyApp());
 }
 
