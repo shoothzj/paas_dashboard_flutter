@@ -19,6 +19,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/module/util/csv_utils.dart';
 import 'package:paas_dashboard_flutter/ui/component/dynamic_filter_table.dart';
 import 'package:paas_dashboard_flutter/ui/mysql/widget/mysql_table_index.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
@@ -80,6 +81,35 @@ class _MysqlTableDataState extends State<MysqlTableDataWidget> {
           vm.fetchData(null);
         },
         child: Text(S.of(context).refresh));
+    var exportButton = TextButton(
+        onPressed: () async {
+          String error = "";
+          bool rs = false;
+          try {
+            rs = await CsvUtils.export(vm.getColumns(), vm.getData());
+          } on Exception catch (e) {
+            error = e.toString();
+          }
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return new AlertDialog(
+                  title: Text(
+                    rs ? S.of(context).success : S.of(context).failure + error,
+                    textAlign: TextAlign.center,
+                  ),
+                  actions: [
+                    new TextButton(
+                      child: new Text(S.of(context).confirm),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ]);
+            },
+          );
+        },
+        child: Text(S.of(context).export));
     MysqlTableColumnViewModel tableColumnVm =
         new MysqlTableColumnViewModel(vm.mysqlInstancePo, vm.dbname, vm.tableName);
     MysqlTableIndexViewModel indexColumnVm = new MysqlTableIndexViewModel(vm.mysqlInstancePo, vm.dbname, vm.tableName);
@@ -90,7 +120,10 @@ class _MysqlTableDataState extends State<MysqlTableDataWidget> {
           child: ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            children: [refreshButton, filterTable!],
+            children: [
+              new Row(children: [refreshButton, exportButton]),
+              filterTable!
+            ],
           ),
         ),
         dbsFuture

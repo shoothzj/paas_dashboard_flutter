@@ -20,7 +20,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:window_size/window_size.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
@@ -64,6 +63,7 @@ import 'package:paas_dashboard_flutter/vm/redis/redis_instance_list_view_model.d
 import 'package:paas_dashboard_flutter/vm/sql/sql_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/sql/sql_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:window_size/window_size.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

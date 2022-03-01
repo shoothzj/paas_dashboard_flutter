@@ -132,19 +132,37 @@ class _DynamicFilterTableState extends State<DynamicFilterTable> {
     List<DropdownMenuItem<TYPE>> rs = [];
     rs.add(new DropdownMenuItem(child: Text("TEXT"), value: TYPE.TEXT));
     rs.add(new DropdownMenuItem(child: Text("NUMBER"), value: TYPE.NUMBER));
+    rs.add(new DropdownMenuItem(child: Text("ObjectId"), value: TYPE.OBJECT_ID));
     return rs;
   }
 
   DataRow getDataRow(DropDownButtonData data) {
     List<DataCell> cells = [];
+    List<DropdownMenuItem> columnItems =
+        _notifier.columns.map((e) => new DropdownMenuItem(child: Text(e.toString()), value: e)).toList();
+    DropdownMenuItem<String> customItem = new DropdownMenuItem(
+      child: new TextField(
+        decoration: InputDecoration(labelText: S.of(context).custom),
+        controller: new TextEditingController(text: rowData[data.index].custom ? rowData[data.index].column : ""),
+        onChanged: (text) {
+          rowData[data.index].column = text;
+          rowData[data.index].custom = true;
+        },
+      ),
+      value: "",
+    );
+    columnItems.add(customItem);
     DropdownButton itemButton = DropdownButton(
-      items: _notifier.columns.map((e) => new DropdownMenuItem(child: Text(e.toString()), value: e)).toList(),
+      items: columnItems,
       onChanged: (value) {
         setState(() {
-          rowData[data.index].column = value;
+          if (value != "") {
+            rowData[data.index].custom = false;
+            rowData[data.index].column = value;
+          }
         });
       },
-      value: rowData[data.index].column,
+      value: rowData[data.index].custom ? "" : rowData[data.index].column,
       isExpanded: true,
     );
     DropdownButton opButton = DropdownButton(
@@ -211,16 +229,20 @@ class _DynamicFilterTableState extends State<DynamicFilterTable> {
 
 enum OP { EQ, NOT_EQ, LT, GT, LT_EQ, GT_EQ, NULL, NOT_NULL, INCLUDE, EXCLUDE, BEGIN, END, CONTAIN }
 
-enum TYPE { NUMBER, TEXT }
+enum TYPE { NUMBER, TEXT, OBJECT_ID }
 
 class DropDownButtonData {
+  // whether hide cell
   bool hiddenValue = false;
   int index;
   String column;
   OP op;
   String? value;
+  // row connector: AND/OR
   bool join;
   TYPE type = TYPE.TEXT;
+  // is custom column
+  bool custom = false;
 
   DropDownButtonData(this.column, this.op, this.index, this.join);
 }

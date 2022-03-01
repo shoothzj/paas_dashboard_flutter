@@ -26,7 +26,11 @@ class MongoSqlResult {
 
   MongoSqlResult(this.fieldName, this.data);
 
+  // column cannot empty
   Set<String> get getFieldName {
+    if (fieldName.isEmpty) {
+      fieldName.add("");
+    }
     return fieldName;
   }
 
@@ -43,8 +47,6 @@ class MongoSqlResult {
   }
 
   factory MongoSqlResult.create() {
-    return MongoSqlResult(HashSet.identity(), [
-      ['']
-    ]);
+    return MongoSqlResult(HashSet.identity(), []);
   }
 }

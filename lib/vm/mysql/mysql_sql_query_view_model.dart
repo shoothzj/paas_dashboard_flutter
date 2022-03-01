@@ -23,7 +23,7 @@ import 'package:paas_dashboard_flutter/module/mysql/mysql_sql_result.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 
-class MysqlSqlQueryViewModel extends BaseLoadListPageViewModel<Object> {
+class MysqlSqlQueryViewModel extends BaseLoadListPageViewModel<List> {
   MysqlInstancePo mysqlInstancePo;
 
   String dbname;
@@ -48,6 +48,10 @@ class MysqlSqlQueryViewModel extends BaseLoadListPageViewModel<Object> {
     return this.columns == null ? [] : this.columns!;
   }
 
+  List<List> getData() {
+    return this.displayList;
+  }
+
   Future<void> fetchSqlData(String sql) async {
     try {
       MysqlSqlResult result = await MysqlDatabaseApi.getSqlData(sql, mysqlInstancePo, dbname);
@@ -63,7 +67,7 @@ class MysqlSqlQueryViewModel extends BaseLoadListPageViewModel<Object> {
   }
 
   DataRow getConvert(dynamic obj) {
-    List<Object> v = obj;
+    List<dynamic> v = obj;
     return new DataRow(cells: v.map((e) => DataCell(SelectableText(e.toString()))).toList());
   }
 

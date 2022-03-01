@@ -19,6 +19,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/module/util/csv_utils.dart';
 import 'package:paas_dashboard_flutter/vm/mysql/mysql_sql_query_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -72,6 +73,36 @@ class _MysqlSqlQueryWidgetState extends State<MysqlSqlQueryWidget> {
         },
         child: Text(S.of(context).execute));
 
+    var exportButton = TextButton(
+        onPressed: () async {
+          String error = "";
+          bool rs = false;
+          try {
+            rs = await CsvUtils.export(vm.getColumns(), vm.getData());
+          } on Exception catch (e) {
+            error = e.toString();
+          }
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return new AlertDialog(
+                  title: Text(
+                    rs ? S.of(context).success : S.of(context).failure + error,
+                    textAlign: TextAlign.center,
+                  ),
+                  actions: [
+                    new TextButton(
+                      child: new Text(S.of(context).confirm),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ]);
+            },
+          );
+        },
+        child: Text(S.of(context).export));
+
     var body = ListView(
       children: <Widget>[
         Container(
@@ -79,7 +110,7 @@ class _MysqlSqlQueryWidgetState extends State<MysqlSqlQueryWidget> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [executeButton],
+            children: [executeButton, exportButton],
           ),
         ),
         Container(

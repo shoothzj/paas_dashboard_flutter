@@ -19,6 +19,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/module/util/csv_utils.dart';
+import 'package:paas_dashboard_flutter/ui/component/dynamic_filter_table.dart';
+import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_table_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -33,11 +36,16 @@ class MongoTableDataWidget extends StatefulWidget {
 }
 
 class _MongoTableDataState extends State<MongoTableDataWidget> {
+  DynamicFilterTable? filterTable;
+  ColumnNotifier _notifier = new ColumnNotifier();
+
   @override
   void initState() {
     super.initState();
     final vm = Provider.of<MongoTableViewModel>(context, listen: false);
-    vm.fetchData();
+    vm.setDataConverter(vm.getConvert);
+    vm.fetchData(null);
+    filterTable = DynamicFilterTable(_notifier, vm);
   }
 
   @override
@@ -48,28 +56,69 @@ class _MongoTableDataState extends State<MongoTableDataWidget> {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<MongoTableViewModel>(context);
-    vm.setDataConverter(vm.getConvert);
+    ExceptionUtil.processOpExceptionPageable(vm, context);
     var dbsFuture = SingleChildScrollView(
       child: PaginatedDataTable(
         showCheckboxColumn: false,
-        columns: vm.getColumns().map((e) => DataColumn(label: SelectableText(e))).toList(),
+        columns: vm
+            .getColumns()
+            .map((e) => DataColumn(
+                    label: SelectableText(
+                  e,
+                  style: new TextStyle(color: Colors.red, fontSize: 20),
+                )))
+            .toList(),
         source: vm,
       ),
     );
     var refreshButton = TextButton(
         onPressed: () {
-          vm.fetchData();
+          vm.fetchData(null);
         },
         child: Text(S.of(context).refresh));
+    var exportButton = TextButton(
+        onPressed: () async {
+          String error = "";
+          bool rs = false;
+          try {
+            rs = await CsvUtils.export(vm.getColumns(), vm.getData());
+          } on Exception catch (e) {
+            error = e.toString();
+          }
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return new AlertDialog(
+                  title: Text(
+                    rs ? S.of(context).success : S.of(context).failure + error,
+                    textAlign: TextAlign.center,
+                  ),
+                  actions: [
+                    new TextButton(
+                      child: new Text(S.of(context).confirm),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ]);
+            },
+          );
+        },
+        child: Text(S.of(context).export));
 
+    _notifier.setColumns(vm.getColumns());
     var body = ListView(
       children: <Widget>[
         Container(
-          height: 50,
           child: ListView(
-            scrollDirection: Axis.horizontal,
+            scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            children: [refreshButton],
+            children: [
+              new Row(
+                children: [refreshButton, exportButton],
+              ),
+              filterTable!
+            ],
           ),
         ),
         dbsFuture
