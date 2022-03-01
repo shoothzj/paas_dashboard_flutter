@@ -27,6 +27,7 @@ class PageRouteConst {
   static const String Mongo = '/mongo';
   static const String MongoInstance = '/mongo/instance';
   static const String MongoDatabase = '/mongo/instance/database';
+  static const String MongoSql = '/mongo/instance/database/sql';
   static const String MongoTable = '/mongo/instance/database/table';
   static const String Mysql = '/mysql';
   static const String MysqlInstance = '/mysql/instance';

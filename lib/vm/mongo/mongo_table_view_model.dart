@@ -23,9 +23,10 @@ import 'package:paas_dashboard_flutter/module/mongo/mongo_database.dart';
 import 'package:paas_dashboard_flutter/module/mongo/mongo_sql_result.dart';
 import 'package:paas_dashboard_flutter/module/mongo/mongo_table.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
+import 'package:paas_dashboard_flutter/ui/component/dynamic_filter_table.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 
-class MongoTableViewModel extends BaseLoadListPageViewModel<Object> {
+class MongoTableViewModel extends BaseLoadListPageViewModel<List> implements FilterCallBack {
   final MongoInstancePo mongoInstancePo;
   final DatabaseResp databaseResp;
   final TableResp tableResp;
@@ -53,16 +54,26 @@ class MongoTableViewModel extends BaseLoadListPageViewModel<Object> {
     return this.columns == null ? [''] : this.columns!;
   }
 
-  Future<void> fetchData() async {
+  List<List> getData() {
+    return this.displayList;
+  }
+
+  Future<void> fetchData(List<DropDownButtonData>? filters) async {
     try {
-      MongoSqlResult result = await MongoTablesApi.getTableData(mongoInstancePo.addr, mongoInstancePo.username,
-          mongoInstancePo.password, databaseResp.databaseName, tableResp.tableName);
+      MongoSqlResult result = await MongoTablesApi.getTableData(
+          mongoInstancePo.addr,
+          mongoInstancePo.username,
+          mongoInstancePo.password,
+          databaseResp.databaseName,
+          tableResp.tableName,
+          MongoTablesApi.getSelectorBuilder(filters));
       this.columns = List.from(result.getFieldName);
       this.fullList = result.getData;
       this.displayList = this.fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
+      opException = e;
       loading = false;
     }
     notifyListeners();
@@ -76,5 +87,10 @@ class MongoTableViewModel extends BaseLoadListPageViewModel<Object> {
                 ? SelectableText("(N/A)", style: new TextStyle(color: Colors.grey))
                 : SelectableText(e.toString())))
             .toList());
+  }
+
+  @override
+  void execute(List<DropDownButtonData> rowData) {
+    fetchData(rowData);
   }
 }

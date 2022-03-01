@@ -142,7 +142,7 @@ class MysqlDatabaseApi {
     } else if (OP.NULL == op || OP.NOT_NULL == op) {
       return "";
     } else {
-      return type == TYPE.TEXT ? sprintf("'%s'", [value]) : value;
+      return type == TYPE.NUMBER ? value : sprintf("'%s'", [value]);
     }
   }
 

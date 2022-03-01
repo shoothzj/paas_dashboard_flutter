@@ -24,7 +24,7 @@ import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/ui/component/dynamic_filter_table.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 
-class MysqlTableDataViewModel extends BaseLoadListPageViewModel<Object> implements FilterCallBack {
+class MysqlTableDataViewModel extends BaseLoadListPageViewModel<List> implements FilterCallBack {
   MysqlInstancePo mysqlInstancePo;
 
   String dbname;
@@ -43,6 +43,10 @@ class MysqlTableDataViewModel extends BaseLoadListPageViewModel<Object> implemen
 
   String getTableName() {
     return this.tableName;
+  }
+
+  List<List> getData() {
+    return this.displayList;
   }
 
   MysqlTableDataViewModel(this.mysqlInstancePo, this.dbname, this.tableName);
@@ -70,7 +74,7 @@ class MysqlTableDataViewModel extends BaseLoadListPageViewModel<Object> implemen
 
   Future<void> fetchSqlData(String sql) async {
     if (sql.isEmpty) {
-      this.fullList = [''];
+      this.fullList = [];
       this.displayList = this.fullList;
       loadSuccess();
       notifyListeners();
@@ -90,7 +94,7 @@ class MysqlTableDataViewModel extends BaseLoadListPageViewModel<Object> implemen
   }
 
   DataRow getConvert(dynamic obj) {
-    List<Object?> v = obj;
+    List<dynamic> v = obj;
     return new DataRow(
         cells: v
             .map((e) => DataCell(e == null
