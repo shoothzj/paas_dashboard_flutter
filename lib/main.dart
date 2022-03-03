@@ -218,13 +218,13 @@ class MyApp extends StatelessWidget {
           final args = settings.arguments as PulsarSinkViewModel;
           return RouteGen.pulsarSink(args);
         }
-        if (settings.name == PageRouteConst.SqlExecute) {
-          final args = settings.arguments as SqlViewModel;
-          return RouteGen.sqlExecute(args);
-        }
         if (settings.name == PageRouteConst.RedisInstance) {
           final args = settings.arguments as RedisInstanceViewModel;
           return RouteGen.redisInstance(args);
+        }
+        if (settings.name == PageRouteConst.SqlExecute) {
+          final args = settings.arguments as SqlViewModel;
+          return RouteGen.sqlExecute(args);
         }
         throw UnimplementedError();
       },
