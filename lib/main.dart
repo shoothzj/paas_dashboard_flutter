@@ -60,6 +60,7 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/redis/redis_instance_list_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/redis/redis_instance_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/sql/sql_list_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/sql/sql_view_model.dart';
 import 'package:provider/provider.dart';
@@ -216,6 +217,10 @@ class MyApp extends StatelessWidget {
         if (settings.name == PageRouteConst.PulsarSink) {
           final args = settings.arguments as PulsarSinkViewModel;
           return RouteGen.pulsarSink(args);
+        }
+        if (settings.name == PageRouteConst.RedisInstance) {
+          final args = settings.arguments as RedisInstanceViewModel;
+          return RouteGen.redisInstance(args);
         }
         if (settings.name == PageRouteConst.SqlExecute) {
           final args = settings.arguments as SqlViewModel;

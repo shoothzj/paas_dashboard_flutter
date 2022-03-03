@@ -17,12 +17,17 @@
 // under the License.
 //
 
+import 'package:paas_dashboard_flutter/api/redis/redis_api.dart';
 import 'package:paas_dashboard_flutter/persistent/po/redis_instance_po.dart';
+import 'package:paas_dashboard_flutter/ui/redis/widget/redis_instance_dart.dart';
+import 'package:paas_dashboard_flutter/vm/base_load_view_model.dart';
 
-class RedisInstanceViewModel {
+class RedisInstanceViewModel extends BaseLoadViewModel {
   final RedisInstancePo redisInstancePo;
 
   RedisInstanceViewModel(this.redisInstancePo);
+
+  dynamic result = "";
 
   RedisInstanceViewModel deepCopy() {
     return new RedisInstanceViewModel(redisInstancePo.deepCopy());
@@ -36,11 +41,57 @@ class RedisInstanceViewModel {
     return this.redisInstancePo.name;
   }
 
-  String get addr {
-    return this.redisInstancePo.addr;
+  String get ip {
+    return this.redisInstancePo.ip;
   }
 
-  String get username {
-    return this.redisInstancePo.username;
+  String get password {
+    return this.redisInstancePo.password;
+  }
+
+  int get port {
+    return this.redisInstancePo.port;
+  }
+
+  String get executeResult {
+    return this.result.toString();
+  }
+
+  Future<void> execute(OP op, List<String> value) async {
+    dynamic reply;
+    try {
+      switch (op) {
+        case OP.KEYS:
+          reply = await RedisApi.keys(ip, port, password, value[0]);
+          break;
+        case OP.GET:
+          reply = await RedisApi.get(ip, port, password, value[0]);
+          break;
+        case OP.SET:
+          reply = await RedisApi.set(ip, port, password, value[0], value[1]);
+          break;
+        case OP.DELETE:
+          reply = await RedisApi.delete(ip, port, password, value[0]);
+          break;
+        case OP.HSET:
+          reply = await RedisApi.hSet(ip, port, password, value[0], value[1], value[2]);
+          break;
+        case OP.HGET:
+          reply = await RedisApi.hGet(ip, port, password, value[0], value[1]);
+          break;
+        case OP.HGETALL:
+          reply = await RedisApi.hGetAll(ip, port, password, value[0]);
+          break;
+        case OP.HDEL:
+          reply = await RedisApi.hDel(ip, port, password, value[0], value[1]);
+          break;
+      }
+      result = reply;
+      loading = true;
+    } on Exception catch (e) {
+      loading = false;
+      opException = e;
+    }
+    notifyListeners();
   }
 }

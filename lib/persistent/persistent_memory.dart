@@ -252,7 +252,7 @@ class PersistentMemory implements PersistentApi {
 
   Future<List<RedisInstancePo>> redisInstances() async {
     return [
-      new RedisInstancePo(0, "example", RedisConst.defaultAddr, RedisConst.defaultUsername, RedisConst.defaultPassword)
+      new RedisInstancePo(0, "example", RedisConst.defaultIp, RedisConst.defaultPort, RedisConst.defaultPassword)
     ];
   }
 
@@ -260,7 +260,6 @@ class PersistentMemory implements PersistentApi {
     if (name != "example") {
       return null;
     }
-    return new RedisInstancePo(
-        0, "example", RedisConst.defaultAddr, RedisConst.defaultUsername, RedisConst.defaultPassword);
+    return new RedisInstancePo(0, "example", RedisConst.defaultIp, RedisConst.defaultPort, RedisConst.defaultPassword);
   }
 }

@@ -69,8 +69,8 @@ class _RedisPageState extends State<RedisPage> {
             columns: [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
-              DataColumn(label: Text('Addr')),
-              DataColumn(label: Text('Username')),
+              DataColumn(label: Text('IP')),
+              DataColumn(label: Text('Port')),
               DataColumn(label: Text('Delete instance')),
             ],
             rows: vm.instances
@@ -81,8 +81,8 @@ class _RedisPageState extends State<RedisPage> {
                         cells: [
                           DataCell(Text(itemRow.id.toString())),
                           DataCell(Text(itemRow.name)),
-                          DataCell(Text(itemRow.addr)),
-                          DataCell(Text(itemRow.username)),
+                          DataCell(Text(itemRow.ip)),
+                          DataCell(Text(itemRow.port.toString())),
                           DataCellUtil.newDelDataCell(() {
                             vm.deleteRedis(itemRow.id);
                           }),
@@ -103,12 +103,12 @@ class _RedisPageState extends State<RedisPage> {
     final vm = Provider.of<RedisInstanceListViewModel>(context, listen: false);
     var list = [
       FormFieldDef('Instance Name'),
-      FormFieldDef('Addr'),
-      FormFieldDef('Username'),
+      FormFieldDef('IP'),
+      FormFieldDef('Port'),
       FormFieldDef('Password'),
     ];
-    return FormUtil.createButton4("Redis Instance", list, context, (name, addr, username, password) {
-      vm.createRedis(name, addr, username, password);
+    return FormUtil.createButton4("Redis Instance", list, context, (name, ip, port, password) {
+      vm.createRedis(name, ip, port, password);
     });
   }
 }
