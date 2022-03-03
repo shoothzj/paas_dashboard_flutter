@@ -30,8 +30,8 @@ class RedisInstanceListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createRedis(String name, String addr, String username, String password) async {
-    Persistent.saveRedis(name, addr, username, password);
+  Future<void> createRedis(String name, String ip, String port, String password) async {
+    Persistent.saveRedis(name, ip, port, password);
     fetchRedisInstances();
   }
 

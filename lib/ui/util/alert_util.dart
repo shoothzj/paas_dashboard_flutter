@@ -38,7 +38,7 @@ class AlertUtil {
           color: Colors.redAccent,
         ),
       ),
-      content: Text(
+      content: SelectableText(
         "$error",
         style: TextStyle(
           color: Colors.blueAccent,

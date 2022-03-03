@@ -124,10 +124,10 @@ class PersistentDb implements PersistentApi {
       'CREATE TABLE code_list(id INTEGER PRIMARY KEY, name TEXT, code TEXT)',
     );
     await db.execute(
-      'CREATE TABLE redis_instances(id INTEGER PRIMARY KEY, name TEXT, addr TEXT, username TEXT, password TEXT)',
+      'CREATE TABLE redis_instances(id INTEGER PRIMARY KEY, name TEXT, ip TEXT, port INTEGER, password TEXT)',
     );
     await db.execute(
-      'INSERT INTO redis_instances(name, addr, username, password) VALUES ("example", "${RedisConst.defaultAddr}", "${RedisConst.defaultUsername}", "${RedisConst.defaultPassword}")',
+      'INSERT INTO redis_instances(name, ip, port, password) VALUES ("example", "${RedisConst.defaultIp}", ${RedisConst.defaultPort}, "${RedisConst.defaultPassword}")',
     );
   }
 
@@ -407,7 +407,7 @@ class PersistentDb implements PersistentApi {
   Future<void> saveRedis(String name, String addr, String username, String password) async {
     var aux = await getInstance();
     var list = [name, addr, username, password];
-    aux.database.execute('INSERT INTO redis_instances(name, addr, username, password) VALUES (?, ?, ?, ?)', list);
+    aux.database.execute('INSERT INTO redis_instances(name, ip, port, password) VALUES (?, ?, ?, ?)', list);
   }
 
   @override
@@ -422,7 +422,7 @@ class PersistentDb implements PersistentApi {
     final List<Map<String, dynamic>> maps = await aux.database.query('redis_instances');
     return List.generate(maps.length, (i) {
       var aux = maps[i];
-      return RedisInstancePo(aux['id'], aux['name'], aux['addr'], aux['username'], aux['password']);
+      return RedisInstancePo(aux['id'], aux['name'], aux['ip'], aux['port'], aux['password']);
     });
   }
 
@@ -435,6 +435,6 @@ class PersistentDb implements PersistentApi {
       return null;
     }
     var current = maps[0];
-    return RedisInstancePo(current['id'], current['name'], current['addr'], current['username'], current['password']);
+    return RedisInstancePo(current['id'], current['name'], current['ip'], current['port'], current['password']);
   }
 }
