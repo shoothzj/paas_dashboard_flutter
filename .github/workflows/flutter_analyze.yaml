@@ -33,6 +33,5 @@ jobs:
         with:
           channel: 'beta'
       - run: flutter pub get
-      - run: flutter pub add intl_utils
       - run: flutter pub run intl_utils:generate
       - run: flutter analyze .

@@ -42,6 +42,10 @@ class PulsarInstancePo {
     };
   }
 
+  static List<String> fieldList() {
+    return ['id', 'name', 'host', 'port', 'function_host', 'function_port'];
+  }
+
   @override
   String toString() {
     return 'PulsarInstance{id: $id, name: $name, host: $host, port: $port, functionHost: $functionHost, functionPort: $functionPort}';

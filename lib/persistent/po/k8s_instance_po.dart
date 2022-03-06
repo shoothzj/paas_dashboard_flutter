@@ -30,6 +30,10 @@ class K8sInstancePo {
     };
   }
 
+  static List<String> fieldList() {
+    return ['id', 'name'];
+  }
+
   @override
   String toString() {
     return 'K8sInstance{id: $id, name: $name}';

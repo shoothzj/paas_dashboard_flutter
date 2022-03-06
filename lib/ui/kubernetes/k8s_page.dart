@@ -19,9 +19,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/persistent/po/k8s_instance_po.dart';
 import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/vm/kubernetes/k8s_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 
 class K8sPage extends StatefulWidget {
   @override
@@ -47,6 +49,8 @@ class _K8sPageState extends State<K8sPage> {
           });
         },
         child: Text(S.of(context).refresh));
+    var exportButton = FormUtil.createExportButton(K8sInstancePo.fieldList().toList(),
+        vm.instances.map((e) => e.k8sInstancePo.toMap().values.toList()).toList(), context);
     var body = ListView(
       children: [
         Container(
@@ -54,7 +58,7 @@ class _K8sPageState extends State<K8sPage> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [refreshButton],
+            children: [refreshButton, exportButton],
           ),
         ),
         Center(

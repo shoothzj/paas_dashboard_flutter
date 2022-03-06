@@ -24,6 +24,7 @@ import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 
 class PulsarPage extends StatefulWidget {
   @override
@@ -79,6 +80,10 @@ class _PulsarPageState extends State<PulsarPage> {
           vm.fetchPulsarInstances();
         },
         child: Text(S.of(context).refresh));
+    var exportButton = FormUtil.createExportButton(PulsarInstancePo.fieldList().toList(),
+        vm.instances.map((e) => e.pulsarInstancePo.toMap().values.toList()).toList(), context);
+    var importButton = FormUtil.createImportButton(
+        PulsarInstancePo.fieldList(), context, (data) => vm.createPulsar(data[1], data[2], data[3], data[4], data[5]));
     var body = ListView(
       children: [
         Container(
@@ -86,7 +91,7 @@ class _PulsarPageState extends State<PulsarPage> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [formButton, refreshButton],
+            children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
         Center(

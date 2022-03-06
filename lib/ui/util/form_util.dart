@@ -17,7 +17,10 @@
 // under the License.
 //
 
+import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/module/util/csv_utils.dart';
 
 class FormFieldDef {
   String fieldName;
@@ -230,5 +233,90 @@ class FormUtil {
               });
         },
         child: Text('Update ' + resourceName));
+  }
+
+  static ButtonStyleButton createExportButton(List<String> header, List<List<dynamic>> data, BuildContext context) {
+    return TextButton(
+        onPressed: () async {
+          String error = "";
+          bool rs = false;
+          try {
+            rs = await CsvUtils.export(header, data);
+          } on Exception catch (e) {
+            error = e.toString();
+          }
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return new AlertDialog(
+                  title: Text(
+                    rs ? S.of(context).success : S.of(context).failure + error,
+                    textAlign: TextAlign.center,
+                  ),
+                  actions: [
+                    new TextButton(
+                      child: new Text(S.of(context).confirm),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ]);
+            },
+          );
+        },
+        child: Text(S.of(context).export));
+  }
+
+  static ButtonStyleButton createImportButton(
+      List<String> fieldSet, BuildContext context, Function(List<dynamic>) callback) {
+    return TextButton(
+        onPressed: () async {
+          String error = "";
+          List<List>? rs;
+          try {
+            rs = await CsvUtils.import();
+            // csv header index, which means csv header can change location
+            Map<String, int> indexMap = new HashMap();
+            int index = 0;
+            // get title and validate
+            rs[0].forEach((element) {
+              if (!fieldSet.contains(element)) {
+                throw Exception('import file wrong,invalid column field ${element}');
+              }
+              indexMap[element] = index++;
+            });
+            // remove header
+            rs.removeAt(0);
+            rs.forEach((dataElement) {
+              var dataList = <dynamic>[];
+              fieldSet.forEach((fieldName) {
+                dataList.add(dataElement[indexMap[fieldName]!]);
+              });
+              callback(dataList);
+            });
+          } on Exception catch (e) {
+            error = e.toString();
+          }
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return new AlertDialog(
+                  title: Text(
+                    error == "" ? S.of(context).success : S.of(context).failure + error,
+                    textAlign: TextAlign.center,
+                  ),
+                  actions: [
+                    new TextButton(
+                      child: new Text(S.of(context).confirm),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ]);
+            },
+          );
+        },
+        child: Text(S.of(context).import));
+    ;
   }
 }

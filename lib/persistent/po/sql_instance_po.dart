@@ -35,4 +35,8 @@ class SqlPo {
       'sql': sql,
     };
   }
+
+  static List<String> fieldList() {
+    return ['id', 'name', 'sql'];
+  }
 }

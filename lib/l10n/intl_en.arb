@@ -30,6 +30,7 @@
   "failure": "Failure",
   "filter": "filter",
   "forceDelete": "forceDelete",
+  "import": "import",
   "isLeader": "Is Leader",
   "languageSettings": "Language Settings",
   "messageList": "message list",

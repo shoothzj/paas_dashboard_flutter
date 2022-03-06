@@ -35,4 +35,8 @@ class CodePo {
       'code': code,
     };
   }
+
+  static List<String> fieldList() {
+    return ['id', 'name', 'code'];
+  }
 }

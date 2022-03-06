@@ -33,6 +33,10 @@ class ZkInstancePo extends HttpEndpoint {
     };
   }
 
+  static Set<String> fieldList() {
+    return {'id', 'name', 'host', 'port'};
+  }
+
   @override
   String toString() {
     return 'ZooKeeperInstance{id: $id, name: $name, host: $host, port: $port}';
