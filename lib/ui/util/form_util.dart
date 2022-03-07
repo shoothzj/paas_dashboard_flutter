@@ -281,7 +281,7 @@ class FormUtil {
             // get title and validate
             rs[0].forEach((element) {
               if (!fieldSet.contains(element)) {
-                throw Exception('import file wrong,invalid column field ${element}');
+                throw Exception('import file wrong,invalid column field $element');
               }
               indexMap[element] = index++;
             });
@@ -317,6 +317,5 @@ class FormUtil {
           );
         },
         child: Text(S.of(context).import));
-    ;
   }
 }

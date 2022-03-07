@@ -27,11 +27,11 @@ class AuthorScreen extends StatelessWidget {
     List<Author> authors = [
       Author('fu_turer', 'Tian Luo', "futurer@outlook.com"),
       Author('goflutterjava', 'KeLe He', "goflutterjava@gmail.com"),
+      Author('Jack-Jiang', 'TianXiang Jiang', 'jiang.tianxiang@foxmail.com'),
       Author('Jaime', 'HaiTao Deng', "denghaitao001@gmail.com"),
       Author('lovehzj', 'TingTing Wang', "1922919664@qq.com"),
       Author('shoothzj', 'ZhangJian He', 'shoothzj@gmail.com'),
       Author('zxJin-x', 'ZhiXin Jin', 'jinzhixin096@gmail.com'),
-      Author('Jack-Jiang', 'Tianxiang Jiang', 'jiang.tianxiang@foxmail.com'),
     ];
 
     return Scaffold(
