@@ -42,6 +42,10 @@ class MysqlInstancePo {
     };
   }
 
+  static List<String> fieldList() {
+    return ['id', 'name', 'host', 'port', 'username', 'password'];
+  }
+
   @override
   String toString() {
     return 'MysqlInstance{id: $id, name: $name}';

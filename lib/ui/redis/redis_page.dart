@@ -24,6 +24,7 @@ import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/redis/redis_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:paas_dashboard_flutter/persistent/po/redis_instance_po.dart';
 
 class RedisPage extends StatefulWidget {
   @override
@@ -50,6 +51,10 @@ class _RedisPageState extends State<RedisPage> {
           });
         },
         child: Text(S.of(context).refresh));
+    var exportButton = FormUtil.createExportButton(RedisInstancePo.fieldList(),
+        vm.instances.map((e) => e.redisInstancePo.toMap().values.toList()).toList(), context);
+    var importButton = FormUtil.createImportButton(
+        RedisInstancePo.fieldList(), context, (data) => vm.createRedis(data[1], data[2], data[3].toString(), data[4]));
     var body = ListView(
       children: [
         Container(
@@ -57,7 +62,7 @@ class _RedisPageState extends State<RedisPage> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [formButton, refreshButton],
+            children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
         Center(

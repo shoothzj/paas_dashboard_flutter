@@ -40,6 +40,10 @@ class MongoInstancePo {
     };
   }
 
+  static List<String> fieldList() {
+    return ['id', 'name', 'addr', 'username', 'password'];
+  }
+
   @override
   String toString() {
     return 'MongoInstance{id: $id, name: $name}';

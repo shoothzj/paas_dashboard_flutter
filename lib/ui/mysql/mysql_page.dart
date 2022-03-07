@@ -19,6 +19,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
@@ -51,6 +52,10 @@ class _MysqlPageState extends State<MysqlPage> {
           });
         },
         child: Text(S.of(context).refresh));
+    var exportButton = FormUtil.createExportButton(MysqlInstancePo.fieldList().toList(),
+        vm.instances.map((e) => e.mysqlInstancePo.toMap().values.toList()).toList(), context);
+    var importButton = FormUtil.createImportButton(
+        MysqlInstancePo.fieldList(), context, (data) => vm.createMysql(data[1], data[2], data[3], data[4], data[5]));
     var body = ListView(
       children: [
         Container(
@@ -58,7 +63,7 @@ class _MysqlPageState extends State<MysqlPage> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [formButton, refreshButton],
+            children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
         Center(

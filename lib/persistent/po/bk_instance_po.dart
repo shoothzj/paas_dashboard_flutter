@@ -33,6 +33,10 @@ class BkInstancePo extends HttpEndpoint {
     };
   }
 
+  static List<String> fieldList() {
+    return ['id', 'name', 'host', 'port'];
+  }
+
   @override
   String toString() {
     return 'BookKeeperInstance{id: $id, name: $name, host: $host, port: $port}';

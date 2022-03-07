@@ -30,6 +30,7 @@
   "failure": "失败",
   "filter": "过滤",
   "forceDelete": "强制删除",
+  "import": "导入",
   "isLeader": "是否是主节点",
   "languageSettings": "语言设置",
   "messageList": "消息列表",

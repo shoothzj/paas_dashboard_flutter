@@ -17,6 +17,7 @@
 // under the License.
 //
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:csv/csv.dart';
@@ -45,5 +46,26 @@ class CsvUtils {
       throw Exception('Error to export ' + e.toString());
     }
     return false;
+  }
+
+  /// import a csv file
+  ///
+  /// The imported format refers to the exported CSV file format from method see CsvUtils.export [export]
+  /// requiring a description of the first behavior parameter, and the second and subsequent columns begins with the data
+  static Future<List<List<dynamic>>> import() async {
+    try {
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['csv'], allowMultiple: false);
+      if (result != null) {
+        File file = new File(result.files[0].path!);
+        List<List<dynamic>> resultList =
+            await file.openRead().transform(utf8.decoder).transform(new CsvToListConverter()).toList();
+
+        return resultList;
+      }
+    } on Exception catch (e) {
+      throw Exception('Error to import ${e.toString()}');
+    }
+    return List.empty();
   }
 }

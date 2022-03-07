@@ -76,6 +76,7 @@ dependencies:
   sprintf: ^6.0.0
   flutter_localizations:
     sdk: flutter
+  intl_utils: ^2.4.0
 
 dev_dependencies:
   flutter_test:

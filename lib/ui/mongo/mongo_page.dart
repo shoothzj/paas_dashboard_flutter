@@ -24,6 +24,7 @@ import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 
 class MongoPage extends StatefulWidget {
   @override
@@ -50,6 +51,10 @@ class _MongoPageState extends State<MongoPage> {
           });
         },
         child: Text(S.of(context).refresh));
+    var exportButton = FormUtil.createExportButton(MongoInstancePo.fieldList().toList(),
+        vm.instances.map((e) => e.mongoInstancePo.toMap().values.toList()).toList(), context);
+    var importButton = FormUtil.createImportButton(
+        MongoInstancePo.fieldList(), context, (data) => vm.createMongo(data[1], data[2], data[3], data[4]));
     var body = ListView(
       children: [
         Container(
@@ -57,7 +62,7 @@ class _MongoPageState extends State<MongoPage> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [formButton, refreshButton],
+            children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
         Center(
@@ -110,5 +115,12 @@ class _MongoPageState extends State<MongoPage> {
     return FormUtil.createButton4("Mongo Instance", list, context, (name, addr, username, password) {
       vm.createMongo(name, addr, username, password);
     });
+  }
+
+  ButtonStyleButton createExportButton(BuildContext context) {
+    final vm = Provider.of<MongoInstanceListViewModel>(context, listen: false);
+    vm.fetchMongoInstances();
+    return FormUtil.createExportButton(vm.instances[0].mongoInstancePo.toMap().keys.toList(),
+        vm.instances.map((e) => e.mongoInstancePo.toMap().values.toList()).toList(), context);
   }
 }

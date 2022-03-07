@@ -19,6 +19,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/persistent/po/code_instance_po.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
@@ -50,6 +51,10 @@ class _CodeListPageState extends State<CodeListPage> {
           });
         },
         child: Text(S.of(context).refresh));
+    var exportButton = FormUtil.createExportButton(
+        CodePo.fieldList().toList(), vm.instances.map((e) => e.codePo.toMap().values.toList()).toList(), context);
+    var importButton =
+        FormUtil.createImportButton(CodePo.fieldList(), context, (data) => vm.createCode(data[1], data[2]));
     var body = ListView(
       children: [
         Container(
@@ -57,7 +62,7 @@ class _CodeListPageState extends State<CodeListPage> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [formButton, refreshButton],
+            children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
         Center(

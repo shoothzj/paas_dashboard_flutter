@@ -40,6 +40,10 @@ class RedisInstancePo {
     };
   }
 
+  static List<String> fieldList() {
+    return ['id', 'name', 'ip', 'port', 'password'];
+  }
+
   @override
   String toString() {
     return 'RedisInstance{id: $id, name: $name}';
