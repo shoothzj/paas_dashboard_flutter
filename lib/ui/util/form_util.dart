@@ -18,6 +18,7 @@
 //
 
 import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/module/util/csv_utils.dart';
@@ -31,6 +32,8 @@ class FormFieldDef {
 class FormUtil {
   static const String CANCEL = 'cancel';
   static const String CREATE = 'create';
+
+  static Map<String, Map<String, String>> lastMap = new HashMap();
 
   static ButtonStyleButton createButton5(String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context,
       Function(String, String, String, String, String) callback) {
@@ -76,9 +79,14 @@ class FormUtil {
 
   static ButtonStyleButton createButton(
       String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context, Function(List<String>) callback) {
+    lastMap.putIfAbsent(
+        resourceName,
+        () => HashMap.fromIterables(
+            formFieldDefList.map((e) => e.fieldName).toList(), Iterable.generate(formFieldDefList.length, (i) => "")));
     return TextButton(
         onPressed: () {
-          var editControllerList = formFieldDefList.map((e) => TextEditingController()).toList();
+          var editControllerList =
+              formFieldDefList.map((e) => TextEditingController(text: lastMap[resourceName]![e.fieldName])).toList();
           List<TextFormField> formFieldsList = List.generate(
               formFieldDefList.length,
               (index) => TextFormField(
@@ -101,6 +109,8 @@ class FormUtil {
                       onPressed: () {
                         var list = editControllerList.map((e) => e.value.text).toList();
                         callback(list);
+                        lastMap[resourceName] = HashMap.fromIterables(formFieldDefList.map((e) => e.fieldName).toList(),
+                            editControllerList.map((e) => e.value.text));
                         Navigator.of(context).pop();
                       },
                     ),
@@ -127,9 +137,14 @@ class FormUtil {
 
   static ButtonStyleButton createButtonNoText(
       String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context, Function(List<String>) callback) {
+    lastMap.putIfAbsent(
+        resourceName,
+        () => HashMap.fromIterables(
+            formFieldDefList.map((e) => e.fieldName).toList(), Iterable.generate(formFieldDefList.length, (i) => "")));
     return TextButton(
         onPressed: () {
-          var editControllerList = formFieldDefList.map((e) => TextEditingController()).toList();
+          var editControllerList =
+              formFieldDefList.map((e) => TextEditingController(text: lastMap[resourceName]![e.fieldName])).toList();
           List<TextFormField> formFieldsList = List.generate(
               formFieldDefList.length,
               (index) => TextFormField(
@@ -152,6 +167,8 @@ class FormUtil {
                       onPressed: () {
                         var list = editControllerList.map((e) => e.value.text).toList();
                         callback(list);
+                        lastMap[resourceName] = HashMap.fromIterables(formFieldDefList.map((e) => e.fieldName).toList(),
+                            editControllerList.map((e) => e.value.text));
                         Navigator.of(context).pop();
                       },
                     ),
@@ -194,9 +211,14 @@ class FormUtil {
 
   static ButtonStyleButton updateButton(
       String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context, Function(List<String>) callback) {
+    lastMap.putIfAbsent(
+        resourceName,
+        () => HashMap.fromIterables(
+            formFieldDefList.map((e) => e.fieldName).toList(), Iterable.generate(formFieldDefList.length, (i) => "")));
     return TextButton(
         onPressed: () {
-          var editControllerList = formFieldDefList.map((e) => TextEditingController()).toList();
+          var editControllerList =
+              formFieldDefList.map((e) => TextEditingController(text: lastMap[resourceName]![e.fieldName])).toList();
           List<TextFormField> formFieldsList = List.generate(
               formFieldDefList.length,
               (index) => TextFormField(
@@ -219,6 +241,8 @@ class FormUtil {
                       onPressed: () {
                         var list = editControllerList.map((e) => e.value.text).toList();
                         callback(list);
+                        lastMap[resourceName] = HashMap.fromIterables(formFieldDefList.map((e) => e.fieldName).toList(),
+                            editControllerList.map((e) => e.value.text));
                         Navigator.of(context).pop();
                       },
                     ),
