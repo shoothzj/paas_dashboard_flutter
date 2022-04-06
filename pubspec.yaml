@@ -57,6 +57,7 @@ dependencies:
       path: plugins/window_size
   # paas
   http: ^0.13.4
+  dio: ^4.0.6
   mongo_dart: ^0.7.4
   mysql1: ^0.19.2
   redis: ^2.2.0
