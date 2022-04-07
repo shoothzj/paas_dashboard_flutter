@@ -33,7 +33,6 @@ jobs:
         with:
           channel: 'stable'
       - run: flutter config --enable-windows-desktop
-      - run: flutter pub add intl_utils
       - run: flutter pub run intl_utils:generate
       - run: flutter build windows
       - uses: vimtor/action-zip@v1
