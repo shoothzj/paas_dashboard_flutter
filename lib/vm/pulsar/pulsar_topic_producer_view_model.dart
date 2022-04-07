@@ -68,7 +68,8 @@ class PulsarTopicProducerViewModel extends BaseLoadListViewModel<ProducerResp> {
 
   Future<void> fetchProducers() async {
     try {
-      final results = await PulsarTopicApi.getProducers(host, port, tenant, namespace, topic);
+      final results = await PulsarTopicApi.getProducers(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadSuccess();

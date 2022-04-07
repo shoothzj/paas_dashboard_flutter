@@ -72,7 +72,8 @@ class PulsarTopicBasicViewModel extends BaseLoadViewModel {
 
   Future<void> fetchPartitions() async {
     try {
-      final results = await PulsarTopicApi.getBase(host, port, tenant, namespace, topic);
+      final results =
+          await PulsarTopicApi.getBase(id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
       msgRateIn = results.msgRateIn;
       msgRateOut = results.msgRateOut;
       msgInCounter = results.msgInCounter;

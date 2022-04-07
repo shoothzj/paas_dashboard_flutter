@@ -20,6 +20,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:paas_dashboard_flutter/api/tls_context.dart';
 import 'package:paas_dashboard_flutter/module/bk/const.dart';
 import 'package:paas_dashboard_flutter/module/mongo/const.dart';
 import 'package:paas_dashboard_flutter/module/mysql/const.dart';
@@ -81,10 +82,11 @@ class PersistentDb implements PersistentApi {
   static initTable(Database db) async {
     log('init tables start');
     await db.execute(
-      'CREATE TABLE pulsar_instances(id INTEGER PRIMARY KEY, name TEXT, host TEXT, port INTEGER, function_host TEXT, function_port INTEGER)',
+      'CREATE TABLE pulsar_instances(id INTEGER PRIMARY KEY, name TEXT, host TEXT, port INTEGER, function_host TEXT, function_port INTEGER, enable_tls INTEGER, function_enable_tls INTEGER, ca_file TEXT, client_cert_file TEXT, client_key_file TEXT, client_key_password TEXT)',
     );
     await db.execute(
-      'INSERT INTO pulsar_instances(name, host, port, function_host, function_port) VALUES ("example", "${PulsarConst.defaultHost}", ${PulsarConst.defaultBrokerPort}, "${PulsarConst.defaultHost}", ${PulsarConst.defaultFunctionPort})',
+      'INSERT INTO pulsar_instances(name, host, port, function_host, function_port, enable_tls, function_enable_tls, ca_file, client_cert_file, client_key_file, client_key_password) VALUES '
+      '("example", "${PulsarConst.defaultHost}", ${PulsarConst.defaultBrokerPort}, "${PulsarConst.defaultHost}", ${PulsarConst.defaultFunctionPort}, ${PulsarConst.defaultEnableTls}, ${PulsarConst.defaultFunctionEnableTls}, "${PulsarConst.defaultCaFile}", "${PulsarConst.defaultClientCertFile}", "${PulsarConst.defaultClientCertFile}", "${PulsarConst.defaultClientKeyPassword}")',
     );
     await db.execute(
       'CREATE TABLE bookkeeper_instances(id INTEGER PRIMARY KEY, name TEXT, host TEXT, port INTEGER)',
@@ -132,11 +134,69 @@ class PersistentDb implements PersistentApi {
   }
 
   @override
-  Future<void> savePulsar(String name, String host, int port, String functionHost, int functionPort) async {
+  Future<void> savePulsar(
+      String name,
+      String host,
+      int port,
+      String functionHost,
+      int functionPort,
+      bool enableTls,
+      bool functionEnableTls,
+      String caFile,
+      String clientCertFile,
+      String clientKeyFile,
+      String clientKeyPassword) async {
     var aux = await getInstance();
-    var list = [name, host, port, functionHost, functionPort];
+    var list = [
+      name,
+      host,
+      port,
+      functionHost,
+      functionPort,
+      enableTls ? TlsContext.ENABLE_TLS : TlsContext.DIS_ENABLE_TLS,
+      functionEnableTls ? TlsContext.ENABLE_TLS : TlsContext.DIS_ENABLE_TLS,
+      caFile,
+      clientCertFile,
+      clientKeyFile,
+      clientKeyPassword
+    ];
     aux.database.execute(
-        'INSERT INTO pulsar_instances(name, host, port, function_host, function_port) VALUES (?, ?, ?, ?, ?)', list);
+        'INSERT INTO pulsar_instances(name, host, port, function_host, function_port, enable_tls, function_enable_tls, ca_file, client_cert_file, client_key_file, client_key_password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        list);
+  }
+
+  @override
+  Future<void> updatePulsar(
+      int id,
+      String name,
+      String host,
+      int port,
+      String functionHost,
+      int functionPort,
+      bool enableTls,
+      bool functionEnableTls,
+      String caFile,
+      String clientCertFile,
+      String clientKeyFile,
+      String clientKeyPassword) async {
+    var aux = await getInstance();
+    var list = [
+      name,
+      host,
+      port,
+      functionHost,
+      functionPort,
+      enableTls ? TlsContext.ENABLE_TLS : TlsContext.DIS_ENABLE_TLS,
+      functionEnableTls ? TlsContext.ENABLE_TLS : TlsContext.DIS_ENABLE_TLS,
+      caFile,
+      clientCertFile,
+      clientKeyFile,
+      clientKeyPassword,
+      id
+    ];
+    aux.database.execute(
+        'UPDATE pulsar_instances set name=?, host=?, port=?, function_host=?, function_port=?, enable_tls=?, function_enable_tls=?, ca_file=?, client_cert_file=?, client_key_file=?, client_key_password=? where id=?',
+        list);
   }
 
   @override
@@ -152,7 +212,18 @@ class PersistentDb implements PersistentApi {
     return List.generate(maps.length, (i) {
       var aux = maps[i];
       return PulsarInstancePo(
-          aux['id'], aux['name'], aux['host'], aux['port'], aux['function_host'], aux['function_port']);
+          aux['id'],
+          aux['name'],
+          aux['host'],
+          aux['port'],
+          aux['function_host'],
+          aux['function_port'],
+          aux['enable_tls'] == TlsContext.ENABLE_TLS,
+          aux['function_enable_tls'] == TlsContext.ENABLE_TLS,
+          aux['ca_file'],
+          aux['client_cert_file'],
+          aux['client_key_file'],
+          aux['client_key_password']);
     });
   }
 
@@ -165,8 +236,19 @@ class PersistentDb implements PersistentApi {
       return null;
     }
     var current = maps[0];
-    return PulsarInstancePo(current['id'], current['name'], current['host'], current['port'], current['function_host'],
-        current['function_port']);
+    return PulsarInstancePo(
+        current['id'],
+        current['name'],
+        current['host'],
+        current['port'],
+        current['function_host'],
+        current['function_port'],
+        current['enable_tls'] == TlsContext.ENABLE_TLS,
+        current['function_enable_tls'] == TlsContext.ENABLE_TLS,
+        current['ca_file'],
+        current['client_cert_file'],
+        current['client_key_file'],
+        current['client_key_password']);
   }
 
   @override

@@ -65,6 +65,7 @@ class PulsarPartitionedTopicProduceViewModel extends BaseLoadListViewModel {
   }
 
   Future<String> sendMsg(key, value) {
-    return PulsarPartitionedTopicApi.sendMsgToPartitionTopic(host, port, tenant, namespace, topic, key, value);
+    return PulsarPartitionedTopicApi.sendMsgToPartitionTopic(
+        id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic, key, value);
   }
 }

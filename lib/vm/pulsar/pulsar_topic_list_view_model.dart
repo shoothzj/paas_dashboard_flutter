@@ -61,7 +61,8 @@ class PulsarTopicListViewModel extends BaseLoadListPageViewModel<PulsarTopicView
 
   Future<void> fetchTopics() async {
     try {
-      final results = await PulsarTopicApi.getTopics(host, port, tenant, namespace);
+      final results =
+          await PulsarTopicApi.getTopics(id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace);
       this.fullList = results.map((e) => PulsarTopicViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
       this.displayList = this.fullList;
       loadSuccess();
@@ -86,7 +87,7 @@ class PulsarTopicListViewModel extends BaseLoadListPageViewModel<PulsarTopicView
 
   Future<void> createTopic(String topic) async {
     try {
-      await PulsarTopicApi.createTopic(host, port, tenant, namespace, topic);
+      await PulsarTopicApi.createTopic(id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;
@@ -96,7 +97,8 @@ class PulsarTopicListViewModel extends BaseLoadListPageViewModel<PulsarTopicView
 
   Future<void> deleteTopic(String topic, bool force) async {
     try {
-      await PulsarTopicApi.deleteTopic(host, port, tenant, namespace, topic, force);
+      await PulsarTopicApi.deleteTopic(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic, force);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;

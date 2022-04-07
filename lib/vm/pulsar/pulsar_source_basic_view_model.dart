@@ -70,8 +70,8 @@ class PulsarSourceBasicViewModel extends BaseLoadViewModel {
 
   Future<void> fetch() async {
     try {
-      final SourceConfigResp sourceConfigResp =
-          await PulsarSourceApi.getSource(host, port, tenant, namespace, sourceName);
+      final SourceConfigResp sourceConfigResp = await PulsarSourceApi.getSource(
+          id, host, port, pulsarInstancePo.createFunctionTlsContext(), tenant, namespace, sourceName);
       this.topicName = sourceConfigResp.topicName;
       this.configs = sourceConfigResp.configs;
       this.archive = sourceConfigResp.archive;

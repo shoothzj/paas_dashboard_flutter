@@ -32,6 +32,23 @@ import 'package:paas_dashboard_flutter/persistent/po/redis_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/sql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/zk_instance_po.dart';
 
+class PulsarFormDto {
+  late int id;
+  late String name = "";
+  late String host = "";
+  late int port = 8080;
+  late String functionHost = "";
+  late int functionPort = 6650;
+  late bool enableTls = false;
+  late bool functionEnableTls = false;
+  late String caFile = "";
+  late String clientCertFile = "";
+  late String clientKeyFile = "";
+  late String clientKeyPassword = "";
+
+  PulsarFormDto();
+}
+
 class Persistent {
   static PersistentApi? api;
 
@@ -46,8 +63,37 @@ class Persistent {
     return api!;
   }
 
-  static Future<void> savePulsar(String name, String host, int port, String functionHost, int functionPort) async {
-    return (await getApi()).savePulsar(name, host, port, functionHost, functionPort);
+  static Future<void> savePulsar(
+      String name,
+      String host,
+      int port,
+      String functionHost,
+      int functionPort,
+      bool enableTls,
+      bool functionEnableTls,
+      String caFile,
+      String clientCertFile,
+      String clientKeyFile,
+      String clientKeyPassword) async {
+    return (await getApi()).savePulsar(name, host, port, functionHost, functionPort, enableTls, functionEnableTls,
+        caFile, clientCertFile, clientKeyFile, clientKeyPassword);
+  }
+
+  static Future<void> updatePulsar(
+      int id,
+      String name,
+      String host,
+      int port,
+      String functionHost,
+      int functionPort,
+      bool enableTls,
+      bool functionEnableTls,
+      String caFile,
+      String clientCertFile,
+      String clientKeyFile,
+      String clientKeyPassword) async {
+    return (await getApi()).updatePulsar(id, name, host, port, functionHost, functionPort, enableTls, functionEnableTls,
+        caFile, clientCertFile, clientKeyFile, clientKeyPassword);
   }
 
   static Future<void> deletePulsar(int id) async {

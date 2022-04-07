@@ -19,28 +19,33 @@
 
 import 'dart:developer';
 
-import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
+import 'package:paas_dashboard_flutter/api/tls_context.dart';
 
 class PulsarStatApi {
   static Future<String> partitionedTopicStats(
-      String host, int port, String tenant, String namespace, String topic) async {
-    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitioned-stats';
-    final response = await http.get(Uri.parse(url));
-    if (HttpUtil.abnormal(response.statusCode)) {
-      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+      int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String topic) async {
+    var url = tlsContext.enableTls
+        ? HttpUtil.https
+        : HttpUtil.http + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitioned-stats';
+    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
+    if (HttpUtil.abnormal(response.statusCode!)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
     }
-    return response.body;
+    return response.data!;
   }
 
-  static Future<String> topicStats(String host, int port, String tenant, String namespace, String topic) async {
-    var url = 'http://$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/stats';
-    final response = await http.get(Uri.parse(url));
-    if (HttpUtil.abnormal(response.statusCode)) {
-      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+  static Future<String> topicStats(
+      int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String topic) async {
+    var url = tlsContext.enableTls
+        ? HttpUtil.https
+        : HttpUtil.http + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/stats';
+    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
+    if (HttpUtil.abnormal(response.statusCode!)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
     }
-    return response.body;
+    return response.data!;
   }
 }

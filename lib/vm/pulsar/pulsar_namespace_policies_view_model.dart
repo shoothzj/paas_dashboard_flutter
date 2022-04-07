@@ -50,7 +50,8 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
 
   Future<void> fetchPolicy() async {
     try {
-      final PolicyResp resp = await PulsarNamespaceApi.getPolicy(host, port, tenant, namespace);
+      final PolicyResp resp =
+          await PulsarNamespaceApi.getPolicy(id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace);
       this.isAllowAutoTopicCreation = resp.isAllowAutoTopicCreation;
       this.messageTTLInSeconds = resp.messageTTLInSeconds;
       this.maxProducersPerTopic = resp.maxProducersPerTopic;
@@ -166,8 +167,8 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
       if (defaultNumPartitions == null) {
         return;
       }
-      await PulsarNamespaceApi.setAutoTopicCreation(
-          host, port, tenant, namespace, isAllowAutoTopicCreation, topicType, defaultNumPartitions);
+      await PulsarNamespaceApi.setAutoTopicCreation(id, host, port, pulsarInstancePo.createTlsContext(), tenant,
+          namespace, isAllowAutoTopicCreation, topicType, defaultNumPartitions);
       await fetchPolicy();
     } on Exception catch (e) {
       opException = e;
@@ -180,7 +181,8 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
       if (messageTTLInSeconds == null) {
         return;
       }
-      await PulsarNamespaceApi.setMessageTTLSecond(host, port, tenant, namespace, messageTTLInSeconds);
+      await PulsarNamespaceApi.setMessageTTLSecond(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, messageTTLInSeconds);
       await fetchPolicy();
     } on Exception catch (e) {
       opException = e;
@@ -193,7 +195,8 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
       if (maxProducersPerTopic == null) {
         return;
       }
-      await PulsarNamespaceApi.setMaxProducersPerTopic(host, port, tenant, namespace, maxProducersPerTopic);
+      await PulsarNamespaceApi.setMaxProducersPerTopic(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, maxProducersPerTopic);
       await fetchPolicy();
     } on Exception catch (e) {
       opException = e;
@@ -206,7 +209,8 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
       if (maxConsumersPerTopic == null) {
         return;
       }
-      await PulsarNamespaceApi.setMaxConsumersPerTopic(host, port, tenant, namespace, maxConsumersPerTopic);
+      await PulsarNamespaceApi.setMaxConsumersPerTopic(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, maxConsumersPerTopic);
       await fetchPolicy();
     } on Exception catch (e) {
       opException = e;
@@ -220,7 +224,7 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
         return;
       }
       await PulsarNamespaceApi.setMaxConsumersPerSubscription(
-          host, port, tenant, namespace, maxConsumersPerSubscription);
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, maxConsumersPerSubscription);
       await fetchPolicy();
     } on Exception catch (e) {
       opException = e;
@@ -234,7 +238,7 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
         return;
       }
       await PulsarNamespaceApi.setMaxUnackedMessagesPerConsumer(
-          host, port, tenant, namespace, maxUnackedMessagesPerConsumer);
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, maxUnackedMessagesPerConsumer);
       await fetchPolicy();
     } on Exception catch (e) {
       opException = e;
@@ -248,7 +252,7 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
         return;
       }
       await PulsarNamespaceApi.setMaxUnackedMessagesPerSubscription(
-          host, port, tenant, namespace, maxUnackedMessagesPerSubscription);
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, maxUnackedMessagesPerSubscription);
       await fetchPolicy();
     } on Exception catch (e) {
       opException = e;
@@ -261,7 +265,8 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
       if (maxSubscriptionsPerTopic == null) {
         return;
       }
-      await PulsarNamespaceApi.setMaxSubscriptionsPerTopic(host, port, tenant, namespace, maxSubscriptionsPerTopic);
+      await PulsarNamespaceApi.setMaxSubscriptionsPerTopic(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, maxSubscriptionsPerTopic);
       await fetchPolicy();
     } on Exception catch (e) {
       opException = e;
@@ -274,7 +279,8 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
       if (maxTopicsPerNamespace == null) {
         return;
       }
-      await PulsarNamespaceApi.setMaxTopicsPerNamespace(host, port, tenant, namespace, maxTopicsPerNamespace);
+      await PulsarNamespaceApi.setMaxTopicsPerNamespace(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, maxTopicsPerNamespace);
       await fetchPolicy();
     } on Exception catch (e) {
       opException = e;

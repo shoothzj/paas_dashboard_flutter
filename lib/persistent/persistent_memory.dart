@@ -37,7 +37,8 @@ import 'package:paas_dashboard_flutter/persistent/po/zk_instance_po.dart';
 
 class PersistentMemory implements PersistentApi {
   @override
-  Future<void> savePulsar(String name, String host, int port, String functionHost, int functionPort) {
+  Future<void> savePulsar(String name, String host, int port, String functionHost, int functionPort, bool enableTls,
+      bool functionEnableTls, String caFile, String clientCertFile, String clientKeyFile, String clientKeyPassword) {
     // TODO: implement savePulsar
     throw UnimplementedError();
   }
@@ -51,8 +52,19 @@ class PersistentMemory implements PersistentApi {
   @override
   Future<List<PulsarInstancePo>> pulsarInstances() async {
     return [
-      new PulsarInstancePo(0, "example", PulsarConst.defaultHost, PulsarConst.defaultBrokerPort,
-          PulsarConst.defaultHost, PulsarConst.defaultFunctionPort)
+      new PulsarInstancePo(
+          0,
+          "example",
+          PulsarConst.defaultHost,
+          PulsarConst.defaultBrokerPort,
+          PulsarConst.defaultHost,
+          PulsarConst.defaultFunctionPort,
+          PulsarConst.defaultEnableTls == 1,
+          PulsarConst.defaultFunctionEnableTls == 1,
+          PulsarConst.defaultCaFile,
+          PulsarConst.defaultClientCertFile,
+          PulsarConst.defaultClientKeyFile,
+          PulsarConst.defaultClientKeyPassword)
     ];
   }
 
@@ -61,8 +73,19 @@ class PersistentMemory implements PersistentApi {
     if (name != "example") {
       return null;
     }
-    return new PulsarInstancePo(0, "example", PulsarConst.defaultHost, PulsarConst.defaultBrokerPort,
-        PulsarConst.defaultHost, PulsarConst.defaultFunctionPort);
+    return new PulsarInstancePo(
+        0,
+        "example",
+        PulsarConst.defaultHost,
+        PulsarConst.defaultBrokerPort,
+        PulsarConst.defaultHost,
+        PulsarConst.defaultFunctionPort,
+        PulsarConst.defaultEnableTls == 1,
+        PulsarConst.defaultFunctionEnableTls == 1,
+        PulsarConst.defaultCaFile,
+        PulsarConst.defaultClientCertFile,
+        PulsarConst.defaultClientKeyFile,
+        PulsarConst.defaultClientKeyPassword);
   }
 
   @override
@@ -261,5 +284,23 @@ class PersistentMemory implements PersistentApi {
       return null;
     }
     return new RedisInstancePo(0, "example", RedisConst.defaultIp, RedisConst.defaultPort, RedisConst.defaultPassword);
+  }
+
+  @override
+  Future<void> updatePulsar(
+      int id,
+      String name,
+      String host,
+      int port,
+      String functionHost,
+      int functionPort,
+      bool enableTls,
+      bool functionEnableTls,
+      String caFile,
+      String clientCertFile,
+      String clientKeyFile,
+      String clientKeyPassword) {
+    // TODO: implement updatePulsar
+    throw UnimplementedError();
   }
 }

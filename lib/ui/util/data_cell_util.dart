@@ -26,6 +26,10 @@ class DataCellUtil {
     return DataCell(DeleteButton(voidCallback));
   }
 
+  static DeleteButton newDelDataButton(VoidCallback voidCallback) {
+    return DeleteButton(voidCallback);
+  }
+
   static DataCell newForceDelDataCell(Function(bool) callback) {
     return DataCell(ForceDeleteButton(callback));
   }

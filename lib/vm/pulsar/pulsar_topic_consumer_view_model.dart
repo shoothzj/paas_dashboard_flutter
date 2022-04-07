@@ -68,7 +68,8 @@ class PulsarTopicConsumerViewModel extends BaseLoadListViewModel<ConsumerResp> {
 
   Future<void> fetchConsumers() async {
     try {
-      final results = await PulsarTopicApi.getConsumers(host, port, tenant, namespace, topic);
+      final results = await PulsarTopicApi.getConsumers(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadSuccess();

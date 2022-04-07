@@ -17,17 +17,18 @@
 // under the License.
 //
 
-import 'package:paas_dashboard_flutter/api/tls_context.dart';
+class TlsContext {
+  static const int ENABLE_TLS = 1;
+  static const int DIS_ENABLE_TLS = 0;
+  final bool enableTls;
+  final String caFile;
+  final String clientCertFile;
+  final String clientKeyFile;
+  final String clientKeyPassword;
 
-class PulsarConst {
-  static const String defaultHost = "localhost";
-  static const int defaultBrokerPort = 8080;
-  static const int defaultFunctionPort = 6650;
-  static const int defaultEnableTls = TlsContext.DIS_ENABLE_TLS;
-  static const int defaultFunctionEnableTls = TlsContext.DIS_ENABLE_TLS;
-  static const String defaultCaFile = "";
-  static const String defaultClientCertFile = "";
-  static const String defaultClientKeyFile = "";
-  static const String defaultClientKeyPassword = "";
-  static const String defaultProducerName = "flutter-dashboard-producer";
+  TlsContext(this.enableTls, this.caFile, this.clientCertFile, this.clientKeyFile, this.clientKeyPassword);
+
+  TlsContext deepCopy() {
+    return new TlsContext(enableTls, caFile, clientCertFile, clientKeyFile, clientKeyPassword);
+  }
 }

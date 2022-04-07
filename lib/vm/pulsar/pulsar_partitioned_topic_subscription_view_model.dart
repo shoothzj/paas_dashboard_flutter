@@ -69,7 +69,8 @@ class PulsarPartitionedTopicSubscriptionViewModel extends BaseLoadListViewModel<
 
   Future<void> fetchSubscriptions() async {
     try {
-      final results = await PulsarPartitionedTopicApi.getSubscription(host, port, tenant, namespace, topic);
+      final results = await PulsarPartitionedTopicApi.getSubscription(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadSuccess();
@@ -82,7 +83,8 @@ class PulsarPartitionedTopicSubscriptionViewModel extends BaseLoadListViewModel<
 
   Future<void> clearBacklog(String subscriptionName) async {
     try {
-      await PulsarPartitionedTopicApi.clearBacklog(host, port, tenant, namespace, topic, subscriptionName);
+      await PulsarPartitionedTopicApi.clearBacklog(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic, subscriptionName);
       await fetchSubscriptions();
     } on Exception catch (e) {
       opException = e;

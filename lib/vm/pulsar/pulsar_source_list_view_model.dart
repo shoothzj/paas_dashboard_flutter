@@ -69,8 +69,8 @@ class PulsarSourceListViewModel extends BaseLoadListPageViewModel<PulsarSourceVi
 
   Future<void> createSource(String sourceName, String outputTopic, String sourceType, String config) async {
     try {
-      await PulsarSourceApi.createSource(
-          functionHost, functionPort, tenant, namespace, sourceName, outputTopic, sourceType, config);
+      await PulsarSourceApi.createSource(id, functionHost, functionPort, pulsarInstancePo.createFunctionTlsContext(),
+          tenant, namespace, sourceName, outputTopic, sourceType, config);
       await fetchSources();
     } on Exception catch (e) {
       opException = e;
@@ -80,7 +80,8 @@ class PulsarSourceListViewModel extends BaseLoadListPageViewModel<PulsarSourceVi
 
   Future<void> fetchSources() async {
     try {
-      final results = await PulsarSourceApi.getSourceList(functionHost, functionPort, tenant, namespace);
+      final results = await PulsarSourceApi.getSourceList(
+          id, functionHost, functionPort, pulsarInstancePo.createFunctionTlsContext(), tenant, namespace);
       this.fullList =
           results.map((e) => PulsarSourceViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
       this.displayList = this.fullList;
@@ -106,7 +107,8 @@ class PulsarSourceListViewModel extends BaseLoadListPageViewModel<PulsarSourceVi
 
   Future<void> deleteSource(String topic) async {
     try {
-      await PulsarSourceApi.deleteSource(functionHost, functionPort, tenant, namespace, topic);
+      await PulsarSourceApi.deleteSource(
+          id, functionHost, functionPort, pulsarInstancePo.createFunctionTlsContext(), tenant, namespace, topic);
       await fetchSources();
     } on Exception catch (e) {
       opException = e;
