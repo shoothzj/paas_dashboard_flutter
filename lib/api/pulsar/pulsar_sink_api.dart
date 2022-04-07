@@ -21,14 +21,16 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:clipboard/clipboard.dart';
-import 'package:http/http.dart' as http;
 import 'package:paas_dashboard_flutter/api/http_util.dart';
+import 'package:paas_dashboard_flutter/api/tls_context.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_sink.dart';
 
 class PulsarSinkApi {
-  static Future<void> createSink(String host, int port, String tenant, String namespace, String sinkName,
-      String subName, String inputTopic, String sinkType, String config) async {
-    String url = 'http://$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sinkName';
+  static Future<void> createSink(int id, String host, int port, TlsContext tlsContext, String tenant, String namespace,
+      String sinkName, String subName, String inputTopic, String sinkType, String config) async {
+    String url = tlsContext.enableTls
+        ? HttpUtil.https
+        : HttpUtil.http + '$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sinkName';
     List<String> inputs = [inputTopic];
     SinkConfigReq sinkConfigReq =
         new SinkConfigReq(tenant, namespace, sinkName, subName, inputs, json.decode(config), "builtin://$sinkType");
@@ -36,34 +38,43 @@ class PulsarSinkApi {
     await FlutterClipboard.copy(curlCommand);
   }
 
-  static Future<void> deleteSink(String host, int port, String tenant, String namespace, String sinkName) async {
-    var url = 'http://$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sinkName';
-    final response = await http.delete(Uri.parse(url));
-    if (HttpUtil.abnormal(response.statusCode)) {
-      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+  static Future<void> deleteSink(
+      int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String sinkName) async {
+    var url = tlsContext.enableTls
+        ? HttpUtil.https
+        : HttpUtil.http + '$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sinkName';
+    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR_FUNCTION, id).delete<String>(url);
+    if (HttpUtil.abnormal(response.statusCode!)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
     }
   }
 
-  static Future<List<SinkResp>> getSinkList(String host, int port, String tenant, String namespace) async {
-    var url = 'http://$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace';
-    final response = await http.get(Uri.parse(url));
-    if (HttpUtil.abnormal(response.statusCode)) {
-      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+  static Future<List<SinkResp>> getSinkList(
+      int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
+    var url = tlsContext.enableTls
+        ? HttpUtil.https
+        : HttpUtil.http + '$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace';
+    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR_FUNCTION, id).get<String>(url);
+    if (HttpUtil.abnormal(response.statusCode!)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
     }
-    List jsonResponse = json.decode(response.body) as List;
+    List jsonResponse = json.decode(response.data!) as List;
     return jsonResponse.map((name) => new SinkResp(name)).toList();
   }
 
-  static Future<SinkConfigResp> getSink(String host, int port, String tenant, String namespace, String sinkName) async {
-    var url = 'http://$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sinkName';
-    final response = await http.get(Uri.parse(url));
-    if (HttpUtil.abnormal(response.statusCode)) {
-      log('ErrorCode is ${response.statusCode}, body is ${response.body}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.body}');
+  static Future<SinkConfigResp> getSink(
+      int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String sinkName) async {
+    var url = tlsContext.enableTls
+        ? HttpUtil.https
+        : HttpUtil.http + '$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sinkName';
+    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR_FUNCTION, id).get<String>(url);
+    if (HttpUtil.abnormal(response.statusCode!)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
     }
-    Map jsonResponse = json.decode(response.body) as Map;
+    Map jsonResponse = json.decode(response.data!) as Map;
     return SinkConfigResp.fromJson(jsonResponse);
   }
 }

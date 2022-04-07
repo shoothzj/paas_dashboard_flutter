@@ -29,7 +29,22 @@ import 'package:paas_dashboard_flutter/persistent/po/sql_instance_po.dart';
 import 'package:paas_dashboard_flutter/persistent/po/zk_instance_po.dart';
 
 abstract class PersistentApi {
-  Future<void> savePulsar(String name, String host, int port, String functionHost, int functionPort);
+  Future<void> savePulsar(String name, String host, int port, String functionHost, int functionPort, bool enableTls,
+      bool functionEnableTls, String caFile, String clientCertFile, String clientKeyFile, String clientKeyPassword);
+
+  Future<void> updatePulsar(
+      int id,
+      String name,
+      String host,
+      int port,
+      String functionHost,
+      int functionPort,
+      bool enableTls,
+      bool functionEnableTls,
+      String caFile,
+      String clientCertFile,
+      String clientKeyFile,
+      String clientKeyPassword);
 
   Future<void> deletePulsar(int id);
 

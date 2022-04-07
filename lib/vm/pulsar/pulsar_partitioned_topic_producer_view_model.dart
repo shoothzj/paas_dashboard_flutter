@@ -67,7 +67,8 @@ class PulsarPartitionedTopicProducerViewModel extends BaseLoadListViewModel<Prod
 
   Future<void> fetchProducers() async {
     try {
-      final results = await PulsarPartitionedTopicApi.getProducers(host, port, tenant, namespace, topic);
+      final results = await PulsarPartitionedTopicApi.getProducers(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadSuccess();

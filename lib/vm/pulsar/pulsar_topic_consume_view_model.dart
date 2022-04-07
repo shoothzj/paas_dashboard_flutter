@@ -71,16 +71,16 @@ class PulsarTopicConsumeViewModel extends BaseLoadListViewModel<ConsumerResp> {
       message = "";
       messageList = [];
       if (messageIdArr.length == 2) {
-        data = await PulsarTopicApi.fetchConsumerMessage(
-            host, port, tenant, namespace, topic, messageIdArr[0], messageIdArr[1]);
+        data = await PulsarTopicApi.fetchConsumerMessage(id, host, port, pulsarInstancePo.createTlsContext(), tenant,
+            namespace, topic, messageIdArr[0], messageIdArr[1]);
         this.message = data.substring(data.indexOf("@") + 1);
       }
       if (messageIdArr.length == 3) {
         var startEntryId = int.parse(messageIdArr[1]);
         var endEntryId = int.parse(messageIdArr[2]);
         for (int i = startEntryId; i <= endEntryId; i++) {
-          data = await PulsarTopicApi.fetchConsumerMessage(
-              host, port, tenant, namespace, topic, messageIdArr[0], i.toString());
+          data = await PulsarTopicApi.fetchConsumerMessage(id, host, port, pulsarInstancePo.createTlsContext(), tenant,
+              namespace, topic, messageIdArr[0], i.toString());
           Message message = new Message(i.toString(), data.substring(data.indexOf("@") + 1));
           messageList.add(message);
         }
@@ -99,7 +99,8 @@ class PulsarTopicConsumeViewModel extends BaseLoadListViewModel<ConsumerResp> {
         return null;
       }
       String data;
-      data = await PulsarTopicApi.fetchMessageId(host, port, tenant, namespace, topic, timestamp);
+      data = await PulsarTopicApi.fetchMessageId(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic, timestamp);
       this.messageId = data;
       loadSuccess();
     } on Exception catch (e) {

@@ -61,7 +61,8 @@ class PulsarNamespaceViewModel extends BaseLoadListPageViewModel<PulsarPartition
 
   Future<void> fetchTopics() async {
     try {
-      final results = await PulsarPartitionedTopicApi.getTopics(host, port, tenant, namespace);
+      final results = await PulsarPartitionedTopicApi.getTopics(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace);
       this.fullList =
           results.map((e) => PulsarPartitionedTopicViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
       this.displayList = this.fullList;
@@ -87,7 +88,8 @@ class PulsarNamespaceViewModel extends BaseLoadListPageViewModel<PulsarPartition
 
   Future<void> createPartitionedTopic(String topic, int partition) async {
     try {
-      await PulsarPartitionedTopicApi.createPartitionTopic(host, port, tenant, namespace, topic, partition);
+      await PulsarPartitionedTopicApi.createPartitionTopic(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic, partition);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;
@@ -97,7 +99,8 @@ class PulsarNamespaceViewModel extends BaseLoadListPageViewModel<PulsarPartition
 
   Future<void> deletePartitionedTopic(String topic) async {
     try {
-      await PulsarPartitionedTopicApi.deletePartitionTopic(host, port, tenant, namespace, topic, false);
+      await PulsarPartitionedTopicApi.deletePartitionTopic(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic, false);
       await fetchTopics();
     } on Exception catch (e) {
       opException = e;

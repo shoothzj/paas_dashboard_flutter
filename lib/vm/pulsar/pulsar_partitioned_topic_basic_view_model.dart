@@ -73,7 +73,8 @@ class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
 
   Future<void> fetchPartitions() async {
     try {
-      final results = await PulsarPartitionedTopicApi.getBase(host, port, tenant, namespace, topic);
+      final results = await PulsarPartitionedTopicApi.getBase(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
       partitionNum = results.partitionNum.toString();
       msgRateIn = results.msgRateIn;
       msgRateOut = results.msgRateOut;
@@ -90,7 +91,8 @@ class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
 
   Future<void> modifyTopicPartition(String topic, int partition) async {
     try {
-      await PulsarPartitionedTopicApi.modifyPartitionTopic(host, port, tenant, namespace, topic, partition);
+      await PulsarPartitionedTopicApi.modifyPartitionTopic(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic, partition);
       await fetchPartitions();
     } on Exception catch (e) {
       opException = e;

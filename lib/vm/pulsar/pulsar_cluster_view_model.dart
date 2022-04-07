@@ -18,6 +18,7 @@
 //
 
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_cluster_api.dart';
+import 'package:paas_dashboard_flutter/api/tls_context.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_cluster.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
@@ -47,7 +48,9 @@ class PulsarClusterViewModel extends BaseLoadListPageViewModel<ClusterResp> {
 
   Future<void> fetchPulsarCluster() async {
     try {
-      this.fullList = await PulsarClusterApi.cluster(host, port);
+      TlsContext tlsContext = new TlsContext(pulsarInstancePo.enableTls, pulsarInstancePo.caFile,
+          pulsarInstancePo.clientCertFile, pulsarInstancePo.clientKeyFile, pulsarInstancePo.clientKeyPassword);
+      this.fullList = await PulsarClusterApi.cluster(id, host, port, tlsContext);
       this.displayList = this.fullList;
       loadSuccess();
     } on Exception catch (e) {

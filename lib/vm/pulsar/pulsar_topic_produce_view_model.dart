@@ -65,7 +65,8 @@ class PulsarTopicProduceViewModel extends BaseLoadListViewModel {
   }
 
   Future<String> sendMsg(key, value) {
-    return PulsarTopicApi.sendMsg(host, port, tenant, namespace, getTopic(), getPartition(), key, value);
+    return PulsarTopicApi.sendMsg(
+        id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, getTopic(), getPartition(), key, value);
   }
 
   String getTopic() {

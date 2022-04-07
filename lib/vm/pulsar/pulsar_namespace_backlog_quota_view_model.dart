@@ -115,7 +115,8 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
 
   Future<void> fetchBacklogQuota() async {
     try {
-      final BacklogQuotaResp resp = await PulsarNamespaceApi.getBacklogQuota(host, port, tenant, namespace);
+      final BacklogQuotaResp resp = await PulsarNamespaceApi.getBacklogQuota(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace);
       this.limitSize = resp.limitSize;
       this.limitTime = resp.limitTime;
       this.retentionPolicy = resp.policy;
@@ -135,8 +136,8 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
       if (retentionPolicy == null) {
         return;
       }
-      await PulsarNamespaceApi.updateBacklogQuota(
-          host, port, tenant, namespace, limitSize!, limitTime, retentionPolicy!);
+      await PulsarNamespaceApi.updateBacklogQuota(id, host, port, pulsarInstancePo.createTlsContext(), tenant,
+          namespace, limitSize!, limitTime, retentionPolicy!);
       await fetchBacklogQuota();
     } on Exception catch (e) {
       opException = e;

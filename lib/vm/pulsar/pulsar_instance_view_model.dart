@@ -20,6 +20,7 @@
 import 'dart:developer';
 
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
+import 'package:paas_dashboard_flutter/persistent/persistent.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
@@ -57,9 +58,50 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
     return this.pulsarInstancePo.functionPort;
   }
 
+  bool get enableTls {
+    return this.pulsarInstancePo.enableTls;
+  }
+
+  bool get functionEnableTls {
+    return this.pulsarInstancePo.functionEnableTls;
+  }
+
+  String get caFile {
+    return this.pulsarInstancePo.caFile;
+  }
+
+  String get clientCertFile {
+    return this.pulsarInstancePo.clientCertFile;
+  }
+
+  String get clientKeyFile {
+    return this.pulsarInstancePo.clientKeyFile;
+  }
+
+  String get clientKeyPassword {
+    return this.pulsarInstancePo.clientKeyPassword;
+  }
+
+  PulsarFormDto toPulsarFormDto() {
+    PulsarFormDto formDto = new PulsarFormDto();
+    formDto.id = this.pulsarInstancePo.id;
+    formDto.name = this.pulsarInstancePo.name;
+    formDto.host = this.pulsarInstancePo.host;
+    formDto.port = this.pulsarInstancePo.port;
+    formDto.functionHost = this.pulsarInstancePo.functionHost;
+    formDto.functionPort = this.pulsarInstancePo.functionPort;
+    formDto.enableTls = this.pulsarInstancePo.enableTls;
+    formDto.functionEnableTls = this.pulsarInstancePo.functionEnableTls;
+    formDto.caFile = this.pulsarInstancePo.caFile;
+    formDto.clientCertFile = this.pulsarInstancePo.clientCertFile;
+    formDto.clientKeyFile = this.pulsarInstancePo.clientKeyFile;
+    formDto.clientKeyPassword = this.pulsarInstancePo.clientKeyPassword;
+    return formDto;
+  }
+
   Future<void> fetchTenants() async {
     try {
-      final results = await PulsarTenantApi.getTenants(host, port);
+      final results = await PulsarTenantApi.getTenants(id, host, port, pulsarInstancePo.createTlsContext());
       this.fullList = results.map((e) => PulsarTenantViewModel(pulsarInstancePo, e)).toList();
       this.displayList = this.fullList;
       loadSuccess();
@@ -85,7 +127,7 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
 
   Future<void> createTenant(String tenant) async {
     try {
-      await PulsarTenantApi.createTenant(host, port, tenant);
+      await PulsarTenantApi.createTenant(id, host, port, pulsarInstancePo.createTlsContext(), tenant);
       await fetchTenants();
     } on Exception catch (e) {
       opException = e;
@@ -95,7 +137,7 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
 
   Future<void> deleteTenants(String tenant) async {
     try {
-      await PulsarTenantApi.deleteTenant(host, port, tenant);
+      await PulsarTenantApi.deleteTenant(id, host, port, pulsarInstancePo.createTlsContext(), tenant);
       await fetchTenants();
     } on Exception catch (e) {
       opException = e;

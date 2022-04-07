@@ -30,8 +30,38 @@ class PulsarInstanceListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createPulsar(String name, String host, int port, String functionHost, int functionPort) async {
-    Persistent.savePulsar(name, host, port, functionHost, functionPort);
+  Future<void> createPulsar(
+      String name,
+      String host,
+      int port,
+      String functionHost,
+      int functionPort,
+      bool enableTls,
+      bool functionEnableTls,
+      String caFile,
+      String clientCertFile,
+      String clientKeyFile,
+      String clientKeyPassword) async {
+    Persistent.savePulsar(name, host, port, functionHost, functionPort, enableTls, functionEnableTls, caFile,
+        clientCertFile, clientKeyFile, clientKeyPassword);
+    fetchPulsarInstances();
+  }
+
+  Future<void> updatePulsar(
+      int id,
+      String name,
+      String host,
+      int port,
+      String functionHost,
+      int functionPort,
+      bool enableTls,
+      bool functionEnableTls,
+      String caFile,
+      String clientCertFile,
+      String clientKeyFile,
+      String clientKeyPassword) async {
+    Persistent.updatePulsar(id, name, host, port, functionHost, functionPort, enableTls, functionEnableTls, caFile,
+        clientCertFile, clientKeyFile, clientKeyPassword);
     fetchPulsarInstances();
   }
 

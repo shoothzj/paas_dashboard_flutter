@@ -69,8 +69,8 @@ class PulsarSinkListViewModel extends BaseLoadListPageViewModel<PulsarSinkViewMo
 
   Future<void> createSink(String sinkName, String subName, String inputTopic, String sinkType, String config) async {
     try {
-      await PulsarSinkApi.createSink(
-          functionHost, functionPort, tenant, namespace, sinkName, subName, inputTopic, sinkType, config);
+      await PulsarSinkApi.createSink(id, functionHost, functionPort, pulsarInstancePo.createFunctionTlsContext(),
+          tenant, namespace, sinkName, subName, inputTopic, sinkType, config);
       await fetchSinks();
     } on Exception catch (e) {
       opException = e;
@@ -80,7 +80,8 @@ class PulsarSinkListViewModel extends BaseLoadListPageViewModel<PulsarSinkViewMo
 
   Future<void> fetchSinks() async {
     try {
-      final results = await PulsarSinkApi.getSinkList(functionHost, functionPort, tenant, namespace);
+      final results = await PulsarSinkApi.getSinkList(
+          id, functionHost, functionPort, pulsarInstancePo.createFunctionTlsContext(), tenant, namespace);
       this.fullList = results.map((e) => PulsarSinkViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
       this.displayList = this.fullList;
       loadSuccess();
@@ -105,7 +106,8 @@ class PulsarSinkListViewModel extends BaseLoadListPageViewModel<PulsarSinkViewMo
 
   Future<void> deleteSink(String name) async {
     try {
-      await PulsarSinkApi.deleteSink(functionHost, functionPort, tenant, namespace, name);
+      await PulsarSinkApi.deleteSink(
+          id, functionHost, functionPort, pulsarInstancePo.createFunctionTlsContext(), tenant, namespace, name);
       await fetchSinks();
     } on Exception catch (e) {
       opException = e;

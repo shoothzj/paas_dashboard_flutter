@@ -17,6 +17,8 @@
 // under the License.
 //
 
+import 'package:paas_dashboard_flutter/api/tls_context.dart';
+
 class PulsarInstancePo {
   final int id;
   final String name;
@@ -24,11 +26,28 @@ class PulsarInstancePo {
   final int port;
   final String functionHost;
   final int functionPort;
+  final bool enableTls;
+  final bool functionEnableTls;
+  final String caFile;
+  final String clientCertFile;
+  final String clientKeyFile;
+  final String clientKeyPassword;
 
-  PulsarInstancePo(this.id, this.name, this.host, this.port, this.functionHost, this.functionPort);
+  PulsarInstancePo(this.id, this.name, this.host, this.port, this.functionHost, this.functionPort, this.enableTls,
+      this.functionEnableTls, this.caFile, this.clientCertFile, this.clientKeyFile, this.clientKeyPassword);
 
   PulsarInstancePo deepCopy() {
-    return new PulsarInstancePo(id, name, host, port, functionHost, functionPort);
+    return new PulsarInstancePo(id, name, host, port, functionHost, functionPort, enableTls, functionEnableTls, caFile,
+        clientCertFile, clientKeyFile, clientKeyPassword);
+  }
+
+  TlsContext createTlsContext() {
+    return new TlsContext(this.enableTls, this.caFile, this.clientCertFile, this.clientKeyFile, this.clientKeyPassword);
+  }
+
+  TlsContext createFunctionTlsContext() {
+    return new TlsContext(
+        this.functionEnableTls, this.caFile, this.clientCertFile, this.clientKeyFile, this.clientKeyPassword);
   }
 
   Map<String, dynamic> toMap() {
@@ -38,16 +57,34 @@ class PulsarInstancePo {
       'host': host,
       'port': port,
       'function_host': functionHost,
-      'function_port': functionPort,
+      'enable_tls': enableTls,
+      'function_enable_tls': functionEnableTls,
+      'ca_file': caFile,
+      'client_cert_file': clientCertFile,
+      'client_key_file': clientKeyFile,
+      'client_key_password': clientKeyPassword,
     };
   }
 
   static List<String> fieldList() {
-    return ['id', 'name', 'host', 'port', 'function_host', 'function_port'];
+    return [
+      'id',
+      'name',
+      'host',
+      'port',
+      'function_host',
+      'function_port',
+      'enable_tls',
+      'function_enable_tls',
+      'ca_file',
+      'client_cert_file',
+      'client_key_file',
+      'client_key_password'
+    ];
   }
 
   @override
   String toString() {
-    return 'PulsarInstance{id: $id, name: $name, host: $host, port: $port, functionHost: $functionHost, functionPort: $functionPort}';
+    return 'PulsarInstance{id: $id, name: $name, host: $host, port: $port, functionHost: $functionHost, functionPort: $functionPort, enableTls: $enableTls, functionEnableTls: $functionEnableTls, caFile: $caFile, clientCertFile: $clientCertFile, clientKeyFile: $clientKeyFile, clientKeyPassword: $clientKeyPassword}';
   }
 }

@@ -68,7 +68,8 @@ class PulsarPartitionedTopicDetailViewModel extends BaseLoadListViewModel<Pulsar
 
   Future<void> fetchPartitions() async {
     try {
-      final results = await PulsarPartitionedTopicApi.getDetails(host, port, tenant, namespace, topic);
+      final results = await PulsarPartitionedTopicApi.getDetails(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
       this.fullList = results;
       this.displayList = this.fullList;
       loadSuccess();

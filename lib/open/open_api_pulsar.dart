@@ -26,7 +26,8 @@ class OpenApiPulsar {
     if (pulsarInstance == null) {
       throw ArgumentError("pulsar instance not exist");
     }
-    var list = await PulsarPartitionedTopicApi.getTopics(pulsarInstance.host, pulsarInstance.port, tenant, namespace);
+    var list = await PulsarPartitionedTopicApi.getTopics(pulsarInstance.id, pulsarInstance.host, pulsarInstance.port,
+        pulsarInstance.createTlsContext(), tenant, namespace);
     return list.length;
   }
 }

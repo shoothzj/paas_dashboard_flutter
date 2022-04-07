@@ -58,7 +58,8 @@ class PulsarTenantViewModel extends BaseLoadListPageViewModel<PulsarNamespaceVie
 
   Future<void> fetchNamespaces() async {
     try {
-      final results = await PulsarNamespaceApi.getNamespaces(host, port, tenant);
+      final results =
+          await PulsarNamespaceApi.getNamespaces(id, host, port, pulsarInstancePo.createTlsContext(), tenant);
       this.fullList = results.map((e) => PulsarNamespaceViewModel(pulsarInstancePo, tenantResp, e)).toList();
       this.displayList = this.fullList;
       loadSuccess();
@@ -83,7 +84,7 @@ class PulsarTenantViewModel extends BaseLoadListPageViewModel<PulsarNamespaceVie
 
   Future<void> createNamespace(String namespace) async {
     try {
-      await PulsarNamespaceApi.createNamespace(host, port, tenant, namespace);
+      await PulsarNamespaceApi.createNamespace(id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace);
       await fetchNamespaces();
     } on Exception catch (e) {
       opException = e;
@@ -93,7 +94,7 @@ class PulsarTenantViewModel extends BaseLoadListPageViewModel<PulsarNamespaceVie
 
   Future<void> deleteNamespace(String namespace) async {
     try {
-      await PulsarNamespaceApi.deleteNamespace(host, port, tenant, namespace);
+      await PulsarNamespaceApi.deleteNamespace(id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace);
       await fetchNamespaces();
     } on Exception catch (e) {
       opException = e;

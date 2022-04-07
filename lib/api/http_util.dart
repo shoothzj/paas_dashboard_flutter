@@ -17,7 +17,60 @@
 // under the License.
 //
 
+import 'dart:collection';
+import 'dart:io';
+
+import 'package:dio/adapter.dart';
+import 'package:dio/dio.dart';
+import 'package:paas_dashboard_flutter/api/tls_context.dart';
+
 class HttpUtil {
+  static final String http = "http://";
+  static final String https = "https://";
+  static const int CONNECT_TIMEOUT = 10000;
+  static const int RECEIVE_TIMEOUT = 10000;
+  static Map<SERVER, Map<int, Dio>> clients = {};
+
+  static Dio getClient(TlsContext tlsContext, SERVER service, int id) {
+    clients.putIfAbsent(service, () => new HashMap.identity());
+    clients[service]!.putIfAbsent(id, () => createClient(tlsContext));
+    return clients[service]![id]!;
+  }
+
+  static Dio createClient(TlsContext tlsContext) {
+    BaseOptions options = BaseOptions(
+      connectTimeout: CONNECT_TIMEOUT,
+      receiveTimeout: RECEIVE_TIMEOUT,
+    );
+    Dio client = new Dio(options);
+    if (!tlsContext.enableTls) {
+      return client;
+    }
+    SecurityContext context = SecurityContext();
+    if (tlsContext.clientKeyPassword.isNotEmpty) {
+      context.usePrivateKey(tlsContext.clientKeyFile, password: tlsContext.clientKeyPassword);
+    } else {
+      context.usePrivateKey(tlsContext.clientKeyFile);
+    }
+    context.useCertificateChain(tlsContext.clientCertFile);
+    context.setTrustedCertificates(tlsContext.caFile);
+
+    (client.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+      HttpClient httpClient = new HttpClient(context: context);
+      httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) {
+        return true;
+      };
+      return httpClient;
+    };
+    return client;
+  }
+
+  static remove(SERVER service, int id) {
+    if (clients[service] != null && clients[service]!.containsKey(id)) {
+      clients[service]!.remove(id);
+    }
+  }
+
   static bool abnormal(int code) {
     return code < 200 || code >= 300;
   }
@@ -25,4 +78,9 @@ class HttpUtil {
   static bool normal(int code) {
     return code >= 200 && code < 300;
   }
+}
+
+enum SERVER {
+  PULSAR,
+  PULSAR_FUNCTION,
 }
