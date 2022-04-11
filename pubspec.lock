@@ -137,9 +137,11 @@ packages:
   dart_eval:
     dependency: "direct main"
     description:
-      name: dart_eval
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: e1a2f51d09815c22445e0c8698c616ddce046ba5
+      resolved-ref: e1a2f51d09815c22445e0c8698c616ddce046ba5
+      url: "https://github.com/ethanblake4/dart_eval.git"
+    source: git
     version: "0.0.4"
   dart_style:
     dependency: transitive
@@ -307,7 +309,7 @@ packages:
       name: mongo_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.4"
+    version: "0.7.4+1"
   mongo_dart_query:
     dependency: transitive
     description:

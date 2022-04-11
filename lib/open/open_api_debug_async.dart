@@ -17,14 +17,14 @@
 // under the License.
 //
 
-class OpenApiSyncDebug {
-  final name = "open sync debug";
+class OpenApiAsyncDebug {
+  final name = "open async debug";
 
-  String helloWorld() {
+  Future<String> helloWorld() async {
     return "helloWorld";
   }
 
-  String echo(String str) {
+  Future<String> echo(String str) async {
     return str;
   }
 }
