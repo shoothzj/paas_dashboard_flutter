@@ -65,7 +65,7 @@ dependencies:
   dart_eval:
     git:
       url: https://github.com/ethanblake4/dart_eval.git
-      ref: e1a2f51d09815c22445e0c8698c616ddce046ba5
+      ref: ac9388ceeacb983eabbc9df73d21196e3796ab67
   # mvvm
   provider: ^6.0.2
   # system
