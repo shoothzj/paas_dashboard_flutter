@@ -17,8 +17,10 @@
 // under the License.
 //
 
-class OpenApiSyncDebug {
-  final name = "open sync debug";
+class OpenApiDebugSync {
+  final name = "open debug sync";
+
+  OpenApiDebugSync();
 
   String helloWorld() {
     return "helloWorld";

@@ -17,8 +17,10 @@
 // under the License.
 //
 
-class OpenApiAsyncDebug {
-  final name = "open async debug";
+class OpenApiDebugAsync {
+  final name = "open debug async";
+
+  OpenApiDebugAsync();
 
   Future<String> helloWorld() async {
     return "helloWorld";
