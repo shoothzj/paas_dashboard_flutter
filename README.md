@@ -4,6 +4,7 @@ Flutter Paas Dashboard
 
 # Why do we use flutter
 - We don’t want JRE, JDK package is too large
+- We are not familiar with C++ and Qt
 - We can’t use c sharp because having people develop use mac.
 - We are not good at frontend. Electron is not friendly to us.
 - Golang isn't proper for GUI
