@@ -32,7 +32,7 @@ class AuthorScreen extends StatelessWidget {
       Author('lovehzj', 'TingTing Wang', "1922919664@qq.com"),
       Author('shoothzj', 'ZhangJian He', 'shoothzj@gmail.com'),
       Author('tracy-java', 'Xue Li', 'lixueworks@gmail.com'),
-      Author('zxJin-x', 'ZhiXin Jin', 'jinzhixin096@gmail.com'),
+      Author('tyluffy', 'ZhiXin Jin', 'jinzhixin096@gmail.com'),
     ];
 
     return Scaffold(
