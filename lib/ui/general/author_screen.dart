@@ -25,6 +25,7 @@ class AuthorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Author> authors = [
+      Author('bigDouble46', 'Bo Jiao', "jiaobo_it@163.com"),
       Author('fu_turer', 'Tian Luo', "futurer@outlook.com"),
       Author('goflutterjava', 'KeLe He', "goflutterjava@gmail.com"),
       Author('Jack-Jiang', 'TianXiang Jiang', 'jiang.tianxiang@foxmail.com'),
