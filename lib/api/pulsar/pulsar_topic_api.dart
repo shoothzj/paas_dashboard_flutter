@@ -22,6 +22,7 @@ import 'dart:developer';
 
 import 'package:paas_dashboard_flutter/api/http_util.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_stat_api.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_lookup_api.dart';
 import 'package:paas_dashboard_flutter/api/tls_context.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/const.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_consume.dart';
@@ -266,6 +267,19 @@ class PulsarTopicApi {
     }
     return new PulsarTopicBaseResp(
         topicName, partitionNum, msgRateIn, msgRateOut, msgInCounter, msgOutCounter, storageSize);
+  }
+
+  static Future<String> getBrokerUrl(
+      int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String topic) async {
+    String data = "";
+    await PulsarLookupApi.lookupTopic(id, host, port, tlsContext, tenant, namespace, topic)
+        .then((value) => {data = value});
+
+    Map lookupMap = json.decode(data) as Map;
+    if (lookupMap.containsKey("brokerUrl")) {
+      return lookupMap["brokerUrl"];
+    }
+    return "";
   }
 
   static Future<String> sendMsg(int id, String host, int port, TlsContext tlsContext, String tenant, String namespace,
