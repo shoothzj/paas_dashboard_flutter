@@ -73,6 +73,19 @@ class PulsarTopicBasicWidgetState extends State<PulsarTopicBasicWidget> {
             shrinkWrap: true,
             children: [
               Text(
+                'Broker :  ${vm.brokerUrl}',
+                style: new TextStyle(fontSize: 20),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            children: [
+              Text(
                 'StorageSize :  ${vm.storageSize}',
                 style: new TextStyle(fontSize: 20),
               ),
