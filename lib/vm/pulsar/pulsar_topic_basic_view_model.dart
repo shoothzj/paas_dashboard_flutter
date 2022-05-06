@@ -29,6 +29,7 @@ class PulsarTopicBasicViewModel extends BaseLoadViewModel {
   final TenantResp tenantResp;
   final NamespaceResp namespaceResp;
   final TopicResp topicResp;
+  String brokerUrl = "";
   double msgRateIn = 0;
   double msgRateOut = 0;
   int msgInCounter = 0;
@@ -79,6 +80,8 @@ class PulsarTopicBasicViewModel extends BaseLoadViewModel {
       msgInCounter = results.msgInCounter;
       msgOutCounter = results.msgOutCounter;
       storageSize = results.storageSize;
+      brokerUrl = await PulsarTopicApi.getBrokerUrl(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
