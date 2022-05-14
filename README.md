@@ -1,5 +1,6 @@
 # paas_dashboard_flutter
-
+![line of code](https://tokei.rs/b1/github/paashzj/paas_dashboard_flutter)
+<br/>
 Flutter Paas Dashboard
 
 # Why do we use flutter
