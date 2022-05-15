@@ -111,7 +111,17 @@ class _PulsarPageState extends State<PulsarPage> {
         PulsarInstancePo.fieldList(),
         context,
         (data) => vm.createPulsar(
-            data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11]));
+            data[1].toString(),
+            data[2],
+            data[3],
+            data[4],
+            data[5],
+            data[6].toString().toLowerCase() == "true",
+            data[7].toString().toLowerCase() == "true",
+            data[8],
+            data[9],
+            data[10],
+            data[11].toString()));
 
     var body = ListView(
       physics: NeverScrollableScrollPhysics(),

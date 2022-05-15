@@ -57,6 +57,7 @@ class PulsarInstancePo {
       'host': host,
       'port': port,
       'function_host': functionHost,
+      'function_port': functionPort,
       'enable_tls': enableTls,
       'function_enable_tls': functionEnableTls,
       'ca_file': caFile,
