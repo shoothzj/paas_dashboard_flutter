@@ -46,7 +46,7 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarPartitionedTopicBasicViewModel>(context);
     if (vm.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
       });
     }

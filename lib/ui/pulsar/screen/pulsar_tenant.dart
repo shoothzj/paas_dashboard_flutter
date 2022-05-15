@@ -60,7 +60,7 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarTenantViewModel>(context);
     if (vm.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
       });
     }

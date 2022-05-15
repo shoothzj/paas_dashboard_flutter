@@ -49,7 +49,7 @@ class PulsarTopicConsumeWidgetState extends State<PulsarTopicConsumeWidget> {
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarTopicConsumeViewModel>(context);
     if (vm.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
       });
     }

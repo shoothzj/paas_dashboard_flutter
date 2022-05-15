@@ -64,7 +64,7 @@ class _MysqlTablesState extends State<MysqlTablesWidget> {
     final vm = Provider.of<MysqlTablesViewModel>(context);
 
     if (vm.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
       });
     }

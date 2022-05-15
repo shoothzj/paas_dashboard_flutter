@@ -60,7 +60,7 @@ class PulsarSinkListWidgetState extends State<PulsarSinkListWidget> {
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarSinkListViewModel>(context);
     if (vm.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
       });
     }
