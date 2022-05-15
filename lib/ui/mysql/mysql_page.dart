@@ -54,8 +54,8 @@ class _MysqlPageState extends State<MysqlPage> {
         child: Text(S.of(context).refresh));
     var exportButton = FormUtil.createExportButton(MysqlInstancePo.fieldList().toList(),
         vm.instances.map((e) => e.mysqlInstancePo.toMap().values.toList()).toList(), context);
-    var importButton = FormUtil.createImportButton(
-        MysqlInstancePo.fieldList(), context, (data) => vm.createMysql(data[1], data[2], data[3], data[4], data[5]));
+    var importButton = FormUtil.createImportButton(MysqlInstancePo.fieldList(), context,
+        (data) => vm.createMysql(data[1].toString(), data[2], data[3], data[4].toString(), data[5].toString()));
     var body = ListView(
       children: [
         Container(

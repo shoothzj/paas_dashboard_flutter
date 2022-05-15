@@ -19,12 +19,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_list_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:paas_dashboard_flutter/persistent/po/mongo_instance_po.dart';
 
 class MongoPage extends StatefulWidget {
   @override
@@ -53,8 +53,8 @@ class _MongoPageState extends State<MongoPage> {
         child: Text(S.of(context).refresh));
     var exportButton = FormUtil.createExportButton(MongoInstancePo.fieldList().toList(),
         vm.instances.map((e) => e.mongoInstancePo.toMap().values.toList()).toList(), context);
-    var importButton = FormUtil.createImportButton(
-        MongoInstancePo.fieldList(), context, (data) => vm.createMongo(data[1], data[2], data[3], data[4]));
+    var importButton = FormUtil.createImportButton(MongoInstancePo.fieldList(), context,
+        (data) => vm.createMongo(data[1].toString(), data[2], data[3].toString(), data[4].toString()));
     var body = ListView(
       children: [
         Container(

@@ -235,7 +235,7 @@ class __PulsarFormState extends State<PulsarForm> {
                 ElevatedButton(
                   child: Text(FormUtil.CREATE),
                   onPressed: () {
-                    List<String> list = editControllerList.map((e) => e.value.text).toList();
+                    List<String> list = editControllerList.map((e) => e.value.text.trim()).toList();
                     formDto!.name = list[0];
                     formDto!.host = list[1];
                     formDto!.port = int.parse(list[2]);
