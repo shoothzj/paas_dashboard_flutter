@@ -46,7 +46,7 @@ class PulsarTopicSubscriptionWidgetState extends State<PulsarTopicSubscriptionWi
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarTopicSubscriptionViewModel>(context);
     if (vm.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
       });
     }

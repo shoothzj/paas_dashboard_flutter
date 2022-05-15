@@ -50,7 +50,7 @@ class MysqlUserState extends State<MysqlUserWidget> {
   Widget build(BuildContext context) {
     final vm = Provider.of<MysqlInstanceViewModel>(context);
     if (vm.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
       });
     }

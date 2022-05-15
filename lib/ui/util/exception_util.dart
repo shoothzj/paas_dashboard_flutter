@@ -29,7 +29,7 @@ class ExceptionUtil {
       return;
     }
     Exception ex = vm.opException!;
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AlertUtil.exceptionDialog(ex, context);
     });
     vm.opException = null;
@@ -40,7 +40,7 @@ class ExceptionUtil {
       return;
     }
     Exception ex = vm.opException!;
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AlertUtil.exceptionDialog(ex, context);
     });
     vm.opException = null;
@@ -51,7 +51,7 @@ class ExceptionUtil {
       return;
     }
     Exception ex = vm.loadException!;
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AlertUtil.exceptionDialog(ex, context);
     });
   }
@@ -61,7 +61,7 @@ class ExceptionUtil {
       return;
     }
     Exception ex = vm.loadException!;
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AlertUtil.exceptionDialog(ex, context);
     });
     vm.loadException = null;

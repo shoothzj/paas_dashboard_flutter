@@ -50,7 +50,7 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarNamespaceBacklogQuotaViewModel>(context);
     if (vm.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
       });
     }

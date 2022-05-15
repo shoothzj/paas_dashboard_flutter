@@ -50,7 +50,7 @@ class PulsarBasicScreenState extends State<PulsarBasicWidget> {
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarClusterViewModel>(context);
     if (vm.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
       });
     }
