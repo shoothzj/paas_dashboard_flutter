@@ -18,6 +18,7 @@
 //
 
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_namespace_api.dart';
+import 'package:paas_dashboard_flutter/const/ui_const.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
@@ -95,63 +96,63 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
 
   String get isAllowAutoTopicCreateDisplayStr {
     if (this.isAllowAutoTopicCreation == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return this.isAllowAutoTopicCreation.toString();
   }
 
   String get messageTTLDisplayStr {
     if (this.messageTTLInSeconds == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return this.messageTTLInSeconds.toString();
   }
 
   String get maxProducersPerTopicDisplayStr {
     if (this.maxProducersPerTopic == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return this.maxProducersPerTopic.toString();
   }
 
   String get maxConsumersPerTopicDisplayStr {
     if (this.maxConsumersPerTopic == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return this.maxConsumersPerTopic.toString();
   }
 
   String get maxConsumersPerSubscriptionDisplayStr {
     if (this.maxConsumersPerSubscription == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return this.maxConsumersPerSubscription.toString();
   }
 
   String get maxUnackedMessagesPerConsumerDisplayStr {
     if (this.maxUnackedMessagesPerConsumer == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return this.maxUnackedMessagesPerConsumer.toString();
   }
 
   String get maxUnackedMessagesPerSubscriptionDisplayStr {
     if (this.maxUnackedMessagesPerSubscription == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return this.maxUnackedMessagesPerSubscription.toString();
   }
 
   String get maxSubscriptionsPerTopicDisplayStr {
     if (this.maxSubscriptionsPerTopic == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return this.maxSubscriptionsPerTopic.toString();
   }
 
   String get maxTopicsPerNamespaceDisplayStr {
     if (this.maxTopicsPerNamespace == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return this.maxTopicsPerNamespace.toString();
   }
