@@ -19,6 +19,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_backlog_quota_view_model.dart';
@@ -64,6 +65,12 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
           vm.limitSizeDisplayStr = limitSizeEditingController.value.text;
           vm.limitTimeDisplayStr = limitTimeEditingController.value.text;
           vm.retentionPolicyDisplayStr = policyEditingController.value.text;
+          if (vm.limitSize == null) {
+            AlertUtil.exceptionDialog(new Exception("please set LimitSize"), context);
+          }
+          if (vm.retentionPolicy == null) {
+            AlertUtil.exceptionDialog(new Exception("please set Policy"), context);
+          }
           vm.updateBacklogQuota();
         },
         child: Text(S.of(context).submit));
