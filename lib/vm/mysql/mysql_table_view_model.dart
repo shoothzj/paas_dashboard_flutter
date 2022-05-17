@@ -20,7 +20,6 @@
 import 'package:paas_dashboard_flutter/api/mysql/mysql_databases_api.dart';
 import 'package:paas_dashboard_flutter/module/mysql/mysql_table.dart';
 import 'package:paas_dashboard_flutter/persistent/po/mysql_instance_po.dart';
-
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 
 class MysqlTablesViewModel extends BaseLoadListPageViewModel<TableResp> {

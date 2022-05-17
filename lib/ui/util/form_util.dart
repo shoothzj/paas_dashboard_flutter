@@ -21,7 +21,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
-import 'package:paas_dashboard_flutter/module/util/csv_utils.dart';
+import 'package:paas_dashboard_flutter/util/csv_utils.dart';
 
 class FormFieldDef {
   String fieldName;

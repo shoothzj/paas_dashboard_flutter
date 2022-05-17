@@ -18,6 +18,7 @@
 //
 
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_namespace_api.dart';
+import 'package:paas_dashboard_flutter/const/ui_const.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
@@ -63,7 +64,7 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
   }
 
   set limitSizeDisplayStr(String displayStr) {
-    if (displayStr == "unset") {
+    if (displayStr == UiConst.unset) {
       return;
     }
     this.limitSize = int.parse(displayStr);
@@ -71,16 +72,16 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
 
   String get limitSizeDisplayStr {
     if (loading) {
-      return "loading";
+      return UiConst.loading;
     }
     if (limitSize == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return limitSize!.toString();
   }
 
   set limitTimeDisplayStr(String displayStr) {
-    if (displayStr == "unset") {
+    if (displayStr == UiConst.unset) {
       return;
     }
     this.limitTime = int.parse(displayStr);
@@ -88,16 +89,16 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
 
   String get limitTimeDisplayStr {
     if (loading) {
-      return "loading";
+      return UiConst.loading;
     }
     if (limitTime == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return limitTime!.toString();
   }
 
   set retentionPolicyDisplayStr(String displayStr) {
-    if (displayStr == "unset") {
+    if (displayStr == UiConst.unset) {
       return;
     }
     this.retentionPolicy = displayStr;
@@ -105,10 +106,10 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
 
   String get retentionPolicyDisplayStr {
     if (loading) {
-      return "loading";
+      return UiConst.loading;
     }
     if (retentionPolicy == null) {
-      return "unset";
+      return UiConst.unset;
     }
     return retentionPolicy!;
   }
