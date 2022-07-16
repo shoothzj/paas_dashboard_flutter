@@ -76,6 +76,20 @@ class PulsarPartitionedTopicApi {
     return response.data!;
   }
 
+  static Future<String> createMissPartitionTopic(
+      int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String topic) async {
+    var url = tlsContext.enableTls
+        ? HttpUtil.https
+        : HttpUtil.http +
+            '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/createMissedPartitions';
+    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url);
+    if (HttpUtil.abnormal(response.statusCode!)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+    }
+    return response.data!;
+  }
+
   static Future<List<TopicResp>> getTopics(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
     var url = tlsContext.enableTls

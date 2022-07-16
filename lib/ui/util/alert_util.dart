@@ -29,10 +29,18 @@ class AlertUtil {
         });
   }
 
+  static void createDialog(String msg, BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertUtil.create(msg, context);
+        });
+  }
+
   static AlertDialog create(Object? error, BuildContext context) {
     return AlertDialog(
       title: Text(
-        S.of(context).anErrorOccurred,
+        error.runtimeType == Exception ? S.of(context).anErrorOccurred : S.of(context).hint,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.redAccent,

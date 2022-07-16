@@ -73,7 +73,7 @@ class PulsarPartitionedTopicListWidgetState extends State<PulsarPartitionedTopic
             },
             cells: [
               DataCell(
-                Text(item.topic),
+                SelectableText(item.topic),
               ),
               DataCellUtil.newForceDelDataCell((force) {
                 vm.deletePartitionedTopic(item.topic, force);

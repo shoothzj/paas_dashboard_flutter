@@ -72,7 +72,7 @@ class PulsarTopicListWidgetState extends State<PulsarTopicListWidget> {
             },
             cells: [
               DataCell(
-                Text(item.topic),
+                SelectableText(item.topic),
               ),
               DataCellUtil.newForceDelDataCell((force) {
                 vm.deleteTopic(item.topic, force);
