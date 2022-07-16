@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
 import 'package:paas_dashboard_flutter/ui/component/searchable_title.dart';
+import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
@@ -72,7 +73,7 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
             },
             cells: [
               DataCell(
-                Text(item.namespace),
+                SelectableText(item.namespace),
               ),
               DataCellUtil.newDelDataCell(() {
                 vm.deleteNamespace(item.namespace);
@@ -84,6 +85,22 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
           vm.fetchNamespaces();
         },
         child: Text(S.of(context).refresh));
+    var createMissPartitionButton = TextButton(
+        onPressed: () {
+          vm.createMissTopicPartition();
+          AlertUtil.createDialog(S.of(context).success, context);
+        },
+        child: Text(S.of(context).createMissPartition));
+    var progressIndicator = SizedBox(
+      height: 1,
+      width: 500,
+      child: LinearProgressIndicator(
+        value: vm.progress,
+        backgroundColor: Colors.grey,
+        minHeight: 1,
+        valueColor: AlwaysStoppedAnimation(Colors.blue),
+      ),
+    );
     var listView = ListView(
       children: <Widget>[
         Container(
@@ -91,7 +108,7 @@ class PulsarTenantScreenState extends State<PulsarTenantScreen> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [formButton, refreshButton],
+            children: [formButton, refreshButton, createMissPartitionButton, progressIndicator],
           ),
         ),
         SearchableTitle(S.of(context).namespaces, S.of(context).searchByNamespace, searchTextController),

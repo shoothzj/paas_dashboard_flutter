@@ -20,7 +20,9 @@
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/route/page_route_const.dart';
+import 'package:paas_dashboard_flutter/ui/component/confirm_button.dart';
 import 'package:paas_dashboard_flutter/ui/component/searchable_title.dart';
+import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/data_cell_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
@@ -72,7 +74,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
             },
             cells: [
               DataCell(
-                Text(item.tenant),
+                SelectableText(item.tenant),
               ),
               DataCellUtil.newDelDataCell(() {
                 vm.deleteTenants(item.tenant);
@@ -84,6 +86,20 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
           vm.fetchTenants();
         },
         child: Text(S.of(context).refresh));
+    var createMissPartitionButton = ConfirmButton(S.of(context).createMissPartition, () async {
+      vm.createMissTopicPartition();
+      AlertUtil.createDialog(S.of(context).success, context);
+    });
+    var progressIndicator = SizedBox(
+      height: 1,
+      width: 500,
+      child: LinearProgressIndicator(
+        value: vm.progress,
+        backgroundColor: Colors.grey,
+        minHeight: 1,
+        valueColor: AlwaysStoppedAnimation(Colors.blue),
+      ),
+    );
     var body = ListView(
       children: <Widget>[
         Container(
@@ -91,7 +107,7 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [formButton, refreshButton],
+            children: [formButton, refreshButton, createMissPartitionButton, progressIndicator],
           ),
         ),
         SearchableTitle(S.of(context).tenants, S.of(context).searchByTenant, searchTextController),

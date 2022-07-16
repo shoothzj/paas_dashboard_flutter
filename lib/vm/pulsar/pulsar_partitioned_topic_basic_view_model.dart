@@ -99,4 +99,15 @@ class PulsarPartitionedTopicBasicViewModel extends BaseLoadViewModel {
       notifyListeners();
     }
   }
+
+  Future<void> createMissTopicPartition(String topic) async {
+    try {
+      await PulsarPartitionedTopicApi.createMissPartitionTopic(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
+      await fetchPartitions();
+    } on Exception catch (e) {
+      opException = e;
+      notifyListeners();
+    }
+  }
 }

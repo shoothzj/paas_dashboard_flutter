@@ -19,14 +19,20 @@
 
 import 'dart:developer';
 
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_namespace_api.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
+import 'package:paas_dashboard_flutter/util/common_utils.dart';
 import 'package:paas_dashboard_flutter/vm/base_load_list_page_view_model.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_tenant_view_model.dart';
 
 class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantViewModel> {
   final PulsarInstancePo pulsarInstancePo;
+
+  double progress = 0;
 
   PulsarInstanceViewModel(this.pulsarInstancePo);
 
@@ -104,6 +110,7 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
       final results = await PulsarTenantApi.getTenants(id, host, port, pulsarInstancePo.createTlsContext());
       this.fullList = results.map((e) => PulsarTenantViewModel(pulsarInstancePo, e)).toList();
       this.displayList = this.fullList;
+      this.progress = 0;
       loadSuccess();
     } on Exception catch (e) {
       log('request failed, $e');
@@ -139,6 +146,36 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
     try {
       await PulsarTenantApi.deleteTenant(id, host, port, pulsarInstancePo.createTlsContext(), tenant);
       await fetchTenants();
+    } on Exception catch (e) {
+      opException = e;
+      notifyListeners();
+    }
+  }
+
+  Future<void> createMissTopicPartition() async {
+    try {
+      progress = 0;
+      int count = 0;
+      List<Triple<String, String, String>> topicList = List.empty(growable: true);
+      for (int i = 0; i < fullList.length; i++) {
+        String tenant = fullList[i].tenant;
+        List<NamespaceResp> namespaceResps =
+            await PulsarNamespaceApi.getNamespaces(id, host, port, pulsarInstancePo.createTlsContext(), tenant);
+        for (int j = 0; j < namespaceResps.length; j++) {
+          String namespace = namespaceResps[j].namespace;
+          final topics = await PulsarPartitionedTopicApi.getTopics(
+              id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace);
+          topicList.addAll(topics.map((e) => new Triple(tenant, namespace, e.topicName)).toList());
+        }
+        progress = 0.2 * (i / fullList.length);
+      }
+      for (int i = 0; i < topicList.length; i++) {
+        Triple<String, String, String> topicTriple = topicList[i];
+        PulsarPartitionedTopicApi.createMissPartitionTopic(id, host, port, pulsarInstancePo.createTlsContext(),
+            topicTriple.first, topicTriple.second, topicTriple.third);
+        progress = 0.2 + (++count / topicList.length) * 0.8;
+        notifyListeners();
+      }
     } on Exception catch (e) {
       opException = e;
       notifyListeners();

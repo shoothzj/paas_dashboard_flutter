@@ -19,6 +19,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
@@ -52,7 +53,13 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
     }
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processOpException(vm, context);
-    var formButton = modifyPartitionTopicButton(context);
+    var updatePartitionButton = modifyPartitionTopicButton(context);
+    var createMissPartitionButton = TextButton(
+        onPressed: () {
+          vm.createMissTopicPartition(vm.topic);
+          AlertUtil.createDialog(S.of(context).success, context);
+        },
+        child: Text(S.of(context).createMissPartition));
     var refreshButton = TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
@@ -61,7 +68,7 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [refreshButton],
+            children: [refreshButton, updatePartitionButton, createMissPartitionButton],
           ),
         ),
         Container(
@@ -73,8 +80,7 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
               Text(
                 'partition num is ${vm.partitionNum}',
                 style: new TextStyle(fontSize: 20),
-              ),
-              formButton
+              )
             ],
           ),
         ),

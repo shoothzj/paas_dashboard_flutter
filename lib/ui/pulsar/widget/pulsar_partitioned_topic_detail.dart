@@ -72,7 +72,7 @@ class PulsarPartitionedTopicDetailWidgetState extends State<PulsarPartitionedTop
                       },
                       cells: [
                         DataCell(
-                          Text(itemRow.topicName),
+                          SelectableText(itemRow.topicName),
                         ),
                         DataCell(
                           Text(itemRow.backlogSize.toString()),
