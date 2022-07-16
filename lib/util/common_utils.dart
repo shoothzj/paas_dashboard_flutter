@@ -17,17 +17,17 @@
 // under the License.
 //
 
-class Pair<T, T2> {
+class Pair<T1, T2> {
   Pair(this.first, this.second);
 
-  T first;
+  T1 first;
   T2 second;
 }
 
-class Triple<T, T2, T3> {
+class Triple<T1, T2, T3> {
   Triple(this.first, this.second, this.third);
 
-  T first;
+  T1 first;
   T2 second;
   T3 third;
 }
