@@ -23,11 +23,11 @@ import 'package:paas_dashboard_flutter/vm/code/code_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CodeExecuteWidget extends StatefulWidget {
-  CodeExecuteWidget();
+  const CodeExecuteWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new CodeExecuteWidgetState();
+    return CodeExecuteWidgetState();
   }
 }
 
@@ -47,7 +47,7 @@ class CodeExecuteWidgetState extends State<CodeExecuteWidget> {
     final vm = Provider.of<CodeViewModel>(context);
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: Text(vm.code),
         ),

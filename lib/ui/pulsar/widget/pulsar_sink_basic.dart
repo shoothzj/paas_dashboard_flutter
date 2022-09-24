@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_sink_basic_view_model.da
 import 'package:provider/provider.dart';
 
 class PulsarSinkBasicWidget extends StatefulWidget {
-  PulsarSinkBasicWidget();
+  const PulsarSinkBasicWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarSinkBasicWidgetState();
+    return PulsarSinkBasicWidgetState();
   }
 }
 
@@ -54,7 +54,7 @@ class PulsarSinkBasicWidgetState extends State<PulsarSinkBasicWidget> {
     var refreshButton = TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -62,7 +62,7 @@ class PulsarSinkBasicWidgetState extends State<PulsarSinkBasicWidget> {
             children: [refreshButton],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -70,12 +70,12 @@ class PulsarSinkBasicWidgetState extends State<PulsarSinkBasicWidget> {
             children: [
               Text(
                 'inputs is ${vm.inputs}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -83,12 +83,12 @@ class PulsarSinkBasicWidgetState extends State<PulsarSinkBasicWidget> {
             children: [
               Text(
                 'configs is ${vm.configs}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -96,7 +96,7 @@ class PulsarSinkBasicWidgetState extends State<PulsarSinkBasicWidget> {
             children: [
               Text(
                 'archive is ${vm.archive}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),

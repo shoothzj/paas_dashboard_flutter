@@ -23,7 +23,7 @@ class NamespaceResp {
   NamespaceResp(this.namespace);
 
   NamespaceResp deepCopy() {
-    return new NamespaceResp(namespace);
+    return NamespaceResp(namespace);
   }
 
   factory NamespaceResp.fromJson(String name) {
@@ -40,12 +40,12 @@ class BacklogQuotaReq {
   BacklogQuotaReq(this.limitSize, this.limitTime, this.policy);
 
   Map toJson() {
-    Map map = new Map();
-    map["limitSize"] = this.limitSize;
+    Map map = {};
+    map["limitSize"] = limitSize;
     if (limitTime != null) {
-      map["limitTime"] = this.limitTime!;
+      map["limitTime"] = limitTime!;
     }
-    map["policy"] = this.policy;
+    map["policy"] = policy;
     return map;
   }
 }
@@ -58,12 +58,12 @@ class TopicAutoCreateReq {
   TopicAutoCreateReq(this.allowAutoTopicCreation, this.topicType, this.defaultNumPartitions);
 
   Map toJson() {
-    Map map = new Map();
-    map["allowAutoTopicCreation"] = this.allowAutoTopicCreation;
+    Map map = {};
+    map["allowAutoTopicCreation"] = allowAutoTopicCreation;
     if (topicType != null) {
-      map["topicType"] = this.topicType!;
+      map["topicType"] = topicType!;
     }
-    map["defaultNumPartitions"] = this.defaultNumPartitions;
+    map["defaultNumPartitions"] = defaultNumPartitions;
     return map;
   }
 }
@@ -74,8 +74,8 @@ class MaxProducersPerTopicReq {
   MaxProducersPerTopicReq(this.maxProducersPerTopic);
 
   Map toJson() {
-    Map map = new Map();
-    map["maxProducersPerTopic"] = this.maxProducersPerTopic;
+    Map map = {};
+    map["maxProducersPerTopic"] = maxProducersPerTopic;
     return map;
   }
 }
@@ -124,17 +124,17 @@ class PolicyResp {
 
   factory PolicyResp.fromJson(Map map) {
     var autoTopicCreate = map["autoTopicCreationOverride"];
-    var isAllowAutoTopicCreation;
-    var topicType;
-    var defaultNumPartitions;
+    bool? isAllowAutoTopicCreation;
+    String? topicType;
+    int? defaultNumPartitions;
     if (autoTopicCreate != null) {
       isAllowAutoTopicCreation = autoTopicCreate["allowAutoTopicCreation"];
       topicType = autoTopicCreate["topicType"];
       defaultNumPartitions = autoTopicCreate["defaultNumPartitions"];
     }
     var bundleData = map["bundles"];
-    var boundaries;
-    var numBundles;
+    List<String>? boundaries;
+    var numBundles = 0;
     if (bundleData != null) {
       boundaries = bundleData["boundaries"];
       numBundles = bundleData["numBundles"];

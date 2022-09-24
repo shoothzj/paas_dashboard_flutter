@@ -23,7 +23,7 @@ class TenantResp {
   TenantResp(this.tenant);
 
   TenantResp deepCopy() {
-    return new TenantResp(this.tenant);
+    return TenantResp(tenant);
   }
 
   factory TenantResp.fromJson(String name) {
@@ -38,7 +38,7 @@ class TenantInfoResp {
   TenantInfoResp(this.adminRoles, this.allowedClusters);
 
   TenantInfoResp deepCopy() {
-    return new TenantInfoResp(this.adminRoles, this.allowedClusters);
+    return TenantInfoResp(adminRoles, allowedClusters);
   }
 
   factory TenantInfoResp.fromJson(Map name) {

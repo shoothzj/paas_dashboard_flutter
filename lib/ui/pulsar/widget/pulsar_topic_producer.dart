@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_producer_view_mode
 import 'package:provider/provider.dart';
 
 class PulsarTopicProducerWidget extends StatefulWidget {
-  PulsarTopicProducerWidget();
+  const PulsarTopicProducerWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTopicProducerWidgetState();
+    return PulsarTopicProducerWidgetState();
   }
 }
 
@@ -54,7 +54,7 @@ class PulsarTopicProducerWidgetState extends State<PulsarTopicProducerWidget> {
     var subscriptionFuture = SingleChildScrollView(
       child: DataTable(
           showCheckboxColumn: false,
-          columns: [
+          columns: const [
             DataColumn(label: Text('ProducerName')),
             DataColumn(label: Text('MsgRateIn')),
             DataColumn(label: Text('MsgThroughputIn')),
@@ -92,7 +92,7 @@ class PulsarTopicProducerWidgetState extends State<PulsarTopicProducerWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -102,7 +102,7 @@ class PulsarTopicProducerWidgetState extends State<PulsarTopicProducerWidget> {
         ),
         Text(
           S.of(context).producerList,
-          style: TextStyle(fontSize: 22),
+          style: const TextStyle(fontSize: 22),
         ),
         subscriptionFuture,
       ],

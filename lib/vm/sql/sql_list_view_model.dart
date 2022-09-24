@@ -26,7 +26,7 @@ class SqlListViewModel extends ChangeNotifier {
 
   Future<void> fetchSqlList() async {
     final results = await Persistent.sqlList();
-    this.instances = results.map((e) => SqlViewModel(e)).toList();
+    instances = results.map((e) => SqlViewModel(e)).toList();
     notifyListeners();
   }
 

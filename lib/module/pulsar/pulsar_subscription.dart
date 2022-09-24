@@ -25,6 +25,6 @@ class SubscriptionResp {
   SubscriptionResp(this.subscriptionName, this.backlog, this.rateOut);
 
   SubscriptionResp deepCopy() {
-    return new SubscriptionResp(this.subscriptionName, this.backlog, this.rateOut);
+    return SubscriptionResp(subscriptionName, backlog, rateOut);
   }
 }

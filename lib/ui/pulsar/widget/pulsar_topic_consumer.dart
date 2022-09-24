@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_consumer_view_mode
 import 'package:provider/provider.dart';
 
 class PulsarTopicConsumerWidget extends StatefulWidget {
-  PulsarTopicConsumerWidget();
+  const PulsarTopicConsumerWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTopicConsumerWidgetState();
+    return PulsarTopicConsumerWidgetState();
   }
 }
 
@@ -54,7 +54,7 @@ class PulsarTopicConsumerWidgetState extends State<PulsarTopicConsumerWidget> {
     var consumerFuture = SingleChildScrollView(
       child: DataTable(
           showCheckboxColumn: false,
-          columns: [
+          columns: const [
             DataColumn(label: Text('SubscriptionName')),
             DataColumn(label: Text('ConsumerName')),
             DataColumn(label: Text('MsgRateOut')),
@@ -104,7 +104,7 @@ class PulsarTopicConsumerWidgetState extends State<PulsarTopicConsumerWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -114,7 +114,7 @@ class PulsarTopicConsumerWidgetState extends State<PulsarTopicConsumerWidget> {
         ),
         Text(
           S.of(context).consumerList,
-          style: TextStyle(fontSize: 22),
+          style: const TextStyle(fontSize: 22),
         ),
         consumerFuture,
       ],

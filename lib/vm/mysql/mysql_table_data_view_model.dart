@@ -34,25 +34,25 @@ class MysqlTableDataViewModel extends BaseLoadListPageViewModel<List> implements
   List<String>? columns;
 
   String get instanceName {
-    return this.mysqlInstancePo.name;
+    return mysqlInstancePo.name;
   }
 
   String getDbname() {
-    return this.dbname;
+    return dbname;
   }
 
   String getTableName() {
-    return this.tableName;
+    return tableName;
   }
 
   List<List> getData() {
-    return this.displayList;
+    return displayList;
   }
 
   MysqlTableDataViewModel(this.mysqlInstancePo, this.dbname, this.tableName);
 
   List<String> getColumns() {
-    return this.columns == null ? [''] : this.columns!;
+    return columns == null ? [''] : columns!;
   }
 
   Future<void> fetchData(List<DropDownButtonData>? filters) async {
@@ -60,9 +60,9 @@ class MysqlTableDataViewModel extends BaseLoadListPageViewModel<List> implements
       String where = MysqlDatabaseApi.getWhere(filters);
 
       MysqlSqlResult result = await MysqlDatabaseApi.getData(mysqlInstancePo, dbname, tableName, where);
-      this.columns = result.getFieldName;
-      this.fullList = result.getData;
-      this.displayList = this.fullList;
+      columns = result.getFieldName;
+      fullList = result.getData;
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -74,17 +74,17 @@ class MysqlTableDataViewModel extends BaseLoadListPageViewModel<List> implements
 
   Future<void> fetchSqlData(String sql) async {
     if (sql.isEmpty) {
-      this.fullList = [];
-      this.displayList = this.fullList;
+      fullList = [];
+      displayList = fullList;
       loadSuccess();
       notifyListeners();
       return;
     }
     try {
       MysqlSqlResult result = await MysqlDatabaseApi.getSqlData(sql, mysqlInstancePo, dbname);
-      this.columns = result.getFieldName;
-      this.fullList = result.getData;
-      this.displayList = this.fullList;
+      columns = result.getFieldName;
+      fullList = result.getData;
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -95,16 +95,16 @@ class MysqlTableDataViewModel extends BaseLoadListPageViewModel<List> implements
 
   DataRow getConvert(dynamic obj) {
     List<dynamic> v = obj;
-    return new DataRow(
+    return DataRow(
         cells: v
             .map((e) => DataCell(e == null
-                ? SelectableText("(N/A)", style: new TextStyle(color: Colors.grey))
+                ? const SelectableText("(N/A)", style: TextStyle(color: Colors.grey))
                 : SelectableText(e.toString())))
             .toList());
   }
 
   MysqlTableDataViewModel deepCopy() {
-    return new MysqlTableDataViewModel(mysqlInstancePo.deepCopy(), dbname, tableName);
+    return MysqlTableDataViewModel(mysqlInstancePo.deepCopy(), dbname, tableName);
   }
 
   @override

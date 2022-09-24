@@ -24,9 +24,9 @@ class PublishMessagesReq {
   PublishMessagesReq(this.producerName, this.messages);
 
   Map toJson() {
-    Map map = new Map();
-    map["producerName"] = this.producerName;
-    map["messages"] = this.messages;
+    Map map = {};
+    map["producerName"] = producerName;
+    map["messages"] = messages;
     return map;
   }
 }
@@ -37,9 +37,9 @@ class ProducerMessage {
 
   ProducerMessage(this.key, this.payload);
   Map toJson() {
-    Map map = new Map();
-    map["payload"] = this.payload;
-    map["key"] = this.key;
+    Map map = {};
+    map["payload"] = payload;
+    map["key"] = key;
     return map;
   }
 }

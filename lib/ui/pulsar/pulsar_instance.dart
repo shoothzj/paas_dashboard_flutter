@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart
 import 'package:provider/provider.dart';
 
 class PulsarInstanceScreen extends StatefulWidget {
-  PulsarInstanceScreen();
+  const PulsarInstanceScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new _PulsarInstanceState();
+    return _PulsarInstanceState();
   }
 }
 
@@ -44,7 +44,7 @@ class _PulsarInstanceState extends State<PulsarInstanceScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Pulsar ${vm.name} Dashboard'),
-          bottom: TabBar(
+          bottom: const TabBar(
             tabs: [
               Tab(
                 text: "Basic",
@@ -57,11 +57,11 @@ class _PulsarInstanceState extends State<PulsarInstanceScreen> {
           children: [
             ChangeNotifierProvider(
               create: (context) => PulsarClusterViewModel(vm.pulsarInstancePo.deepCopy()),
-              child: PulsarBasicWidget(),
+              child: const PulsarBasicWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) => vm.deepCopy(),
-              child: PulsarTenantsWidget(),
+              child: const PulsarTenantsWidget(),
             ).build(context),
           ],
         ),

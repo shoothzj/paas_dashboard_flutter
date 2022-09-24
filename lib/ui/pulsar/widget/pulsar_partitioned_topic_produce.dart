@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_produc
 import 'package:provider/provider.dart';
 
 class PulsarPartitionedTopicProduceWidget extends StatefulWidget {
-  PulsarPartitionedTopicProduceWidget();
+  const PulsarPartitionedTopicProduceWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarPartitionedTopicProduceWidgetState();
+    return PulsarPartitionedTopicProduceWidgetState();
   }
 }
 
@@ -53,7 +53,7 @@ class PulsarPartitionedTopicProduceWidgetState extends State<PulsarPartitionedTo
     var produceMsgButton = createInstanceButton(context);
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,

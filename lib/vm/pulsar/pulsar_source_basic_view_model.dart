@@ -36,45 +36,45 @@ class PulsarSourceBasicViewModel extends BaseLoadViewModel {
   PulsarSourceBasicViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.sourceResp);
 
   PulsarSourceBasicViewModel deepCopy() {
-    return new PulsarSourceBasicViewModel(
+    return PulsarSourceBasicViewModel(
         pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), sourceResp.deepCopy());
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   String get sourceName {
-    return this.sourceResp.sourceName;
+    return sourceResp.sourceName;
   }
 
   Future<void> fetch() async {
     try {
       final SourceConfigResp sourceConfigResp = await PulsarSourceApi.getSource(
           id, host, port, pulsarInstancePo.createFunctionTlsContext(), tenant, namespace, sourceName);
-      this.topicName = sourceConfigResp.topicName;
-      this.configs = sourceConfigResp.configs;
-      this.archive = sourceConfigResp.archive;
+      topicName = sourceConfigResp.topicName;
+      configs = sourceConfigResp.configs;
+      archive = sourceConfigResp.archive;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;

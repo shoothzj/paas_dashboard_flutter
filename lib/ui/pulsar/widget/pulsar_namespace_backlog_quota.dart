@@ -26,11 +26,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_backlog_quota_
 import 'package:provider/provider.dart';
 
 class PulsarNamespaceBacklogQuotaWidget extends StatefulWidget {
-  PulsarNamespaceBacklogQuotaWidget();
+  const PulsarNamespaceBacklogQuotaWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarNamespaceBacklogQuotaWidgetState();
+    return PulsarNamespaceBacklogQuotaWidgetState();
   }
 }
 
@@ -66,10 +66,10 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
           vm.limitTimeDisplayStr = limitTimeEditingController.value.text;
           vm.retentionPolicyDisplayStr = policyEditingController.value.text;
           if (vm.limitSize == null) {
-            AlertUtil.exceptionDialog(new Exception("please set LimitSize"), context);
+            AlertUtil.exceptionDialog(Exception("please set LimitSize"), context);
           }
           if (vm.retentionPolicy == null) {
-            AlertUtil.exceptionDialog(new Exception("please set Policy"), context);
+            AlertUtil.exceptionDialog(Exception("please set Policy"), context);
           }
           vm.updateBacklogQuota();
         },
@@ -81,7 +81,7 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -89,38 +89,32 @@ class PulsarNamespaceBacklogQuotaWidgetState extends State<PulsarNamespaceBacklo
             children: [refreshButton, formButton],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "LimitSize"),
+            decoration: const InputDecoration(labelText: "LimitSize"),
             controller: limitSizeEditingController,
           ),
         ),
-        Container(
-          child: Text("${S.of(context).unit}: ${S.of(context).byte}"),
-        ),
-        Container(
+        Text("${S.of(context).unit}: ${S.of(context).byte}"),
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "LimitTime"),
+            decoration: const InputDecoration(labelText: "LimitTime"),
             controller: limitTimeEditingController,
           ),
         ),
-        Container(
-          child: Text("${S.of(context).unit}: ${S.of(context).second}"),
-        ),
-        Container(
+        Text("${S.of(context).unit}: ${S.of(context).second}"),
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "Policy"),
+            decoration: const InputDecoration(labelText: "Policy"),
             controller: policyEditingController,
           ),
         ),
-        Container(
-          child: SelectableText(
-            "Policy enum: {producer_request_hold, producer_exception, consumer_backlog_eviction}",
-            toolbarOptions: ToolbarOptions(paste: true),
-          ),
+        const SelectableText(
+          "Policy enum: {producer_request_hold, producer_exception, consumer_backlog_eviction}",
+          toolbarOptions: ToolbarOptions(paste: true),
         ),
       ],
     );

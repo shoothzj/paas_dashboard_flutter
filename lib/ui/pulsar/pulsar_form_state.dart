@@ -27,11 +27,11 @@ class PulsarForm extends StatefulWidget {
   final Function(PulsarFormDto) callback;
   final PulsarFormDto? formDto;
 
-  PulsarForm(this.callback, this.formDto);
+  const PulsarForm(this.callback, this.formDto);
 
   @override
   State<StatefulWidget> createState() {
-    return new __PulsarFormState(callback, formDto);
+    return __PulsarFormState(callback, formDto);
   }
 }
 
@@ -56,21 +56,19 @@ class __PulsarFormState extends State<PulsarForm> {
         onPressed: () {
           pulsarFormDialog();
         },
-        icon: Icon(Icons.edit),
+        icon: const Icon(Icons.edit),
       );
     } else {
       return TextButton(
           onPressed: () {
             pulsarFormDialog();
           },
-          child: Text('Create Pulsar Instance'));
+          child: const Text('Create Pulsar Instance'));
     }
   }
 
   pulsarFormDialog() {
-    if (formDto == null) {
-      formDto = new PulsarFormDto();
-    }
+    formDto ??= PulsarFormDto();
     certDisplay = !(formDto!.enableTls || formDto!.functionEnableTls);
     var formFieldDefList = [
       'Instance Name',
@@ -98,8 +96,8 @@ class __PulsarFormState extends State<PulsarForm> {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, void Function(void Function()) setState) {
-            List<Widget> children = new List.from(formFieldsList);
-            Switch tlsSwitch = new Switch(
+            List<Widget> children = List.from(formFieldsList);
+            Switch tlsSwitch = Switch(
                 value: formDto!.enableTls,
                 onChanged: (value) {
                   setState(() {
@@ -107,16 +105,16 @@ class __PulsarFormState extends State<PulsarForm> {
                     certDisplay = !(formDto!.enableTls || formDto!.functionEnableTls);
                   });
                 });
-            Row tlsRow = new Row(
+            Row tlsRow = Row(
               children: [
-                new Text(
+                const Text(
                   "Enable Tls: ",
-                  style: new TextStyle(color: Colors.blue),
+                  style: TextStyle(color: Colors.blue),
                 ),
                 tlsSwitch
               ],
             );
-            Switch functionTlsSwitch = new Switch(
+            Switch functionTlsSwitch = Switch(
                 value: formDto!.functionEnableTls,
                 onChanged: (value) {
                   setState(() {
@@ -124,22 +122,22 @@ class __PulsarFormState extends State<PulsarForm> {
                     certDisplay = !(formDto!.enableTls || formDto!.functionEnableTls);
                   });
                 });
-            Row functionTlsRow = new Row(
+            Row functionTlsRow = Row(
               children: [
-                new Text(
+                const Text(
                   "Function Enable Tls: ",
-                  style: new TextStyle(color: Colors.blue),
+                  style: TextStyle(color: Colors.blue),
                 ),
                 functionTlsSwitch
               ],
             );
 
-            TextEditingController caFieldController = new TextEditingController(text: formDto!.caFile);
-            TextFormField caField = new TextFormField(
-              decoration: InputDecoration(labelText: "CA File"),
+            TextEditingController caFieldController = TextEditingController(text: formDto!.caFile);
+            TextFormField caField = TextFormField(
+              decoration: const InputDecoration(labelText: "CA File"),
               controller: caFieldController,
             );
-            TextButton caPickerButton = new TextButton(
+            TextButton caPickerButton = TextButton(
               onPressed: () async {
                 FilePickerResult? caPicker = await FilePicker.platform
                     .pickFiles(type: FileType.custom, allowedExtensions: ['pem', 'crt'], allowMultiple: false);
@@ -151,20 +149,20 @@ class __PulsarFormState extends State<PulsarForm> {
               },
               child: Text(S.of(context).import),
             );
-            Row caRow = new Row(
-              children: [new Expanded(child: caField), caPickerButton],
+            Row caRow = Row(
+              children: [Expanded(child: caField), caPickerButton],
             );
-            Offstage caStage = new Offstage(
+            Offstage caStage = Offstage(
               offstage: certDisplay,
               child: caRow,
             );
 
-            TextEditingController clientCertFieldController = new TextEditingController(text: formDto!.clientCertFile);
-            TextFormField clientCertField = new TextFormField(
-              decoration: InputDecoration(labelText: "Client Cert File"),
+            TextEditingController clientCertFieldController = TextEditingController(text: formDto!.clientCertFile);
+            TextFormField clientCertField = TextFormField(
+              decoration: const InputDecoration(labelText: "Client Cert File"),
               controller: clientCertFieldController,
             );
-            TextButton clientCertPickerButton = new TextButton(
+            TextButton clientCertPickerButton = TextButton(
               onPressed: () async {
                 FilePickerResult? caPicker = await FilePicker.platform
                     .pickFiles(type: FileType.custom, allowedExtensions: ['pem', 'crt'], allowMultiple: false);
@@ -176,20 +174,20 @@ class __PulsarFormState extends State<PulsarForm> {
               },
               child: Text(S.of(context).import),
             );
-            Row clientCertRow = new Row(
-              children: [new Expanded(child: clientCertField), clientCertPickerButton],
+            Row clientCertRow = Row(
+              children: [Expanded(child: clientCertField), clientCertPickerButton],
             );
-            Offstage clientCertStage = new Offstage(
+            Offstage clientCertStage = Offstage(
               offstage: certDisplay,
               child: clientCertRow,
             );
 
-            TextEditingController clientKeyFieldController = new TextEditingController(text: formDto!.clientKeyFile);
-            TextFormField clientKeyField = new TextFormField(
-              decoration: InputDecoration(labelText: "Client Key File"),
+            TextEditingController clientKeyFieldController = TextEditingController(text: formDto!.clientKeyFile);
+            TextFormField clientKeyField = TextFormField(
+              decoration: const InputDecoration(labelText: "Client Key File"),
               controller: clientKeyFieldController,
             );
-            TextButton clientKeyPickerButton = new TextButton(
+            TextButton clientKeyPickerButton = TextButton(
               onPressed: () async {
                 FilePickerResult? clientKeyPicker = await FilePicker.platform
                     .pickFiles(type: FileType.custom, allowedExtensions: ['pem', 'crt'], allowMultiple: false);
@@ -201,21 +199,20 @@ class __PulsarFormState extends State<PulsarForm> {
               },
               child: Text(S.of(context).import),
             );
-            Row clientKeyRow = new Row(
-              children: [new Expanded(child: clientKeyField), clientKeyPickerButton],
+            Row clientKeyRow = Row(
+              children: [Expanded(child: clientKeyField), clientKeyPickerButton],
             );
-            Offstage clientKeyStage = new Offstage(
+            Offstage clientKeyStage = Offstage(
               offstage: certDisplay,
               child: clientKeyRow,
             );
 
-            TextEditingController clientKeyPasswordController =
-                new TextEditingController(text: formDto!.clientKeyPassword);
-            TextFormField clientKeyPasswordField = new TextFormField(
-              decoration: InputDecoration(labelText: "Client Key Password"),
+            TextEditingController clientKeyPasswordController = TextEditingController(text: formDto!.clientKeyPassword);
+            TextFormField clientKeyPasswordField = TextFormField(
+              decoration: const InputDecoration(labelText: "Client Key Password"),
               controller: clientKeyPasswordController,
             );
-            Offstage clientKeyPasswordStage = new Offstage(
+            Offstage clientKeyPasswordStage = Offstage(
               offstage: certDisplay,
               child: clientKeyPasswordField,
             );
@@ -229,11 +226,11 @@ class __PulsarFormState extends State<PulsarForm> {
 
             return AlertDialog(
               scrollable: true,
-              title: Text("Create Pulsar Instance Form"),
+              title: const Text("Create Pulsar Instance Form"),
               content: Form(child: Column(children: children)),
               actions: [
                 ElevatedButton(
-                  child: Text(FormUtil.CREATE),
+                  child: const Text(FormUtil.CREATE),
                   onPressed: () {
                     List<String> list = editControllerList.map((e) => e.value.text.trim()).toList();
                     formDto!.name = list[0];
@@ -247,7 +244,7 @@ class __PulsarFormState extends State<PulsarForm> {
                   },
                 ),
                 ElevatedButton(
-                  child: Text(FormUtil.CANCEL),
+                  child: const Text(FormUtil.CANCEL),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

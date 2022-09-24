@@ -35,11 +35,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_view_m
 import 'package:provider/provider.dart';
 
 class PulsarPartitionedTopic extends StatefulWidget {
-  PulsarPartitionedTopic();
+  const PulsarPartitionedTopic();
 
   @override
   State<StatefulWidget> createState() {
-    return new _PulsarPartitionedTopicState();
+    return _PulsarPartitionedTopicState();
   }
 }
 
@@ -71,32 +71,32 @@ class _PulsarPartitionedTopicState extends State<PulsarPartitionedTopic> {
             ChangeNotifierProvider(
               create: (context) => PulsarPartitionedTopicBasicViewModel(
                   vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarPartitionedTopicBasicWidget(),
+              child: const PulsarPartitionedTopicBasicWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => new PulsarPartitionedTopicDetailViewModel(
+              create: (context) => PulsarPartitionedTopicDetailViewModel(
                   vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarPartitionedTopicDetailWidget(),
+              child: const PulsarPartitionedTopicDetailWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => new PulsarPartitionedTopicSubscriptionViewModel(
+              create: (context) => PulsarPartitionedTopicSubscriptionViewModel(
                   vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarPartitionedTopicSubscriptionWidget(),
+              child: const PulsarPartitionedTopicSubscriptionWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) => PulsarPartitionedTopicConsumerViewModel(
                   vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarPartitionedTopicConsumerWidget(),
+              child: const PulsarPartitionedTopicConsumerWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) => PulsarPartitionedTopicProducerViewModel(
                   vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarPartitionedTopicProducerWidget(),
+              child: const PulsarPartitionedTopicProducerWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) => PulsarPartitionedTopicProduceViewModel(
                   vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarPartitionedTopicProduceWidget(),
+              child: const PulsarPartitionedTopicProduceWidget(),
             ).build(context),
           ],
         ),

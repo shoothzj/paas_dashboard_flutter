@@ -38,7 +38,7 @@ class PulsarPartitionedTopicApi {
       String namespace, String topic, int partitionNum) async {
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).put<String>(url, data: partitionNum.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -52,8 +52,7 @@ class PulsarPartitionedTopicApi {
       String namespace, String topic, bool force) async {
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http +
-            '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions?force=$force';
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions?force=$force';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).delete<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -66,7 +65,7 @@ class PulsarPartitionedTopicApi {
       String namespace, String topic, int partitionNum) async {
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url, data: partitionNum.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -80,8 +79,7 @@ class PulsarPartitionedTopicApi {
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String topic) async {
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http +
-            '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/createMissedPartitions';
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/createMissedPartitions';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -94,14 +92,14 @@ class PulsarPartitionedTopicApi {
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/partitioned';
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/partitioned';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
       throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
     }
     List jsonResponse = json.decode(response.data!) as List;
-    return jsonResponse.map((name) => new TopicResp.fromJson(name)).toList();
+    return jsonResponse.map((name) => TopicResp.fromJson(name)).toList();
   }
 
   static Future<List<SubscriptionResp>> getSubscription(
@@ -109,14 +107,14 @@ class PulsarPartitionedTopicApi {
     String data = "";
     await PulsarStatApi.partitionedTopicStats(id, host, port, tlsContext, tenant, namespace, topic)
         .then((value) => {data = value});
-    List<SubscriptionResp> respList = new List.empty(growable: true);
+    List<SubscriptionResp> respList = List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("subscriptions")) {
       Map subscriptionsMap = statsMap["subscriptions"] as Map<String, dynamic>;
       subscriptionsMap.forEach((key, value) {
         double rateOut = value["msgRateOut"];
         int backlog = value["msgBacklog"];
-        SubscriptionResp subscriptionDetail = new SubscriptionResp(key, backlog, rateOut);
+        SubscriptionResp subscriptionDetail = SubscriptionResp(key, backlog, rateOut);
         respList.add(subscriptionDetail);
       });
     }
@@ -127,8 +125,7 @@ class PulsarPartitionedTopicApi {
       String namespace, String topic, String subscription) async {
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http +
-            '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/subscription/$subscription/skip_all';
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/subscription/$subscription/skip_all';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -158,7 +155,7 @@ class PulsarPartitionedTopicApi {
     String data = "";
     await PulsarStatApi.partitionedTopicStats(id, host, port, tlsContext, tenant, namespace, topic)
         .then((value) => {data = value});
-    List<ConsumerResp> respList = new List.empty(growable: true);
+    List<ConsumerResp> respList = List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("subscriptions")) {
       Map subscriptionsMap = statsMap["subscriptions"] as Map;
@@ -166,7 +163,7 @@ class PulsarPartitionedTopicApi {
         Map subMap = value as Map;
         if (subMap.containsKey("consumers")) {
           List consumers = subMap["consumers"] as List;
-          consumers.forEach((element) {
+          for (var element in consumers) {
             Map consumer = element as Map;
             double rateOut = 0;
             double throughputOut = 0;
@@ -200,10 +197,10 @@ class PulsarPartitionedTopicApi {
             if (consumer.containsKey("lastConsumedTimestamp")) {
               lastConsumedTimestamp = consumer["lastConsumedTimestamp"];
             }
-            ConsumerResp consumerResp = new ConsumerResp(consumerName, key, rateOut, throughputOut, availablePermits,
+            ConsumerResp consumerResp = ConsumerResp(consumerName, key, rateOut, throughputOut, availablePermits,
                 unackedMessages, lastConsumedTimestamp, clientVersion, address);
             respList.add(consumerResp);
-          });
+          }
         }
       });
     }
@@ -215,11 +212,11 @@ class PulsarPartitionedTopicApi {
     String data = "";
     await PulsarStatApi.partitionedTopicStats(id, host, port, tlsContext, tenant, namespace, topic)
         .then((value) => {data = value});
-    List<ProducerResp> respList = new List.empty(growable: true);
+    List<ProducerResp> respList = List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("publishers")) {
       List publisherList = statsMap["publishers"] as List<dynamic>;
-      publisherList.forEach((element) {
+      for (var element in publisherList) {
         String producerName = StringUtil.nullStr(element["producerName"]);
         double rateIn = element["msgRateIn"];
         double throughputIn = element["msgThroughputIn"];
@@ -227,9 +224,9 @@ class PulsarPartitionedTopicApi {
         double averageMsgSize = element["averageMsgSize"];
         String address = StringUtil.nullStr(element["address"]);
         ProducerResp producerResp =
-            new ProducerResp(producerName, rateIn, throughputIn, clientVersion, averageMsgSize, address);
+            ProducerResp(producerName, rateIn, throughputIn, clientVersion, averageMsgSize, address);
         respList.add(producerResp);
-      });
+      }
     }
     return respList;
   }
@@ -239,13 +236,13 @@ class PulsarPartitionedTopicApi {
     String data = "";
     await PulsarStatApi.partitionedTopicStats(id, host, port, tlsContext, tenant, namespace, topic)
         .then((value) => {data = value});
-    List<PulsarPartitionedTopicDetailResp> respList = new List.empty(growable: true);
+    List<PulsarPartitionedTopicDetailResp> respList = List.empty(growable: true);
     Map statsMap = json.decode(data) as Map;
     if (statsMap.containsKey("partitions")) {
       Map partitionsMap = statsMap["partitions"] as Map<String, dynamic>;
       partitionsMap.forEach((key, value) {
         int backlog = value["backlogSize"];
-        var resp = new PulsarPartitionedTopicDetailResp(key, backlog);
+        var resp = PulsarPartitionedTopicDetailResp(key, backlog);
         respList.add(resp);
       });
     }
@@ -286,24 +283,24 @@ class PulsarPartitionedTopicApi {
     if (statsMap.containsKey("storageSize")) {
       storageSize = statsMap["storageSize"];
     }
-    return new PulsarPartitionedTopicBaseResp(
+    return PulsarPartitionedTopicBaseResp(
         topicName, partitionNum, msgRateIn, msgRateOut, msgInCounter, msgOutCounter, storageSize);
   }
 
   static Future<String> sendMsgToPartitionTopic(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, String topic, String key, String value) async {
-    ProducerMessage producerMessage = new ProducerMessage(key, value);
-    List<ProducerMessage> messageList = new List.empty(growable: true);
+    ProducerMessage producerMessage = ProducerMessage(key, value);
+    List<ProducerMessage> messageList = List.empty(growable: true);
     messageList.add(producerMessage);
-    PublishMessagesReq messagesReq = new PublishMessagesReq(PulsarConst.defaultProducerName, messageList);
+    PublishMessagesReq messagesReq = PublishMessagesReq(PulsarConst.defaultProducerName, messageList);
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http + '$host:${port.toString()}/topics/persistent/$tenant/$namespace/$topic/';
+        : '${HttpUtil.http}$host:${port.toString()}/topics/persistent/$tenant/$namespace/$topic/';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url, data: json.encode(messagesReq));
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
-      return "send msg failed, " + response.data!;
+      return "send msg failed, ${response.data!}";
     }
     return "send msg success";
   }

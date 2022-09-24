@@ -25,7 +25,7 @@ class CodePo {
   CodePo(this.id, this.name, this.code);
 
   CodePo deepCopy() {
-    return new CodePo(id, name, code);
+    return CodePo(id, name, code);
   }
 
   Map<String, dynamic> toMap() {

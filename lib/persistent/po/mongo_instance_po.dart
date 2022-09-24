@@ -27,7 +27,7 @@ class MongoInstancePo {
   MongoInstancePo(this.id, this.name, this.addr, this.username, this.password);
 
   MongoInstancePo deepCopy() {
-    return new MongoInstancePo(id, name, addr, username, password);
+    return MongoInstancePo(id, name, addr, username, password);
   }
 
   Map<String, dynamic> toMap() {

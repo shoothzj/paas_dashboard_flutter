@@ -52,7 +52,7 @@ class PersistentMemory implements PersistentApi {
   @override
   Future<List<PulsarInstancePo>> pulsarInstances() async {
     return [
-      new PulsarInstancePo(
+      PulsarInstancePo(
           0,
           "example",
           PulsarConst.defaultHost,
@@ -73,7 +73,7 @@ class PersistentMemory implements PersistentApi {
     if (name != "example") {
       return null;
     }
-    return new PulsarInstancePo(
+    return PulsarInstancePo(
         0,
         "example",
         PulsarConst.defaultHost,
@@ -102,7 +102,7 @@ class PersistentMemory implements PersistentApi {
 
   @override
   Future<List<BkInstancePo>> bookkeeperInstances() async {
-    return [new BkInstancePo(0, "example", BkConst.defaultHost, BkConst.defaultPort)];
+    return [BkInstancePo(0, "example", BkConst.defaultHost, BkConst.defaultPort)];
   }
 
   @override
@@ -110,7 +110,7 @@ class PersistentMemory implements PersistentApi {
     if (name != "example") {
       return null;
     }
-    return new BkInstancePo(0, "example", BkConst.defaultHost, BkConst.defaultPort);
+    return BkInstancePo(0, "example", BkConst.defaultHost, BkConst.defaultPort);
   }
 
   @override
@@ -127,7 +127,7 @@ class PersistentMemory implements PersistentApi {
 
   @override
   Future<List<ZkInstancePo>> zooKeeperInstances() async {
-    return [new ZkInstancePo(0, "example", ZkConst.defaultHost, ZkConst.defaultPort)];
+    return [ZkInstancePo(0, "example", ZkConst.defaultHost, ZkConst.defaultPort)];
   }
 
   @override
@@ -135,7 +135,7 @@ class PersistentMemory implements PersistentApi {
     if (name != "example") {
       return null;
     }
-    return new ZkInstancePo(0, "example", ZkConst.defaultHost, ZkConst.defaultPort);
+    return ZkInstancePo(0, "example", ZkConst.defaultHost, ZkConst.defaultPort);
   }
 
   @override
@@ -152,7 +152,7 @@ class PersistentMemory implements PersistentApi {
 
   @override
   Future<List<K8sInstancePo>> kubernetesInstances() async {
-    return [new K8sInstancePo(0, "example")];
+    return [K8sInstancePo(0, "example")];
   }
 
   @override
@@ -160,7 +160,7 @@ class PersistentMemory implements PersistentApi {
     if (name != "example") {
       return null;
     }
-    return new K8sInstancePo(0, "example");
+    return K8sInstancePo(0, "example");
   }
 
   @override
@@ -175,7 +175,7 @@ class PersistentMemory implements PersistentApi {
 
   @override
   Future<List<MongoInstancePo>> mongoInstances() async {
-    return [new MongoInstancePo(0, "example", MongoConst.defaultAddr, "", "")];
+    return [MongoInstancePo(0, "example", MongoConst.defaultAddr, "", "")];
   }
 
   @override
@@ -183,7 +183,7 @@ class PersistentMemory implements PersistentApi {
     if (name != "example") {
       return null;
     }
-    return new MongoInstancePo(0, "example", MongoConst.defaultAddr, "", "");
+    return MongoInstancePo(0, "example", MongoConst.defaultAddr, "", "");
   }
 
   @override
@@ -201,7 +201,7 @@ class PersistentMemory implements PersistentApi {
   @override
   Future<List<MysqlInstancePo>> mysqlInstances() async {
     return [
-      new MysqlInstancePo(0, "example", MysqlConst.defaultHost, MysqlConst.defaultPort, MysqlConst.defaultUsername,
+      MysqlInstancePo(0, "example", MysqlConst.defaultHost, MysqlConst.defaultPort, MysqlConst.defaultUsername,
           MysqlConst.defaultPassword)
     ];
   }
@@ -211,7 +211,7 @@ class PersistentMemory implements PersistentApi {
     if (name != "example") {
       return null;
     }
-    return new MysqlInstancePo(0, "example", MysqlConst.defaultHost, MysqlConst.defaultPort, MysqlConst.defaultUsername,
+    return MysqlInstancePo(0, "example", MysqlConst.defaultHost, MysqlConst.defaultPort, MysqlConst.defaultUsername,
         MysqlConst.defaultPassword);
   }
 
@@ -263,27 +263,29 @@ class PersistentMemory implements PersistentApi {
     throw UnimplementedError();
   }
 
+  @override
   Future<void> saveRedis(String name, String addr, String username, String password) {
     // TODO: implement sqlInstance
     throw UnimplementedError();
   }
 
+  @override
   Future<void> deleteRedis(int id) {
     // TODO: implement sqlInstance
     throw UnimplementedError();
   }
 
+  @override
   Future<List<RedisInstancePo>> redisInstances() async {
-    return [
-      new RedisInstancePo(0, "example", RedisConst.defaultIp, RedisConst.defaultPort, RedisConst.defaultPassword)
-    ];
+    return [RedisInstancePo(0, "example", RedisConst.defaultIp, RedisConst.defaultPort, RedisConst.defaultPassword)];
   }
 
+  @override
   Future<RedisInstancePo?> redisInstance(String name) async {
     if (name != "example") {
       return null;
     }
-    return new RedisInstancePo(0, "example", RedisConst.defaultIp, RedisConst.defaultPort, RedisConst.defaultPassword);
+    return RedisInstancePo(0, "example", RedisConst.defaultIp, RedisConst.defaultPort, RedisConst.defaultPassword);
   }
 
   @override

@@ -45,7 +45,7 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
   PulsarNamespacePoliciesViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
 
   PulsarNamespacePoliciesViewModel deepCopy() {
-    return new PulsarNamespacePoliciesViewModel(
+    return PulsarNamespacePoliciesViewModel(
         pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy());
   }
 
@@ -53,15 +53,15 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
     try {
       final PolicyResp resp =
           await PulsarNamespaceApi.getPolicy(id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace);
-      this.isAllowAutoTopicCreation = resp.isAllowAutoTopicCreation;
-      this.messageTTLInSeconds = resp.messageTTLInSeconds;
-      this.maxProducersPerTopic = resp.maxProducersPerTopic;
-      this.maxConsumersPerTopic = resp.maxConsumersPerTopic;
-      this.maxConsumersPerSubscription = resp.maxConsumersPerSubscription;
-      this.maxUnackedMessagesPerConsumer = resp.maxUnackedMessagesPerConsumer;
-      this.maxUnackedMessagesPerSubscription = resp.maxUnackedMessagesPerSubscription;
-      this.maxSubscriptionsPerTopic = resp.maxSubscriptionsPerTopic;
-      this.maxTopicsPerNamespace = resp.maxTopicsPerNamespace;
+      isAllowAutoTopicCreation = resp.isAllowAutoTopicCreation;
+      messageTTLInSeconds = resp.messageTTLInSeconds;
+      maxProducersPerTopic = resp.maxProducersPerTopic;
+      maxConsumersPerTopic = resp.maxConsumersPerTopic;
+      maxConsumersPerSubscription = resp.maxConsumersPerSubscription;
+      maxUnackedMessagesPerConsumer = resp.maxUnackedMessagesPerConsumer;
+      maxUnackedMessagesPerSubscription = resp.maxUnackedMessagesPerSubscription;
+      maxSubscriptionsPerTopic = resp.maxSubscriptionsPerTopic;
+      maxTopicsPerNamespace = resp.maxTopicsPerNamespace;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -71,90 +71,90 @@ class PulsarNamespacePoliciesViewModel extends BaseLoadViewModel {
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   String get isAllowAutoTopicCreateDisplayStr {
-    if (this.isAllowAutoTopicCreation == null) {
+    if (isAllowAutoTopicCreation == null) {
       return UiConst.unset;
     }
-    return this.isAllowAutoTopicCreation.toString();
+    return isAllowAutoTopicCreation.toString();
   }
 
   String get messageTTLDisplayStr {
-    if (this.messageTTLInSeconds == null) {
+    if (messageTTLInSeconds == null) {
       return UiConst.unset;
     }
-    return this.messageTTLInSeconds.toString();
+    return messageTTLInSeconds.toString();
   }
 
   String get maxProducersPerTopicDisplayStr {
-    if (this.maxProducersPerTopic == null) {
+    if (maxProducersPerTopic == null) {
       return UiConst.unset;
     }
-    return this.maxProducersPerTopic.toString();
+    return maxProducersPerTopic.toString();
   }
 
   String get maxConsumersPerTopicDisplayStr {
-    if (this.maxConsumersPerTopic == null) {
+    if (maxConsumersPerTopic == null) {
       return UiConst.unset;
     }
-    return this.maxConsumersPerTopic.toString();
+    return maxConsumersPerTopic.toString();
   }
 
   String get maxConsumersPerSubscriptionDisplayStr {
-    if (this.maxConsumersPerSubscription == null) {
+    if (maxConsumersPerSubscription == null) {
       return UiConst.unset;
     }
-    return this.maxConsumersPerSubscription.toString();
+    return maxConsumersPerSubscription.toString();
   }
 
   String get maxUnackedMessagesPerConsumerDisplayStr {
-    if (this.maxUnackedMessagesPerConsumer == null) {
+    if (maxUnackedMessagesPerConsumer == null) {
       return UiConst.unset;
     }
-    return this.maxUnackedMessagesPerConsumer.toString();
+    return maxUnackedMessagesPerConsumer.toString();
   }
 
   String get maxUnackedMessagesPerSubscriptionDisplayStr {
-    if (this.maxUnackedMessagesPerSubscription == null) {
+    if (maxUnackedMessagesPerSubscription == null) {
       return UiConst.unset;
     }
-    return this.maxUnackedMessagesPerSubscription.toString();
+    return maxUnackedMessagesPerSubscription.toString();
   }
 
   String get maxSubscriptionsPerTopicDisplayStr {
-    if (this.maxSubscriptionsPerTopic == null) {
+    if (maxSubscriptionsPerTopic == null) {
       return UiConst.unset;
     }
-    return this.maxSubscriptionsPerTopic.toString();
+    return maxSubscriptionsPerTopic.toString();
   }
 
   String get maxTopicsPerNamespaceDisplayStr {
-    if (this.maxTopicsPerNamespace == null) {
+    if (maxTopicsPerNamespace == null) {
       return UiConst.unset;
     }
-    return this.maxTopicsPerNamespace.toString();
+    return maxTopicsPerNamespace.toString();
   }
 
   Future<void> updateAutoTopicCreate() async {

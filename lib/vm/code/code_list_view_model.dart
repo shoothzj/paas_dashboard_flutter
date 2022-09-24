@@ -27,7 +27,7 @@ class CodeListViewModel extends ChangeNotifier {
 
   Future<void> fetchCodeList() async {
     final results = await Persistent.codeList();
-    this.instances = results.map((e) => CodeViewModel(e)).toList();
+    instances = results.map((e) => CodeViewModel(e)).toList();
     notifyListeners();
   }
 

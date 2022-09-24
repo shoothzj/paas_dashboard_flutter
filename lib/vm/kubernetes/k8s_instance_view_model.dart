@@ -25,10 +25,10 @@ class K8sInstanceViewModel {
   K8sInstanceViewModel(this.k8sInstancePo);
 
   int get id {
-    return this.k8sInstancePo.id;
+    return k8sInstancePo.id;
   }
 
   String get name {
-    return this.k8sInstancePo.name;
+    return k8sInstancePo.name;
   }
 }

@@ -24,7 +24,7 @@ class SpinnerUtil {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[CircularProgressIndicator(), SizedBox(height: 20), Text('This may take some time..')],
+        children: const <Widget>[CircularProgressIndicator(), SizedBox(height: 20), Text('This may take some time..')],
       ),
     );
   }

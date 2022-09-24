@@ -24,6 +24,6 @@ class ClusterResp {
   ClusterResp(this.instance, this.version);
 
   ClusterResp deepCopy() {
-    return new ClusterResp(instance, version);
+    return ClusterResp(instance, version);
   }
 }

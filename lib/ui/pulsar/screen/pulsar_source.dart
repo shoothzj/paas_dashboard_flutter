@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PulsarSourceScreen extends StatefulWidget {
-  PulsarSourceScreen();
+  const PulsarSourceScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new _PulsarSourceScreenState();
+    return _PulsarSourceScreenState();
   }
 }
 
@@ -56,7 +56,7 @@ class _PulsarSourceScreenState extends State<PulsarSourceScreen> {
             ChangeNotifierProvider(
               create: (context) =>
                   PulsarSourceBasicViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.sourceResp),
-              child: PulsarSourceBasicWidget(),
+              child: const PulsarSourceBasicWidget(),
             ).build(context),
           ],
         ),

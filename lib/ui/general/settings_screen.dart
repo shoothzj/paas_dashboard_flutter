@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/general/settings_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
-  SettingsScreen();
+  const SettingsScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new SettingsScreenState();
+    return SettingsScreenState();
   }
 }
 
@@ -53,11 +53,11 @@ class SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ExpansionTile(
         title: Text(S.of(context).languageSettings),
-        leading: Icon(Icons.language),
+        leading: const Icon(Icons.language),
         initiallyExpanded: false,
         children: [
-          RadioListTile(title: Text('English'), value: 'en', groupValue: vm.language, onChanged: _changed),
-          RadioListTile(title: Text('汉语'), value: 'zh', groupValue: vm.language, onChanged: _changed),
+          RadioListTile(title: const Text('English'), value: 'en', groupValue: vm.language, onChanged: _changed),
+          RadioListTile(title: const Text('汉语'), value: 'zh', groupValue: vm.language, onChanged: _changed),
         ],
       ),
     );

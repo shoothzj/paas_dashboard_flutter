@@ -23,11 +23,11 @@ import 'package:paas_dashboard_flutter/vm/sql/sql_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SqlExecuteWidget extends StatefulWidget {
-  SqlExecuteWidget();
+  const SqlExecuteWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new SqlExecuteWidgetState();
+    return SqlExecuteWidgetState();
   }
 }
 
@@ -47,7 +47,7 @@ class SqlExecuteWidgetState extends State<SqlExecuteWidget> {
     final vm = Provider.of<SqlViewModel>(context);
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: Text(vm.sql),
         ),

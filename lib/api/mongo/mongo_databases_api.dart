@@ -25,6 +25,6 @@ class MongoDatabaseApi {
     var db = await Db.create(addr);
     await db.open();
     var databases = await db.listDatabases();
-    return databases.map((name) => new DatabaseResp(name)).toList();
+    return databases.map((name) => DatabaseResp(name)).toList();
   }
 }

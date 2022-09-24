@@ -30,33 +30,33 @@ class MysqlDatabaseViewModel extends BaseLoadListPageViewModel<DatabaseResp> {
   MysqlDatabaseViewModel(this.mysqlInstancePo);
 
   int get id {
-    return this.mysqlInstancePo.id;
+    return mysqlInstancePo.id;
   }
 
   String get name {
-    return this.mysqlInstancePo.name;
+    return mysqlInstancePo.name;
   }
 
   String get host {
-    return this.mysqlInstancePo.host;
+    return mysqlInstancePo.host;
   }
 
   String get username {
-    return this.mysqlInstancePo.username;
+    return mysqlInstancePo.username;
   }
 
   String get password {
-    return this.mysqlInstancePo.password;
+    return mysqlInstancePo.password;
   }
 
   int get port {
-    return this.mysqlInstancePo.port;
+    return mysqlInstancePo.port;
   }
 
   Future<void> fetchMysqlDatabase() async {
     try {
-      this.fullList = await MysqlDatabaseApi.getDatabaseList(host, port, username, password);
-      this.displayList = this.fullList;
+      fullList = await MysqlDatabaseApi.getDatabaseList(host, port, username, password);
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;

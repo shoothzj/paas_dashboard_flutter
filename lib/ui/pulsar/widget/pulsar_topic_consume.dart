@@ -26,11 +26,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_consume_view_model
 import 'package:provider/provider.dart';
 
 class PulsarTopicConsumeWidget extends StatefulWidget {
-  PulsarTopicConsumeWidget();
+  const PulsarTopicConsumeWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTopicConsumeWidgetState();
+    return PulsarTopicConsumeWidgetState();
   }
 }
 
@@ -56,8 +56,8 @@ class PulsarTopicConsumeWidgetState extends State<PulsarTopicConsumeWidget> {
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processOpException(vm, context);
     var messageId = TextEditingController(text: vm.messageId);
-    var messageList = SingleChildScrollView();
-    if (vm.messageList.length != 0) {
+    var messageList = const SingleChildScrollView();
+    if (vm.messageList.isNotEmpty) {
       messageList = SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: DataTable(
@@ -73,7 +73,7 @@ class PulsarTopicConsumeWidgetState extends State<PulsarTopicConsumeWidget> {
                           controller: TextEditingController(text: data.entryId),
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(border: InputBorder.none),
+                          decoration: const InputDecoration(border: InputBorder.none),
                           readOnly: true,
                         ),
                       ),
@@ -82,7 +82,7 @@ class PulsarTopicConsumeWidgetState extends State<PulsarTopicConsumeWidget> {
                           controller: TextEditingController(text: data.message),
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(border: InputBorder.none),
+                          decoration: const InputDecoration(border: InputBorder.none),
                           readOnly: true,
                         ),
                       ),
@@ -94,7 +94,7 @@ class PulsarTopicConsumeWidgetState extends State<PulsarTopicConsumeWidget> {
     var body = ListView(
       children: <Widget>[
         Container(
-            margin: EdgeInsetsDirectional.only(top: 10),
+            margin: const EdgeInsetsDirectional.only(top: 10),
             child: TextButton(
               onPressed: () {
                 DatePicker.showDateTimePicker(context, showTitleActions: true, onChanged: (date) {
@@ -106,14 +106,14 @@ class PulsarTopicConsumeWidgetState extends State<PulsarTopicConsumeWidget> {
               child: Text(S.of(context).timePick),
             )),
         Container(
-          margin: EdgeInsetsDirectional.only(top: 10),
+          margin: const EdgeInsetsDirectional.only(top: 10),
           child: TextField(
             controller: searchMessageIdController,
             decoration: InputDecoration(
                 fillColor: Colors.green,
                 labelText: Text(S.of(context).searchByTimestampWithHint).data,
                 hintText: Text(S.of(context).searchByTimestampWithHint).data,
-                enabledBorder: OutlineInputBorder(
+                enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                   color: Colors.blueGrey,
                   width: 5.0,
@@ -125,24 +125,24 @@ class PulsarTopicConsumeWidgetState extends State<PulsarTopicConsumeWidget> {
           ),
         ),
         Container(
-          margin: EdgeInsetsDirectional.only(top: 10),
+          margin: const EdgeInsetsDirectional.only(top: 10),
           child: TextField(
             controller: messageId,
             maxLines: null,
             keyboardType: TextInputType.multiline,
-            decoration: InputDecoration(border: InputBorder.none),
+            decoration: const InputDecoration(border: InputBorder.none),
             readOnly: true,
           ),
         ),
         Container(
-          margin: EdgeInsetsDirectional.only(top: 10),
+          margin: const EdgeInsetsDirectional.only(top: 10),
           child: TextField(
             controller: searchTimestampController,
             decoration: InputDecoration(
                 fillColor: Colors.green,
                 labelText: Text(S.of(context).searchByMessageIdWithHint).data,
                 hintText: Text(S.of(context).searchByMessageIdWithHint).data,
-                enabledBorder: OutlineInputBorder(
+                enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                   color: Colors.blueGrey,
                   width: 5.0,
@@ -154,12 +154,12 @@ class PulsarTopicConsumeWidgetState extends State<PulsarTopicConsumeWidget> {
           ),
         ),
         Container(
-          margin: EdgeInsetsDirectional.only(top: 10),
+          margin: const EdgeInsetsDirectional.only(top: 10),
           child: TextField(
             controller: TextEditingController(text: vm.message),
             maxLines: null,
             keyboardType: TextInputType.multiline,
-            decoration: InputDecoration(border: InputBorder.none),
+            decoration: const InputDecoration(border: InputBorder.none),
             readOnly: true,
           ),
         ),

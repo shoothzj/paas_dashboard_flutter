@@ -28,7 +28,7 @@ import 'package:provider/provider.dart';
 class BkPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _BkPageState();
+    return _BkPageState();
   }
 }
 
@@ -56,7 +56,7 @@ class _BkPageState extends State<BkPage> {
         BkInstancePo.fieldList(), context, (data) => vm.createBk(data[1], data[2], data[3]));
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -64,13 +64,13 @@ class _BkPageState extends State<BkPage> {
             children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
-        Center(
+        const Center(
           child: Text('Bookkeeper Instance List'),
         ),
         SingleChildScrollView(
           child: DataTable(
             showCheckboxColumn: false,
-            columns: [
+            columns: const [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
               DataColumn(label: Text('Address')),
@@ -94,7 +94,7 @@ class _BkPageState extends State<BkPage> {
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text('Bookkeeper Dashboard'),
+          title: const Text('Bookkeeper Dashboard'),
         ),
         body: body);
   }

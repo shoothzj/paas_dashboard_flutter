@@ -26,7 +26,7 @@ class PulsarInstanceListViewModel extends ChangeNotifier {
 
   Future<void> fetchPulsarInstances() async {
     final results = await Persistent.pulsarInstances();
-    this.instances = results.map((e) => PulsarInstanceViewModel(e)).toList();
+    instances = results.map((e) => PulsarInstanceViewModel(e)).toList();
     notifyListeners();
   }
 

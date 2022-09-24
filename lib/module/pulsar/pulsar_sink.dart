@@ -30,14 +30,14 @@ class SinkConfigReq {
       this.tenant, this.namespace, this.name, this.sourceSubscriptionName, this.inputs, this.configs, this.archive);
 
   Map toJson() {
-    Map map = new Map();
-    map["name"] = this.name;
-    map["tenant"] = this.tenant;
-    map["namespace"] = this.namespace;
-    map["sourceSubscriptionName"] = this.sourceSubscriptionName;
-    map["inputs"] = this.inputs;
-    map["configs"] = this.configs;
-    map["archive"] = this.archive;
+    Map map = {};
+    map["name"] = name;
+    map["tenant"] = tenant;
+    map["namespace"] = namespace;
+    map["sourceSubscriptionName"] = sourceSubscriptionName;
+    map["inputs"] = inputs;
+    map["configs"] = configs;
+    map["archive"] = archive;
     return map;
   }
 }
@@ -63,7 +63,7 @@ class SinkResp {
   SinkResp(this.sinkName);
 
   SinkResp deepCopy() {
-    return new SinkResp(this.sinkName);
+    return SinkResp(sinkName);
   }
 
   @override
@@ -78,8 +78,8 @@ class PulsarSink {
   PulsarSink(this.serviceUrl);
 
   Map toJson() {
-    Map map = new Map();
-    map["serviceUrl"] = this.serviceUrl;
+    Map map = {};
+    map["serviceUrl"] = serviceUrl;
     return map;
   }
 }

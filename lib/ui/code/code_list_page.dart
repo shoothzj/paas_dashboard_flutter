@@ -29,7 +29,7 @@ import 'package:provider/provider.dart';
 class CodeListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _CodeListPageState();
+    return _CodeListPageState();
   }
 }
 
@@ -57,7 +57,7 @@ class _CodeListPageState extends State<CodeListPage> {
         FormUtil.createImportButton(CodePo.fieldList(), context, (data) => vm.createCode(data[1], data[2]));
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -65,13 +65,13 @@ class _CodeListPageState extends State<CodeListPage> {
             children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
-        Center(
+        const Center(
           child: Text('Code List'),
         ),
         SingleChildScrollView(
           child: DataTable(
             showCheckboxColumn: false,
-            columns: [
+            columns: const [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
               DataColumn(label: Text('Code')),
@@ -97,7 +97,7 @@ class _CodeListPageState extends State<CodeListPage> {
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text('Code Dashboard'),
+          title: const Text('Code Dashboard'),
         ),
         body: body);
   }

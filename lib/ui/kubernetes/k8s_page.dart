@@ -28,7 +28,7 @@ import 'package:provider/provider.dart';
 class K8sPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _K8sPageState();
+    return _K8sPageState();
   }
 }
 
@@ -53,7 +53,7 @@ class _K8sPageState extends State<K8sPage> {
         vm.instances.map((e) => e.k8sInstancePo.toMap().values.toList()).toList(), context);
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -61,13 +61,13 @@ class _K8sPageState extends State<K8sPage> {
             children: [refreshButton, exportButton],
           ),
         ),
-        Center(
+        const Center(
           child: Text('Kubernetes Instance List'),
         ),
         SingleChildScrollView(
           child: DataTable(
             showCheckboxColumn: false,
-            columns: [
+            columns: const [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
               DataColumn(label: Text('Delete instance')),
@@ -87,7 +87,7 @@ class _K8sPageState extends State<K8sPage> {
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text('Kubernetes Dashboard'),
+          title: const Text('Kubernetes Dashboard'),
         ),
         body: body);
   }

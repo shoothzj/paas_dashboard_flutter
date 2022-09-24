@@ -24,11 +24,11 @@ import 'package:paas_dashboard_flutter/vm/mongo/mongo_instance_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MongoInstanceScreen extends StatefulWidget {
-  MongoInstanceScreen();
+  const MongoInstanceScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new _MongoInstanceState();
+    return _MongoInstanceState();
   }
 }
 
@@ -43,7 +43,7 @@ class _MongoInstanceState extends State<MongoInstanceScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Mongo ${vm.name} Dashboard'),
-          bottom: TabBar(
+          bottom: const TabBar(
             tabs: [
               Tab(
                 text: "Databases",
@@ -55,7 +55,7 @@ class _MongoInstanceState extends State<MongoInstanceScreen> {
           children: [
             ChangeNotifierProvider(
               create: (context) => MongoDatabaseListViewModel(vm.mongoInstancePo.deepCopy()),
-              child: MongoDatabaseListWidget(),
+              child: const MongoDatabaseListWidget(),
             ).build(context),
           ],
         ),

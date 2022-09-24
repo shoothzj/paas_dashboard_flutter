@@ -24,7 +24,7 @@ class ConfirmButton extends StatelessWidget {
   final String name;
   final VoidCallback voidCallback;
 
-  ConfirmButton(this.name, this.voidCallback);
+  const ConfirmButton(this.name, this.voidCallback);
 
   @override
   Widget build(BuildContext context) {

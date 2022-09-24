@@ -25,14 +25,14 @@ import 'package:dio/dio.dart';
 import 'package:paas_dashboard_flutter/api/tls_context.dart';
 
 class HttpUtil {
-  static final String http = "http://";
-  static final String https = "https://";
+  static const String http = "http://";
+  static const String https = "https://";
   static const int CONNECT_TIMEOUT = 10000;
   static const int RECEIVE_TIMEOUT = 10000;
   static Map<SERVER, Map<int, Dio>> clients = {};
 
   static Dio getClient(TlsContext tlsContext, SERVER service, int id) {
-    clients.putIfAbsent(service, () => new HashMap.identity());
+    clients.putIfAbsent(service, () => HashMap.identity());
     clients[service]!.putIfAbsent(id, () => createClient(tlsContext));
     return clients[service]![id]!;
   }
@@ -42,7 +42,7 @@ class HttpUtil {
       connectTimeout: CONNECT_TIMEOUT,
       receiveTimeout: RECEIVE_TIMEOUT,
     );
-    Dio client = new Dio(options);
+    Dio client = Dio(options);
     if (!tlsContext.enableTls) {
       return client;
     }
@@ -56,7 +56,7 @@ class HttpUtil {
     context.setTrustedCertificates(tlsContext.caFile);
 
     (client.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-      HttpClient httpClient = new HttpClient(context: context);
+      HttpClient httpClient = HttpClient(context: context);
       httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) {
         return true;
       };

@@ -29,7 +29,7 @@ import 'package:provider/provider.dart';
 class MysqlInstanceScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _MysqlInstanceState();
+    return _MysqlInstanceState();
   }
 }
 
@@ -56,11 +56,11 @@ class _MysqlInstanceState extends State<MysqlInstanceScreen> {
           children: [
             ChangeNotifierProvider(
               create: (context) => MysqlDatabaseViewModel(vm.mysqlInstancePo.deepCopy()),
-              child: MysqlDatabaseWidget(),
+              child: const MysqlDatabaseWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) => vm.deepCopy(),
-              child: MysqlUserWidget(),
+              child: const MysqlUserWidget(),
             ).build(context)
           ],
         ),

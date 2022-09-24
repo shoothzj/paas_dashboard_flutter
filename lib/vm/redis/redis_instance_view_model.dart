@@ -30,31 +30,31 @@ class RedisInstanceViewModel extends BaseLoadViewModel {
   dynamic result = "";
 
   RedisInstanceViewModel deepCopy() {
-    return new RedisInstanceViewModel(redisInstancePo.deepCopy());
+    return RedisInstanceViewModel(redisInstancePo.deepCopy());
   }
 
   int get id {
-    return this.redisInstancePo.id;
+    return redisInstancePo.id;
   }
 
   String get name {
-    return this.redisInstancePo.name;
+    return redisInstancePo.name;
   }
 
   String get ip {
-    return this.redisInstancePo.ip;
+    return redisInstancePo.ip;
   }
 
   String get password {
-    return this.redisInstancePo.password;
+    return redisInstancePo.password;
   }
 
   int get port {
-    return this.redisInstancePo.port;
+    return redisInstancePo.port;
   }
 
   String get executeResult {
-    return this.result.toString();
+    return result.toString();
   }
 
   Future<void> execute(OP op, List<String> value) async {

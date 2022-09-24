@@ -27,7 +27,7 @@ class PulsarLookupApi {
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String topic) async {
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http + '$host:${port.toString()}/lookup/v2/topic/persistent/$tenant/$namespace/$topic';
+        : '${HttpUtil.http}$host:${port.toString()}/lookup/v2/topic/persistent/$tenant/$namespace/$topic';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');

@@ -26,7 +26,7 @@ class MysqlInstanceListViewModel extends ChangeNotifier {
 
   Future<void> fetchMysqlInstances() async {
     final results = await Persistent.mysqlInstances();
-    this.instances = results.map((e) => MysqlInstanceViewModel(e)).toList();
+    instances = results.map((e) => MysqlInstanceViewModel(e)).toList();
     notifyListeners();
   }
 

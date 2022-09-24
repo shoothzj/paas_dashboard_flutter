@@ -35,11 +35,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PulsarTopic extends StatefulWidget {
-  PulsarTopic();
+  const PulsarTopic();
 
   @override
   State<StatefulWidget> createState() {
-    return new _PulsarTopicState();
+    return _PulsarTopicState();
   }
 }
 
@@ -71,32 +71,32 @@ class _PulsarTopicState extends State<PulsarTopic> {
             ChangeNotifierProvider(
               create: (context) =>
                   PulsarTopicBasicViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarTopicBasicWidget(),
+              child: const PulsarTopicBasicWidget(),
             ).build(context),
             ChangeNotifierProvider(
-              create: (context) => new PulsarTopicSubscriptionViewModel(
-                  vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarTopicSubscriptionWidget(),
+              create: (context) =>
+                  PulsarTopicSubscriptionViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
+              child: const PulsarTopicSubscriptionWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) =>
                   PulsarTopicConsumerViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarTopicConsumerWidget(),
+              child: const PulsarTopicConsumerWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) =>
                   PulsarTopicProducerViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarTopicProducerWidget(),
+              child: const PulsarTopicProducerWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) =>
                   PulsarTopicConsumeViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarTopicConsumeWidget(),
+              child: const PulsarTopicConsumeWidget(),
             ).build(context),
             ChangeNotifierProvider(
               create: (context) =>
                   PulsarTopicProduceViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.topicResp),
-              child: PulsarTopicProduceWidget(),
+              child: const PulsarTopicProduceWidget(),
             ).build(context),
           ],
         ),

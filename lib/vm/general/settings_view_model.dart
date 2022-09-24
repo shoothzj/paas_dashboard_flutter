@@ -28,18 +28,18 @@ class SettingsViewModel extends ChangeNotifier {
 
   SettingsViewModel() {
     if (!kIsWeb) {
-      this.language = Platform.localeName.split("_")[0];
+      language = Platform.localeName.split("_")[0];
     }
   }
 
   void setLan(String lan) {
-    this.language = lan;
+    language = lan;
     switch (lan) {
       case "zh":
-        S.load(Locale('zh', 'CN'));
+        S.load(const Locale('zh', 'CN'));
         break;
       case "en":
-        S.load(Locale('en', 'US'));
+        S.load(const Locale('en', 'US'));
         break;
     }
     notifyListeners();

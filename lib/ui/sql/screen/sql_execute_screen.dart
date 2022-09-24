@@ -23,11 +23,11 @@ import 'package:paas_dashboard_flutter/vm/sql/sql_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SqlExecuteScreen extends StatefulWidget {
-  SqlExecuteScreen();
+  const SqlExecuteScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new SqlExecuteScreenState();
+    return SqlExecuteScreenState();
   }
 }
 
@@ -49,11 +49,11 @@ class SqlExecuteScreenState extends State<SqlExecuteScreen> {
       length: 1,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Sql Execute'),
+          title: const Text('Sql Execute'),
         ),
         body: ChangeNotifierProvider(
           create: (context) => vm.deepCopy(),
-          child: SqlExecuteWidget(),
+          child: const SqlExecuteWidget(),
         ).build(context),
       ),
     );

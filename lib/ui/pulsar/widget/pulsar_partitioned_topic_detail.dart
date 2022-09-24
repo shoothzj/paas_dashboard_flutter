@@ -28,11 +28,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PulsarPartitionedTopicDetailWidget extends StatefulWidget {
-  PulsarPartitionedTopicDetailWidget();
+  const PulsarPartitionedTopicDetailWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarPartitionedTopicDetailWidgetState();
+    return PulsarPartitionedTopicDetailWidgetState();
   }
 }
 
@@ -57,7 +57,7 @@ class PulsarPartitionedTopicDetailWidgetState extends State<PulsarPartitionedTop
     var partitionsFuture = SingleChildScrollView(
       child: DataTable(
           showCheckboxColumn: false,
-          columns: [
+          columns: const [
             DataColumn(label: Text('TopicName')),
             DataColumn(label: Text('BacklogSize')),
           ],
@@ -67,8 +67,8 @@ class PulsarPartitionedTopicDetailWidgetState extends State<PulsarPartitionedTop
                         var split = itemRow.topicName.split("/");
                         var topicResp = TopicResp(split[split.length - 1]);
                         Navigator.pushNamed(context, PageRouteConst.PulsarTopic,
-                            arguments: new PulsarTopicViewModel(
-                                vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, topicResp));
+                            arguments:
+                                PulsarTopicViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, topicResp));
                       },
                       cells: [
                         DataCell(
@@ -87,7 +87,7 @@ class PulsarPartitionedTopicDetailWidgetState extends State<PulsarPartitionedTop
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -97,7 +97,7 @@ class PulsarPartitionedTopicDetailWidgetState extends State<PulsarPartitionedTop
         ),
         Text(
           S.of(context).consumerList,
-          style: TextStyle(fontSize: 22),
+          style: const TextStyle(fontSize: 22),
         ),
         partitionsFuture,
       ],

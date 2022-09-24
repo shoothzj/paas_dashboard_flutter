@@ -28,7 +28,7 @@ class K8sInstanceListViewModel extends ChangeNotifier {
 
   Future<void> fetchKubernetesInstances() async {
     final results = await Persistent.kubernetesInstances();
-    this.instances = results.map((e) => K8sInstanceViewModel(e)).toList();
+    instances = results.map((e) => K8sInstanceViewModel(e)).toList();
     notifyListeners();
   }
 

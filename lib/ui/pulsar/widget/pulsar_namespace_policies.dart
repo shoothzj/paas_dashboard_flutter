@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_namespace_policies_view_
 import 'package:provider/provider.dart';
 
 class PulsarNamespacePoliciesWidget extends StatefulWidget {
-  PulsarNamespacePoliciesWidget();
+  const PulsarNamespacePoliciesWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarNamespacePoliciesWidgetState();
+    return PulsarNamespacePoliciesWidgetState();
   }
 }
 
@@ -72,7 +72,7 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -80,16 +80,16 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
             children: [refreshButton],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "autoTopicCreation"),
+            decoration: const InputDecoration(labelText: "autoTopicCreation"),
             controller: autoTopicCreationController,
           ),
         ),
         Container(
           height: 20,
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -101,24 +101,24 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
                     vm.updateAutoTopicCreate();
                   },
                   style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 0)),
                       backgroundColor: MaterialStateProperty.all(Colors.grey),
                       overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
                   child: Text(S.of(context).submit,
-                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+                      style: const TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "messageTTLSecond"),
+            decoration: const InputDecoration(labelText: "messageTTLSecond"),
             controller: messageTTLController,
           ),
         ),
         Container(
           height: 20,
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -129,24 +129,24 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
                     vm.setMessageTTLSecond();
                   },
                   style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 0)),
                       backgroundColor: MaterialStateProperty.all(Colors.grey),
                       overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
                   child: Text(S.of(context).submit,
-                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+                      style: const TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "maxProducersPerTopic"),
+            decoration: const InputDecoration(labelText: "maxProducersPerTopic"),
             controller: maxProducersPerTopicController,
           ),
         ),
         Container(
           height: 20,
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -157,24 +157,24 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
                     vm.setMaxProducersPerTopic();
                   },
                   style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 0)),
                       backgroundColor: MaterialStateProperty.all(Colors.grey),
                       overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
                   child: Text(S.of(context).submit,
-                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+                      style: const TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "maxConsumersPerTopic"),
+            decoration: const InputDecoration(labelText: "maxConsumersPerTopic"),
             controller: maxConsumersPerTopicController,
           ),
         ),
         Container(
           height: 20,
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -185,24 +185,24 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
                     vm.setMaxConsumersPerTopic();
                   },
                   style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 0)),
                       backgroundColor: MaterialStateProperty.all(Colors.grey),
                       overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
                   child: Text(S.of(context).submit,
-                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+                      style: const TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "maxConsumersPerSubscription"),
+            decoration: const InputDecoration(labelText: "maxConsumersPerSubscription"),
             controller: maxConsumerPerSubscriptionController,
           ),
         ),
         Container(
           height: 20,
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -213,24 +213,24 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
                     vm.setMaxConsumersPerSubscription();
                   },
                   style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 0)),
                       backgroundColor: MaterialStateProperty.all(Colors.grey),
                       overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
                   child: Text(S.of(context).submit,
-                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+                      style: const TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "maxUnackedMessagesPerConsumer"),
+            decoration: const InputDecoration(labelText: "maxUnackedMessagesPerConsumer"),
             controller: maxUnAckedPerConsumersController,
           ),
         ),
         Container(
           height: 20,
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -241,24 +241,24 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
                     vm.setMaxUnackedMessagesPerConsumer();
                   },
                   style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 0)),
                       backgroundColor: MaterialStateProperty.all(Colors.grey),
                       overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
                   child: Text(S.of(context).submit,
-                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+                      style: const TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "maxUnackedMessagesPerSubscription"),
+            decoration: const InputDecoration(labelText: "maxUnackedMessagesPerSubscription"),
             controller: maxUnAckedPerSubscriptionController,
           ),
         ),
         Container(
           height: 20,
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -269,24 +269,24 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
                     vm.setMaxUnackedMessagesPerSubscription();
                   },
                   style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 0)),
                       backgroundColor: MaterialStateProperty.all(Colors.grey),
                       overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
                   child: Text(S.of(context).submit,
-                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+                      style: const TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "maxSubscriptionsPerTopic"),
+            decoration: const InputDecoration(labelText: "maxSubscriptionsPerTopic"),
             controller: maxSubscriptionController,
           ),
         ),
         Container(
           height: 20,
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -297,24 +297,24 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
                     vm.setMaxSubscriptionsPerTopic();
                   },
                   style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 0)),
                       backgroundColor: MaterialStateProperty.all(Colors.grey),
                       overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
                   child: Text(S.of(context).submit,
-                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+                      style: const TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: TextFormField(
-            decoration: InputDecoration(labelText: "maxTopicsPerNamespace"),
+            decoration: const InputDecoration(labelText: "maxTopicsPerNamespace"),
             controller: maxTopicsPerNamespacesController,
           ),
         ),
         Container(
           height: 20,
-          padding: EdgeInsets.only(left: 0),
+          padding: const EdgeInsets.only(left: 0),
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
@@ -325,11 +325,11 @@ class PulsarNamespacePoliciesWidgetState extends State<PulsarNamespacePoliciesWi
                     vm.setMaxTopicsPerNamespace();
                   },
                   style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.only(left: 0)),
+                      padding: MaterialStateProperty.all(const EdgeInsets.only(left: 0)),
                       backgroundColor: MaterialStateProperty.all(Colors.grey),
                       overlayColor: MaterialStateProperty.all(Colors.lightGreen)),
                   child: Text(S.of(context).submit,
-                      style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
+                      style: const TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.left))
             ],
           ),
         ),

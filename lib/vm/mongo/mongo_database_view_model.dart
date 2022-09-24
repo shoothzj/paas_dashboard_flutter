@@ -28,7 +28,7 @@ class MongoDatabaseViewModel extends ChangeNotifier {
   MongoDatabaseViewModel(this.mongoInstancePo, this.databaseResp);
 
   MongoDatabaseViewModel deepCopy() {
-    return new MongoDatabaseViewModel(mongoInstancePo.deepCopy(), databaseResp.deepCopy());
+    return MongoDatabaseViewModel(mongoInstancePo.deepCopy(), databaseResp.deepCopy());
   }
 
   String get name {

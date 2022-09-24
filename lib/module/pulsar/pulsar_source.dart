@@ -28,13 +28,13 @@ class SourceConfigReq {
   SourceConfigReq(this.name, this.tenant, this.namespace, this.topicName, this.configs, this.archive);
 
   Map toJson() {
-    Map map = new Map();
-    map["name"] = this.name;
-    map["tenant"] = this.tenant;
-    map["namespace"] = this.namespace;
-    map["topicName"] = this.topicName;
-    map["configs"] = this.configs;
-    map["archive"] = this.archive;
+    Map map = {};
+    map["name"] = name;
+    map["tenant"] = tenant;
+    map["namespace"] = namespace;
+    map["topicName"] = topicName;
+    map["configs"] = configs;
+    map["archive"] = archive;
     return map;
   }
 }
@@ -61,6 +61,6 @@ class SourceResp {
   SourceResp(this.sourceName);
 
   SourceResp deepCopy() {
-    return new SourceResp(this.sourceName);
+    return SourceResp(sourceName);
   }
 }

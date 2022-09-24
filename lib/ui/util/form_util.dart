@@ -33,7 +33,7 @@ class FormUtil {
   static const String CANCEL = 'cancel';
   static const String CREATE = 'create';
 
-  static Map<String, Map<String, String>> lastMap = new HashMap();
+  static Map<String, Map<String, String>> lastMap = HashMap();
 
   static ButtonStyleButton createButton5(String resourceName, List<FormFieldDef> formFieldDefList, BuildContext context,
       Function(String, String, String, String, String) callback) {
@@ -98,14 +98,14 @@ class FormUtil {
               builder: (BuildContext context) {
                 return AlertDialog(
                   scrollable: true,
-                  title: Text(resourceName + ' Form'),
+                  title: Text('$resourceName Form'),
                   content: Form(
                       child: Column(
                     children: formFieldsList,
                   )),
                   actions: [
                     ElevatedButton(
-                      child: Text(CREATE),
+                      child: const Text(CREATE),
                       onPressed: () {
                         var list = editControllerList.map((e) => e.value.text).toList();
                         callback(list);
@@ -115,7 +115,7 @@ class FormUtil {
                       },
                     ),
                     ElevatedButton(
-                      child: Text(CANCEL),
+                      child: const Text(CANCEL),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -124,7 +124,7 @@ class FormUtil {
                 );
               });
         },
-        child: Text('Create ' + resourceName));
+        child: Text('Create $resourceName'));
   }
 
   static ButtonStyleButton createButton2NoText(String resourceName, List<FormFieldDef> formFieldDefList,
@@ -163,7 +163,7 @@ class FormUtil {
                   )),
                   actions: [
                     ElevatedButton(
-                      child: Text(CREATE),
+                      child: const Text(CREATE),
                       onPressed: () {
                         var list = editControllerList.map((e) => e.value.text).toList();
                         callback(list);
@@ -173,7 +173,7 @@ class FormUtil {
                       },
                     ),
                     ElevatedButton(
-                      child: Text(CANCEL),
+                      child: const Text(CANCEL),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -230,14 +230,14 @@ class FormUtil {
               builder: (BuildContext context) {
                 return AlertDialog(
                   scrollable: true,
-                  title: Text(resourceName + ' Form'),
+                  title: Text('$resourceName Form'),
                   content: Form(
                       child: Column(
                     children: formFieldsList,
                   )),
                   actions: [
                     ElevatedButton(
-                      child: Text(CREATE),
+                      child: const Text(CREATE),
                       onPressed: () {
                         var list = editControllerList.map((e) => e.value.text).toList();
                         callback(list);
@@ -247,7 +247,7 @@ class FormUtil {
                       },
                     ),
                     ElevatedButton(
-                      child: Text(CANCEL),
+                      child: const Text(CANCEL),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -256,7 +256,7 @@ class FormUtil {
                 );
               });
         },
-        child: Text('Update ' + resourceName));
+        child: Text('Update $resourceName'));
   }
 
   static ButtonStyleButton createExportButton(List<String> header, List<List<dynamic>> data, BuildContext context) {
@@ -272,14 +272,14 @@ class FormUtil {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return new AlertDialog(
+              return AlertDialog(
                   title: Text(
                     rs ? S.of(context).success : S.of(context).failure + error,
                     textAlign: TextAlign.center,
                   ),
                   actions: [
-                    new TextButton(
-                      child: new Text(S.of(context).confirm),
+                    TextButton(
+                      child: Text(S.of(context).confirm),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -300,38 +300,38 @@ class FormUtil {
           try {
             rs = await CsvUtils.import();
             // csv header index, which means csv header can change location
-            Map<String, int> indexMap = new HashMap();
+            Map<String, int> indexMap = HashMap();
             int index = 0;
             // get title and validate
-            rs[0].forEach((element) {
+            for (var element in rs[0]) {
               if (!fieldSet.contains(element)) {
                 throw Exception('import file wrong,invalid column field $element');
               }
               indexMap[element] = index++;
-            });
+            }
             // remove header
             rs.removeAt(0);
-            rs.forEach((dataElement) {
+            for (var dataElement in rs) {
               var dataList = <dynamic>[];
-              fieldSet.forEach((fieldName) {
+              for (var fieldName in fieldSet) {
                 dataList.add(dataElement[indexMap[fieldName]!]);
-              });
+              }
               callback(dataList);
-            });
+            }
           } on Exception catch (e) {
             error = e.toString();
           }
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return new AlertDialog(
+              return AlertDialog(
                   title: Text(
                     error == "" ? S.of(context).success : S.of(context).failure + error,
                     textAlign: TextAlign.center,
                   ),
                   actions: [
-                    new TextButton(
-                      child: new Text(S.of(context).confirm),
+                    TextButton(
+                      child: Text(S.of(context).confirm),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },

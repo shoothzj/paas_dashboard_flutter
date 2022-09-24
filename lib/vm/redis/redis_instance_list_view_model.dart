@@ -26,7 +26,7 @@ class RedisInstanceListViewModel extends ChangeNotifier {
 
   Future<void> fetchRedisInstances() async {
     final results = await Persistent.redisInstances();
-    this.instances = results.map((e) => RedisInstanceViewModel(e)).toList();
+    instances = results.map((e) => RedisInstanceViewModel(e)).toList();
     notifyListeners();
   }
 

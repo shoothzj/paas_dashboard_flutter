@@ -23,7 +23,7 @@ import 'package:paas_dashboard_flutter/generated/l10n.dart';
 class ClearBacklogButton extends StatelessWidget {
   final VoidCallback voidCallback;
 
-  ClearBacklogButton(this.voidCallback);
+  const ClearBacklogButton(this.voidCallback);
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +59,6 @@ class ClearBacklogButton extends StatelessWidget {
                 );
               });
         },
-        icon: Icon(Icons.delete));
+        icon: const Icon(Icons.delete));
   }
 }

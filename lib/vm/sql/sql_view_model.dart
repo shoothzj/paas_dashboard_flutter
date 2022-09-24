@@ -26,18 +26,18 @@ class SqlViewModel extends ChangeNotifier {
   SqlViewModel(this.sqlPo);
 
   SqlViewModel deepCopy() {
-    return new SqlViewModel(sqlPo.deepCopy());
+    return SqlViewModel(sqlPo.deepCopy());
   }
 
   int get id {
-    return this.sqlPo.id;
+    return sqlPo.id;
   }
 
   String get name {
-    return this.sqlPo.name;
+    return sqlPo.name;
   }
 
   String get sql {
-    return this.sqlPo.sql;
+    return sqlPo.sql;
   }
 }

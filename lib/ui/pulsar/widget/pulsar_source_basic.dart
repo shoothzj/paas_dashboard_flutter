@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_basic_view_model.
 import 'package:provider/provider.dart';
 
 class PulsarSourceBasicWidget extends StatefulWidget {
-  PulsarSourceBasicWidget();
+  const PulsarSourceBasicWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarSourceBasicWidgetState();
+    return PulsarSourceBasicWidgetState();
   }
 }
 
@@ -54,7 +54,7 @@ class PulsarSourceBasicWidgetState extends State<PulsarSourceBasicWidget> {
     var refreshButton = TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -62,7 +62,7 @@ class PulsarSourceBasicWidgetState extends State<PulsarSourceBasicWidget> {
             children: [refreshButton],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -70,12 +70,12 @@ class PulsarSourceBasicWidgetState extends State<PulsarSourceBasicWidget> {
             children: [
               Text(
                 'output is ${vm.topicName}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -83,12 +83,12 @@ class PulsarSourceBasicWidgetState extends State<PulsarSourceBasicWidget> {
             children: [
               Text(
                 'configs is ${vm.configs}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -96,7 +96,7 @@ class PulsarSourceBasicWidgetState extends State<PulsarSourceBasicWidget> {
             children: [
               Text(
                 'archive is ${vm.archive}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),

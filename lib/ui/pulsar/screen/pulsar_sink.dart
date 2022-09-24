@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_sink_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PulsarSinkScreen extends StatefulWidget {
-  PulsarSinkScreen();
+  const PulsarSinkScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new _PulsarSinkScreenState();
+    return _PulsarSinkScreenState();
   }
 }
 
@@ -56,7 +56,7 @@ class _PulsarSinkScreenState extends State<PulsarSinkScreen> {
             ChangeNotifierProvider(
               create: (context) =>
                   PulsarSinkBasicViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp, vm.sinkResp),
-              child: PulsarSinkBasicWidget(),
+              child: const PulsarSinkBasicWidget(),
             ).build(context),
           ],
         ),

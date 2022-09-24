@@ -29,7 +29,9 @@ class PulsarTenantViewModel extends BaseLoadListPageViewModel<PulsarNamespaceVie
   final PulsarInstancePo pulsarInstancePo;
   final TenantResp tenantResp;
 
+  @override
   List<PulsarNamespaceViewModel> displayList = <PulsarNamespaceViewModel>[];
+  @override
   List<PulsarNamespaceViewModel> fullList = <PulsarNamespaceViewModel>[];
 
   double progress = 0;
@@ -37,40 +39,40 @@ class PulsarTenantViewModel extends BaseLoadListPageViewModel<PulsarNamespaceVie
   PulsarTenantViewModel(this.pulsarInstancePo, this.tenantResp);
 
   PulsarTenantViewModel deepCopy() {
-    return new PulsarTenantViewModel(pulsarInstancePo.deepCopy(), tenantResp.deepCopy());
+    return PulsarTenantViewModel(pulsarInstancePo.deepCopy(), tenantResp.deepCopy());
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   double getProgress() {
-    return this.progress;
+    return progress;
   }
 
   Future<void> fetchNamespaces() async {
     try {
       final results =
           await PulsarNamespaceApi.getNamespaces(id, host, port, pulsarInstancePo.createTlsContext(), tenant);
-      this.fullList = results.map((e) => PulsarNamespaceViewModel(pulsarInstancePo, tenantResp, e)).toList();
-      this.displayList = this.fullList;
-      this.progress = 0;
+      fullList = results.map((e) => PulsarNamespaceViewModel(pulsarInstancePo, tenantResp, e)).toList();
+      displayList = fullList;
+      progress = 0;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -81,12 +83,12 @@ class PulsarTenantViewModel extends BaseLoadListPageViewModel<PulsarNamespaceVie
 
   Future<void> filter(String str) async {
     if (str == "") {
-      this.displayList = this.fullList;
+      displayList = fullList;
       notifyListeners();
       return;
     }
     if (!loading && loadException == null) {
-      this.displayList = this.fullList.where((element) => element.namespace.contains(str)).toList();
+      displayList = fullList.where((element) => element.namespace.contains(str)).toList();
     }
     notifyListeners();
   }
@@ -120,7 +122,7 @@ class PulsarTenantViewModel extends BaseLoadListPageViewModel<PulsarNamespaceVie
         PulsarNamespaceViewModel temp = fullList[i];
         final topics = await PulsarPartitionedTopicApi.getTopics(
             id, host, port, pulsarInstancePo.createTlsContext(), tenant, temp.namespace);
-        topicList.addAll(topics.map((e) => new Pair(temp.namespace, e.topicName)).toList());
+        topicList.addAll(topics.map((e) => Pair(temp.namespace, e.topicName)).toList());
       }
       for (int i = 0; i < topicList.length; i++) {
         Pair<String, String> temp = topicList[i];

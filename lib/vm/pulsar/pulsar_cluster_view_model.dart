@@ -31,27 +31,27 @@ class PulsarClusterViewModel extends BaseLoadListPageViewModel<ClusterResp> {
   PulsarClusterViewModel(this.pulsarInstancePo);
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   Future<void> fetchPulsarCluster() async {
     try {
-      TlsContext tlsContext = new TlsContext(pulsarInstancePo.enableTls, pulsarInstancePo.caFile,
+      TlsContext tlsContext = TlsContext(pulsarInstancePo.enableTls, pulsarInstancePo.caFile,
           pulsarInstancePo.clientCertFile, pulsarInstancePo.clientKeyFile, pulsarInstancePo.clientKeyPassword);
-      this.fullList = await PulsarClusterApi.cluster(id, host, port, tlsContext);
-      this.displayList = this.fullList;
+      fullList = await PulsarClusterApi.cluster(id, host, port, tlsContext);
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;

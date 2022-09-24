@@ -28,11 +28,11 @@ import 'package:provider/provider.dart';
 
 /// mysql database list windows
 class MysqlDatabaseWidget extends StatefulWidget {
-  MysqlDatabaseWidget();
+  const MysqlDatabaseWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new MysqlDatabaseScreenState();
+    return MysqlDatabaseScreenState();
   }
 }
 
@@ -68,7 +68,7 @@ class MysqlDatabaseScreenState extends State<MysqlDatabaseWidget> {
               .map((data) => DataRow(
                       onSelectChanged: (bool? select) {
                         MysqlTablesViewModel tablesViewModel =
-                            new MysqlTablesViewModel(vm.mysqlInstancePo.deepCopy(), data.databaseName);
+                            MysqlTablesViewModel(vm.mysqlInstancePo.deepCopy(), data.databaseName);
                         Navigator.pushNamed(context, PageRouteConst.MysqlDatabase,
                             arguments: tablesViewModel.deepCopy());
                       },
@@ -86,7 +86,7 @@ class MysqlDatabaseScreenState extends State<MysqlDatabaseWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -94,7 +94,7 @@ class MysqlDatabaseScreenState extends State<MysqlDatabaseWidget> {
             children: [refreshButton],
           ),
         ),
-        Text(
+        const Text(
           'Mysql Database',
           style: TextStyle(fontSize: 22),
         ),

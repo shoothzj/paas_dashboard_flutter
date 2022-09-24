@@ -30,7 +30,7 @@ import 'package:provider/provider.dart';
 class MysqlPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _MysqlPageState();
+    return _MysqlPageState();
   }
 }
 
@@ -58,7 +58,7 @@ class _MysqlPageState extends State<MysqlPage> {
         (data) => vm.createMysql(data[1].toString(), data[2], data[3], data[4].toString(), data[5].toString()));
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -66,13 +66,13 @@ class _MysqlPageState extends State<MysqlPage> {
             children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
-        Center(
+        const Center(
           child: Text('Mysql Instance List'),
         ),
         SingleChildScrollView(
           child: DataTable(
             showCheckboxColumn: false,
-            columns: [
+            columns: const [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
               DataColumn(label: Text('Host')),
@@ -102,7 +102,7 @@ class _MysqlPageState extends State<MysqlPage> {
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text('Mysql Dashboard'),
+          title: const Text('Mysql Dashboard'),
         ),
         body: body);
   }

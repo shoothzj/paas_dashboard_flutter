@@ -34,41 +34,41 @@ class MysqlTablesViewModel extends BaseLoadListPageViewModel<TableResp> {
   MysqlTablesViewModel(this.mysqlInstancePo, this.dbname);
 
   int get id {
-    return this.mysqlInstancePo.id;
+    return mysqlInstancePo.id;
   }
 
   String get name {
-    return this.mysqlInstancePo.name;
+    return mysqlInstancePo.name;
   }
 
   String get host {
-    return this.mysqlInstancePo.host;
+    return mysqlInstancePo.host;
   }
 
   String get username {
-    return this.mysqlInstancePo.username;
+    return mysqlInstancePo.username;
   }
 
   String get password {
-    return this.mysqlInstancePo.password;
+    return mysqlInstancePo.password;
   }
 
   int get port {
-    return this.mysqlInstancePo.port;
+    return mysqlInstancePo.port;
   }
 
   String getDbname() {
-    return this.dbname;
+    return dbname;
   }
 
   String getTableName() {
-    return this.tableName == null ? "" : this.tableName!;
+    return tableName == null ? "" : tableName!;
   }
 
   Future<void> fetchMysqlTables() async {
     try {
-      this.fullList = await MysqlDatabaseApi.getTableList(host, port, username, password, dbname);
-      this.displayList = this.fullList;
+      fullList = await MysqlDatabaseApi.getTableList(host, port, username, password, dbname);
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -79,17 +79,17 @@ class MysqlTablesViewModel extends BaseLoadListPageViewModel<TableResp> {
 
   Future<void> filter(String str) async {
     if (str == "") {
-      this.displayList = this.fullList;
+      displayList = fullList;
       notifyListeners();
       return;
     }
     if (!loading && loadException == null) {
-      this.displayList = this.fullList.where((element) => element.tableName.contains(str)).toList();
+      displayList = fullList.where((element) => element.tableName.contains(str)).toList();
     }
     notifyListeners();
   }
 
   MysqlTablesViewModel deepCopy() {
-    return new MysqlTablesViewModel(mysqlInstancePo.deepCopy(), dbname);
+    return MysqlTablesViewModel(mysqlInstancePo.deepCopy(), dbname);
   }
 }

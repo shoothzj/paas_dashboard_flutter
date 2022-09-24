@@ -27,11 +27,11 @@ import 'package:paas_dashboard_flutter/vm/mongo/mongo_table_list_view_model.dart
 import 'package:provider/provider.dart';
 
 class MongoTableListWidget extends StatefulWidget {
-  MongoTableListWidget();
+  const MongoTableListWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new MongoTableListWidgetState();
+    return MongoTableListWidgetState();
   }
 }
 
@@ -92,7 +92,7 @@ class MongoTableListWidgetState extends State<MongoTableListWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,

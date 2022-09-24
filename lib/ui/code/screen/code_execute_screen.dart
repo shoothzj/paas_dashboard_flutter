@@ -23,11 +23,11 @@ import 'package:paas_dashboard_flutter/vm/code/code_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CodeExecuteScreen extends StatefulWidget {
-  CodeExecuteScreen();
+  const CodeExecuteScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new CodeExecuteScreenState();
+    return CodeExecuteScreenState();
   }
 }
 
@@ -49,11 +49,11 @@ class CodeExecuteScreenState extends State<CodeExecuteScreen> {
       length: 1,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Code Execute'),
+          title: const Text('Code Execute'),
         ),
         body: ChangeNotifierProvider(
           create: (context) => vm.deepCopy(),
-          child: CodeExecuteWidget(),
+          child: const CodeExecuteWidget(),
         ).build(context),
       ),
     );

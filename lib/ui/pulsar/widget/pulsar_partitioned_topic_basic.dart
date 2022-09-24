@@ -27,11 +27,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_basic_
 import 'package:provider/provider.dart';
 
 class PulsarPartitionedTopicBasicWidget extends StatefulWidget {
-  PulsarPartitionedTopicBasicWidget();
+  const PulsarPartitionedTopicBasicWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarPartitionedTopicBasicWidgetState();
+    return PulsarPartitionedTopicBasicWidgetState();
   }
 }
 
@@ -63,7 +63,7 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
     var refreshButton = TextButton(onPressed: () {}, child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -71,7 +71,7 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
             children: [refreshButton, updatePartitionButton, createMissPartitionButton],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -79,12 +79,12 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
             children: [
               Text(
                 'partition num is ${vm.partitionNum}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               )
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -92,12 +92,12 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
             children: [
               Text(
                 'storageSize :  ${vm.storageSize}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -105,12 +105,12 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
             children: [
               Text(
                 'MsgRateIn :  ${vm.msgRateIn}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -118,12 +118,12 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
             children: [
               Text(
                 'MsgRateOut :  ${vm.msgRateOut}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -131,12 +131,12 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
             children: [
               Text(
                 'MsgInCounter :  ${vm.msgInCounter}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -144,7 +144,7 @@ class PulsarPartitionedTopicBasicWidgetState extends State<PulsarPartitionedTopi
             children: [
               Text(
                 'MsgOutCounter :  ${vm.msgOutCounter}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),

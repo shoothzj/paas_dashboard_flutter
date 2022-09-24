@@ -30,15 +30,15 @@ class MongoTableListViewModel extends BaseLoadListPageViewModel<MongoTableViewMo
   MongoTableListViewModel(this.mongoInstancePo, this.databaseResp);
 
   MongoTableListViewModel deepCopy() {
-    return new MongoTableListViewModel(mongoInstancePo.deepCopy(), databaseResp.deepCopy());
+    return MongoTableListViewModel(mongoInstancePo.deepCopy(), databaseResp.deepCopy());
   }
 
   Future<void> fetchTables() async {
     try {
       final results = await MongoTablesApi.getTableList(
           mongoInstancePo.addr, mongoInstancePo.username, mongoInstancePo.password, databaseResp.databaseName);
-      this.fullList = results.map((e) => MongoTableViewModel(mongoInstancePo, databaseResp, e)).toList();
-      this.displayList = this.fullList;
+      fullList = results.map((e) => MongoTableViewModel(mongoInstancePo, databaseResp, e)).toList();
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -49,12 +49,12 @@ class MongoTableListViewModel extends BaseLoadListPageViewModel<MongoTableViewMo
 
   Future<void> filter(String str) async {
     if (str == "") {
-      this.displayList = this.fullList;
+      displayList = fullList;
       notifyListeners();
       return;
     }
     if (!loading && loadException == null) {
-      this.displayList = this.fullList.where((element) => element.databaseName.contains(str)).toList();
+      displayList = fullList.where((element) => element.databaseName.contains(str)).toList();
     }
     notifyListeners();
   }

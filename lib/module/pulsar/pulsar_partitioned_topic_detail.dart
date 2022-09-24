@@ -24,6 +24,6 @@ class PulsarPartitionedTopicDetailResp {
   PulsarPartitionedTopicDetailResp(this.topicName, this.backlogSize);
 
   PulsarPartitionedTopicDetailResp deepCopy() {
-    return new PulsarPartitionedTopicDetailResp(topicName, backlogSize);
+    return PulsarPartitionedTopicDetailResp(topicName, backlogSize);
   }
 }

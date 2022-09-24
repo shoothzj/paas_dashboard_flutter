@@ -30,7 +30,7 @@ class PulsarPartitionedTopicBaseResp {
       this.msgOutCounter, this.storageSize);
 
   PulsarPartitionedTopicBaseResp deepCopy() {
-    return new PulsarPartitionedTopicBaseResp(
+    return PulsarPartitionedTopicBaseResp(
         topicName, partitionNum, msgRateIn, msgRateOut, msgInCounter, msgOutCounter, storageSize);
   }
 }
