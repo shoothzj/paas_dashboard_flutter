@@ -32,39 +32,39 @@ class PulsarSourceListViewModel extends BaseLoadListPageViewModel<PulsarSourceVi
   PulsarSourceListViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
 
   PulsarSourceListViewModel deepCopy() {
-    return new PulsarSourceListViewModel(pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy());
+    return PulsarSourceListViewModel(pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy());
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get functionHost {
-    return this.pulsarInstancePo.functionHost;
+    return pulsarInstancePo.functionHost;
   }
 
   int get functionPort {
-    return this.pulsarInstancePo.functionPort;
+    return pulsarInstancePo.functionPort;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   Future<void> createSource(String sourceName, String outputTopic, String sourceType, String config) async {
@@ -82,9 +82,8 @@ class PulsarSourceListViewModel extends BaseLoadListPageViewModel<PulsarSourceVi
     try {
       final results = await PulsarSourceApi.getSourceList(
           id, functionHost, functionPort, pulsarInstancePo.createFunctionTlsContext(), tenant, namespace);
-      this.fullList =
-          results.map((e) => PulsarSourceViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
-      this.displayList = this.fullList;
+      fullList = results.map((e) => PulsarSourceViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -95,12 +94,12 @@ class PulsarSourceListViewModel extends BaseLoadListPageViewModel<PulsarSourceVi
 
   Future<void> filter(String str) async {
     if (str == "") {
-      this.displayList = this.fullList;
+      displayList = fullList;
       notifyListeners();
       return;
     }
     if (!loading && loadException == null) {
-      this.displayList = this.fullList.where((element) => element.sourceName.contains(str)).toList();
+      displayList = fullList.where((element) => element.sourceName.contains(str)).toList();
     }
     notifyListeners();
   }

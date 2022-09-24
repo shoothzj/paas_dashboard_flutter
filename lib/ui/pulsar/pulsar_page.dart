@@ -32,7 +32,7 @@ import 'package:provider/provider.dart';
 class PulsarPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _PulsarPageState();
+    return _PulsarPageState();
   }
 }
 
@@ -48,7 +48,7 @@ class _PulsarPageState extends State<PulsarPage> {
     final vm = Provider.of<PulsarInstanceListViewModel>(context);
     var datatable = DataTable(
       showCheckboxColumn: false,
-      columns: [
+      columns: const [
         DataColumn(label: Text('Id')),
         DataColumn(label: Text('Name')),
         DataColumn(label: Text('Host')),
@@ -94,7 +94,7 @@ class _PulsarPageState extends State<PulsarPage> {
           .toList(),
     );
     var tableView = SingleChildScrollView(
-      physics: ScrollPhysics(),
+      physics: const ScrollPhysics(),
       primary: true,
       scrollDirection: Axis.horizontal,
       child: datatable,
@@ -124,11 +124,11 @@ class _PulsarPageState extends State<PulsarPage> {
             data[11].toString()));
 
     var body = ListView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       controller: ScrollController(),
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -136,23 +136,23 @@ class _PulsarPageState extends State<PulsarPage> {
             children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
-        Center(
+        const Center(
           child: Text('Pulsar Instance List'),
         ),
-        Scrollbar(radius: Radius.circular(10), thickness: 10, child: tableView)
+        Scrollbar(radius: const Radius.circular(10), thickness: 10, child: tableView)
       ],
     );
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Pulsar Dashboard'),
+          title: const Text('Pulsar Dashboard'),
         ),
         body: body);
   }
 
   Widget updateInstanceButton(BuildContext context, PulsarFormDto formDto) {
     final vm = Provider.of<PulsarInstanceListViewModel>(context, listen: false);
-    return new PulsarForm((formDto) {
+    return PulsarForm((formDto) {
       vm.updatePulsar(
           formDto.id,
           formDto.name,
@@ -172,7 +172,7 @@ class _PulsarPageState extends State<PulsarPage> {
 
   Widget createInstanceButton(BuildContext context) {
     final vm = Provider.of<PulsarInstanceListViewModel>(context, listen: false);
-    return new PulsarForm((formDto) {
+    return PulsarForm((formDto) {
       vm.createPulsar(
           formDto.name,
           formDto.host,

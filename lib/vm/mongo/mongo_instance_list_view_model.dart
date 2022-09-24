@@ -26,7 +26,7 @@ class MongoInstanceListViewModel extends ChangeNotifier {
 
   Future<void> fetchMongoInstances() async {
     final results = await Persistent.mongoInstances();
-    this.instances = results.map((e) => MongoInstanceViewModel(e)).toList();
+    instances = results.map((e) => MongoInstanceViewModel(e)).toList();
     notifyListeners();
   }
 

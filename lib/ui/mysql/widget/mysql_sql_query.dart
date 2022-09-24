@@ -24,16 +24,16 @@ import 'package:paas_dashboard_flutter/vm/mysql/mysql_sql_query_view_model.dart'
 import 'package:provider/provider.dart';
 
 class MysqlSqlQueryWidget extends StatefulWidget {
-  MysqlSqlQueryWidget();
+  const MysqlSqlQueryWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new _MysqlSqlQueryWidgetState();
+    return _MysqlSqlQueryWidgetState();
   }
 }
 
 class _MysqlSqlQueryWidgetState extends State<MysqlSqlQueryWidget> {
-  TextEditingController textFieldController = new TextEditingController();
+  TextEditingController textFieldController = TextEditingController();
 
   @override
   void dispose() {
@@ -58,7 +58,7 @@ class _MysqlSqlQueryWidgetState extends State<MysqlSqlQueryWidget> {
       maxLines: 10,
       decoration: InputDecoration(
           hintText: S.of(context).sqlQueryMessage,
-          border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30)))),
+          border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(30)))),
     );
 
     var executeButton = TextButton(
@@ -85,14 +85,14 @@ class _MysqlSqlQueryWidgetState extends State<MysqlSqlQueryWidget> {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return new AlertDialog(
+              return AlertDialog(
                   title: Text(
                     rs ? S.of(context).success : S.of(context).failure + error,
                     textAlign: TextAlign.center,
                   ),
                   actions: [
-                    new TextButton(
-                      child: new Text(S.of(context).confirm),
+                    TextButton(
+                      child: Text(S.of(context).confirm),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -105,7 +105,7 @@ class _MysqlSqlQueryWidgetState extends State<MysqlSqlQueryWidget> {
 
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,

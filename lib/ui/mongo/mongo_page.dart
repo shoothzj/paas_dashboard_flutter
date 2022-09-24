@@ -29,7 +29,7 @@ import 'package:provider/provider.dart';
 class MongoPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _MongoPageState();
+    return _MongoPageState();
   }
 }
 
@@ -57,7 +57,7 @@ class _MongoPageState extends State<MongoPage> {
         (data) => vm.createMongo(data[1].toString(), data[2], data[3].toString(), data[4].toString()));
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -65,13 +65,13 @@ class _MongoPageState extends State<MongoPage> {
             children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
-        Center(
+        const Center(
           child: Text('Mongo Instance List'),
         ),
         SingleChildScrollView(
           child: DataTable(
             showCheckboxColumn: false,
-            columns: [
+            columns: const [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
               DataColumn(label: Text('Addr')),
@@ -99,7 +99,7 @@ class _MongoPageState extends State<MongoPage> {
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text('Mongo Dashboard'),
+          title: const Text('Mongo Dashboard'),
         ),
         body: body);
   }

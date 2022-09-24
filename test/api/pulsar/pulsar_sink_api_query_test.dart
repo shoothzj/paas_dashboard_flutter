@@ -6,7 +6,7 @@ import 'package:paas_dashboard_flutter/module/pulsar/const.dart';
 void main() {
   test("test_create_sink", () async {
     var list = await PulsarSinkApi.getSinkList(1, PulsarConst.defaultHost, PulsarConst.defaultFunctionPort,
-        new TlsContext(false, "", "", "", ""), "public", "default");
+        TlsContext(false, "", "", "", ""), "public", "default");
     print(list);
   });
 }

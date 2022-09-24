@@ -27,37 +27,37 @@ class MysqlInstanceViewModel extends BaseLoadListPageViewModel<String> {
   MysqlInstanceViewModel(this.mysqlInstancePo);
 
   MysqlInstanceViewModel deepCopy() {
-    return new MysqlInstanceViewModel(mysqlInstancePo.deepCopy());
+    return MysqlInstanceViewModel(mysqlInstancePo.deepCopy());
   }
 
   int get id {
-    return this.mysqlInstancePo.id;
+    return mysqlInstancePo.id;
   }
 
   String get name {
-    return this.mysqlInstancePo.name;
+    return mysqlInstancePo.name;
   }
 
   String get host {
-    return this.mysqlInstancePo.host;
+    return mysqlInstancePo.host;
   }
 
   int get port {
-    return this.mysqlInstancePo.port;
+    return mysqlInstancePo.port;
   }
 
   String get username {
-    return this.mysqlInstancePo.username;
+    return mysqlInstancePo.username;
   }
 
   String get password {
-    return this.mysqlInstancePo.password;
+    return mysqlInstancePo.password;
   }
 
   Future<void> fetchMysqlUser() async {
     try {
-      this.fullList = await MysqlDatabaseApi.getUsers(host, port, username, password);
-      this.displayList = this.fullList;
+      fullList = await MysqlDatabaseApi.getUsers(host, port, username, password);
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;

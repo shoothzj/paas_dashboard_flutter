@@ -32,35 +32,35 @@ class PulsarSourceViewModel extends ChangeNotifier {
   PulsarSourceViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.sourceResp);
 
   PulsarSourceViewModel deepCopy() {
-    return new PulsarSourceViewModel(
+    return PulsarSourceViewModel(
         pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), sourceResp.deepCopy());
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   String get sourceName {
-    return this.sourceResp.sourceName;
+    return sourceResp.sourceName;
   }
 }

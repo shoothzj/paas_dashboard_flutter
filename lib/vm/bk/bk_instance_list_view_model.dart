@@ -26,7 +26,7 @@ class BkInstanceListViewModel extends ChangeNotifier {
 
   Future<void> fetchBkInstances() async {
     final results = await Persistent.bookkeeperInstances();
-    this.instances = results.map((e) => BkInstanceViewModel(e)).toList();
+    instances = results.map((e) => BkInstanceViewModel(e)).toList();
     notifyListeners();
   }
 

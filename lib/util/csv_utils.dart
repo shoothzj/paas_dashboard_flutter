@@ -34,7 +34,7 @@ class CsvUtils {
       );
 
       if (outputFile != null) {
-        File file = File(outputFile + ".csv");
+        File file = File("$outputFile.csv");
         List<List<dynamic>> rows = [];
         rows.add(header);
         rows.addAll(data);
@@ -43,7 +43,7 @@ class CsvUtils {
         return true;
       }
     } on Exception catch (e) {
-      throw Exception('Error to export ' + e.toString());
+      throw Exception('Error to export $e');
     }
     return false;
   }
@@ -57,9 +57,9 @@ class CsvUtils {
       FilePickerResult? result =
           await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['csv'], allowMultiple: false);
       if (result != null) {
-        File file = new File(result.files[0].path!);
+        File file = File(result.files[0].path!);
         List<List<dynamic>> resultList =
-            await file.openRead().transform(utf8.decoder).transform(new CsvToListConverter()).toList();
+            await file.openRead().transform(utf8.decoder).transform(const CsvToListConverter()).toList();
 
         return resultList;
       }

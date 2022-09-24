@@ -25,18 +25,18 @@ class BkInstanceViewModel {
   BkInstanceViewModel(this.bkInstancePo);
 
   int get id {
-    return this.bkInstancePo.id;
+    return bkInstancePo.id;
   }
 
   String get name {
-    return this.bkInstancePo.name;
+    return bkInstancePo.name;
   }
 
   String get host {
-    return this.bkInstancePo.host;
+    return bkInstancePo.host;
   }
 
   int get port {
-    return this.bkInstancePo.port;
+    return bkInstancePo.port;
   }
 }

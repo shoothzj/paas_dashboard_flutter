@@ -58,7 +58,7 @@ class TopicResp {
   TopicResp(this.topicName);
 
   TopicResp deepCopy() {
-    return new TopicResp(this.topicName);
+    return TopicResp(topicName);
   }
 
   factory TopicResp.fromJson(String name) {

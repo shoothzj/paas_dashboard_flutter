@@ -29,6 +29,6 @@ class ProducerResp {
       this.producerName, this.rateIn, this.throughputIn, this.clientVersion, this.averageMsgSize, this.address);
 
   ProducerResp deepCopy() {
-    return new ProducerResp(producerName, rateIn, throughputIn, clientVersion, averageMsgSize, address);
+    return ProducerResp(producerName, rateIn, throughputIn, clientVersion, averageMsgSize, address);
   }
 }

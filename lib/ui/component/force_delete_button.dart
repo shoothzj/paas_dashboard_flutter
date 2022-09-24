@@ -23,11 +23,11 @@ import 'package:paas_dashboard_flutter/generated/l10n.dart';
 class ForceDeleteButton extends StatefulWidget {
   final Function(bool) callback;
 
-  ForceDeleteButton(this.callback);
+  const ForceDeleteButton(this.callback);
 
   @override
   State<StatefulWidget> createState() {
-    return new __ForceDeleteButtonState(callback);
+    return __ForceDeleteButtonState(callback);
   }
 }
 
@@ -51,26 +51,26 @@ class __ForceDeleteButtonState extends State<ForceDeleteButton> {
                       S.of(context).confirmDeleteQuestion,
                       textAlign: TextAlign.center,
                     ),
-                    content: Container(
+                    content: SizedBox(
                       width: 300,
                       height: 40,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ), //SizedBox
                           Text(S.of(context).forceDelete), //Text
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Checkbox(
-                            value: this.forceDelete,
+                            value: forceDelete,
                             onChanged: (value) {
                               setState(() {
                                 if (value == null) {
-                                  this.forceDelete = false;
+                                  forceDelete = false;
                                 } else {
-                                  this.forceDelete = value;
+                                  forceDelete = value;
                                 }
                               });
                             },
@@ -101,6 +101,6 @@ class __ForceDeleteButtonState extends State<ForceDeleteButton> {
                 });
               });
         },
-        icon: Icon(Icons.delete));
+        icon: const Icon(Icons.delete));
   }
 }

@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/mysql/mysql_instance_view_model.dart';
 import 'package:provider/provider.dart';
 
 class MysqlUserWidget extends StatefulWidget {
-  MysqlUserWidget();
+  const MysqlUserWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new MysqlUserState();
+    return MysqlUserState();
   }
 }
 
@@ -75,7 +75,7 @@ class MysqlUserState extends State<MysqlUserWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -83,7 +83,7 @@ class MysqlUserState extends State<MysqlUserWidget> {
             children: [refreshButton],
           ),
         ),
-        Text(
+        const Text(
           'Mysql User Name',
           style: TextStyle(fontSize: 22),
         ),

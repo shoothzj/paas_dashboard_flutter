@@ -37,17 +37,16 @@ class PulsarInstancePo {
       this.functionEnableTls, this.caFile, this.clientCertFile, this.clientKeyFile, this.clientKeyPassword);
 
   PulsarInstancePo deepCopy() {
-    return new PulsarInstancePo(id, name, host, port, functionHost, functionPort, enableTls, functionEnableTls, caFile,
+    return PulsarInstancePo(id, name, host, port, functionHost, functionPort, enableTls, functionEnableTls, caFile,
         clientCertFile, clientKeyFile, clientKeyPassword);
   }
 
   TlsContext createTlsContext() {
-    return new TlsContext(this.enableTls, this.caFile, this.clientCertFile, this.clientKeyFile, this.clientKeyPassword);
+    return TlsContext(enableTls, caFile, clientCertFile, clientKeyFile, clientKeyPassword);
   }
 
   TlsContext createFunctionTlsContext() {
-    return new TlsContext(
-        this.functionEnableTls, this.caFile, this.clientCertFile, this.clientKeyFile, this.clientKeyPassword);
+    return TlsContext(functionEnableTls, caFile, clientCertFile, clientKeyFile, clientKeyPassword);
   }
 
   Map<String, dynamic> toMap() {

@@ -72,8 +72,8 @@ void main() async {
     var window = await getWindowInfo();
     if (window.screen != null) {
       final screenFrame = window.screen!.visibleFrame;
-      final width = 1200.0;
-      final height = 800.0;
+      const width = 1200.0;
+      const height = 800.0;
       final left = ((screenFrame.width - width) / 2).roundToDouble();
       final top = ((screenFrame.height - height) / 3).roundToDouble();
       final frame = Rect.fromLTWH(left, top, width, height);
@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Paas Dashboard',
-      localizationsDelegates: [
+      localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -110,7 +110,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: PageRouteConst.Root,
       routes: {
-        PageRouteConst.Root: (context) => HomePage(),
+        PageRouteConst.Root: (context) => const HomePage(),
         PageRouteConst.Author: (context) => AuthorScreen(),
         PageRouteConst.Bookkeeper: (context) => ChangeNotifierProvider(
               create: (context) => BkInstanceListViewModel(),
@@ -142,7 +142,7 @@ class MyApp extends StatelessWidget {
             ),
         PageRouteConst.Settings: (context) => ChangeNotifierProvider(
               create: (context) => SettingsViewModel(),
-              child: SettingsScreen(),
+              child: const SettingsScreen(),
             ),
         PageRouteConst.Sql: (context) => ChangeNotifierProvider(
               create: (context) => SqlListViewModel(),

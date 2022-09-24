@@ -35,39 +35,39 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
   PulsarNamespaceBacklogQuotaViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
 
   PulsarNamespaceBacklogQuotaViewModel deepCopy() {
-    return new PulsarNamespaceBacklogQuotaViewModel(
+    return PulsarNamespaceBacklogQuotaViewModel(
         pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy());
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   set limitSizeDisplayStr(String displayStr) {
     if (displayStr == UiConst.unset) {
       return;
     }
-    this.limitSize = int.parse(displayStr);
+    limitSize = int.parse(displayStr);
   }
 
   String get limitSizeDisplayStr {
@@ -84,7 +84,7 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
     if (displayStr == UiConst.unset) {
       return;
     }
-    this.limitTime = int.parse(displayStr);
+    limitTime = int.parse(displayStr);
   }
 
   String get limitTimeDisplayStr {
@@ -101,7 +101,7 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
     if (displayStr == UiConst.unset) {
       return;
     }
-    this.retentionPolicy = displayStr;
+    retentionPolicy = displayStr;
   }
 
   String get retentionPolicyDisplayStr {
@@ -118,9 +118,9 @@ class PulsarNamespaceBacklogQuotaViewModel extends BaseLoadViewModel {
     try {
       final BacklogQuotaResp resp = await PulsarNamespaceApi.getBacklogQuota(
           id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace);
-      this.limitSize = resp.limitSize;
-      this.limitTime = resp.limitTime;
-      this.retentionPolicy = resp.policy;
+      limitSize = resp.limitSize;
+      limitTime = resp.limitTime;
+      retentionPolicy = resp.policy;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;

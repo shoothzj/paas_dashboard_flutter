@@ -23,7 +23,7 @@ class DatabaseResp {
   DatabaseResp(this.databaseName);
 
   DatabaseResp deepCopy() {
-    return new DatabaseResp(this.databaseName);
+    return DatabaseResp(databaseName);
   }
 
   @override

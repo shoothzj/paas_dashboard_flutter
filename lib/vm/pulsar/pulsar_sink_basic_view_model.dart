@@ -36,45 +36,45 @@ class PulsarSinkBasicViewModel extends BaseLoadViewModel {
   PulsarSinkBasicViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.sinkResp);
 
   PulsarSinkBasicViewModel deepCopy() {
-    return new PulsarSinkBasicViewModel(
+    return PulsarSinkBasicViewModel(
         pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), sinkResp.deepCopy());
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   String get sinkName {
-    return this.sinkResp.sinkName;
+    return sinkResp.sinkName;
   }
 
   Future<void> fetch() async {
     try {
       final SinkConfigResp sinkConfigResp = await PulsarSinkApi.getSink(
           id, host, port, pulsarInstancePo.createFunctionTlsContext(), tenant, namespace, sinkName);
-      this.inputs = sinkConfigResp.inputs;
-      this.configs = sinkConfigResp.configs;
-      this.archive = sinkConfigResp.archive;
+      inputs = sinkConfigResp.inputs;
+      configs = sinkConfigResp.configs;
+      archive = sinkConfigResp.archive;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;

@@ -27,19 +27,19 @@ import 'package:paas_dashboard_flutter/ui/component/dynamic_filter_table.dart';
 class MongoTablesApi {
   static Future<List<TableResp>> getTableList(
       String addr, String username, String password, String databaseName) async {
-    var db = await Db.create(addr + "/" + databaseName);
+    var db = await Db.create("$addr/$databaseName");
     await db.open();
     var collectionNames = await db.getCollectionNames();
     db.close();
     return collectionNames.whereType<String>().map((name) {
-      return new TableResp(name);
+      return TableResp(name);
     }).toList();
   }
 
   static Future<MongoSqlResult> getTableData(String addr, String username, String password, String databaseName,
       String tableName, SelectorBuilder builder) async {
     try {
-      var db = await Db.create(addr + "/" + databaseName);
+      var db = await Db.create("$addr/$databaseName");
       await db.open();
       var collection = db.collection(tableName);
       List<Map<String, dynamic>> data = await collection.find(builder).toList();
@@ -48,18 +48,18 @@ class MongoTablesApi {
       if (data.isEmpty) {
         return result;
       }
-      LinkedHashSet<String> fieldNames = new LinkedHashSet();
+      LinkedHashSet<String> fieldNames = LinkedHashSet();
       List<List<Object?>> sqldata = [];
-      data.forEach((element) {
+      for (var element in data) {
         fieldNames.addAll(element.keys);
-      });
-      data.forEach((element) {
+      }
+      for (var element in data) {
         List<Object?> temp = [];
-        fieldNames.forEach((fieldName) {
+        for (var fieldName in fieldNames) {
           temp.add(element[fieldName]);
-        });
+        }
         sqldata.add(temp);
-      });
+      }
       result.fieldName = fieldNames;
       result.data = sqldata;
       return result;
@@ -113,11 +113,11 @@ class MongoTablesApi {
         return where.nin(
             column, data.value == null ? [] : data.value!.split(",").map((e) => parseValue(e, data.type)).toList());
       case OP.BEGIN:
-        return where.match(column, "^" + value);
+        return where.match(column, "^$value");
       case OP.END:
         return where.match(column, value + "\$");
       case OP.CONTAIN:
-        return where.match(column, "^.*" + value + ".*\$");
+        return where.match(column, "${"^.*$value"}.*\$");
     }
   }
 

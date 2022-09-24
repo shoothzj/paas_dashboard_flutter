@@ -49,7 +49,7 @@ abstract class BaseLoadListPageViewModel<T> extends DataTableSource {
     if (converter == null) {
       return null;
     }
-    var item = this.displayList[index];
+    var item = displayList[index];
     return converter!(item);
   }
 

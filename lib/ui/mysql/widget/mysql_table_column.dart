@@ -27,11 +27,11 @@ import 'mysql_table_index.dart';
 
 /// mysql table column windows
 class MysqlTableColumnWidget extends StatefulWidget {
-  MysqlTableColumnWidget();
+  const MysqlTableColumnWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new _MysqlTableColumnWidgetState();
+    return _MysqlTableColumnWidgetState();
   }
 }
 
@@ -69,7 +69,7 @@ class _MysqlTableColumnWidgetState extends State<MysqlTableColumnWidget> {
 
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -81,8 +81,7 @@ class _MysqlTableColumnWidgetState extends State<MysqlTableColumnWidget> {
       ],
     );
 
-    MysqlTableIndexViewModel indexVm =
-        new MysqlTableIndexViewModel(vm.mysqlInstancePo.deepCopy(), vm.dbname, vm.tableName);
+    MysqlTableIndexViewModel indexVm = MysqlTableIndexViewModel(vm.mysqlInstancePo.deepCopy(), vm.dbname, vm.tableName);
 
     return DefaultTabController(
       length: 2,
@@ -91,7 +90,7 @@ class _MysqlTableColumnWidgetState extends State<MysqlTableColumnWidget> {
           body,
           ChangeNotifierProvider(
             create: (context) => indexVm.deepCopy(),
-            child: MysqlTableIndexWidget(),
+            child: const MysqlTableIndexWidget(),
           ).build(context)
         ],
       ),

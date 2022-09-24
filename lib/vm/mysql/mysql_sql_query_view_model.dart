@@ -32,32 +32,32 @@ class MysqlSqlQueryViewModel extends BaseLoadListPageViewModel<List> {
 
   MysqlSqlQueryViewModel(this.mysqlInstancePo, this.dbname) {
     columns = [''];
-    this.fullList = [
+    fullList = [
       ['']
     ];
-    this.displayList = this.fullList;
+    displayList = fullList;
     loadSuccess();
-    this.setDataConverter(this.getConvert);
+    setDataConverter(getConvert);
   }
 
   String getDbname() {
-    return this.dbname;
+    return dbname;
   }
 
   List<String> getColumns() {
-    return this.columns == null ? [] : this.columns!;
+    return columns == null ? [] : columns!;
   }
 
   List<List> getData() {
-    return this.displayList;
+    return displayList;
   }
 
   Future<void> fetchSqlData(String sql) async {
     try {
       MysqlSqlResult result = await MysqlDatabaseApi.getSqlData(sql, mysqlInstancePo, dbname);
-      this.columns = result.getFieldName;
-      this.fullList = result.getData;
-      this.displayList = this.fullList;
+      columns = result.getFieldName;
+      fullList = result.getData;
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -68,10 +68,10 @@ class MysqlSqlQueryViewModel extends BaseLoadListPageViewModel<List> {
 
   DataRow getConvert(dynamic obj) {
     List<dynamic> v = obj;
-    return new DataRow(cells: v.map((e) => DataCell(SelectableText(e.toString()))).toList());
+    return DataRow(cells: v.map((e) => DataCell(SelectableText(e.toString()))).toList());
   }
 
   MysqlSqlQueryViewModel deepCopy() {
-    return new MysqlSqlQueryViewModel(mysqlInstancePo.deepCopy(), dbname);
+    return MysqlSqlQueryViewModel(mysqlInstancePo.deepCopy(), dbname);
   }
 }

@@ -42,19 +42,19 @@ class AlertUtil {
       title: Text(
         error.runtimeType == Exception ? S.of(context).anErrorOccurred : S.of(context).hint,
         textAlign: TextAlign.center,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.redAccent,
         ),
       ),
       content: SelectableText(
         "$error",
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.blueAccent,
         ),
       ),
       actions: <Widget>[
         TextButton(
-          child: Text(
+          child: const Text(
             'Go Back',
             style: TextStyle(
               color: Colors.redAccent,

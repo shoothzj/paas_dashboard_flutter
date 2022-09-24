@@ -26,11 +26,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_subscr
 import 'package:provider/provider.dart';
 
 class PulsarPartitionedTopicSubscriptionWidget extends StatefulWidget {
-  PulsarPartitionedTopicSubscriptionWidget();
+  const PulsarPartitionedTopicSubscriptionWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarPartitionedTopicSubscriptionWidgetState();
+    return PulsarPartitionedTopicSubscriptionWidgetState();
   }
 }
 
@@ -57,8 +57,8 @@ class PulsarPartitionedTopicSubscriptionWidgetState extends State<PulsarPartitio
           showCheckboxColumn: false,
           columns: [
             DataColumn(label: Text(S.of(context).subscriptionName)),
-            DataColumn(label: Text('MsgBacklog')),
-            DataColumn(label: Text('MsgRateOut')),
+            const DataColumn(label: Text('MsgBacklog')),
+            const DataColumn(label: Text('MsgRateOut')),
             DataColumn(label: Text(S.of(context).clearBacklog)),
           ],
           rows: vm.displayList
@@ -85,7 +85,7 @@ class PulsarPartitionedTopicSubscriptionWidgetState extends State<PulsarPartitio
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -95,7 +95,7 @@ class PulsarPartitionedTopicSubscriptionWidgetState extends State<PulsarPartitio
         ),
         Text(
           S.of(context).subscriptionList,
-          style: TextStyle(fontSize: 22),
+          style: const TextStyle(fontSize: 22),
         ),
         subscriptionFuture
       ],

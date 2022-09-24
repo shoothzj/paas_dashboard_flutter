@@ -29,7 +29,7 @@ import 'package:provider/provider.dart';
 class SqlListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _SqlListPageState();
+    return _SqlListPageState();
   }
 }
 
@@ -57,7 +57,7 @@ class _SqlListPageState extends State<SqlListPage> {
         FormUtil.createImportButton(SqlPo.fieldList(), context, (data) => vm.createSql(data[1], data[2]));
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -65,13 +65,13 @@ class _SqlListPageState extends State<SqlListPage> {
             children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
-        Center(
+        const Center(
           child: Text('Sql List'),
         ),
         SingleChildScrollView(
           child: DataTable(
             showCheckboxColumn: false,
-            columns: [
+            columns: const [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
               DataColumn(label: Text('Sql')),
@@ -97,7 +97,7 @@ class _SqlListPageState extends State<SqlListPage> {
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text('Sql Dashboard'),
+          title: const Text('Sql Dashboard'),
         ),
         body: body);
   }

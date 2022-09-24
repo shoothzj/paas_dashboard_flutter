@@ -26,18 +26,18 @@ class CodeViewModel extends ChangeNotifier {
   CodeViewModel(this.codePo);
 
   CodeViewModel deepCopy() {
-    return new CodeViewModel(codePo.deepCopy());
+    return CodeViewModel(codePo.deepCopy());
   }
 
   int get id {
-    return this.codePo.id;
+    return codePo.id;
   }
 
   String get name {
-    return this.codePo.name;
+    return codePo.name;
   }
 
   String get code {
-    return this.codePo.code;
+    return codePo.code;
   }
 }

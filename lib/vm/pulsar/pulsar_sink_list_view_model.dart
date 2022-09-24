@@ -32,39 +32,39 @@ class PulsarSinkListViewModel extends BaseLoadListPageViewModel<PulsarSinkViewMo
   PulsarSinkListViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
 
   PulsarSinkListViewModel deepCopy() {
-    return new PulsarSinkListViewModel(pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy());
+    return PulsarSinkListViewModel(pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy());
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get functionHost {
-    return this.pulsarInstancePo.functionHost;
+    return pulsarInstancePo.functionHost;
   }
 
   int get functionPort {
-    return this.pulsarInstancePo.functionPort;
+    return pulsarInstancePo.functionPort;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   Future<void> createSink(String sinkName, String subName, String inputTopic, String sinkType, String config) async {
@@ -82,8 +82,8 @@ class PulsarSinkListViewModel extends BaseLoadListPageViewModel<PulsarSinkViewMo
     try {
       final results = await PulsarSinkApi.getSinkList(
           id, functionHost, functionPort, pulsarInstancePo.createFunctionTlsContext(), tenant, namespace);
-      this.fullList = results.map((e) => PulsarSinkViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
-      this.displayList = this.fullList;
+      fullList = results.map((e) => PulsarSinkViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -94,12 +94,12 @@ class PulsarSinkListViewModel extends BaseLoadListPageViewModel<PulsarSinkViewMo
 
   Future<void> filter(String str) async {
     if (str == "") {
-      this.displayList = this.fullList;
+      displayList = fullList;
       notifyListeners();
       return;
     }
     if (!loading && loadException == null) {
-      this.displayList = this.fullList.where((element) => element.sinkName.contains(str)).toList();
+      displayList = fullList.where((element) => element.sinkName.contains(str)).toList();
     }
     notifyListeners();
   }

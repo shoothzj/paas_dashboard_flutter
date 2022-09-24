@@ -24,11 +24,11 @@ import 'package:paas_dashboard_flutter/vm/redis/redis_instance_view_model.dart';
 import 'package:provider/provider.dart';
 
 class RedisInstanceWidget extends StatefulWidget {
-  RedisInstanceWidget();
+  const RedisInstanceWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new _RedisInstanceWidgetState();
+    return _RedisInstanceWidgetState();
   }
 }
 
@@ -52,11 +52,11 @@ class _RedisInstanceWidgetState extends State<RedisInstanceWidget> {
           DataColumn(
               label: SelectableText(
             S.of(context).result,
-            style: new TextStyle(color: Colors.red, fontSize: 20),
+            style: const TextStyle(color: Colors.red, fontSize: 20),
           ))
         ],
         rows: [
-          DataRow(cells: [new DataCell(SelectableText(vm.executeResult))])
+          DataRow(cells: [DataCell(SelectableText(vm.executeResult))])
         ],
       ),
     );
@@ -80,7 +80,7 @@ class _RedisInstanceWidgetState extends State<RedisInstanceWidget> {
       isExpanded: true,
     );
 
-    inputRow = new Row(
+    inputRow = Row(
       children: createInput(inputValues.length),
     );
 
@@ -90,20 +90,20 @@ class _RedisInstanceWidgetState extends State<RedisInstanceWidget> {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return new AlertDialog(
+                  return AlertDialog(
                     title: Text(
                       S.of(context).confirmDeleteQuestion,
                       textAlign: TextAlign.center,
                     ),
                     actions: [
-                      new TextButton(
-                        child: new Text(S.of(context).cancel),
+                      TextButton(
+                        child: Text(S.of(context).cancel),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
-                      new TextButton(
-                        child: new Text(S.of(context).confirm),
+                      TextButton(
+                        child: Text(S.of(context).confirm),
                         onPressed: () {
                           vm.execute(opButtonValue, List.from(inputValues.values));
                           Navigator.of(context).pop();
@@ -118,7 +118,7 @@ class _RedisInstanceWidgetState extends State<RedisInstanceWidget> {
         },
         child: Text(S.of(context).execute));
 
-    var row1 = new Row(
+    var row1 = Row(
       children: <Widget>[
         Expanded(flex: 1, child: opButton!),
         Expanded(flex: 3, child: inputRow!),
@@ -126,17 +126,15 @@ class _RedisInstanceWidgetState extends State<RedisInstanceWidget> {
       ],
     );
 
-    Expanded row2 = new Expanded(child: dbsFuture);
+    Expanded row2 = Expanded(child: dbsFuture);
 
     var body = ListView(
       shrinkWrap: true,
       children: <Widget>[
-        Container(
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: [row1, row2],
-          ),
+        ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          children: [row1, row2],
         ),
       ],
     );
@@ -146,7 +144,7 @@ class _RedisInstanceWidgetState extends State<RedisInstanceWidget> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Redis ${vm.name} Dashboard'),
-          bottom: TabBar(
+          bottom: const TabBar(
             tabs: [
               Tab(
                 text: "Redis",
@@ -163,14 +161,14 @@ class _RedisInstanceWidgetState extends State<RedisInstanceWidget> {
 
   List<DropdownMenuItem<OP>> getOpMenu() {
     List<DropdownMenuItem<OP>> rs = [];
-    rs.add(new DropdownMenuItem(child: Text("KEYS"), value: OP.KEYS));
-    rs.add(new DropdownMenuItem(child: Text("DELETE"), value: OP.DELETE));
-    rs.add(new DropdownMenuItem(child: Text("GET"), value: OP.GET));
-    rs.add(new DropdownMenuItem(child: Text("SET"), value: OP.SET));
-    rs.add(new DropdownMenuItem(child: Text("HSET"), value: OP.HSET));
-    rs.add(new DropdownMenuItem(child: Text("HGET"), value: OP.HGET));
-    rs.add(new DropdownMenuItem(child: Text("HGETALL"), value: OP.HGETALL));
-    rs.add(new DropdownMenuItem(child: Text("HDEL"), value: OP.HDEL));
+    rs.add(const DropdownMenuItem(value: OP.KEYS, child: Text("KEYS")));
+    rs.add(const DropdownMenuItem(value: OP.DELETE, child: Text("DELETE")));
+    rs.add(const DropdownMenuItem(value: OP.GET, child: Text("GET")));
+    rs.add(const DropdownMenuItem(value: OP.SET, child: Text("SET")));
+    rs.add(const DropdownMenuItem(value: OP.HSET, child: Text("HSET")));
+    rs.add(const DropdownMenuItem(value: OP.HGET, child: Text("HGET")));
+    rs.add(const DropdownMenuItem(value: OP.HGETALL, child: Text("HGETALL")));
+    rs.add(const DropdownMenuItem(value: OP.HDEL, child: Text("HDEL")));
     return rs;
   }
 
@@ -178,9 +176,9 @@ class _RedisInstanceWidgetState extends State<RedisInstanceWidget> {
     List<Expanded> rs = [];
     for (int i = 0; i < length; i++) {
       rs.add(Expanded(
-          child: new TextField(
-        decoration: InputDecoration(labelText: "param" + (i + 1).toString()),
-        controller: new TextEditingController(text: inputValues[i]),
+          child: TextField(
+        decoration: InputDecoration(labelText: "param${i + 1}"),
+        controller: TextEditingController(text: inputValues[i]),
         onChanged: (text) {
           inputValues[i] = text;
         },

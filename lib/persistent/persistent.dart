@@ -57,7 +57,7 @@ class Persistent {
       if (!kIsWeb) {
         api = await PersistentDb.getInstance();
       } else {
-        api = new PersistentMemory();
+        api = PersistentMemory();
       }
     }
     return api!;

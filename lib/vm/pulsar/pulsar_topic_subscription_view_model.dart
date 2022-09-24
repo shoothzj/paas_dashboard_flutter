@@ -34,44 +34,44 @@ class PulsarTopicSubscriptionViewModel extends BaseLoadListViewModel<Subscriptio
   PulsarTopicSubscriptionViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   PulsarTopicSubscriptionViewModel deepCopy() {
-    return new PulsarTopicSubscriptionViewModel(
+    return PulsarTopicSubscriptionViewModel(
         pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), topicResp.deepCopy());
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   String get topic {
-    return this.topicResp.topicName;
+    return topicResp.topicName;
   }
 
   Future<void> fetchSubscriptions() async {
     try {
       final results = await PulsarTopicApi.getSubscription(
           id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic);
-      this.fullList = results;
-      this.displayList = this.fullList;
+      fullList = results;
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;

@@ -24,11 +24,11 @@ import 'package:provider/provider.dart';
 
 /// mysql table index windows
 class MysqlTableIndexWidget extends StatefulWidget {
-  MysqlTableIndexWidget();
+  const MysqlTableIndexWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new _MysqlTableIndexWidgetState();
+    return _MysqlTableIndexWidgetState();
   }
 }
 
@@ -66,7 +66,7 @@ class _MysqlTableIndexWidgetState extends State<MysqlTableIndexWidget> {
 
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,

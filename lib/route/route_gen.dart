@@ -64,7 +64,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: CodeExecuteScreen(),
+              child: const CodeExecuteScreen(),
             ));
   }
 
@@ -73,7 +73,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: MongoInstanceScreen(),
+              child: const MongoInstanceScreen(),
             ));
   }
 
@@ -82,7 +82,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: MongoDatabaseScreen(),
+              child: const MongoDatabaseScreen(),
             ));
   }
 
@@ -91,7 +91,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: MongoTableDataWidget(),
+              child: const MongoTableDataWidget(),
             ));
   }
 
@@ -107,7 +107,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: MysqlSqlQueryWidget(),
+              child: const MysqlSqlQueryWidget(),
             ));
   }
 
@@ -115,7 +115,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: MysqlTablesWidget(),
+              child: const MysqlTablesWidget(),
             ));
   }
 
@@ -123,7 +123,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: MysqlTableDataWidget(),
+              child: const MysqlTableDataWidget(),
             ));
   }
 
@@ -131,13 +131,14 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: MysqlTableColumnWidget(),
+              child: const MysqlTableColumnWidget(),
             ));
   }
 
   static Route mysqlTableIndex(MysqlTableIndexViewModel viewModel) {
     return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider(create: (context) => viewModel, child: MysqlTableIndexWidget()));
+        builder: (context) =>
+            ChangeNotifierProvider(create: (context) => viewModel, child: const MysqlTableIndexWidget()));
   }
 
   static Route pulsarInstance(PulsarInstanceViewModel viewModel) {
@@ -145,7 +146,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: PulsarInstanceScreen(),
+              child: const PulsarInstanceScreen(),
             ));
   }
 
@@ -153,7 +154,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: PulsarTenantScreen(),
+              child: const PulsarTenantScreen(),
             ));
   }
 
@@ -161,7 +162,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: PulsarNamespaceScreen(),
+              child: const PulsarNamespaceScreen(),
             ));
   }
 
@@ -169,7 +170,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: PulsarPartitionedTopic(),
+              child: const PulsarPartitionedTopic(),
             ));
   }
 
@@ -177,7 +178,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: PulsarTopic(),
+              child: const PulsarTopic(),
             ));
   }
 
@@ -185,7 +186,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: PulsarSourceScreen(),
+              child: const PulsarSourceScreen(),
             ));
   }
 
@@ -193,7 +194,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: PulsarSinkScreen(),
+              child: const PulsarSinkScreen(),
             ));
   }
 
@@ -201,7 +202,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: RedisInstanceWidget(),
+              child: const RedisInstanceWidget(),
             ));
   }
 
@@ -210,7 +211,7 @@ class RouteGen {
     return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
               create: (context) => viewModel,
-              child: SqlExecuteScreen(),
+              child: const SqlExecuteScreen(),
             ));
   }
 }

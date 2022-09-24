@@ -31,11 +31,11 @@ import 'package:provider/provider.dart';
 
 /// mysql Database list windows
 class MysqlTablesWidget extends StatefulWidget {
-  MysqlTablesWidget();
+  const MysqlTablesWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new _MysqlTablesState();
+    return _MysqlTablesState();
   }
 }
 
@@ -79,7 +79,7 @@ class _MysqlTablesState extends State<MysqlTablesWidget> {
                       onSelectChanged: (bool? select) {
                         vm.tableName = data.tableName;
                         MysqlTableDataViewModel detailViewModel =
-                            new MysqlTableDataViewModel(vm.mysqlInstancePo, vm.dbname, data.tableName);
+                            MysqlTableDataViewModel(vm.mysqlInstancePo, vm.dbname, data.tableName);
                         Navigator.pushNamed(context, PageRouteConst.MysqlTable, arguments: detailViewModel.deepCopy());
                       },
                       cells: [
@@ -96,7 +96,7 @@ class _MysqlTablesState extends State<MysqlTablesWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -108,7 +108,7 @@ class _MysqlTablesState extends State<MysqlTablesWidget> {
         dbsFuture
       ],
     );
-    MysqlSqlQueryViewModel sqlQueryVm = new MysqlSqlQueryViewModel(vm.mysqlInstancePo, vm.dbname);
+    MysqlSqlQueryViewModel sqlQueryVm = MysqlSqlQueryViewModel(vm.mysqlInstancePo, vm.dbname);
 
     return DefaultTabController(
         length: 2,
@@ -127,7 +127,7 @@ class _MysqlTablesState extends State<MysqlTablesWidget> {
               body,
               ChangeNotifierProvider(
                 create: (context) => sqlQueryVm.deepCopy(),
-                child: MysqlSqlQueryWidget(),
+                child: const MysqlSqlQueryWidget(),
               ).build(context)
             ],
           ),

@@ -18,6 +18,6 @@
 //
 
 class UiConst {
-  static final String loading = "loading";
-  static final String unset = "unset";
+  static const String loading = "loading";
+  static const String unset = "unset";
 }

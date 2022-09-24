@@ -30,10 +30,10 @@ class PulsarSourceApi {
       String namespace, String sourceName, String outputTopic, String sourceType, String config) async {
     String url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http + '$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sourceName';
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v3/sinks/$tenant/$namespace/$sourceName';
     SourceConfigReq sinkConfigReq =
-        new SourceConfigReq(sourceName, tenant, namespace, outputTopic, json.decode(config), "builtin://$sourceType");
-    String curlCommand = "curl '$url' -F sourceConfig='" + jsonEncode(sinkConfigReq) + ";type=application/json'";
+        SourceConfigReq(sourceName, tenant, namespace, outputTopic, json.decode(config), "builtin://$sourceType");
+    String curlCommand = "curl '$url' -F sourceConfig='${jsonEncode(sinkConfigReq)};type=application/json'";
     await FlutterClipboard.copy(curlCommand);
   }
 
@@ -41,7 +41,7 @@ class PulsarSourceApi {
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String sourceName) async {
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http + '$host:${port.toString()}/admin/v3/sources/$tenant/$namespace/$sourceName';
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v3/sources/$tenant/$namespace/$sourceName';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR_FUNCTION, id).delete<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -53,21 +53,21 @@ class PulsarSourceApi {
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http + '$host:${port.toString()}/admin/v3/sources/$tenant/$namespace';
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v3/sources/$tenant/$namespace';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR_FUNCTION, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
       throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
     }
     List jsonResponse = json.decode(response.data!) as List;
-    return jsonResponse.map((name) => new SourceResp(name)).toList();
+    return jsonResponse.map((name) => SourceResp(name)).toList();
   }
 
   static Future<SourceConfigResp> getSource(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String sourceName) async {
     var url = tlsContext.enableTls
         ? HttpUtil.https
-        : HttpUtil.http + '$host:${port.toString()}/admin/v3/sources/$tenant/$namespace/$sourceName';
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v3/sources/$tenant/$namespace/$sourceName';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR_FUNCTION, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');

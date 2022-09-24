@@ -29,11 +29,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_sink_list_view_model.dar
 import 'package:provider/provider.dart';
 
 class PulsarSinkListWidget extends StatefulWidget {
-  PulsarSinkListWidget();
+  const PulsarSinkListWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarSinkListWidgetState();
+    return PulsarSinkListWidgetState();
   }
 }
 
@@ -82,7 +82,7 @@ class PulsarSinkListWidgetState extends State<PulsarSinkListWidget> {
       child: PaginatedDataTable(
           showCheckboxColumn: false,
           columns: [
-            DataColumn(label: Text("Sink")),
+            const DataColumn(label: Text("Sink")),
             DataColumn(label: Text(S.of(context).delete)),
           ],
           source: vm),
@@ -95,7 +95,7 @@ class PulsarSinkListWidgetState extends State<PulsarSinkListWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -123,8 +123,8 @@ class PulsarSinkListWidgetState extends State<PulsarSinkListWidget> {
       vm.createSink(sinkName, subName, inputTopic, sinkType, config);
       final scaffold = ScaffoldMessenger.of(context);
       scaffold.showSnackBar(
-        SnackBar(
-          content: const Text('Dart 目前不支持复杂ContentType请求，Curl命令已复制到剪切版'),
+        const SnackBar(
+          content: Text('Dart 目前不支持复杂ContentType请求，Curl命令已复制到剪切版'),
         ),
       );
     });

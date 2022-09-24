@@ -27,7 +27,7 @@ class RedisInstancePo {
   RedisInstancePo(this.id, this.name, this.ip, this.port, this.password);
 
   RedisInstancePo deepCopy() {
-    return new RedisInstancePo(id, name, ip, port, password);
+    return RedisInstancePo(id, name, ip, port, password);
   }
 
   Map<String, dynamic> toMap() {

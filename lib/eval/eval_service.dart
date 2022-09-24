@@ -26,15 +26,8 @@ class EvalService {
     var compiler = Compiler();
     compiler.defineBridgeClasses([OpenApiDebugSyncBridge.$declaration]);
     compiler.defineBridgeClasses([OpenApiDebugAsyncBridge.$declaration]);
-    final code = "" +
-        "import 'package:paas_dashboard_flutter/open/open_api_debug_async.dart';\n" +
-        "import 'package:paas_dashboard_flutter/open/open_api_debug_sync.dart';\n" +
-        "void main() async {\n" +
-        "final openApiDebugSync = OpenApiDebugSync();\n" +
-        "final openApiDebugAsync = OpenApiDebugAsync();\n" +
-        piece +
-        "\n" +
-        "}";
+    final code =
+        "import 'package:paas_dashboard_flutter/open/open_api_debug_async.dart';\nimport 'package:paas_dashboard_flutter/open/open_api_debug_sync.dart';\nvoid main() async {\nfinal openApiDebugSync = OpenApiDebugSync();\nfinal openApiDebugAsync = OpenApiDebugAsync();\n$piece\n}";
     final program = compiler.compile({
       'package:example': {'main.dart': code}
     });

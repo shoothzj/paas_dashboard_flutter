@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_produce_view_model
 import 'package:provider/provider.dart';
 
 class PulsarTopicProduceWidget extends StatefulWidget {
-  PulsarTopicProduceWidget();
+  const PulsarTopicProduceWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTopicProduceWidgetState();
+    return PulsarTopicProduceWidgetState();
   }
 }
 
@@ -52,7 +52,7 @@ class PulsarTopicProduceWidgetState extends State<PulsarTopicProduceWidget> {
     var produceMsgButton = createInstanceButton(context);
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,

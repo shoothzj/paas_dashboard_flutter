@@ -27,11 +27,11 @@ import 'package:paas_dashboard_flutter/vm/mongo/mongo_database_list_view_model.d
 import 'package:provider/provider.dart';
 
 class MongoDatabaseListWidget extends StatefulWidget {
-  MongoDatabaseListWidget();
+  const MongoDatabaseListWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new MongoDatabaseListWidgetState();
+    return MongoDatabaseListWidgetState();
   }
 }
 
@@ -76,7 +76,7 @@ class MongoDatabaseListWidgetState extends State<MongoDatabaseListWidget> {
     var topicsTable = SingleChildScrollView(
       child: PaginatedDataTable(
           showCheckboxColumn: false,
-          columns: [
+          columns: const [
             DataColumn(label: Text("Database")),
           ],
           source: vm),
@@ -88,7 +88,7 @@ class MongoDatabaseListWidgetState extends State<MongoDatabaseListWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,

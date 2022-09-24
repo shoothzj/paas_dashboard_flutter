@@ -29,7 +29,7 @@ import 'package:provider/provider.dart';
 class RedisPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new _RedisPageState();
+    return _RedisPageState();
   }
 }
 
@@ -57,7 +57,7 @@ class _RedisPageState extends State<RedisPage> {
         (data) => vm.createRedis(data[1].toString(), data[2], data[3].toString(), data[4].toString()));
     var body = ListView(
       children: [
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -65,13 +65,13 @@ class _RedisPageState extends State<RedisPage> {
             children: [formButton, refreshButton, exportButton, importButton],
           ),
         ),
-        Center(
+        const Center(
           child: Text('Redis Instance List'),
         ),
         SingleChildScrollView(
           child: DataTable(
             showCheckboxColumn: false,
-            columns: [
+            columns: const [
               DataColumn(label: Text('Id')),
               DataColumn(label: Text('Name')),
               DataColumn(label: Text('IP')),
@@ -99,7 +99,7 @@ class _RedisPageState extends State<RedisPage> {
     );
     return Scaffold(
         appBar: AppBar(
-          title: Text('Redis Dashboard'),
+          title: const Text('Redis Dashboard'),
         ),
         body: body);
   }

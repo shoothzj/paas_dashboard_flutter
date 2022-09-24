@@ -23,7 +23,7 @@ class TableResp {
   TableResp(this.tableName);
 
   TableResp deepCopy() {
-    return new TableResp(this.tableName);
+    return TableResp(tableName);
   }
 
   @override

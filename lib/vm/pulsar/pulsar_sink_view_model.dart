@@ -32,35 +32,35 @@ class PulsarSinkViewModel extends ChangeNotifier {
   PulsarSinkViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.sinkResp);
 
   PulsarSinkViewModel deepCopy() {
-    return new PulsarSinkViewModel(
+    return PulsarSinkViewModel(
         pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy(), sinkResp.deepCopy());
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   String get sinkName {
-    return this.sinkResp.sinkName;
+    return sinkResp.sinkName;
   }
 }

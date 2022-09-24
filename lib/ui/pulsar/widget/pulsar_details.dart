@@ -31,11 +31,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart
 import 'package:provider/provider.dart';
 
 class PulsarTenantsWidget extends StatefulWidget {
-  PulsarTenantsWidget();
+  const PulsarTenantsWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTenantsState();
+    return PulsarTenantsState();
   }
 }
 
@@ -97,12 +97,12 @@ class PulsarTenantsState extends State<PulsarTenantsWidget> {
         value: vm.progress,
         backgroundColor: Colors.grey,
         minHeight: 1,
-        valueColor: AlwaysStoppedAnimation(Colors.blue),
+        valueColor: const AlwaysStoppedAnimation(Colors.blue),
       ),
     );
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,

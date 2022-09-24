@@ -28,15 +28,15 @@ class MongoDatabaseListViewModel extends BaseLoadListPageViewModel<MongoDatabase
   MongoDatabaseListViewModel(this.mongoInstancePo);
 
   MongoDatabaseListViewModel deepCopy() {
-    return new MongoDatabaseListViewModel(mongoInstancePo.deepCopy());
+    return MongoDatabaseListViewModel(mongoInstancePo.deepCopy());
   }
 
   Future<void> fetchDatabases() async {
     try {
       final results = await MongoDatabaseApi.getDatabaseList(
           mongoInstancePo.addr, mongoInstancePo.username, mongoInstancePo.password);
-      this.fullList = results.map((e) => MongoDatabaseViewModel(mongoInstancePo, e)).toList();
-      this.displayList = this.fullList;
+      fullList = results.map((e) => MongoDatabaseViewModel(mongoInstancePo, e)).toList();
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -47,12 +47,12 @@ class MongoDatabaseListViewModel extends BaseLoadListPageViewModel<MongoDatabase
 
   Future<void> filter(String str) async {
     if (str == "") {
-      this.displayList = this.fullList;
+      displayList = fullList;
       notifyListeners();
       return;
     }
     if (!loading && loadException == null) {
-      this.displayList = this.fullList.where((element) => element.databaseName.contains(str)).toList();
+      displayList = fullList.where((element) => element.databaseName.contains(str)).toList();
     }
     notifyListeners();
   }

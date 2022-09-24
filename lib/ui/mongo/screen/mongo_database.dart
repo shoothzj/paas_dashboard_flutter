@@ -24,11 +24,11 @@ import 'package:paas_dashboard_flutter/vm/mongo/mongo_table_list_view_model.dart
 import 'package:provider/provider.dart';
 
 class MongoDatabaseScreen extends StatefulWidget {
-  MongoDatabaseScreen();
+  const MongoDatabaseScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new MongoDatabaseScreenState();
+    return MongoDatabaseScreenState();
   }
 }
 
@@ -51,7 +51,7 @@ class MongoDatabaseScreenState extends State<MongoDatabaseScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Mongo ${vm.name} -> ${vm.databaseName}'),
-          bottom: TabBar(
+          bottom: const TabBar(
             tabs: [
               Tab(text: "Tables"),
             ],
@@ -61,7 +61,7 @@ class MongoDatabaseScreenState extends State<MongoDatabaseScreen> {
           children: [
             ChangeNotifierProvider(
               create: (context) => MongoTableListViewModel(vm.mongoInstancePo, vm.databaseResp),
-              child: MongoTableListWidget(),
+              child: const MongoTableListWidget(),
             ).build(context),
           ],
         ),

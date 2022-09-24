@@ -29,11 +29,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_source_list_view_model.d
 import 'package:provider/provider.dart';
 
 class PulsarSourceListWidget extends StatefulWidget {
-  PulsarSourceListWidget();
+  const PulsarSourceListWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarSourceListWidgetState();
+    return PulsarSourceListWidgetState();
   }
 }
 
@@ -82,7 +82,7 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
       child: PaginatedDataTable(
           showCheckboxColumn: false,
           columns: [
-            DataColumn(label: Text("Source")),
+            const DataColumn(label: Text("Source")),
             DataColumn(label: Text(S.of(context).delete)),
           ],
           source: vm),
@@ -95,7 +95,7 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -122,8 +122,8 @@ class PulsarSourceListWidgetState extends State<PulsarSourceListWidget> {
       vm.createSource(sourceName, outputTopic, sourceType, config);
       final scaffold = ScaffoldMessenger.of(context);
       scaffold.showSnackBar(
-        SnackBar(
-          content: const Text('Dart 目前不支持复杂ContentType请求，Curl命令已复制到剪切版'),
+        const SnackBar(
+          content: Text('Dart 目前不支持复杂ContentType请求，Curl命令已复制到剪切版'),
         ),
       );
     });

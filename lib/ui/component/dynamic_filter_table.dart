@@ -25,11 +25,11 @@ class DynamicFilterTable extends StatefulWidget {
 
   final FilterCallBack callBack;
 
-  DynamicFilterTable(this._notifier, this.callBack);
+  const DynamicFilterTable(this._notifier, this.callBack);
 
   @override
   State<StatefulWidget> createState() {
-    return new _DynamicFilterTableState(_notifier, callBack);
+    return _DynamicFilterTableState(_notifier, callBack);
   }
 }
 
@@ -45,7 +45,7 @@ class ColumnNotifier extends ChangeNotifier {
 }
 
 class _DynamicFilterTableState extends State<DynamicFilterTable> {
-  ColumnNotifier _notifier;
+  final ColumnNotifier _notifier;
 
   List<DropDownButtonData> rowData = [];
 
@@ -62,7 +62,7 @@ class _DynamicFilterTableState extends State<DynamicFilterTable> {
 
   addRow() async {
     setState(() {
-      DropDownButtonData data = new DropDownButtonData(_notifier.columns[0], OP.EQ, rowData.length, true);
+      DropDownButtonData data = DropDownButtonData(_notifier.columns[0], OP.EQ, rowData.length, true);
       rowData.add(data);
     });
   }
@@ -84,17 +84,17 @@ class _DynamicFilterTableState extends State<DynamicFilterTable> {
           }
         },
         child: Text(S.of(context).filter));
-    var addButton = TextButton(onPressed: () => {addRow()}, child: Text("+"));
-    var deleteButton = TextButton(onPressed: () => {deleteRow()}, child: Text("-"));
-    DataColumn filterColumn = new DataColumn(label: filterButton);
-    DataColumn addColumn = new DataColumn(label: addButton);
-    DataColumn deleteColumn = new DataColumn(label: deleteButton);
-    DataColumn joinColumn = new DataColumn(label: Text(""));
+    var addButton = TextButton(onPressed: () => {addRow()}, child: const Text("+"));
+    var deleteButton = TextButton(onPressed: () => {deleteRow()}, child: const Text("-"));
+    DataColumn filterColumn = DataColumn(label: filterButton);
+    DataColumn addColumn = DataColumn(label: addButton);
+    DataColumn deleteColumn = DataColumn(label: deleteButton);
+    DataColumn joinColumn = const DataColumn(label: Text(""));
 
     table = DataTable(
         columns: [filterColumn, addColumn, deleteColumn, joinColumn],
         rows: rowData.map((e) => getDataRow(e)).toList(),
-        headingTextStyle: new TextStyle(color: Colors.grey));
+        headingTextStyle: const TextStyle(color: Colors.grey));
 
     return ListView(
       scrollDirection: Axis.vertical,
@@ -105,51 +105,51 @@ class _DynamicFilterTableState extends State<DynamicFilterTable> {
 
   List<DropdownMenuItem<OP>> getOpMenu() {
     List<DropdownMenuItem<OP>> rs = [];
-    rs.add(new DropdownMenuItem(child: Text("="), value: OP.EQ));
-    rs.add(new DropdownMenuItem(child: Text("!="), value: OP.NOT_EQ));
-    rs.add(new DropdownMenuItem(child: Text("<"), value: OP.LT));
-    rs.add(new DropdownMenuItem(child: Text(">"), value: OP.GT));
-    rs.add(new DropdownMenuItem(child: Text("<="), value: OP.LT_EQ));
-    rs.add(new DropdownMenuItem(child: Text(">="), value: OP.GT_EQ));
-    rs.add(new DropdownMenuItem(child: Text("is null"), value: OP.NULL));
-    rs.add(new DropdownMenuItem(child: Text("is not null"), value: OP.NOT_NULL));
-    rs.add(new DropdownMenuItem(child: Text("include"), value: OP.INCLUDE));
-    rs.add(new DropdownMenuItem(child: Text("exclude"), value: OP.EXCLUDE));
-    rs.add(new DropdownMenuItem(child: Text("begin with"), value: OP.BEGIN));
-    rs.add(new DropdownMenuItem(child: Text("end with"), value: OP.END));
-    rs.add(new DropdownMenuItem(child: Text("contain"), value: OP.CONTAIN));
+    rs.add(const DropdownMenuItem(value: OP.EQ, child: Text("=")));
+    rs.add(const DropdownMenuItem(value: OP.NOT_EQ, child: Text("!=")));
+    rs.add(const DropdownMenuItem(value: OP.LT, child: Text("<")));
+    rs.add(const DropdownMenuItem(value: OP.GT, child: Text(">")));
+    rs.add(const DropdownMenuItem(value: OP.LT_EQ, child: Text("<=")));
+    rs.add(const DropdownMenuItem(value: OP.GT_EQ, child: Text(">=")));
+    rs.add(const DropdownMenuItem(value: OP.NULL, child: Text("is null")));
+    rs.add(const DropdownMenuItem(value: OP.NOT_NULL, child: Text("is not null")));
+    rs.add(const DropdownMenuItem(value: OP.INCLUDE, child: Text("include")));
+    rs.add(const DropdownMenuItem(value: OP.EXCLUDE, child: Text("exclude")));
+    rs.add(const DropdownMenuItem(value: OP.BEGIN, child: Text("begin with")));
+    rs.add(const DropdownMenuItem(value: OP.END, child: Text("end with")));
+    rs.add(const DropdownMenuItem(value: OP.CONTAIN, child: Text("contain")));
     return rs;
   }
 
   List<DropdownMenuItem<bool>> getJoinMenu() {
     List<DropdownMenuItem<bool>> rs = [];
-    rs.add(new DropdownMenuItem(child: Text("AND"), value: true));
-    rs.add(new DropdownMenuItem(child: Text("OR"), value: false));
+    rs.add(const DropdownMenuItem(value: true, child: Text("AND")));
+    rs.add(const DropdownMenuItem(value: false, child: Text("OR")));
     return rs;
   }
 
   List<DropdownMenuItem<TYPE>> getTypeMenu() {
     List<DropdownMenuItem<TYPE>> rs = [];
-    rs.add(new DropdownMenuItem(child: Text("TEXT"), value: TYPE.TEXT));
-    rs.add(new DropdownMenuItem(child: Text("NUMBER"), value: TYPE.NUMBER));
-    rs.add(new DropdownMenuItem(child: Text("ObjectId"), value: TYPE.OBJECT_ID));
+    rs.add(const DropdownMenuItem(value: TYPE.TEXT, child: Text("TEXT")));
+    rs.add(const DropdownMenuItem(value: TYPE.NUMBER, child: Text("NUMBER")));
+    rs.add(const DropdownMenuItem(value: TYPE.OBJECT_ID, child: Text("ObjectId")));
     return rs;
   }
 
   DataRow getDataRow(DropDownButtonData data) {
     List<DataCell> cells = [];
     List<DropdownMenuItem> columnItems =
-        _notifier.columns.map((e) => new DropdownMenuItem(child: Text(e.toString()), value: e)).toList();
-    DropdownMenuItem<String> customItem = new DropdownMenuItem(
-      child: new TextField(
+        _notifier.columns.map((e) => DropdownMenuItem(value: e, child: Text(e.toString()))).toList();
+    DropdownMenuItem<String> customItem = DropdownMenuItem(
+      value: "",
+      child: TextField(
         decoration: InputDecoration(labelText: S.of(context).custom),
-        controller: new TextEditingController(text: rowData[data.index].custom ? rowData[data.index].column : ""),
+        controller: TextEditingController(text: rowData[data.index].custom ? rowData[data.index].column : ""),
         onChanged: (text) {
           rowData[data.index].column = text;
           rowData[data.index].custom = true;
         },
       ),
-      value: "",
     );
     columnItems.add(customItem);
     DropdownButton itemButton = DropdownButton(
@@ -181,7 +181,7 @@ class _DynamicFilterTableState extends State<DynamicFilterTable> {
       isExpanded: true,
     );
 
-    TextField inputField = new TextField(
+    TextField inputField = TextField(
       onChanged: (text) {
         rowData[data.index].value = text;
       },
@@ -206,23 +206,23 @@ class _DynamicFilterTableState extends State<DynamicFilterTable> {
       value: rowData[data.index].join,
       isExpanded: true,
     );
-    cells.add(new DataCell(itemButton));
-    cells.add(new DataCell(opButton));
+    cells.add(DataCell(itemButton));
+    cells.add(DataCell(opButton));
     if (rowData[data.index].hiddenValue) {
-      cells.add(new DataCell(new Text("")));
+      cells.add(const DataCell(Text("")));
     } else {
-      cells.add(new DataCell(Expanded(
-        child: new Row(
+      cells.add(DataCell(Expanded(
+        child: Row(
           children: <Widget>[Expanded(child: inputField), Expanded(child: inputTypeButton)],
         ),
       )));
     }
     if (data.index + 1 == rowData.length) {
-      cells.add(new DataCell(new Text("")));
+      cells.add(const DataCell(Text("")));
     } else {
-      cells.add(new DataCell(joinButton));
+      cells.add(DataCell(joinButton));
     }
-    DataRow row = new DataRow(cells: cells);
+    DataRow row = DataRow(cells: cells);
     return row;
   }
 }

@@ -9,7 +9,7 @@ void main() {
         1,
         PulsarConst.defaultHost,
         PulsarConst.defaultFunctionPort,
-        new TlsContext(false, "", "", "", ""),
+        TlsContext(false, "", "", "", ""),
         "public",
         "default",
         "sink_name",

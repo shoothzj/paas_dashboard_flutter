@@ -37,31 +37,31 @@ class PulsarTopicConsumeViewModel extends BaseLoadListViewModel<ConsumerResp> {
   PulsarTopicConsumeViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp, this.topicResp);
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   String get topic {
-    return this.topicResp.topicName;
+    return topicResp.topicName;
   }
 
   Future<void> fetchConsumerMessage(String messageId) async {
@@ -73,7 +73,7 @@ class PulsarTopicConsumeViewModel extends BaseLoadListViewModel<ConsumerResp> {
       if (messageIdArr.length == 2) {
         data = await PulsarTopicApi.fetchConsumerMessage(id, host, port, pulsarInstancePo.createTlsContext(), tenant,
             namespace, topic, messageIdArr[0], messageIdArr[1]);
-        this.message = data.substring(data.indexOf("@") + 1);
+        message = data.substring(data.indexOf("@") + 1);
       }
       if (messageIdArr.length == 3) {
         var startEntryId = int.parse(messageIdArr[1]);
@@ -81,7 +81,7 @@ class PulsarTopicConsumeViewModel extends BaseLoadListViewModel<ConsumerResp> {
         for (int i = startEntryId; i <= endEntryId; i++) {
           data = await PulsarTopicApi.fetchConsumerMessage(id, host, port, pulsarInstancePo.createTlsContext(), tenant,
               namespace, topic, messageIdArr[0], i.toString());
-          Message message = new Message(i.toString(), data.substring(data.indexOf("@") + 1));
+          Message message = Message(i.toString(), data.substring(data.indexOf("@") + 1));
           messageList.add(message);
         }
       }
@@ -96,12 +96,12 @@ class PulsarTopicConsumeViewModel extends BaseLoadListViewModel<ConsumerResp> {
   Future<void> fetchMessageId(String timestamp) async {
     try {
       if (timestamp == "") {
-        return null;
+        return;
       }
       String data;
       data = await PulsarTopicApi.fetchMessageId(
           id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic, timestamp);
-      this.messageId = data;
+      messageId = data;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;

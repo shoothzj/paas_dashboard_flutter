@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_basic_view_model.d
 import 'package:provider/provider.dart';
 
 class PulsarTopicBasicWidget extends StatefulWidget {
-  PulsarTopicBasicWidget();
+  const PulsarTopicBasicWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTopicBasicWidgetState();
+    return PulsarTopicBasicWidgetState();
   }
 }
 
@@ -58,7 +58,7 @@ class PulsarTopicBasicWidgetState extends State<PulsarTopicBasicWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -66,7 +66,7 @@ class PulsarTopicBasicWidgetState extends State<PulsarTopicBasicWidget> {
             children: [refreshButton],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -74,12 +74,12 @@ class PulsarTopicBasicWidgetState extends State<PulsarTopicBasicWidget> {
             children: [
               Text(
                 'Broker :  ${vm.brokerUrl}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -87,12 +87,12 @@ class PulsarTopicBasicWidgetState extends State<PulsarTopicBasicWidget> {
             children: [
               Text(
                 'StorageSize :  ${vm.storageSize}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -100,12 +100,12 @@ class PulsarTopicBasicWidgetState extends State<PulsarTopicBasicWidget> {
             children: [
               Text(
                 'MsgRateIn :  ${vm.msgRateIn}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -113,12 +113,12 @@ class PulsarTopicBasicWidgetState extends State<PulsarTopicBasicWidget> {
             children: [
               Text(
                 'MsgRateOut :  ${vm.msgRateOut}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -126,12 +126,12 @@ class PulsarTopicBasicWidgetState extends State<PulsarTopicBasicWidget> {
             children: [
               Text(
                 'MsgInCounter :  ${vm.msgInCounter}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -139,7 +139,7 @@ class PulsarTopicBasicWidgetState extends State<PulsarTopicBasicWidget> {
             children: [
               Text(
                 'MsgOutCounter :  ${vm.msgOutCounter}',
-                style: new TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),

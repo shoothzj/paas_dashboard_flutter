@@ -75,7 +75,7 @@ class PersistentDb implements PersistentApi {
       // path to perform database upgrades and downgrades.
       version: 1,
     );
-    _dbProvider = new PersistentDb(database);
+    _dbProvider = PersistentDb(database);
     return _dbProvider!;
   }
 
@@ -232,7 +232,7 @@ class PersistentDb implements PersistentApi {
     var aux = await getInstance();
     final List<Map<String, dynamic>> maps =
         await aux.database.query('pulsar_instances', where: "name = ?", whereArgs: [name]);
-    if (maps.length == 0) {
+    if (maps.isEmpty) {
       return null;
     }
     var current = maps[0];
@@ -279,7 +279,7 @@ class PersistentDb implements PersistentApi {
     var aux = await getInstance();
     final List<Map<String, dynamic>> maps =
         await aux.database.query('pulsar_instances', where: "name = ?", whereArgs: [name]);
-    if (maps.length == 0) {
+    if (maps.isEmpty) {
       return null;
     }
     var current = maps[0];
@@ -314,7 +314,7 @@ class PersistentDb implements PersistentApi {
     var aux = await getInstance();
     final List<Map<String, dynamic>> maps =
         await aux.database.query('zookeeper_instances', where: "name = ?", whereArgs: [name]);
-    if (maps.length == 0) {
+    if (maps.isEmpty) {
       return null;
     }
     var current = maps[0];
@@ -373,7 +373,7 @@ class PersistentDb implements PersistentApi {
     var aux = await getInstance();
     final List<Map<String, dynamic>> maps =
         await aux.database.query('mongo_instances', where: "name = ?", whereArgs: [name]);
-    if (maps.length == 0) {
+    if (maps.isEmpty) {
       return null;
     }
     var current = maps[0];
@@ -409,7 +409,7 @@ class PersistentDb implements PersistentApi {
     var aux = await getInstance();
     final List<Map<String, dynamic>> maps =
         await aux.database.query('mysql_instances', where: "name = ?", whereArgs: [name]);
-    if (maps.length == 0) {
+    if (maps.isEmpty) {
       return null;
     }
     var current = maps[0];
@@ -444,7 +444,7 @@ class PersistentDb implements PersistentApi {
   Future<SqlPo?> sqlInstance(String name) async {
     var aux = await getInstance();
     final List<Map<String, dynamic>> maps = await aux.database.query('sql_list', where: "name = ?", whereArgs: [name]);
-    if (maps.length == 0) {
+    if (maps.isEmpty) {
       return null;
     }
     var current = maps[0];
@@ -478,7 +478,7 @@ class PersistentDb implements PersistentApi {
   Future<CodePo?> codeInstance(String name) async {
     var aux = await getInstance();
     final List<Map<String, dynamic>> maps = await aux.database.query('code_list', where: "name = ?", whereArgs: [name]);
-    if (maps.length == 0) {
+    if (maps.isEmpty) {
       return null;
     }
     var current = maps[0];
@@ -513,7 +513,7 @@ class PersistentDb implements PersistentApi {
     var aux = await getInstance();
     final List<Map<String, dynamic>> maps =
         await aux.database.query('redis_instances', where: "name = ?", whereArgs: [name]);
-    if (maps.length == 0) {
+    if (maps.isEmpty) {
       return null;
     }
     var current = maps[0];

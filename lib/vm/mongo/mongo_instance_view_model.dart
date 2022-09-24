@@ -26,22 +26,22 @@ class MongoInstanceViewModel extends ChangeNotifier {
   MongoInstanceViewModel(this.mongoInstancePo);
 
   MongoInstanceViewModel deepCopy() {
-    return new MongoInstanceViewModel(mongoInstancePo.deepCopy());
+    return MongoInstanceViewModel(mongoInstancePo.deepCopy());
   }
 
   int get id {
-    return this.mongoInstancePo.id;
+    return mongoInstancePo.id;
   }
 
   String get name {
-    return this.mongoInstancePo.name;
+    return mongoInstancePo.name;
   }
 
   String get addr {
-    return this.mongoInstancePo.addr;
+    return mongoInstancePo.addr;
   }
 
   String get username {
-    return this.mongoInstancePo.username;
+    return mongoInstancePo.username;
   }
 }

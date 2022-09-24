@@ -25,11 +25,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_consum
 import 'package:provider/provider.dart';
 
 class PulsarPartitionedTopicConsumerWidget extends StatefulWidget {
-  PulsarPartitionedTopicConsumerWidget();
+  const PulsarPartitionedTopicConsumerWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarPartitionedTopicConsumerWidgetState();
+    return PulsarPartitionedTopicConsumerWidgetState();
   }
 }
 
@@ -54,7 +54,7 @@ class PulsarPartitionedTopicConsumerWidgetState extends State<PulsarPartitionedT
     var consumerFuture = SingleChildScrollView(
       child: DataTable(
           showCheckboxColumn: false,
-          columns: [
+          columns: const [
             DataColumn(label: Text('SubscriptionName')),
             DataColumn(label: Text('ConsumerName')),
             DataColumn(label: Text('MsgRateOut')),
@@ -104,7 +104,7 @@ class PulsarPartitionedTopicConsumerWidgetState extends State<PulsarPartitionedT
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -114,7 +114,7 @@ class PulsarPartitionedTopicConsumerWidgetState extends State<PulsarPartitionedT
         ),
         Text(
           S.of(context).consumerList,
-          style: TextStyle(fontSize: 22),
+          style: const TextStyle(fontSize: 22),
         ),
         consumerFuture,
       ],

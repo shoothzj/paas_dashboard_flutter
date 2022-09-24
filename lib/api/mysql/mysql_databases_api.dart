@@ -36,12 +36,12 @@ class MysqlDatabaseApi {
       "select INDEX_NAME, COLUMN_NAME, SEQ_IN_INDEX, INDEX_TYPE from STATISTICS where TABLE_NAME = '%s' and TABLE_SCHEMA = '%s'";
 
   static Future<List<DatabaseResp>> getDatabaseList(String host, int port, String username, String password) async {
-    final setting = new ConnectionSettings(host: host, port: port, user: username, password: password);
+    final setting = ConnectionSettings(host: host, port: port, user: username, password: password);
     final MySqlConnection conn = await MySqlConnection.connect(setting);
     var queryResult = await conn.query('show databases');
     List<DatabaseResp> result = [];
     for (var row in queryResult) {
-      result.add(new DatabaseResp(row[0]));
+      result.add(DatabaseResp(row[0]));
     }
     await conn.close();
     return result;
@@ -49,12 +49,12 @@ class MysqlDatabaseApi {
 
   static Future<List<TableResp>> getTableList(
       String host, int port, String username, String password, String db) async {
-    final setting = new ConnectionSettings(host: host, port: port, user: username, password: password, db: db);
+    final setting = ConnectionSettings(host: host, port: port, user: username, password: password, db: db);
     final MySqlConnection conn = await MySqlConnection.connect(setting);
     var queryResult = await conn.query('show tables');
     List<TableResp> result = [];
     for (var row in queryResult) {
-      result.add(new TableResp(row[0]));
+      result.add(TableResp(row[0]));
     }
     await conn.close();
     return result;
@@ -64,7 +64,7 @@ class MysqlDatabaseApi {
       MysqlInstancePo mysqlConn, String dbname, String tableName, String where) async {
     MysqlSqlResult result = MysqlSqlResult.create();
     try {
-      final setting = new ConnectionSettings(
+      final setting = ConnectionSettings(
           host: mysqlConn.host,
           port: mysqlConn.port,
           user: mysqlConn.username,
@@ -88,7 +88,7 @@ class MysqlDatabaseApi {
   }
 
   static Future<MysqlSqlResult> getSqlData(String sql, MysqlInstancePo mysqlConn, String dbname) async {
-    final setting = new ConnectionSettings(
+    final setting = ConnectionSettings(
         host: mysqlConn.host, port: mysqlConn.port, user: mysqlConn.username, password: mysqlConn.password, db: dbname);
     MysqlSqlResult result = MysqlSqlResult.create();
     final MySqlConnection conn = await MySqlConnection.connect(setting);
@@ -97,7 +97,7 @@ class MysqlDatabaseApi {
       List<List<Object>> data = [];
       for (var row in queryResult) {
         if (row.values != null) {
-          data.add(row.values!.map((e) => e == null ? "" : e).toList());
+          data.add(row.values!.map((e) => e ?? "").toList());
         }
       }
       result.setFieldName = queryResult.fields.map((e) => e.name!.isNotEmpty ? e.name.toString() : "").toList();
@@ -108,7 +108,7 @@ class MysqlDatabaseApi {
   }
 
   static Future<List<String>> getUsers(String host, int port, String username, String password) async {
-    final setting = new ConnectionSettings(host: host, port: port, user: username, password: password, db: "mysql");
+    final setting = ConnectionSettings(host: host, port: port, user: username, password: password, db: "mysql");
     final MySqlConnection conn = await MySqlConnection.connect(setting);
     var queryResult = await conn.query("select User from user");
     List<String> result = [];

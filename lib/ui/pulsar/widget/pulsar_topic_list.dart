@@ -29,11 +29,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_list_view_model.da
 import 'package:provider/provider.dart';
 
 class PulsarTopicListWidget extends StatefulWidget {
-  PulsarTopicListWidget();
+  const PulsarTopicListWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTopicListWidgetState();
+    return PulsarTopicListWidgetState();
   }
 }
 
@@ -95,7 +95,7 @@ class PulsarTopicListWidgetState extends State<PulsarTopicListWidget> {
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,

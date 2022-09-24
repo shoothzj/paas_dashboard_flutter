@@ -29,6 +29,6 @@ class TlsContext {
   TlsContext(this.enableTls, this.caFile, this.clientCertFile, this.clientKeyFile, this.clientKeyPassword);
 
   TlsContext deepCopy() {
-    return new TlsContext(enableTls, caFile, clientCertFile, clientKeyFile, clientKeyPassword);
+    return TlsContext(enableTls, caFile, clientCertFile, clientKeyFile, clientKeyPassword);
   }
 }

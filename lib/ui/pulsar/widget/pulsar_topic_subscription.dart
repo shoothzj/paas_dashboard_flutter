@@ -26,11 +26,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_subscription_view_
 import 'package:provider/provider.dart';
 
 class PulsarTopicSubscriptionWidget extends StatefulWidget {
-  PulsarTopicSubscriptionWidget();
+  const PulsarTopicSubscriptionWidget();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarTopicSubscriptionWidgetState();
+    return PulsarTopicSubscriptionWidgetState();
   }
 }
 
@@ -57,8 +57,8 @@ class PulsarTopicSubscriptionWidgetState extends State<PulsarTopicSubscriptionWi
           showCheckboxColumn: false,
           columns: [
             DataColumn(label: Text(S.of(context).subscriptionName)),
-            DataColumn(label: Text('MsgBacklog')),
-            DataColumn(label: Text('MsgRateOut')),
+            const DataColumn(label: Text('MsgBacklog')),
+            const DataColumn(label: Text('MsgRateOut')),
             DataColumn(label: Text(S.of(context).clearBacklog)),
           ],
           rows: vm.displayList
@@ -85,7 +85,7 @@ class PulsarTopicSubscriptionWidgetState extends State<PulsarTopicSubscriptionWi
         child: Text(S.of(context).refresh));
     var body = ListView(
       children: <Widget>[
-        Container(
+        SizedBox(
           height: 50,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -95,7 +95,7 @@ class PulsarTopicSubscriptionWidgetState extends State<PulsarTopicSubscriptionWi
         ),
         Text(
           S.of(context).subscriptionList,
-          style: TextStyle(fontSize: 22),
+          style: const TextStyle(fontSize: 22),
         ),
         subscriptionFuture
       ],

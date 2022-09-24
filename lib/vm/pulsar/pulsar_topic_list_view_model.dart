@@ -32,39 +32,39 @@ class PulsarTopicListViewModel extends BaseLoadListPageViewModel<PulsarTopicView
   PulsarTopicListViewModel(this.pulsarInstancePo, this.tenantResp, this.namespaceResp);
 
   PulsarTopicListViewModel deepCopy() {
-    return new PulsarTopicListViewModel(pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy());
+    return PulsarTopicListViewModel(pulsarInstancePo.deepCopy(), tenantResp.deepCopy(), namespaceResp.deepCopy());
   }
 
   int get id {
-    return this.pulsarInstancePo.id;
+    return pulsarInstancePo.id;
   }
 
   String get name {
-    return this.pulsarInstancePo.name;
+    return pulsarInstancePo.name;
   }
 
   String get host {
-    return this.pulsarInstancePo.host;
+    return pulsarInstancePo.host;
   }
 
   int get port {
-    return this.pulsarInstancePo.port;
+    return pulsarInstancePo.port;
   }
 
   String get tenant {
-    return this.tenantResp.tenant;
+    return tenantResp.tenant;
   }
 
   String get namespace {
-    return this.namespaceResp.namespace;
+    return namespaceResp.namespace;
   }
 
   Future<void> fetchTopics() async {
     try {
       final results =
           await PulsarTopicApi.getTopics(id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace);
-      this.fullList = results.map((e) => PulsarTopicViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
-      this.displayList = this.fullList;
+      fullList = results.map((e) => PulsarTopicViewModel(pulsarInstancePo, tenantResp, namespaceResp, e)).toList();
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -75,12 +75,12 @@ class PulsarTopicListViewModel extends BaseLoadListPageViewModel<PulsarTopicView
 
   Future<void> filter(String str) async {
     if (str == "") {
-      this.displayList = this.fullList;
+      displayList = fullList;
       notifyListeners();
       return;
     }
     if (!loading && loadException == null) {
-      this.displayList = this.fullList.where((element) => element.topic.contains(str)).toList();
+      displayList = fullList.where((element) => element.topic.contains(str)).toList();
     }
     notifyListeners();
   }

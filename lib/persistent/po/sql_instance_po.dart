@@ -25,7 +25,7 @@ class SqlPo {
   SqlPo(this.id, this.name, this.sql);
 
   SqlPo deepCopy() {
-    return new SqlPo(id, name, sql);
+    return SqlPo(id, name, sql);
   }
 
   Map<String, dynamic> toMap() {

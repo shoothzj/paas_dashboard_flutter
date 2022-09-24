@@ -44,7 +44,7 @@ class AuthorScreen extends StatelessWidget {
         child: DataTable(
           showCheckboxColumn: false,
           columns: [
-            DataColumn(label: Text("github id")),
+            const DataColumn(label: Text("github id")),
             DataColumn(label: Text(S.of(context).name)),
             DataColumn(label: Text(S.of(context).email)),
           ],

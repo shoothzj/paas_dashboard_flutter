@@ -32,7 +32,7 @@ class ConsumerResp {
       this.unackedMessages, this.lastConsumedTimestamp, this.clientVersion, this.address);
 
   ConsumerResp deepCopy() {
-    return new ConsumerResp(consumerName, subscriptionName, rateOut, throughputOut, availablePermits, unackedMessages,
+    return ConsumerResp(consumerName, subscriptionName, rateOut, throughputOut, availablePermits, unackedMessages,
         lastConsumedTimestamp, clientVersion, address);
   }
 }

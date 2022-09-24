@@ -36,11 +36,11 @@ import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_topic_list_view_model.da
 import 'package:provider/provider.dart';
 
 class PulsarNamespaceScreen extends StatefulWidget {
-  PulsarNamespaceScreen();
+  const PulsarNamespaceScreen();
 
   @override
   State<StatefulWidget> createState() {
-    return new PulsarNamespaceScreenState();
+    return PulsarNamespaceScreenState();
   }
 }
 
@@ -63,7 +63,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Pulsar ${S.of(context).tenant} ${vm.tenant} -> ${S.of(context).namespace} ${vm.namespace}'),
-          bottom: TabBar(
+          bottom: const TabBar(
             tabs: [
               Tab(text: "Policy"),
               Tab(text: "Topic"),
@@ -78,7 +78,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
               child: Scaffold(
                 appBar: ColoredTabBar(
                     Colors.black,
-                    TabBar(
+                    const TabBar(
                       tabs: [
                         Tab(text: "BacklogQuota"),
                         Tab(text: "Policies"),
@@ -88,12 +88,12 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
                   ChangeNotifierProvider(
                     create: (context) =>
                         PulsarNamespaceBacklogQuotaViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-                    child: PulsarNamespaceBacklogQuotaWidget(),
+                    child: const PulsarNamespaceBacklogQuotaWidget(),
                   ).build(context),
                   ChangeNotifierProvider(
                     create: (context) =>
                         PulsarNamespacePoliciesViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-                    child: PulsarNamespacePoliciesWidget(),
+                    child: const PulsarNamespacePoliciesWidget(),
                   ).build(context),
                 ]),
               ),
@@ -103,7 +103,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
               child: Scaffold(
                 appBar: ColoredTabBar(
                     Colors.black,
-                    TabBar(
+                    const TabBar(
                       tabs: [
                         Tab(text: "PartitionedTopic"),
                         Tab(text: "Topic"),
@@ -113,11 +113,11 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
                   ChangeNotifierProvider(
                     create: (context) =>
                         PulsarPartitionedTopicListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-                    child: PulsarPartitionedTopicListWidget(),
+                    child: const PulsarPartitionedTopicListWidget(),
                   ).build(context),
                   ChangeNotifierProvider(
                     create: (context) => PulsarTopicListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-                    child: PulsarTopicListWidget(),
+                    child: const PulsarTopicListWidget(),
                   ).build(context),
                 ]),
               ),
@@ -127,7 +127,7 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
               child: Scaffold(
                 appBar: ColoredTabBar(
                     Colors.black,
-                    TabBar(
+                    const TabBar(
                       tabs: [
                         Tab(text: "Source"),
                         Tab(text: "Sink"),
@@ -137,11 +137,11 @@ class PulsarNamespaceScreenState extends State<PulsarNamespaceScreen> {
                   ChangeNotifierProvider(
                     create: (context) =>
                         PulsarSourceListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-                    child: PulsarSourceListWidget(),
+                    child: const PulsarSourceListWidget(),
                   ).build(context),
                   ChangeNotifierProvider(
                     create: (context) => PulsarSinkListViewModel(vm.pulsarInstancePo, vm.tenantResp, vm.namespaceResp),
-                    child: PulsarSinkListWidget(),
+                    child: const PulsarSinkListWidget(),
                   ).build(context),
                 ]),
               ),

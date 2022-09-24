@@ -34,30 +34,30 @@ class MysqlTableIndexViewModel extends BaseLoadListPageViewModel<Object> {
   List<String>? columns;
 
   String get instanceName {
-    return this.mysqlInstancePo.name;
+    return mysqlInstancePo.name;
   }
 
   String getDbname() {
-    return this.dbname;
+    return dbname;
   }
 
   String getTableName() {
-    return this.tableName;
+    return tableName;
   }
 
   MysqlTableIndexViewModel(this.mysqlInstancePo, this.dbname, this.tableName);
 
   List<String> getColumns() {
-    return this.columns == null ? [''] : this.columns!;
+    return columns == null ? [''] : columns!;
   }
 
   Future<void> fetchData() async {
     try {
       MysqlSqlResult result = await MysqlDatabaseApi.getSqlData(
           sprintf(MysqlDatabaseApi.TABLE_INDEX, [tableName, dbname]), mysqlInstancePo, MysqlDatabaseApi.SCHEMA_DB);
-      this.columns = result.getFieldName;
-      this.fullList = result.getData;
-      this.displayList = this.fullList;
+      columns = result.getFieldName;
+      fullList = result.getData;
+      displayList = fullList;
       loadSuccess();
     } on Exception catch (e) {
       loadException = e;
@@ -68,10 +68,10 @@ class MysqlTableIndexViewModel extends BaseLoadListPageViewModel<Object> {
 
   DataRow getConvert(dynamic obj) {
     List<Object> v = obj;
-    return new DataRow(cells: v.map((e) => DataCell(SelectableText(e.toString()))).toList());
+    return DataRow(cells: v.map((e) => DataCell(SelectableText(e.toString()))).toList());
   }
 
   MysqlTableIndexViewModel deepCopy() {
-    return new MysqlTableIndexViewModel(mysqlInstancePo.deepCopy(), dbname, tableName);
+    return MysqlTableIndexViewModel(mysqlInstancePo.deepCopy(), dbname, tableName);
   }
 }
