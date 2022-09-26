@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  push_to_registries:
+    name: Push Docker image to multiple registries
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - run: flutter config --enable-windows-desktop
+      - run: flutter pub get
+      - run: flutter pub run intl_utils:generate
+      - run: flutter build windows
+      - uses: vimtor/action-zip@v1
+        with:
+          files: build/windows/runner/Release/ addons/windows/
+          recursive: true
+          dest: dashboard-windows.zip
+      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true
+          tag_name: latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
+
+      - name: Tag release
+        uses: tvdias/github-tagger@v0.0.2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          tag: latest
+
+      # Creates the new release with the binary as a release asset.
+      # If the previous Action was skipped, then this keeps the same tag as the
+      # previous release.
+      - name: Create new release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: "Latest"
+          name: "latest"
+          tag_name: latest
+          files: dashboard-windows.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
