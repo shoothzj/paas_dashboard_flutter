@@ -18,6 +18,7 @@
 //
 
 import 'dart:io';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -67,18 +68,22 @@ import 'package:provider/provider.dart';
 import 'package:window_size/window_size.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    var window = await getWindowInfo();
-    if (window.screen != null) {
-      final screenFrame = window.screen!.visibleFrame;
-      const width = 1200.0;
-      const height = 800.0;
-      final left = ((screenFrame.width - width) / 2).roundToDouble();
-      final top = ((screenFrame.height - height) / 3).roundToDouble();
-      final frame = Rect.fromLTWH(left, top, width, height);
-      setWindowFrame(frame);
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      var window = await getWindowInfo();
+      if (window.screen != null) {
+        final screenFrame = window.screen!.visibleFrame;
+        const width = 1200.0;
+        const height = 800.0;
+        final left = ((screenFrame.width - width) / 2).roundToDouble();
+        final top = ((screenFrame.height - height) / 3).roundToDouble();
+        final frame = Rect.fromLTWH(left, top, width, height);
+        setWindowFrame(frame);
+      }
     }
+  } catch (e) {
+    log('may be run in web environment. err: $e');
   }
   runApp(MyApp());
 }
