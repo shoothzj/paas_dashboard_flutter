@@ -16,22 +16,9 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-
-name: Flutter Analyze
-
-on:
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-      - run: flutter pub get
-      - run: flutter pub run intl_utils:generate
-      - run: flutter analyze .
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
