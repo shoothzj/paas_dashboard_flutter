@@ -53,7 +53,7 @@ class _RedisPageState extends State<RedisPage> {
         child: Text(S.of(context).refresh));
     var exportButton = FormUtil.exportButton('redis-instances', RedisInstancePo.fieldList(),
         vm.instances.map((e) => e.redisInstancePo.toMap().values.toList()).toList(), context);
-    var importButton = FormUtil.importButton(RedisInstancePo.fieldList(), context,
+    var importButton = FormUtil.importButton('', RedisInstancePo.fieldList(), context,
         (data) => vm.createRedis(data[1].toString(), data[2], data[3].toString(), data[4].toString()));
     var body = ListView(
       children: [

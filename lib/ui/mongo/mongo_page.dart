@@ -53,7 +53,7 @@ class _MongoPageState extends State<MongoPage> {
         child: Text(S.of(context).refresh));
     var exportButton = FormUtil.exportButton('mongo-instances', MongoInstancePo.fieldList().toList(),
         vm.instances.map((e) => e.mongoInstancePo.toMap().values.toList()).toList(), context);
-    var importButton = FormUtil.importButton(MongoInstancePo.fieldList(), context,
+    var importButton = FormUtil.importButton('', MongoInstancePo.fieldList(), context,
         (data) => vm.createMongo(data[1].toString(), data[2], data[3].toString(), data[4].toString()));
     var body = ListView(
       children: [

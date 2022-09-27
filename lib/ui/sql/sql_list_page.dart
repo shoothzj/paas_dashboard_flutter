@@ -53,7 +53,7 @@ class _SqlListPageState extends State<SqlListPage> {
         child: Text(S.of(context).refresh));
     var exportButton = FormUtil.exportButton('sql-list', vm.instances[0].sqlPo.toMap().keys.toList(),
         vm.instances.map((e) => e.sqlPo.toMap().values.toList()).toList(), context);
-    var importButton = FormUtil.importButton(SqlPo.fieldList(), context, (data) => vm.createSql(data[1], data[2]));
+    var importButton = FormUtil.importButton('', SqlPo.fieldList(), context, (data) => vm.createSql(data[1], data[2]));
     var body = ListView(
       children: [
         SizedBox(

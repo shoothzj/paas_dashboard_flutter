@@ -293,7 +293,7 @@ class FormUtil {
   }
 
   static ButtonStyleButton exportButtonAsync(
-      String filename, List<String> header, Future<List<List<dynamic>>> data, String text, BuildContext context) {
+      String filename, String text, List<String> header, Future<List<List<dynamic>>> data, BuildContext context) {
     return TextButton(
         onPressed: () async {
           String error = "";
@@ -325,7 +325,8 @@ class FormUtil {
         child: Text(text + S.of(context).export));
   }
 
-  static ButtonStyleButton importButton(List<String> fieldSet, BuildContext context, Function(List<dynamic>) callback) {
+  static ButtonStyleButton importButton(
+      String text, List<String> fieldSet, BuildContext context, Function(List<dynamic>) callback) {
     return TextButton(
         onPressed: () async {
           String error = "";
@@ -373,6 +374,6 @@ class FormUtil {
             },
           );
         },
-        child: Text(S.of(context).import));
+        child: Text(text + S.of(context).import));
   }
 }
