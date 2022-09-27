@@ -49,7 +49,7 @@ class _K8sPageState extends State<K8sPage> {
           });
         },
         child: Text(S.of(context).refresh));
-    var exportButton = FormUtil.createExportButton(K8sInstancePo.fieldList().toList(),
+    var exportButton = FormUtil.exportButton('k8s-instances', K8sInstancePo.fieldList().toList(),
         vm.instances.map((e) => e.k8sInstancePo.toMap().values.toList()).toList(), context);
     var body = ListView(
       children: [

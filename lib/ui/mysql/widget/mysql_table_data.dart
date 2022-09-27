@@ -86,7 +86,7 @@ class _MysqlTableDataState extends State<MysqlTableDataWidget> {
           String error = "";
           bool rs = false;
           try {
-            rs = await CsvUtils.export(vm.getColumns(), vm.getData());
+            rs = await CsvUtils.export('mysql ${vm.instanceName} table', vm.getColumns(), vm.getData());
           } on Exception catch (e) {
             error = e.toString();
           }

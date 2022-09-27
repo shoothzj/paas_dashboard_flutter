@@ -52,9 +52,9 @@ class _MysqlPageState extends State<MysqlPage> {
           });
         },
         child: Text(S.of(context).refresh));
-    var exportButton = FormUtil.createExportButton(MysqlInstancePo.fieldList().toList(),
+    var exportButton = FormUtil.exportButton('mysql-instances', MysqlInstancePo.fieldList().toList(),
         vm.instances.map((e) => e.mysqlInstancePo.toMap().values.toList()).toList(), context);
-    var importButton = FormUtil.createImportButton(MysqlInstancePo.fieldList(), context,
+    var importButton = FormUtil.importButton(MysqlInstancePo.fieldList(), context,
         (data) => vm.createMysql(data[1].toString(), data[2], data[3], data[4].toString(), data[5].toString()));
     var body = ListView(
       children: [

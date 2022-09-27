@@ -51,10 +51,9 @@ class _CodeListPageState extends State<CodeListPage> {
           });
         },
         child: Text(S.of(context).refresh));
-    var exportButton = FormUtil.createExportButton(
-        CodePo.fieldList().toList(), vm.instances.map((e) => e.codePo.toMap().values.toList()).toList(), context);
-    var importButton =
-        FormUtil.createImportButton(CodePo.fieldList(), context, (data) => vm.createCode(data[1], data[2]));
+    var exportButton = FormUtil.exportButton('code-list', CodePo.fieldList().toList(),
+        vm.instances.map((e) => e.codePo.toMap().values.toList()).toList(), context);
+    var importButton = FormUtil.importButton(CodePo.fieldList(), context, (data) => vm.createCode(data[1], data[2]));
     var body = ListView(
       children: [
         SizedBox(

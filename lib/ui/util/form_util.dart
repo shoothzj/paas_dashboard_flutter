@@ -259,13 +259,14 @@ class FormUtil {
         child: Text('Update $resourceName'));
   }
 
-  static ButtonStyleButton createExportButton(List<String> header, List<List<dynamic>> data, BuildContext context) {
+  static ButtonStyleButton exportButton(
+      String filename, List<String> header, List<List<dynamic>> data, BuildContext context) {
     return TextButton(
         onPressed: () async {
           String error = "";
           bool rs = false;
           try {
-            rs = await CsvUtils.export(header, data);
+            rs = await CsvUtils.export(filename, header, data);
           } on Exception catch (e) {
             error = e.toString();
           }
@@ -291,8 +292,40 @@ class FormUtil {
         child: Text(S.of(context).export));
   }
 
-  static ButtonStyleButton createImportButton(
-      List<String> fieldSet, BuildContext context, Function(List<dynamic>) callback) {
+  static ButtonStyleButton exportButtonAsync(
+      String filename, List<String> header, Future<List<List<dynamic>>> data, String text, BuildContext context) {
+    return TextButton(
+        onPressed: () async {
+          String error = "";
+          bool rs = false;
+          try {
+            rs = await CsvUtils.export(filename, header, await data);
+          } on Exception catch (e) {
+            error = e.toString();
+          }
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: Text(
+                    rs ? S.of(context).success : S.of(context).failure + error,
+                    textAlign: TextAlign.center,
+                  ),
+                  actions: [
+                    TextButton(
+                      child: Text(S.of(context).confirm),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ]);
+            },
+          );
+        },
+        child: Text(text + S.of(context).export));
+  }
+
+  static ButtonStyleButton importButton(List<String> fieldSet, BuildContext context, Function(List<dynamic>) callback) {
     return TextButton(
         onPressed: () async {
           String error = "";
