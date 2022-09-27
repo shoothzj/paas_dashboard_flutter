@@ -17,41 +17,13 @@
 // under the License.
 //
 
-class TenantResp {
-  final String tenant;
+class PartitionedTopicCsv {
+  final String topic;
+  final int partitionedNum;
 
-  TenantResp(this.tenant);
-
-  TenantResp deepCopy() {
-    return TenantResp(tenant);
-  }
-
-  factory TenantResp.fromJson(String name) {
-    return TenantResp(name);
-  }
-}
-
-class TenantInfoResp {
-  final String adminRoles;
-  final String allowedClusters;
-
-  TenantInfoResp(this.adminRoles, this.allowedClusters);
-
-  TenantInfoResp deepCopy() {
-    return TenantInfoResp(adminRoles, allowedClusters);
-  }
-
-  factory TenantInfoResp.fromJson(Map name) {
-    return TenantInfoResp(name["adminRoles"], name["allowedClusters"]);
-  }
-}
-
-class TenantCsv {
-  final String tenant;
-
-  TenantCsv(this.tenant);
+  PartitionedTopicCsv(this.topic, this.partitionedNum);
 
   static List<String> fieldList() {
-    return ['tenant'];
+    return ['topicName', 'partitionedNum'];
   }
 }

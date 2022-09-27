@@ -168,3 +168,13 @@ class BundlesData {
   List<String>? boundaries;
   int? numBundles;
 }
+
+class NamespaceCsv {
+  final String namespace;
+
+  NamespaceCsv(this.namespace);
+
+  static List<String> fieldList() {
+    return ['namespace'];
+  }
+}
