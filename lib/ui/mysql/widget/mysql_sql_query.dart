@@ -78,7 +78,7 @@ class _MysqlSqlQueryWidgetState extends State<MysqlSqlQueryWidget> {
           String error = "";
           bool rs = false;
           try {
-            rs = await CsvUtils.export(vm.getColumns(), vm.getData());
+            rs = await CsvUtils.export('mysql instance', vm.getColumns(), vm.getData());
           } on Exception catch (e) {
             error = e.toString();
           }

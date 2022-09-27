@@ -24,11 +24,11 @@ import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 
 class CsvUtils {
-  static Future<bool> export(List<String> header, List<List<dynamic>> data) async {
+  static Future<bool> export(String filename, List<String> header, List<List<dynamic>> data) async {
     try {
       String? outputFile = await FilePicker.platform.saveFile(
         dialogTitle: 'Please select an output file:',
-        fileName: 'dashboard-output-file',
+        fileName: filename,
         allowedExtensions: ['csv'],
         type: FileType.custom,
       );

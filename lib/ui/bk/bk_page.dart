@@ -50,10 +50,10 @@ class _BkPageState extends State<BkPage> {
           });
         },
         child: Text(S.of(context).refresh));
-    var exportButton = FormUtil.createExportButton(BkInstancePo.fieldList().toList(),
+    var exportButton = FormUtil.exportButton('bk-instances', BkInstancePo.fieldList().toList(),
         vm.instances.map((e) => e.bkInstancePo.toMap().values.toList()).toList(), context);
-    var importButton = FormUtil.createImportButton(
-        BkInstancePo.fieldList(), context, (data) => vm.createBk(data[1], data[2], data[3]));
+    var importButton =
+        FormUtil.importButton(BkInstancePo.fieldList(), context, (data) => vm.createBk(data[1], data[2], data[3]));
     var body = ListView(
       children: [
         SizedBox(
