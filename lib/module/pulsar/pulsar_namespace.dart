@@ -170,11 +170,12 @@ class BundlesData {
 }
 
 class NamespaceCsv {
+  final String tenant;
   final String namespace;
 
-  NamespaceCsv(this.namespace);
+  NamespaceCsv(this.tenant, this.namespace);
 
   static List<String> fieldList() {
-    return ['namespace'];
+    return ['tenant', 'namespace'];
   }
 }

@@ -18,12 +18,30 @@
 //
 
 class PartitionedTopicCsv {
+  final String tenant;
+  final String namespace;
   final String topic;
   final int partitionedNum;
+  final String backlogPolicy;
+  final int backlogQuotaBytes;
+  final int retentionSize;
+  final int retentionTime;
+  final int ttlSeconds;
 
-  PartitionedTopicCsv(this.topic, this.partitionedNum);
+  PartitionedTopicCsv(this.tenant, this.namespace, this.topic, this.partitionedNum, this.backlogPolicy,
+      this.backlogQuotaBytes, this.retentionSize, this.retentionTime, this.ttlSeconds);
 
   static List<String> fieldList() {
-    return ['topicName', 'partitionedNum'];
+    return [
+      'tenant',
+      'namespace',
+      'topicName',
+      'partitionedNum',
+      'backlogPolicy',
+      'backlogQuotaBytes',
+      'retentionSize',
+      'retentionTime',
+      'ttlSeconds'
+    ];
   }
 }
