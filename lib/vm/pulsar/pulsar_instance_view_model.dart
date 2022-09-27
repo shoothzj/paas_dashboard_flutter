@@ -17,11 +17,13 @@
 // under the License.
 //
 
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_namespace_api.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
+import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
@@ -150,6 +152,60 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
       opException = e;
       notifyListeners();
     }
+  }
+
+  Future<List<List<String>>> getAllTenant() async {
+    final results = await PulsarTenantApi.getTenants(id, host, port, pulsarInstancePo.createTlsContext());
+    List<List<String>> tenantData = [];
+    for (var tenant in results) {
+      tenantData.add([tenant.tenant]);
+    }
+    return tenantData;
+  }
+
+  Future<List<List<dynamic>>> getAllNamespace(Future<List<List<dynamic>>> tenantsFuture) async {
+    List<List<dynamic>> namespaceData = [];
+    var tenants = await tenantsFuture;
+    for (var tenant in tenants) {
+      final resp =
+          await PulsarNamespaceApi.getNamespaces(id, host, port, pulsarInstancePo.createTlsContext(), tenant[0]);
+      for (var namespaceReq in resp) {
+        final policy = await PulsarNamespaceApi.getPolicy(
+            id, host, port, pulsarInstancePo.createTlsContext(), tenant[0], namespaceReq.namespace);
+        final backlogQuota = await PulsarNamespaceApi.getBacklogQuota(
+            id, host, port, pulsarInstancePo.createTlsContext(), tenant[0], namespaceReq.namespace);
+        final retention = await PulsarNamespaceApi.getRetention(
+            id, host, port, pulsarInstancePo.createTlsContext(), tenant[0], namespaceReq.namespace);
+        namespaceData.add([
+          tenant[0],
+          namespaceReq.namespace,
+          backlogQuota.policy,
+          retention.retentionSizeInMB,
+          backlogQuota.limitSize,
+          backlogQuota.limitTime,
+          policy.messageTTLInSeconds
+        ]);
+      }
+    }
+    return namespaceData;
+  }
+
+  Future<List<List<dynamic>>> getAllTopic(Future<List<List<dynamic>>> namespacesFuture) async {
+    List<List<dynamic>> topicData = [];
+    var namespaces = await namespacesFuture;
+    for (var namespace in namespaces) {
+      String tenant = namespace[0];
+      String name = namespace[1];
+      final topics = await PulsarTopicApi.getTopics(id, host, port, pulsarInstancePo.createTlsContext(), tenant, name);
+      for (var topicResp in topics) {
+        final partitionedNum = PulsarTopicApi.getBase(
+            id, host, port, pulsarInstancePo.createTlsContext(), tenant, name, topicResp.topicName);
+        int defaultPartitionedNum = 2;
+        partitionedNum.then((value) => defaultPartitionedNum = value.partitionNum);
+        topicData.add([tenant, name, topicResp.topicName, defaultPartitionedNum]);
+      }
+    }
+    return topicData;
   }
 
   Future<void> createMissTopicPartition() async {
