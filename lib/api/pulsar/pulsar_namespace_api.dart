@@ -64,6 +64,23 @@ class PulsarNamespaceApi {
     return jsonResponse.map((name) => NamespaceResp.fromJson(name)).toList();
   }
 
+  static Future<RetentionResp> getRetention(
+      int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
+    String url = tlsContext.enableTls
+        ? HttpUtil.https
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/retention';
+    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
+    if (HttpUtil.abnormal(response.statusCode!)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+    }
+    if ("" == response.data!) {
+      return RetentionResp(-1, -1);
+    }
+    Map jsonResponse = json.decode(response.data!) as Map;
+    return RetentionResp.fromJson(jsonResponse);
+  }
+
   static Future<BacklogQuotaResp> getBacklogQuota(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
     String url = tlsContext.enableTls

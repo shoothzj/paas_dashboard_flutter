@@ -19,9 +19,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_partitioned_topic.dart';
+import 'package:paas_dashboard_flutter/module/pulsar/pulsar_tenant.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
+import 'package:paas_dashboard_flutter/ui/util/form_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_cluster_view_model.dart';
+import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_instance_view_model.dart';
 import 'package:provider/provider.dart';
 
 class PulsarBasicWidget extends StatefulWidget {
@@ -49,6 +54,7 @@ class PulsarBasicScreenState extends State<PulsarBasicWidget> {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<PulsarClusterViewModel>(context);
+    final instanceVm = Provider.of<PulsarInstanceViewModel>(context);
     if (vm.loading) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         SpinnerUtil.create();
@@ -79,6 +85,15 @@ class PulsarBasicScreenState extends State<PulsarBasicWidget> {
           vm.fetchPulsarCluster();
         },
         child: Text(S.of(context).refresh));
+    var allTenants = instanceVm.getAllTenant();
+    var tenantExportButton = FormUtil.exportButtonAsync(
+        'pulsar-${instanceVm.name}-tenant', 'tenant', TenantCsv.fieldList(), allTenants, context);
+    var allNamespaces = instanceVm.getAllNamespace(allTenants);
+    var namespaceExportButton = FormUtil.exportButtonAsync(
+        'pulsar-${instanceVm.name}-namespace', 'namespace', NamespaceCsv.fieldList(), allNamespaces, context);
+    var allTopics = instanceVm.getAllTopic(allNamespaces);
+    var topicExportButton = FormUtil.exportButtonAsync(
+        'pulsar-${instanceVm.name}-topic', 'topic', PartitionedTopicCsv.fieldList(), allTopics, context);
     var body = ListView(
       children: <Widget>[
         SizedBox(
@@ -86,7 +101,12 @@ class PulsarBasicScreenState extends State<PulsarBasicWidget> {
           child: ListView(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
-            children: [refreshButton],
+            children: [
+              refreshButton,
+              tenantExportButton,
+              namespaceExportButton,
+              topicExportButton,
+            ],
           ),
         ),
         const Text(

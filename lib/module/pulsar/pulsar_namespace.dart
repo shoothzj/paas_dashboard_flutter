@@ -92,6 +92,17 @@ class BacklogQuotaResp {
   }
 }
 
+class RetentionResp {
+  final int? retentionTimeInMinutes;
+  final int? retentionSizeInMB;
+
+  RetentionResp(this.retentionTimeInMinutes, this.retentionSizeInMB);
+
+  factory RetentionResp.fromJson(Map map) {
+    return RetentionResp(map["retentionTimeInMinutes"], map["retentionSizeInMB"]);
+  }
+}
+
 class PolicyResp {
   final bool? isAllowAutoTopicCreation;
   final String? topicType;
@@ -136,7 +147,7 @@ class PolicyResp {
     List<String>? boundaries;
     var numBundles = 0;
     if (bundleData != null) {
-      boundaries = bundleData["boundaries"];
+      boundaries?.addAll(bundleData["boundaries"]);
       numBundles = bundleData["numBundles"];
     }
     return PolicyResp(
@@ -172,10 +183,25 @@ class BundlesData {
 class NamespaceCsv {
   final String tenant;
   final String namespace;
+  final String backlogPolicy;
+  final int backlogQuotaBytes;
+  final int retentionSize;
+  final int retentionTime;
+  final int ttlSeconds;
 
-  NamespaceCsv(this.tenant, this.namespace);
+  NamespaceCsv(this.tenant, this.namespace, this.backlogPolicy, this.backlogQuotaBytes, this.retentionSize,
+      this.retentionTime, this.ttlSeconds);
 
   static List<String> fieldList() {
-    return ['tenant', 'namespace'];
+    return [
+      'tenant',
+      'namespace',
+      'partitionedNum',
+      'backlogPolicy',
+      'backlogQuotaBytes',
+      'retentionSize',
+      'retentionTime',
+      'ttlSeconds',
+    ];
   }
 }
