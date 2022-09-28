@@ -293,13 +293,13 @@ class FormUtil {
   }
 
   static ButtonStyleButton exportButtonAsync(
-      String filename, String text, List<String> header, Future<List<List<dynamic>>> data, BuildContext context) {
+      String filename, String text, List<String> header, Function() fun, BuildContext context) {
     return TextButton(
         onPressed: () async {
           String error = "";
           bool rs = false;
           try {
-            rs = await CsvUtils.export(filename, header, await data);
+            rs = await CsvUtils.export(filename, header, fun());
           } on Exception catch (e) {
             error = e.toString();
           }

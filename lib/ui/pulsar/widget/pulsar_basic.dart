@@ -85,19 +85,20 @@ class PulsarBasicScreenState extends State<PulsarBasicWidget> {
           vm.fetchPulsarCluster();
         },
         child: Text(S.of(context).refresh));
-    var allTenants = instanceVm.getAllTenant();
     var tenantExportButton = FormUtil.exportButtonAsync(
-        'pulsar-${instanceVm.name}-tenant', 'tenant', TenantCsv.fieldList(), allTenants, context);
+        'pulsar-${instanceVm.name}-tenant', 'tenant', TenantCsv.fieldList(), () => instanceVm.getAllTenant(), context);
     var tenantImportButton =
         FormUtil.importButton("tenant", TenantCsv.fieldList(), context, (data) => instanceVm.createAllTenant(data));
-    var allNamespaces = instanceVm.getAllNamespace(allTenants);
-    var namespaceExportButton = FormUtil.exportButtonAsync(
-        'pulsar-${instanceVm.name}-namespace', 'namespace', NamespaceCsv.fieldList(), allNamespaces, context);
+    var namespaceExportButton = FormUtil.exportButtonAsync('pulsar-${instanceVm.name}-namespace', 'namespace',
+        NamespaceCsv.fieldList(), () => instanceVm.getAllNamespace(instanceVm.getAllTenant()), context);
     var namespaceImportButton = FormUtil.importButton(
         "namespace", NamespaceCsv.fieldList(), context, (data) => instanceVm.createAllNamespace(data));
-    var allTopics = instanceVm.getAllTopic(allNamespaces);
     var topicExportButton = FormUtil.exportButtonAsync(
-        'pulsar-${instanceVm.name}-topic', 'partition-topic', PartitionedTopicCsv.fieldList(), allTopics, context);
+        'pulsar-${instanceVm.name}-topic',
+        'partition-topic',
+        PartitionedTopicCsv.fieldList(),
+        () => instanceVm.getAllTopic(instanceVm.getAllNamespaceName(instanceVm.getAllTenant())),
+        context);
     var topicImportButton = FormUtil.importButton(
         "partition-topic", PartitionedTopicCsv.fieldList(), context, (data) => instanceVm.createAllTopic(data));
     var body = ListView(

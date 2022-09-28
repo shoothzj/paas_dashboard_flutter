@@ -197,8 +197,22 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
     return namespaceData;
   }
 
+  Future<List<List<dynamic>>> getAllNamespaceName(Future<List<List<dynamic>>> tenantsFuture) async {
+    List<List<dynamic>> namespaceData = [];
+    var tenants = await tenantsFuture;
+    for (var tenant in tenants) {
+      final resp =
+          await PulsarNamespaceApi.getNamespaces(id, host, port, pulsarInstancePo.createTlsContext(), tenant[0]);
+      for (var namespace in resp) {
+        namespaceData.add([tenant, namespace]);
+      }
+    }
+    return namespaceData;
+  }
+
   Future<void> createAllNamespace(List<dynamic> namespaces) async {
     try {
+      print("-------------------welcome------------------------");
       var namespaceCsv = NamespaceCsv(namespaces[0], namespaces[1], namespaces[2], int.parse(namespaces[3] ?? "0"),
           int.parse(namespaces[4] ?? "0"), int.parse(namespaces[5] ?? "0"), int.parse(namespaces[6] ?? "0"));
       await PulsarNamespaceApi.createNamespace(
