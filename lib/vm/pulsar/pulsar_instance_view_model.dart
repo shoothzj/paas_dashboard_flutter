@@ -204,7 +204,7 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
       final resp =
           await PulsarNamespaceApi.getNamespaces(id, host, port, pulsarInstancePo.createTlsContext(), tenant[0]);
       for (var namespace in resp) {
-        namespaceData.add([tenant, namespace]);
+        namespaceData.add([tenant[0], namespace.namespace]);
       }
     }
     return namespaceData;
@@ -212,12 +212,18 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
 
   Future<void> createAllNamespace(List<dynamic> namespaces) async {
     try {
-      var namespaceCsv = NamespaceCsv(namespaces[0], namespaces[1], namespaces[2], int.parse(namespaces[3] ?? "0"),
-          int.parse(namespaces[4] ?? "0"), int.parse(namespaces[5] ?? "0"), int.parse(namespaces[6] ?? "0"));
+      var namespaceCsv = NamespaceCsv(
+          namespaces[0],
+          namespaces[1],
+          namespaces[2],
+          int.parse(namespaces[3] == "null" ? "0" : '${namespaces[3]}'),
+          int.parse(namespaces[4] == "null" ? "0" : '${namespaces[4]}'),
+          int.parse(namespaces[5] == "null" ? "0" : '${namespaces[5]}'),
+          int.parse(namespaces[6] == "null" ? "0" : '${namespaces[6]}'));
       await PulsarNamespaceApi.createNamespace(
           id, host, port, pulsarInstancePo.createTlsContext(), namespaceCsv.tenant, namespaceCsv.namespace);
       PulsarNamespaceApi.updateBacklogQuota(id, host, port, pulsarInstancePo.createTlsContext(), namespaceCsv.tenant,
-          namespaceCsv.namespace, namespaceCsv.backlogQuotaBytes, -1, namespaceCsv.backlogPolicy);
+          namespaceCsv.namespace, namespaceCsv.backlogQuotaBytes, 0, namespaceCsv.backlogPolicy);
       PulsarNamespaceApi.setMessageTTLSecond(id, host, port, pulsarInstancePo.createTlsContext(), namespaceCsv.tenant,
           namespaceCsv.namespace, namespaceCsv.ttlSeconds);
       PulsarNamespaceApi.setRetention(id, host, port, pulsarInstancePo.createTlsContext(), namespaceCsv.tenant,
@@ -247,13 +253,11 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
   }
 
   Future<void> createAllTopic(List<dynamic> topics) async {
-    for (var topic in topics) {
-      try {
-        PulsarPartitionedTopicApi.createPartitionTopic(id, host, port, pulsarInstancePo.createTlsContext(), topic[0],
-            topic[1], topic[2], int.parse(topics[3] ?? "0"));
-      } catch (e) {
-        log('create topic [$topic] fail. err: $e');
-      }
+    try {
+      PulsarPartitionedTopicApi.createPartitionTopic(id, host, port, pulsarInstancePo.createTlsContext(), topics[0],
+          topics[1], topics[2], int.parse('${topics[3]}'));
+    } catch (e) {
+      log('create topic [$topics] fail. err: $e');
     }
   }
 

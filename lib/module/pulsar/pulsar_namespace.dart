@@ -101,6 +101,12 @@ class RetentionResp {
   factory RetentionResp.fromJson(Map map) {
     return RetentionResp(map["retentionTimeInMinutes"], map["retentionSizeInMB"]);
   }
+  Map toJson() {
+    Map map = {};
+    map["retentionTimeInMinutes"] = retentionTimeInMinutes;
+    map["limitTime"] = retentionSizeInMB;
+    return map;
+  }
 }
 
 class PolicyResp {
