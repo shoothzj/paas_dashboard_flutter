@@ -23,7 +23,6 @@ import 'dart:developer';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_namespace_api.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_partitioned_topic_api.dart';
 import 'package:paas_dashboard_flutter/api/pulsar/pulsar_tenant_api.dart';
-import 'package:paas_dashboard_flutter/api/pulsar/pulsar_topic_api.dart';
 import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 import 'package:paas_dashboard_flutter/persistent/persistent.dart';
 import 'package:paas_dashboard_flutter/persistent/po/pulsar_instance_po.dart';
@@ -163,6 +162,14 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
     return tenantData;
   }
 
+  Future<void> createAllTenant(List<dynamic> tenants) async {
+    try {
+      await PulsarTenantApi.createTenant(id, host, port, pulsarInstancePo.createTlsContext(), tenants[0]);
+    } catch (e) {
+      log('create tenant [${tenants[0]}] fail. err: $e');
+    }
+  }
+
   Future<List<List<dynamic>>> getAllNamespace(Future<List<List<dynamic>>> tenantsFuture) async {
     List<List<dynamic>> namespaceData = [];
     var tenants = await tenantsFuture;
@@ -180,14 +187,31 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
           tenant[0],
           namespaceReq.namespace,
           backlogQuota.policy,
-          retention.retentionSizeInMB,
           backlogQuota.limitSize,
-          backlogQuota.limitTime,
+          retention.retentionSizeInMB,
+          retention.retentionTimeInMinutes,
           policy.messageTTLInSeconds
         ]);
       }
     }
     return namespaceData;
+  }
+
+  Future<void> createAllNamespace(List<dynamic> namespaces) async {
+    try {
+      var namespaceCsv = NamespaceCsv(namespaces[0], namespaces[1], namespaces[2], int.parse(namespaces[3] ?? "0"),
+          int.parse(namespaces[4] ?? "0"), int.parse(namespaces[5] ?? "0"), int.parse(namespaces[6] ?? "0"));
+      await PulsarNamespaceApi.createNamespace(
+          id, host, port, pulsarInstancePo.createTlsContext(), namespaceCsv.tenant, namespaceCsv.namespace);
+      PulsarNamespaceApi.updateBacklogQuota(id, host, port, pulsarInstancePo.createTlsContext(), namespaceCsv.tenant,
+          namespaceCsv.namespace, namespaceCsv.backlogQuotaBytes, -1, namespaceCsv.backlogPolicy);
+      PulsarNamespaceApi.setMessageTTLSecond(id, host, port, pulsarInstancePo.createTlsContext(), namespaceCsv.tenant,
+          namespaceCsv.namespace, namespaceCsv.ttlSeconds);
+      PulsarNamespaceApi.setRetention(id, host, port, pulsarInstancePo.createTlsContext(), namespaceCsv.tenant,
+          namespaceCsv.namespace, namespaceCsv.retentionTime, namespaceCsv.retentionSize);
+    } catch (e) {
+      log('create namespace [$namespaces] fail. err: $e');
+    }
   }
 
   Future<List<List<dynamic>>> getAllTopic(Future<List<List<dynamic>>> namespacesFuture) async {
@@ -196,9 +220,10 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
     for (var namespace in namespaces) {
       String tenant = namespace[0];
       String name = namespace[1];
-      final topics = await PulsarTopicApi.getTopics(id, host, port, pulsarInstancePo.createTlsContext(), tenant, name);
+      final topics =
+          await PulsarPartitionedTopicApi.getTopics(id, host, port, pulsarInstancePo.createTlsContext(), tenant, name);
       for (var topicResp in topics) {
-        final partitionedNum = PulsarTopicApi.getBase(
+        final partitionedNum = PulsarPartitionedTopicApi.getBase(
             id, host, port, pulsarInstancePo.createTlsContext(), tenant, name, topicResp.topicName);
         int defaultPartitionedNum = 2;
         partitionedNum.then((value) => defaultPartitionedNum = value.partitionNum);
@@ -206,6 +231,17 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
       }
     }
     return topicData;
+  }
+
+  Future<void> createAllTopic(List<dynamic> topics) async {
+    for (var topic in topics) {
+      try {
+        PulsarPartitionedTopicApi.createPartitionTopic(id, host, port, pulsarInstancePo.createTlsContext(), topic[0],
+            topic[1], topic[2], int.parse(topics[3] ?? "0"));
+      } catch (e) {
+        log('create topic [$topic] fail. err: $e');
+      }
+    }
   }
 
   Future<void> createMissTopicPartition() async {
