@@ -81,6 +81,19 @@ class PulsarNamespaceApi {
     return RetentionResp.fromJson(jsonResponse);
   }
 
+  static Future<void> setRetention(int id, String host, int port, TlsContext tlsContext, String tenant,
+      String namespace, int retentionTimeInMinutes, int retentionSizeInMB) async {
+    String url = tlsContext.enableTls
+        ? HttpUtil.https
+        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/retention';
+    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id)
+        .post(url, data: json.encode(RetentionResp(retentionTimeInMinutes, retentionSizeInMB)));
+    if (HttpUtil.abnormal(response.statusCode!)) {
+      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+    }
+  }
+
   static Future<BacklogQuotaResp> getBacklogQuota(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
     String url = tlsContext.enableTls

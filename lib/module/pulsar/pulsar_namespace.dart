@@ -196,7 +196,6 @@ class NamespaceCsv {
     return [
       'tenant',
       'namespace',
-      'partitionedNum',
       'backlogPolicy',
       'backlogQuotaBytes',
       'retentionSize',
