@@ -27,8 +27,8 @@ import 'package:paas_dashboard_flutter/api/tls_context.dart';
 class HttpUtil {
   static const String http = "http://";
   static const String https = "https://";
-  static const int CONNECT_TIMEOUT = 10000;
-  static const int RECEIVE_TIMEOUT = 10000;
+  static const int CONNECT_TIMEOUT = 30000;
+  static const int RECEIVE_TIMEOUT = 30000;
   static Map<SERVER, Map<int, Dio>> clients = {};
 
   static Dio getClient(TlsContext tlsContext, SERVER service, int id) {
