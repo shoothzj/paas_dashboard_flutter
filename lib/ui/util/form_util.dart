@@ -299,7 +299,7 @@ class FormUtil {
           String error = "";
           bool rs = false;
           try {
-            rs = await CsvUtils.export(filename, header, fun());
+            rs = await CsvUtils.export(filename, header, await fun());
           } on Exception catch (e) {
             error = e.toString();
           }
