@@ -165,8 +165,10 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
   Future<void> createAllTenant(List<dynamic> tenants) async {
     try {
       await PulsarTenantApi.createTenant(id, host, port, pulsarInstancePo.createTlsContext(), tenants[0]);
-    } catch (e) {
+    } on Exception catch (e) {
       log('create tenant [${tenants[0]}] fail. err: $e');
+      opException = e;
+      notifyListeners();
     }
   }
 
@@ -228,8 +230,10 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
           namespaceCsv.namespace, namespaceCsv.ttlSeconds);
       PulsarNamespaceApi.setRetention(id, host, port, pulsarInstancePo.createTlsContext(), namespaceCsv.tenant,
           namespaceCsv.namespace, namespaceCsv.retentionTime, namespaceCsv.retentionSize);
-    } catch (e) {
+    } on Exception catch (e) {
       log('create namespace [$namespaces] fail. err: $e');
+      opException = e;
+      notifyListeners();
     }
   }
 
@@ -242,11 +246,9 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
       final topics =
           await PulsarPartitionedTopicApi.getTopics(id, host, port, pulsarInstancePo.createTlsContext(), tenant, name);
       for (var topicResp in topics) {
-        final partitionedNum = PulsarPartitionedTopicApi.getBase(
+        final partitionedNum = await PulsarPartitionedTopicApi.getBase(
             id, host, port, pulsarInstancePo.createTlsContext(), tenant, name, topicResp.topicName);
-        int defaultPartitionedNum = 2;
-        partitionedNum.then((value) => defaultPartitionedNum = value.partitionNum);
-        topicData.add([tenant, name, topicResp.topicName, defaultPartitionedNum]);
+        topicData.add([tenant, name, topicResp.topicName, partitionedNum.partitionNum]);
       }
     }
     return topicData;
@@ -256,8 +258,10 @@ class PulsarInstanceViewModel extends BaseLoadListPageViewModel<PulsarTenantView
     try {
       PulsarPartitionedTopicApi.createPartitionTopic(id, host, port, pulsarInstancePo.createTlsContext(), topics[0],
           topics[1], topics[2], int.parse('${topics[3]}'));
-    } catch (e) {
+    } on Exception catch (e) {
       log('create topic [$topics] fail. err: $e');
+      opException = e;
+      notifyListeners();
     }
   }
 

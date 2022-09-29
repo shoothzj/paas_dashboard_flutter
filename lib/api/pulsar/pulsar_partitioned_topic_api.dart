@@ -90,16 +90,20 @@ class PulsarPartitionedTopicApi {
 
   static Future<List<TopicResp>> getTopics(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
-    var url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/partitioned';
-    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
-    if (HttpUtil.abnormal(response.statusCode!)) {
-      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+    try {
+      var url = tlsContext.enableTls
+          ? HttpUtil.https
+          : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/partitioned';
+      var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
+      if (HttpUtil.abnormal(response.statusCode!)) {
+        log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+        throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      }
+      List jsonResponse = json.decode(response.data!) as List;
+      return jsonResponse.map((name) => TopicResp.fromJson(name)).toList();
+    } on Exception catch (e) {
+      throw Exception('tenant is $tenant, namespace is $namespace, exception $e');
     }
-    List jsonResponse = json.decode(response.data!) as List;
-    return jsonResponse.map((name) => TopicResp.fromJson(name)).toList();
   }
 
   static Future<List<SubscriptionResp>> getSubscription(
