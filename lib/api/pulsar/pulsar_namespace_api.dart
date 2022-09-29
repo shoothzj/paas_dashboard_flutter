@@ -71,19 +71,23 @@ class PulsarNamespaceApi {
 
   static Future<RetentionResp> getRetention(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/retention';
-    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
-    if (HttpUtil.abnormal(response.statusCode!)) {
-      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+    try {
+      String url = tlsContext.enableTls
+          ? HttpUtil.https
+          : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/retention';
+      var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
+      if (HttpUtil.abnormal(response.statusCode!)) {
+        log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+        throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      }
+      if ("" == response.data!) {
+        return RetentionResp(null, null);
+      }
+      Map jsonResponse = json.decode(response.data!) as Map;
+      return RetentionResp.fromJson(jsonResponse);
+    } on Exception catch (e) {
+      throw Exception('tenant is $tenant, namespace is $namespace, exception $e');
     }
-    if ("" == response.data!) {
-      return RetentionResp(null, null);
-    }
-    Map jsonResponse = json.decode(response.data!) as Map;
-    return RetentionResp.fromJson(jsonResponse);
   }
 
   static Future<void> setRetention(int id, String host, int port, TlsContext tlsContext, String tenant,
@@ -101,20 +105,24 @@ class PulsarNamespaceApi {
 
   static Future<BacklogQuotaResp> getBacklogQuota(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/backlogQuotaMap';
-    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
-    if (HttpUtil.abnormal(response.statusCode!)) {
-      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+    try {
+      String url = tlsContext.enableTls
+          ? HttpUtil.https
+          : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/backlogQuotaMap';
+      var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
+      if (HttpUtil.abnormal(response.statusCode!)) {
+        log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+        throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      }
+      Map jsonResponse = json.decode(response.data!) as Map;
+      var destinationStorageResp = jsonResponse["destination_storage"];
+      if (destinationStorageResp == null) {
+        return BacklogQuotaResp(null, null, null);
+      }
+      return BacklogQuotaResp.fromJson(destinationStorageResp);
+    } on Exception catch (e) {
+      throw Exception('tenant is $tenant, namespace is $namespace, exception $e');
     }
-    Map jsonResponse = json.decode(response.data!) as Map;
-    var destinationStorageResp = jsonResponse["destination_storage"];
-    if (destinationStorageResp == null) {
-      return BacklogQuotaResp(null, null, null);
-    }
-    return BacklogQuotaResp.fromJson(destinationStorageResp);
   }
 
   static Future<void> updateBacklogQuota(int id, String host, int port, TlsContext tlsContext, String tenant,
@@ -133,16 +141,20 @@ class PulsarNamespaceApi {
 
   static Future<PolicyResp> getPolicy(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
-    var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
-    if (HttpUtil.abnormal(response.statusCode!)) {
-      log('ErrorCode is ${response.statusCode}, body is ${response.data}');
-      throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+    try {
+      String url = tlsContext.enableTls
+          ? HttpUtil.https
+          : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
+      var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
+      if (HttpUtil.abnormal(response.statusCode!)) {
+        log('ErrorCode is ${response.statusCode}, body is ${response.data}');
+        throw Exception('ErrorCode is ${response.statusCode}, body is ${response.data}');
+      }
+      Map jsonResponse = json.decode(response.data!) as Map;
+      return PolicyResp.fromJson(jsonResponse);
+    } on Exception catch (e) {
+      throw Exception('tenant is $tenant, namespace is $namespace, exception $e');
     }
-    Map jsonResponse = json.decode(response.data!) as Map;
-    return PolicyResp.fromJson(jsonResponse);
   }
 
   static Future<void> setAutoTopicCreation(int id, String host, int port, TlsContext tlsContext, String tenant,

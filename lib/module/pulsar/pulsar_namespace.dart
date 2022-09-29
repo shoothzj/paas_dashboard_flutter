@@ -104,7 +104,7 @@ class RetentionResp {
   Map toJson() {
     Map map = {};
     map["retentionTimeInMinutes"] = retentionTimeInMinutes;
-    map["limitTime"] = retentionSizeInMB;
+    map["retentionSizeInMB"] = retentionSizeInMB;
     return map;
   }
 }
