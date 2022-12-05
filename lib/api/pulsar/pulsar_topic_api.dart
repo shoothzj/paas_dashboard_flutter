@@ -90,8 +90,7 @@ class PulsarTopicApi {
 
   static Future<String> fetchConsumerMessage(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, String topic, String ledgerId, String entryId) async {
-    var url = tlsContext.getSchema() +
-        '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/ledger/$ledgerId/entry/$entryId';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/ledger/$ledgerId/entry/$entryId';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -102,8 +101,7 @@ class PulsarTopicApi {
 
   static Future<String> fetchMessageId(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, String topic, String timestamp) async {
-    var url = tlsContext.getSchema() +
-        '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/messageid/$timestamp';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/messageid/$timestamp';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -114,8 +112,7 @@ class PulsarTopicApi {
 
   static Future<String> clearBacklog(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, String topic, String subscription) async {
-    var url = tlsContext.getSchema() +
-        '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/subscription/$subscription/skip_all';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/subscription/$subscription/skip_all';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -278,8 +275,7 @@ class PulsarTopicApi {
     List<ProducerMessage> messageList = List.empty(growable: true);
     messageList.add(producerMessage);
     PublishMessagesReq messagesReq = PublishMessagesReq(PulsarConst.defaultProducerName, messageList);
-    var url = tlsContext.getSchema() +
-        '$host:${port.toString()}/topics/persistent/$tenant/$namespace/$topic/partitions/$partition';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/topics/persistent/$tenant/$namespace/$topic/partitions/$partition';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url, data: json.encode(messagesReq));
     if (HttpUtil.abnormal(response.statusCode!)) {

@@ -49,8 +49,7 @@ class PulsarPartitionedTopicApi {
 
   static Future<String> deletePartitionTopic(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, String topic, bool force) async {
-    var url = tlsContext.getSchema() +
-        '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions?force=$force';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions?force=$force';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).delete<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -74,8 +73,7 @@ class PulsarPartitionedTopicApi {
 
   static Future<String> createMissPartitionTopic(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String topic) async {
-    var url = tlsContext.getSchema() +
-        '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/createMissedPartitions';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/createMissedPartitions';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -123,8 +121,7 @@ class PulsarPartitionedTopicApi {
 
   static Future<String> clearBacklog(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, String topic, String subscription) async {
-    var url = tlsContext.getSchema() +
-        '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/subscription/$subscription/skip_all';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/subscription/$subscription/skip_all';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
