@@ -29,9 +29,7 @@ import 'package:paas_dashboard_flutter/module/pulsar/pulsar_namespace.dart';
 class PulsarNamespaceApi {
   static Future<void> createNamespace(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
-    var url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
+    var url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).put<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -41,9 +39,7 @@ class PulsarNamespaceApi {
 
   static Future<void> deleteNamespace(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
-    var url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
+    var url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).delete<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -54,9 +50,7 @@ class PulsarNamespaceApi {
   static Future<List<NamespaceResp>> getNamespaces(
       int id, String host, int port, TlsContext tlsContext, String tenant) async {
     try {
-      var url = tlsContext.enableTls
-          ? HttpUtil.https
-          : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant';
+      var url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant';
       var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
       if (HttpUtil.abnormal(response.statusCode!)) {
         log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -72,9 +66,7 @@ class PulsarNamespaceApi {
   static Future<RetentionResp> getRetention(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
     try {
-      String url = tlsContext.enableTls
-          ? HttpUtil.https
-          : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/retention';
+      String url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/retention';
       var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
       if (HttpUtil.abnormal(response.statusCode!)) {
         log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -92,9 +84,7 @@ class PulsarNamespaceApi {
 
   static Future<void> setRetention(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, int retentionTimeInMinutes, int retentionSizeInMB) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/retention';
+    String url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/retention';
     RetentionResp retentionResp = RetentionResp(retentionTimeInMinutes, retentionSizeInMB);
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post(url, data: json.encode(retentionResp));
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -106,9 +96,8 @@ class PulsarNamespaceApi {
   static Future<BacklogQuotaResp> getBacklogQuota(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
     try {
-      String url = tlsContext.enableTls
-          ? HttpUtil.https
-          : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/backlogQuotaMap';
+      String url =
+          tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/backlogQuotaMap';
       var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
       if (HttpUtil.abnormal(response.statusCode!)) {
         log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -127,9 +116,8 @@ class PulsarNamespaceApi {
 
   static Future<void> updateBacklogQuota(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, int limit, int? limitTime, String policy) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/backlogQuota';
+    String url =
+        tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/backlogQuota';
     BacklogQuotaReq backlogQuotaReq = BacklogQuotaReq(limit, limitTime, policy);
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post(url, data: json.encode(backlogQuotaReq));
@@ -142,9 +130,7 @@ class PulsarNamespaceApi {
   static Future<PolicyResp> getPolicy(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
     try {
-      String url = tlsContext.enableTls
-          ? HttpUtil.https
-          : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
+      String url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace';
       var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
       if (HttpUtil.abnormal(response.statusCode!)) {
         log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -159,9 +145,8 @@ class PulsarNamespaceApi {
 
   static Future<void> setAutoTopicCreation(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, bool? allowAutoTopicCreation, String? topicType, int? defaultNumPartitions) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/autoTopicCreation';
+    String url =
+        tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/autoTopicCreation';
     TopicAutoCreateReq topicAutoCreateReq = TopicAutoCreateReq(allowAutoTopicCreation, topicType, defaultNumPartitions);
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post(url, data: json.encode(topicAutoCreateReq));
@@ -173,9 +158,7 @@ class PulsarNamespaceApi {
 
   static Future<void> setMessageTTLSecond(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, int? messageTTLSecond) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/messageTTL';
+    String url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/messageTTL';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post(url, data: messageTTLSecond.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -185,9 +168,8 @@ class PulsarNamespaceApi {
 
   static Future<void> setMaxProducersPerTopic(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, int? maxProducersPerTopic) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxProducersPerTopic';
+    String url =
+        tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxProducersPerTopic';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post(url, data: maxProducersPerTopic.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -198,9 +180,8 @@ class PulsarNamespaceApi {
 
   static Future<void> setMaxConsumersPerTopic(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, int? maxConsumersPerTopic) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxConsumersPerTopic';
+    String url =
+        tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxConsumersPerTopic';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post(url, data: maxConsumersPerTopic.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -211,9 +192,8 @@ class PulsarNamespaceApi {
 
   static Future<void> setMaxConsumersPerSubscription(int id, String host, int port, TlsContext tlsContext,
       String tenant, String namespace, int? maxConsumersPerSubscription) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxConsumersPerSubscription';
+    String url = tlsContext.getSchema() +
+        '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxConsumersPerSubscription';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post(url, data: maxConsumersPerSubscription.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -224,9 +204,8 @@ class PulsarNamespaceApi {
 
   static Future<void> setMaxUnackedMessagesPerConsumer(int id, String host, int port, TlsContext tlsContext,
       String tenant, String namespace, int? maxUnackedMessagesPerConsumer) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxUnackedMessagesPerConsumer';
+    String url = tlsContext.getSchema() +
+        '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxUnackedMessagesPerConsumer';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id)
         .post(url, data: maxUnackedMessagesPerConsumer.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -237,9 +216,8 @@ class PulsarNamespaceApi {
 
   static Future<void> setMaxUnackedMessagesPerSubscription(int id, String host, int port, TlsContext tlsContext,
       String tenant, String namespace, int? maxUnackedMessagesPerSubscription) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxUnackedMessagesPerSubscription';
+    String url = tlsContext.getSchema() +
+        '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxUnackedMessagesPerSubscription';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id)
         .post(url, data: maxUnackedMessagesPerSubscription.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -250,9 +228,8 @@ class PulsarNamespaceApi {
 
   static Future<void> setMaxSubscriptionsPerTopic(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, int? maxSubscriptionsPerTopic) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxSubscriptionsPerTopic';
+    String url = tlsContext.getSchema() +
+        '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxSubscriptionsPerTopic';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post(url, data: maxSubscriptionsPerTopic.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -263,9 +240,8 @@ class PulsarNamespaceApi {
 
   static Future<void> setMaxTopicsPerNamespace(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, int? maxTopicsPerNamespace) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxTopicsPerNamespace';
+    String url = tlsContext.getSchema() +
+        '$host:${port.toString()}/admin/v2/namespaces/$tenant/$namespace/maxTopicsPerNamespace';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id)
         .post(url, data: maxTopicsPerNamespace.toString(), options: Options(contentType: ContentType.json.toString()));
     if (HttpUtil.abnormal(response.statusCode!)) {

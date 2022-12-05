@@ -25,9 +25,8 @@ import 'package:paas_dashboard_flutter/api/tls_context.dart';
 class PulsarStatApi {
   static Future<String> partitionedTopicStats(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String topic) async {
-    var url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitioned-stats';
+    var url = tlsContext.getSchema() +
+        '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitioned-stats';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -38,9 +37,7 @@ class PulsarStatApi {
 
   static Future<String> topicStats(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String topic) async {
-    var url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/stats';
+    var url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/stats';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');

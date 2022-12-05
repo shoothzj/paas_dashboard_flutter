@@ -31,8 +31,7 @@ class PulsarClusterApi {
     String version = await getVersion(id, host, port, tlsContext);
     String tenantInfo = await PulsarTenantApi.getTenantInfo(id, host, port, "public", tlsContext);
     String cluster = ((json.decode(tenantInfo) as Map)["allowedClusters"] as List)[0];
-    String url =
-        tlsContext.enableTls ? HttpUtil.https : '${HttpUtil.http}$host:${port.toString()}/admin/v2/brokers/$cluster';
+    String url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/brokers/$cluster';
     final brokersResponse = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(brokersResponse.statusCode!)) {
       log('ErrorCode is ${brokersResponse.statusCode}, body is ${brokersResponse.data}');
@@ -43,8 +42,7 @@ class PulsarClusterApi {
   }
 
   static Future<String> getVersion(int id, String host, int port, TlsContext tlsContext) async {
-    String url =
-        tlsContext.enableTls ? HttpUtil.https : '${HttpUtil.http}$host:${port.toString()}/admin/v2/brokers/version';
+    String url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/brokers/version';
     final versionResponse = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id)
         .get<String>(url, options: Options(responseType: ResponseType.json));
     if (HttpUtil.abnormal(versionResponse.statusCode!)) {
@@ -55,9 +53,7 @@ class PulsarClusterApi {
   }
 
   static Future<String> getLeader(int id, String host, int port, TlsContext tlsContext) async {
-    String url = tlsContext.enableTls
-        ? HttpUtil.https
-        : '${HttpUtil.http}$host:${port.toString()}/admin/v2/brokers/leaderBroker';
+    String url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/brokers/leaderBroker';
     final leaderBrokerResponse = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(leaderBrokerResponse.statusCode!)) {
       log('ErrorCode is ${leaderBrokerResponse.statusCode}, body is ${leaderBrokerResponse.data}');
