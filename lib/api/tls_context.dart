@@ -17,6 +17,8 @@
 // under the License.
 //
 
+import 'http_util.dart';
+
 class TlsContext {
   static const int ENABLE_TLS = 1;
   static const int DIS_ENABLE_TLS = 0;
@@ -30,5 +32,9 @@ class TlsContext {
 
   TlsContext deepCopy() {
     return TlsContext(enableTls, caFile, clientCertFile, clientKeyFile, clientKeyPassword);
+  }
+
+  String getSchema() {
+    return enableTls ? HttpUtil.https : HttpUtil.http;
   }
 }

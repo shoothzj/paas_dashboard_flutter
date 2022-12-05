@@ -28,8 +28,7 @@ class PulsarTenantApi {
   static Future<void> createTenant(int id, String host, int port, TlsContext tlsContext, String tenant) async {
     String tenantInfo = "";
     await getTenantInfo(id, host, port, tenant, tlsContext).then((value) => tenantInfo = value);
-    var url =
-        tlsContext.enableTls ? HttpUtil.https : '${HttpUtil.http}$host:${port.toString()}/admin/v2/tenants/$tenant';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/tenants/$tenant';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).put<String>(url, data: tenantInfo);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -38,8 +37,7 @@ class PulsarTenantApi {
   }
 
   static Future<void> deleteTenant(int id, String host, int port, TlsContext tlsContext, String tenant) async {
-    var url =
-        tlsContext.enableTls ? HttpUtil.https : '${HttpUtil.http}$host:${port.toString()}/admin/v2/tenants/$tenant';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/tenants/$tenant';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).delete<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -48,7 +46,7 @@ class PulsarTenantApi {
   }
 
   static Future<List<TenantResp>> getTenants(int id, String host, int port, TlsContext tlsContext) async {
-    var url = tlsContext.enableTls ? HttpUtil.https : '${HttpUtil.http}$host:${port.toString()}/admin/v2/tenants';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/tenants';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -59,8 +57,7 @@ class PulsarTenantApi {
   }
 
   static Future<String> getTenantInfo(int id, String host, int port, String tenant, TlsContext tlsContext) async {
-    var url =
-        tlsContext.enableTls ? HttpUtil.https : '${HttpUtil.http}$host:${port.toString()}/admin/v2/tenants/public';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/tenants/public';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
