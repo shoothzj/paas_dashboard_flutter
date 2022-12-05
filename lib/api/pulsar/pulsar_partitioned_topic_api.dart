@@ -37,7 +37,7 @@ class PulsarPartitionedTopicApi {
   static Future<String> createPartitionTopic(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, String topic, int partitionNum) async {
     var url =
-        tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
+        '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).put<String>(url, data: partitionNum.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -62,7 +62,7 @@ class PulsarPartitionedTopicApi {
   static Future<String> modifyPartitionTopic(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, String topic, int partitionNum) async {
     var url =
-        tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
+        '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic/partitions';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url, data: partitionNum.toString());
     if (HttpUtil.abnormal(response.statusCode!)) {
@@ -292,7 +292,7 @@ class PulsarPartitionedTopicApi {
     List<ProducerMessage> messageList = List.empty(growable: true);
     messageList.add(producerMessage);
     PublishMessagesReq messagesReq = PublishMessagesReq(PulsarConst.defaultProducerName, messageList);
-    var url = tlsContext.getSchema() + '$host:${port.toString()}/topics/persistent/$tenant/$namespace/$topic/';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/topics/persistent/$tenant/$namespace/$topic/';
     var response =
         await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).post<String>(url, data: json.encode(messagesReq));
     if (HttpUtil.abnormal(response.statusCode!)) {

@@ -36,7 +36,7 @@ import 'package:paas_dashboard_flutter/ui/util/string_util.dart';
 class PulsarTopicApi {
   static Future<String> createTopic(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace, String topic) async {
-    var url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).put<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -48,7 +48,7 @@ class PulsarTopicApi {
   static Future<String> deleteTopic(int id, String host, int port, TlsContext tlsContext, String tenant,
       String namespace, String topic, bool force) async {
     var url =
-        tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic?force=$force';
+        '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/$topic?force=$force';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).delete<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
@@ -59,7 +59,7 @@ class PulsarTopicApi {
 
   static Future<List<TopicResp>> getTopics(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
-    var url = tlsContext.getSchema() + '$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace';
+    var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace';
     var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
     if (HttpUtil.abnormal(response.statusCode!)) {
       log('ErrorCode is ${response.statusCode}, body is ${response.data}');
