@@ -87,9 +87,7 @@ class PulsarPartitionedTopicApi {
   static Future<List<TopicResp>> getTopics(
       int id, String host, int port, TlsContext tlsContext, String tenant, String namespace) async {
     try {
-      var url = tlsContext.enableTls
-          ? HttpUtil.https
-          : '${HttpUtil.http}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/partitioned';
+      var url = '${tlsContext.getSchema()}$host:${port.toString()}/admin/v2/persistent/$tenant/$namespace/partitioned';
       var response = await HttpUtil.getClient(tlsContext, SERVER.PULSAR, id).get<String>(url);
       if (HttpUtil.abnormal(response.statusCode!)) {
         log('ErrorCode is ${response.statusCode}, body is ${response.data}');
