@@ -25,7 +25,7 @@ on:
       - main
 
 jobs:
-  build:
+  flutter_analyze:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
