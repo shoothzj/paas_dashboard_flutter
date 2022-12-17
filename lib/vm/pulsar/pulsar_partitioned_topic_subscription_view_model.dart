@@ -91,4 +91,15 @@ class PulsarPartitionedTopicSubscriptionViewModel extends BaseLoadListViewModel<
       notifyListeners();
     }
   }
+
+  Future<void> resetCursorByTimestamp(String subscriptionName, int timestamp) async {
+    try {
+      await PulsarPartitionedTopicApi.resetCursorByTimestamp(
+          id, host, port, pulsarInstancePo.createTlsContext(), tenant, namespace, topic, subscriptionName, timestamp);
+      await fetchSubscriptions();
+    } on Exception catch (e) {
+      opException = e;
+      notifyListeners();
+    }
+  }
 }
