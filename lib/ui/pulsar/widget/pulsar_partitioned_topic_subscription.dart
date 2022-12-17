@@ -18,8 +18,10 @@
 //
 
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:paas_dashboard_flutter/generated/l10n.dart';
 import 'package:paas_dashboard_flutter/ui/component/clear_backlog_button.dart';
+import 'package:paas_dashboard_flutter/ui/util/alert_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/exception_util.dart';
 import 'package:paas_dashboard_flutter/ui/util/spinner_util.dart';
 import 'package:paas_dashboard_flutter/vm/pulsar/pulsar_partitioned_topic_subscription_view_model.dart';
@@ -35,9 +37,16 @@ class PulsarPartitionedTopicSubscriptionWidget extends StatefulWidget {
 }
 
 class PulsarPartitionedTopicSubscriptionWidgetState extends State<PulsarPartitionedTopicSubscriptionWidget> {
+  final resetCursorByTimeTextController = TextEditingController();
+  final ledgerIdTextController = TextEditingController();
+  final entryIdTextController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+    resetCursorByTimeTextController.addListener(() {});
+    ledgerIdTextController.addListener(() {});
+    entryIdTextController.addListener(() {});
     final vm = Provider.of<PulsarPartitionedTopicSubscriptionViewModel>(context, listen: false);
     vm.fetchSubscriptions();
   }
@@ -52,6 +61,27 @@ class PulsarPartitionedTopicSubscriptionWidgetState extends State<PulsarPartitio
     }
     ExceptionUtil.processLoadException(vm, context);
     ExceptionUtil.processOpException(vm, context);
+
+    var timeField = TextField(
+      decoration: InputDecoration(
+        fillColor: Colors.green,
+        labelText: Text(S.of(context).resetCursorWithHint).data,
+        hintText: Text(S.of(context).resetCursorWithHint).data,
+      ),
+      controller: resetCursorByTimeTextController,
+    );
+
+    var timeButton = TextButton(
+      onPressed: () {
+        DatePicker.showDateTimePicker(context, showTitleActions: true, onChanged: (date) {
+          print("change $date");
+        }, onConfirm: (date) {
+          resetCursorByTimeTextController.text = date.millisecondsSinceEpoch.toString();
+        }, currentTime: DateTime.now(), locale: LocaleType.zh);
+      },
+      child: Text(S.of(context).timePick),
+    );
+
     var subscriptionFuture = SingleChildScrollView(
       child: DataTable(
           showCheckboxColumn: false,
@@ -60,6 +90,7 @@ class PulsarPartitionedTopicSubscriptionWidgetState extends State<PulsarPartitio
             const DataColumn(label: Text('MsgBacklog')),
             const DataColumn(label: Text('MsgRateOut')),
             DataColumn(label: Text(S.of(context).clearBacklog)),
+            DataColumn(label: Text(S.of(context).resetCursor)),
           ],
           rows: vm.displayList
               .map((data) => DataRow(cells: [
@@ -75,6 +106,45 @@ class PulsarPartitionedTopicSubscriptionWidgetState extends State<PulsarPartitio
                     DataCell(ClearBacklogButton(() {
                       vm.clearBacklog(data.subscriptionName);
                     })),
+                    DataCell(TextButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    S.of(context).resetCursor,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  actions: <Widget>[
+                                    timeField,
+                                    timeButton,
+                                    TextButton(
+                                      child: Text(
+                                        S.of(context).cancel,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        S.of(context).confirm,
+                                      ),
+                                      onPressed: () {
+                                        vm.resetCursorByTimestamp(data.subscriptionName,
+                                            int.parse(resetCursorByTimeTextController.value.text));
+                                        Navigator.of(context).pop();
+                                        AlertUtil.createDialog(S.of(context).success, context);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              });
+                        },
+                        child: Text(
+                          S.of(context).resetCursor,
+                        ))),
                   ]))
               .toList()),
     );

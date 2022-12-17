@@ -46,6 +46,8 @@
   "producer": "Producer",
   "producerList": "Producer List",
   "refresh": "Refresh",
+  "resetCursor": "ResetCursor",
+  "resetCursorWithHint": "Please enter the timestamp in milliseconds",
   "result": "Result",
   "searchByMessageId": "Search by MessageId, type is ledgerId entryId, submit with enter key",
   "searchByMessageIdWithHint": "Search by MessageId, single search type should be ledgerId entryId, multi search type should be ledgerId entryId entryId, submit with enter key",

@@ -46,6 +46,8 @@
   "producer": "生产者",
   "producerList": "生产者列表",
   "refresh": "刷新",
+  "resetCursor": "重置游标",
+  "resetCursorWithHint": "请输入时间戳，单位毫秒",
   "result": "结果",
   "searchByMessageId": "通过messageId查询消息，格式ledgerId entryId，按enter键进行查询。",
   "searchByMessageIdWithHint": "通过messageId查询消息，单条查询格式ledgerId entryId，范围查询格式位ledgerId entryId entryId，按enter键进行查询。",
